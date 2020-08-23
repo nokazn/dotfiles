@@ -1,0 +1,12 @@
+[user]
+	email =
+	name = nokazn
+[core]
+	editor = vim
+[github]
+	user = nokazn
+[merge]
+	ff = false
+[pull]
+	ff = only
+	rebase = true
