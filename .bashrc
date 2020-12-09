@@ -129,13 +129,12 @@ fi
 # goenv
 if [ -e "$HOME/.goenv" ]; then
     export GOENV_ROOT="$HOME/.goenv"
-    export PATH="$GOENV_ROOT/bin:$PATH"
     # goenv コマンドが存在する場合
     if type "goenv" >/dev/null 2>&1; then
         eval "$(goenv init -)"
     fi
 
-    export GOROOT=/usr/local/go
+    export GOROOT=$GOENV_ROOT
     export GOPATH=$HOME/go
     export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
 fi
