@@ -116,13 +116,33 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# nodenv
+if [ -e "$HOME/.nodenv" ]; then
+    export NODENV_ROOT="$HOME/.nodenv"
+    export PATH="$NODENV_ROOT/bin:$PATH"
+    # nodenv コマンドが存在する場合
+    if type "nodenv" >/dev/null 2>&1; then
+        eval "$(nodenv init -)"
+    fi
+fi
+
+# goenv
+if [ -e "$HOME/.goenv" ]; then
+    export GOENV_ROOT="$HOME/.goenv"
+    export PATH="$GOENV_ROOT/bin:$PATH"
+    # goenv コマンドが存在する場合
+    if type "goenv" >/dev/null 2>&1; then
+        eval "$(goenv init -)"
+    fi
+
+    export GOROOT=/usr/local/go
+    export GOPATH=$HOME/go
+    export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
+fi
+
+
 # X Server 経由で GUI を表示
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
-
-# Go
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # Deno
 export DENO_INSTALL="$HOME/.deno"
