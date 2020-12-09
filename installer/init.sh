@@ -22,7 +22,7 @@ cd $BASE_DIR
 for f in .??*; do
   current="${PWD}/${f}"
   case $f in
-    ".git" )
+    ".git" | ".gitignore" )
       continue;;
     ".gitconfig.template" )
       gitconfig="${DESTINATION}/.gitconfig"
