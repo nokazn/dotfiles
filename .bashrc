@@ -109,17 +109,17 @@ fi
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
 fi
 
 # nodenv
-if [ -e "$HOME/.nodenv" ]; then
-    export NODENV_ROOT="$HOME/.nodenv"
-    export PATH="$NODENV_ROOT/bin:$PATH"
+if [ -e "${HOME}/.nodenv" ]; then
+    export NODENV_ROOT="${HOME}/.nodenv"
+    export PATH="${NODENV_ROOT}/bin:${PATH}"
     # nodenv コマンドが存在する場合
     if type "nodenv" >/dev/null 2>&1; then
         eval "$(nodenv init -)"
@@ -127,16 +127,19 @@ if [ -e "$HOME/.nodenv" ]; then
 fi
 
 # goenv
-if [ -e "$HOME/.goenv" ]; then
-    export GOENV_ROOT="$HOME/.goenv"
+if [ -e "${HOME}/.goenv" ]; then
+    export GOENV_ROOT="${HOME}/.goenv"
+    export PATH="${GOENV_ROOT}/bin:${PATH}"
     # goenv コマンドが存在する場合
     if type "goenv" >/dev/null 2>&1; then
         eval "$(goenv init -)"
+        # GOROOT はよしなに設定してくれる
+        export GOPATH="${HOME}/go"
+        export PATH="${GOROOT}/bin:${PATH}"
+        export PATH="${PATH}:${GOPATH}/bin"
+        # Go Modules を有効にする
+        export 'GO111MODULE=on'
     fi
-
-    export GOROOT=$GOENV_ROOT
-    export GOPATH=$HOME/go
-    export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
 fi
 
 
@@ -144,9 +147,9 @@ fi
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
 
 # Deno
-export DENO_INSTALL="$HOME/.deno"
-export PATH="/$DENO_INSTALL/bin:$PATH:"
+export DENO_INSTALL="${HOME}/.deno"
+export PATH="/$DENO_INSTALL/bin:${PATH}:"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="${HOME}/.sdkman"
+[[ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
