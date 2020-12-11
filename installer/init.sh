@@ -4,7 +4,7 @@ set nounset
 
 BASE_DIR="$(dirname ${0})/.."
 DESTINATION_DIR=~/
-BACKUP_DIR=~/dotfiles_backup/
+BACKUP_DIR=~/backup_dotfiles/
 # バックアップ用のディレクトリが存在するか
 has_backup=$(test -e $BACKUP_DIR; echo $?)
 file_counter=0
