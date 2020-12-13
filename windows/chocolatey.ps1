@@ -10,7 +10,7 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
   }
 }
 
-choco install -Y googlechrome `
+choco install -y googlechrome `
 firefox `
 brave `
 visualstudiocode `
@@ -33,7 +33,6 @@ crystaldiskinfo `
 7zip `
 gimp `
 vlc `
-monosnap `
 screentogif `
 spotify `
 lastfmscrobbler `
