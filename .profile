@@ -16,7 +16,7 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 
     # include .bash_profile if it exists
-    if [ -f "$HOME/.bash_profile"]; then
+    if [ -f "$HOME/.bash_profile" ]; then
     source "$HOME/.bash_profile"
     fi
 fi
