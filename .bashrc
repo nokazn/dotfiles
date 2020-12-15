@@ -142,6 +142,16 @@ if [ -e "${HOME}/.goenv" ]; then
     fi
 fi
 
+# pyenv
+if [ -e "${HOME}/.pyenv" ]; then
+    export PYENV_ROOT="${HOME}/.pyenv"
+    export PATH="${PYENV_ROOT}/bin:${PATH}"
+    # pyenv コマンドが存在する場合
+    if type "pyenv" >/dev/null 2>&1; then
+        eval "$(pyenv init -)"
+    fi
+fi
+
 # Deno
 export DENO_INSTALL="${HOME}/.deno"
 export PATH="/$DENO_INSTALL/bin:${PATH}:"
