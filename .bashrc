@@ -142,6 +142,13 @@ if [ -e "${HOME}/.goenv" ]; then
     fi
 fi
 
+# Deno
+export DENO_INSTALL="${HOME}/.deno"
+export PATH="/$DENO_INSTALL/bin:${PATH}:"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="${HOME}/.sdkman"
+[[ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
 
 # WSL 内では X Server 経由で GUI を表示
 if type wsl.exe > /dev/null 2>&1; then
@@ -154,12 +161,3 @@ if type wsl.exe > /dev/null 2>&1; then
         cmd.exe /c "$(wslpath -w ./windows/config.xlaunch)"
     fi
 fi
-
-
-# Deno
-export DENO_INSTALL="${HOME}/.deno"
-export PATH="/$DENO_INSTALL/bin:${PATH}:"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="${HOME}/.sdkman"
-[[ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
