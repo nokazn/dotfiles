@@ -151,6 +151,10 @@ if [ -e "${HOME}/.pyenv" ]; then
         eval "$(pyenv init -)"
     fi
 fi
+# ユーザーインストールした pipenv
+if [ -e "${HOME}/.local/bin/pipenv" ]; then
+    export PATH="${HOME}/.local/bin:${PATH}"
+fi
 
 # Deno
 export DENO_INSTALL="${HOME}/.deno"
