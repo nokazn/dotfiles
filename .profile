@@ -84,11 +84,3 @@ if [ -d SDKMAN_DIR ]; then
     export SDKMAN_DIR="${SDKMAN_DIR}"
     [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 fi
-
-# WSL 内では X Server 経由で GUI を表示
-INIT_VCXSRV_PATH="${HOME}/dotfiles/init_vcxsrv.sh"
-if [ -f $INIT_VCXSRV_PATH ]; then
-    "${INIT_VCXSRV_PATH}"
-else
-    echo "⚠ file 'init_vcxsrv' doesn't exist at ${INIT_VCXSRV_PATH}" >&2
-fi

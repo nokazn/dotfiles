@@ -115,3 +115,14 @@ if ! shopt -oq posix; then
         . /etc/bash_completion
     fi
 fi
+
+# WSL 内では X Server 経由で GUI を表示
+INIT_VCXSRV_PATH="${HOME}/dotfiles/init_vcxsrv.sh"
+if [ -f $INIT_VCXSRV_PATH ]; then
+    # WSL に割り当てられる IP アドレスを取得して設定
+    export DISPLAY="$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0"
+    "${INIT_VCXSRV_PATH}"
+else
+    echo "⚠ file 'init_vcxsrv' doesn't exist at ${INIT_VCXSRV_PATH}" >&2
+fi
+echo $DISPLAY
