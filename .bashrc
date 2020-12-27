@@ -125,4 +125,3 @@ if [ -f $INIT_VCXSRV_PATH ]; then
 else
     echo "⚠ file 'init_vcxsrv' doesn't exist at ${INIT_VCXSRV_PATH}" >&2
 fi
-echo $DISPLAY
