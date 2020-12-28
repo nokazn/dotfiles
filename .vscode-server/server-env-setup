@@ -1,0 +1,15 @@
+# vscode-go で環境変数を認識させるため
+# https://code.visualstudio.com/docs/remote/wsl#_advanced-environment-setup-script
+if [ -d "${HOME}/.goenv" ]; then
+    export GOENV_ROOT="${HOME}/.goenv"
+    export PATH="${GOENV_ROOT}/bin:${PATH}"
+    # goenv コマンドが存在する場合
+    if type "goenv" >/dev/null 2>&1; then
+        eval "$(goenv init -)"
+        # GOROOT はよしなに設定してくれる
+        export GOPATH="${HOME}/go"
+        export PATH="${PATH}:${GOPATH}/bin"
+        # Go Modules を有効にする
+        export 'GO111MODULE=on'
+    fi
+fi

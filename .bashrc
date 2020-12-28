@@ -135,7 +135,6 @@ if [ -d "${HOME}/.goenv" ]; then
         eval "$(goenv init -)"
         # GOROOT はよしなに設定してくれる
         export GOPATH="${HOME}/go"
-        export PATH="${GOROOT}/bin:${PATH}"
         export PATH="${PATH}:${GOPATH}/bin"
         # Go Modules を有効にする
         export 'GO111MODULE=on'
