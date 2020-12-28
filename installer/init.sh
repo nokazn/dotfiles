@@ -10,7 +10,8 @@ file_counter=0
 # @param {string} - destination path
 # @return {string}
 function show_overprompt_for_overwrite() {
-  read -rp "warning: ${1} already exists. Do you really want to overwrite? (Y/n) " response
+  # TODO
+  read -rp "warning: ${1} already exists. Do you really want to overwrite? (Y/n) " response  </dev/tty
   echo ${response}
 }
 
@@ -30,12 +31,16 @@ function backup() {
 # @param {stirng} - source  file path
 # @param {stirng} - destination file path
 function copy_file() {
-  response=$(show_overprompt_for_overwrite $1)
-  if [[ ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  if [[ -f ${2} ]]; then
+    # read -rp "warning: ${2} already exists. Do you really want to overwrite? (Y/n) " response
+    response=$(show_overprompt_for_overwrite $1)
+    if [[ !(${response} =~ ^([yY][eE][sS]|[yY])$) ]]; then
+      return
+    fi
     backup "${2}"
-    cp --verbose "${1}" "${2}" | sed --regexp-extended --expression "s/(^.*$)/✅ newly copied: \1/"
-    increment_file_counter
   fi
+  cp --verbose "${1}" "${2}" | sed --regexp-extended --expression "s/(^.*$)/✅ newly copied: \1/"
+  increment_file_counter
 }
 
 # @param {string} - source file path
