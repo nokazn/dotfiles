@@ -117,7 +117,7 @@ if ! shopt -oq posix; then
 fi
 
 # nodenv
-if [ -d "${HOME}/.nodenv" ]; then
+if [[ -d "${HOME}/.nodenv" ]]; then
     export NODENV_ROOT="${HOME}/.nodenv"
     export PATH="${NODENV_ROOT}/bin:${PATH}"
     # nodenv コマンドが存在する場合
@@ -142,7 +142,7 @@ if [ -d "${HOME}/.goenv" ]; then
 fi
 
 # pyenv
-if [ -d "${HOME}/.pyenv" ]; then
+if [[ -d "${HOME}/.pyenv" ]]; then
     export PYENV_ROOT="${HOME}/.pyenv"
     export PATH="${PYENV_ROOT}/bin:${PATH}"
     # pyenv コマンドが存在する場合
@@ -151,30 +151,30 @@ if [ -d "${HOME}/.pyenv" ]; then
     fi
 fi
 # ユーザーインストールした pipenv
-if [ -d "${HOME}/.local/bin/pipenv" ]; then
+if [[ -e "${HOME}/.local/bin/pipenv" ]]; then
     export PATH="${HOME}/.local/bin:${PATH}"
 fi
 
 # Deno
 DENO_INSTALL="${HOME}/.deno"
-if [ -d "${DENO_INSTALL}" ]; then
+if [[ -d "${DENO_INSTALL}" ]]; then
     export DENO_INSTALL=$DENO_INSTALL
     export PATH="/${DENO_INSTALL}/bin:${PATH}:"
 fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 SDKMAN_DIR="${HOME}/.sdkman"
-if [ -d SDKMAN_DIR ]; then
+if [[ -d ${SDKMAN_DIR} ]]; then
     export SDKMAN_DIR="${SDKMAN_DIR}"
     [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 fi
 
 # WSL 内では X Server 経由で GUI を表示
-INIT_VCXSRV_PATH="${HOME}/dotfiles/init_vcxsrv.sh"
-if [ -f $INIT_VCXSRV_PATH ]; then
+START_VCXSRV_PATH="${HOME}/dotfiles/scripts/start_vcxsrv.sh"
+if [[ -f ${START_VCXSRV_PATH} ]]; then
     # WSL に割り当てられる IP アドレスを取得して設定
     export DISPLAY="$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0"
-    "${INIT_VCXSRV_PATH}"
+    "${START_VCXSRV_PATH}"
 else
-    echo "⚠ file 'init_vcxsrv' doesn't exist at ${INIT_VCXSRV_PATH}" >&2
+    echo "⚠ file 'start_vcxsrv' doesn't exist at ${START_VCXSRV_PATH}" >&2
 fi

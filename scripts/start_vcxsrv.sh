@@ -2,7 +2,9 @@
 
 current_dir=$(cd $(dirname ${0}); pwd)
 
-function init_vcxsrv {
+# @param - none
+# @return {void}
+function start_vcxsrv() {
   # WSL 内では X Server 経由で GUI を表示
   if type wsl.exe > /dev/null 2>&1; then
       config_path="${current_dir}/windows/config.xlaunch"
@@ -13,6 +15,7 @@ function init_vcxsrv {
           cmd.exe /c $(wslpath -w ${config_path})
       fi
   fi
+  return 0
 }
 
-init_vcxsrv
+start_vcxsrv
