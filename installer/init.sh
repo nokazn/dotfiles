@@ -1,23 +1,36 @@
 #!/bin/bash
 
 set nounset
+set errexit
 
 readonly BASE_DIR="$(dirname $0)/.."
 readonly DESTINATION_BASE_DIR=~
 readonly BACKUP_BASE_DIR=~/backup_dotfiles
 file_counter=0
 
+# standard error output
+# @param {string}
+# @return {void}
+function decho() {
+  echo "$1" 1>&2
+}
+
 # @param {string} - full path of destination
-# @return {string}
+# @return {"y" | "n"}
 function show_overprompt_for_overwrite() {
   # TODO
   read -rp "warning: $1 already exists. Do you really want to overwrite? (Y/n) " response  </dev/tty
-  echo ${response}
+  if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    echo "y"
+  else
+    decho "🙈 ignored: $1"
+    echo "n"
+  fi
   return 0
 }
 
 # @param {stirng} - full path of destination
-# @return void
+# @return {void}
 function backup() {
   local backup_file="${BACKUP_BASE_DIR}${1##${DESTINATION_BASE_DIR}}"
   local backup_dir="$(dirname ${backup_file})"
@@ -33,15 +46,11 @@ function backup() {
 
 # @param {stirng} - full path of source
 # @param {stirng} - full path of destination
-# @return void
+# @return {void}
 function copy_file() {
   if [[ -f $2 ]]; then
-    # read -rp "warning: $2 already exists. Do you really want to overwrite? (Y/n) " response
     local response=$(show_overprompt_for_overwrite $2)
-    if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
-      echo "🙈 ignored: $2"
-      return 0
-    fi
+    [[ ${response} != "y" ]] && return 0
     backup $2
   fi
   cp --verbose $1 $2 | sed --regexp-extended --expression "s/(^.*$)/✅ newly copied: \1/"
@@ -51,7 +60,7 @@ function copy_file() {
 
 # @param {string} - full path of source
 # @param {string} - full path of destination
-# @return void
+# @return {void}
 function symbolic_link() {
   # すでにシンボリックリンクが存在する場合は無視
   if [[ -L $2 ]]; then
@@ -66,13 +75,10 @@ function symbolic_link() {
   # ファイルが存在する場合
   elif [[ -f $2 ]] && [[ -f $1 ]]; then
     local response=$(show_overprompt_for_overwrite $2)
-    if [[ ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    if [[ ${response} == "y" ]]; then
       backup $2
       ln --symbolic --verbose --force $1 $2 | sed --regexp-extended --expression "s/(^.*$)/✅ newly linked: \1/"
       increment_file_counter
-    else
-      echo "🙈 ignored: $2"
-      return 0
     fi
   # ディレクトリが存在する場合再帰的に呼び出す
   elif [[ -d $1 ]] && [[ -d $2 ]]; then
@@ -81,7 +87,11 @@ function symbolic_link() {
       symbolic_link ${file} $2/$(basename ${file})
     # Process Substitution (標準出力を仮のファイルに出力させる感じ)
     done < <(find $1/ -mindepth 1 -maxdepth 1 -printf "%p:")
+  else
+    echo "❌ An error occuered when linking $1 to $2"
+    return 1
   fi
+
   return 0
 }
 
