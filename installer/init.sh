@@ -2,112 +2,131 @@
 
 set nounset
 
-BASE_DIR="$(dirname ${0})/.."
-DESTINATION_BASE_DIR=~
-BACKUP_BASE_DIR=~/backup_dotfiles
+readonly BASE_DIR="$(dirname $0)/.."
+readonly DESTINATION_BASE_DIR=~
+readonly BACKUP_BASE_DIR=~/backup_dotfiles
 file_counter=0
 
-# @param {string} - destination path
+# @param {string} - full path of destination
 # @return {string}
 function show_overprompt_for_overwrite() {
   # TODO
-  read -rp "warning: ${1} already exists. Do you really want to overwrite? (Y/n) " response  </dev/tty
+  read -rp "warning: $1 already exists. Do you really want to overwrite? (Y/n) " response  </dev/tty
   echo ${response}
+  return 0
 }
 
-# @param {stirng} - destination file path
+# @param {stirng} - full path of destination
+# @return void
 function backup() {
-  backup_file="${BACKUP_BASE_DIR}${1##${DESTINATION_BASE_DIR}}"
-  backup_dir="$(dirname ${backup_file})"
+  local backup_file="${BACKUP_BASE_DIR}${1##${DESTINATION_BASE_DIR}}"
+  local backup_dir="$(dirname ${backup_file})"
 
 # 同名のファイルが存在し、バックアップがなければ実行
-  if [[ -f ${1} ]] && [[ !(-e ${backup_file}) ]]; then
+  if [[ -f $1 ]] && [[ !(-e ${backup_file}) ]]; then
     # バックアップ用のディレクトリがなければ作成
     [[ !(-d ${backup_dir}) ]] && mkdir -p "${backup_dir}"
-    cp --verbose "${1}" "${backup_file}" | sed --regexp-extended --expression "s/(^.*$)/✔ backuped: \1/"
+    cp --verbose $1 "${backup_file}" | sed --regexp-extended --expression "s/(^.*$)/✔ backuped: \1/"
   fi
+  return 0
 }
 
-# @param {stirng} - source  file path
-# @param {stirng} - destination file path
+# @param {stirng} - full path of source
+# @param {stirng} - full path of destination
+# @return void
 function copy_file() {
-  if [[ -f ${2} ]]; then
-    # read -rp "warning: ${2} already exists. Do you really want to overwrite? (Y/n) " response
-    response=$(show_overprompt_for_overwrite $1)
-    if [[ !(${response} =~ ^([yY][eE][sS]|[yY])$) ]]; then
-      return
+  if [[ -f $2 ]]; then
+    # read -rp "warning: $2 already exists. Do you really want to overwrite? (Y/n) " response
+    local response=$(show_overprompt_for_overwrite $2)
+    if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
+      echo "🙈 ignored: $2"
+      return 0
     fi
-    backup "${2}"
+    backup $2
   fi
-  cp --verbose "${1}" "${2}" | sed --regexp-extended --expression "s/(^.*$)/✅ newly copied: \1/"
+  cp --verbose $1 $2 | sed --regexp-extended --expression "s/(^.*$)/✅ newly copied: \1/"
   increment_file_counter
+  return 0
 }
 
-# @param {string} - source file path
-# @param {string} - destination file path
+# @param {string} - full path of source
+# @param {string} - full path of destination
+# @return void
 function symbolic_link() {
   # すでにシンボリックリンクが存在する場合は無視
-  if [[ -L ${2} ]]; then
-    echo "📌 already linked: ${2}"
-    return
+  if [[ -L $2 ]]; then
+    echo "📌 already linked: $2"
+    return 0
   fi
 
   # destination にファイルが存在しないか、バックアップがある場合
-  if [[ !(-e ${2}) ]]; then
-    ln --symbolic --verbose --force "${1}" "${2}" | sed --regexp-extended --expression "s/(^.*$)/✅ newly linked: \1/"
+  if [[ !(-e $2) ]]; then
+    ln --symbolic --verbose --force $1 $2 | sed --regexp-extended --expression "s/(^.*$)/✅ newly linked: \1/"
     increment_file_counter
   # ファイルが存在する場合
-  elif [[ -f ${2} ]] && [[ -f ${1} ]]; then
-    response=$(show_overprompt_for_overwrite ${2})
+  elif [[ -f $2 ]] && [[ -f $1 ]]; then
+    local response=$(show_overprompt_for_overwrite $2)
     if [[ ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
-      backup "${2}"
-      ln --symbolic --verbose --force "${1}" "${2}" | sed --regexp-extended --expression "s/(^.*$)/✅ newly linked: \1/"
+      backup $2
+      ln --symbolic --verbose --force $1 $2 | sed --regexp-extended --expression "s/(^.*$)/✅ newly linked: \1/"
       increment_file_counter
+    else
+      echo "🙈 ignored: $2"
+      return 0
     fi
   # ディレクトリが存在する場合再帰的に呼び出す
-  elif [[ -d ${1} ]] && [[ -d ${2} ]]; then
-    while read -d ":" f; do
-      symbolic_link ${f} ${2}/$(basename ${f})
+  elif [[ -d $1 ]] && [[ -d $2 ]]; then
+    # file は full path
+    while read -d ":" file; do
+      symbolic_link ${file} $2/$(basename ${file})
     # Process Substitution (標準出力を仮のファイルに出力させる感じ)
-    done < <(find ${1}/ -mindepth 1 -maxdepth 1 -printf "%p:")
-    return
+    done < <(find $1/ -mindepth 1 -maxdepth 1 -printf "%p:")
   fi
+  return 0
 }
 
+# @param - none
+# @return {void}
 function increment_file_counter() {
   if [[ $? -eq 0 ]]; then
     file_counter=$((file_counter+1))
   fi
+  return 0
 }
 
+# @return {void}
 function main() {
   # .gitconfig 用の email の入力を受け付ける
   read -rp "Please enter your email for .gitconfig file: " email
   cd $BASE_DIR
 
   # dot で始まる2文字以上のファイル
-  for f in .??*; do
+  for file in $(ls -a . | grep --extended-regexp "^\.\w{2,}"); do
     # フルパスで表示させないと ln できない
-    current="${PWD}/${f}"
-    case $f in
+    local current="${PWD}/${file}"
+    case ${file} in
       ".git" | ".gitignore" )
-        continue;;
+        continue
+        ;;
 
       ".gitconfig.template" )
         gitconfig="${DESTINATION_BASE_DIR}/.gitconfig"
         copy_file "${current}" "${gitconfig}"
         # .gitconfig の email の箇所を置換
-        sed --in-place --expression "2 s/email.*/email = ${email}/" "${gitconfig}";;
+        sed --in-place --expression "2 s/email.*/email = ${email}/" "${gitconfig}"
+        ;;
 
       *)
-        destination=${DESTINATION_BASE_DIR}/${f}
-        symbolic_link ${current} ${destination};;
+        destination="${DESTINATION_BASE_DIR}/${file}"
+        symbolic_link "${current}" "${destination}"
+        ;;
     esac
   done
 
   if [[ $? -eq 0 ]] && [[ $file_counter -gt 0 ]]; then
     echo "Successfully ${file_counter} dotfiles are initialized!"
   fi
+  return 0
 }
 
 main
