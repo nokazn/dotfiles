@@ -15,9 +15,10 @@ filetype plugin indent on
 " vim 起動時に NerdTree を起動
 autocmd VimEnter * execute 'NERDTree'
 " Ctrl + e で NerdTree を toggle
-map <silent><C-E> :NERDTreeToggle<CR>
+" map <silent><C-e> :NERDTreeToggle<CR>
 map <silent><C-e> :NERDTreeFocus<CR>
 map <silent><C-f> :NERDTreeFind<CR>
+" TODO: デフォルトですべてのファイルを表示
 
 " クリップボードと連携 (tmux-yunk 用)
 set clipboard=unnamedplus
@@ -53,4 +54,10 @@ set hlsearch
 " ESC を押下した後に noh (nohlsearch)
 nnoremap <esc> :noh<return><esc> 
 nnoremap <esc>^[ <esc>^[
+
+" gr で前のタブへ移動 (gt で次のタブへ移動)
+nnoremap gr :tabprevious<return><esc>
+"タブを左右に移動する
+nnoremap <Tab>l :+tabmove<return><esc>
+nnoremap <Tab>h :-tabmove<return><esc>
 
