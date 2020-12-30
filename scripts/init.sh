@@ -13,6 +13,14 @@ file_counter=0
 # @return {void}
 function decho() {
   echo "$1" 1>&2
+  return 0
+}
+
+# @param {string} - directory path
+# @return {void}
+function ls_all() {
+  ls $1 -a --ignore "." --ignore ".." --ignore "*.swp"
+  return 0
 }
 
 # @param {string} - full path of destination
@@ -29,6 +37,15 @@ function show_overprompt_for_overwrite() {
   return 0
 }
 
+# @param - none
+# @return {void}
+function increment_file_counter() {
+  if [[ $? -eq 0 ]]; then
+    file_counter=$((file_counter+1))
+  fi
+  return 0
+}
+
 # @param {stirng} - full path of destination
 # @return {void}
 function backup() {
@@ -36,9 +53,9 @@ function backup() {
   local backup_dir="$(dirname ${backup_file})"
 
 # 同名のファイルが存在し、バックアップがなければ実行
-  if [[ -f $1 ]] && [[ !(-e ${backup_file}) ]]; then
+  if [[ -f $1 ]] && [[ ! -e ${backup_file} ]]; then
     # バックアップ用のディレクトリがなければ作成
-    [[ !(-d ${backup_dir}) ]] && mkdir -p "${backup_dir}"
+    [[ ! -d ${backup_dir} ]] && mkdir -p "${backup_dir}"
     cp --verbose $1 "${backup_file}" | sed --regexp-extended --expression "s/(^.*$)/✔ backuped: \1/"
   fi
   return 0
@@ -49,7 +66,6 @@ function backup() {
 # @return {void}
 function copy_gitconfig() {
   if [[ -f $2 ]]; then
-    # local has_diff=$(diff $1 $2 --ignore-matching-lines "email\s=.*")
     local response=$(show_overprompt_for_overwrite $2)
     [[ ${response} != "y" ]] && return 0
     backup $2
@@ -88,7 +104,7 @@ function symbolic_link() {
   fi
 
   # destination にファイルが存在しないか、バックアップがある場合
-  if [[ !(-e $2) ]]; then
+  if [[ ! -e $2 ]]; then
     ln --symbolic --verbose --force $1 $2 | sed --regexp-extended --expression "s/(^.*$)/✅ newly linked: \1/"
     increment_file_counter
   # ファイルが存在する場合
@@ -101,7 +117,7 @@ function symbolic_link() {
     fi
   # ディレクトリが存在する場合再帰的に呼び出す
   elif [[ -d $1 ]] && [[ -d $2 ]]; then
-    for file in $(ls "$1/" -a --ignore "." --ignore=".."); do
+    for file in $(ls_all "$1/"); do
       symbolic_link "$1/${file}" "$2/${file}"
     done
   else
@@ -114,19 +130,11 @@ function symbolic_link() {
 
 # @param - none
 # @return {void}
-function increment_file_counter() {
-  if [[ $? -eq 0 ]]; then
-    file_counter=$((file_counter+1))
-  fi
-  return 0
-}
-
-# @return {void}
 function main() {
-  cd $BASE_DIR
+  cd ${BASE_DIR}
 
   # dot で始まり、.swp を含まない2文字以上のファイル
-  for file in $(ls -a . --ignore "*.swp" | grep --extended-regexp "^\.\w{2,}"); do
+  for file in $(ls_all . | grep --extended-regexp "^\.\w{2,}"); do
     # フルパスで表示させないと ln できない
     local current="${PWD}/${file}"
     case ${file} in
@@ -135,8 +143,7 @@ function main() {
         ;;
 
       ".gitconfig.template" )
-        gitconfig="${DESTINATION_BASE_DIR}/.gitconfig"
-        copy_gitconfig "${current}" "${gitconfig}"
+        copy_gitconfig "${current}" "${DESTINATION_BASE_DIR}/.gitconfig"
         ;;
 
       *)
