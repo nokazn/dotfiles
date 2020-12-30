@@ -19,7 +19,7 @@ function decho() {
 # @return {"y" | "n"}
 function show_overprompt_for_overwrite() {
   # TODO
-  read -rp "warning: $1 already exists. Do you really want to overwrite? (Y/n) " response  </dev/tty
+  read -rp "warning: $1 already exists. Do you really want to backup and overwrite? (Y/n) " response  </dev/tty
   if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
     echo "y"
   else
@@ -44,16 +44,35 @@ function backup() {
   return 0
 }
 
-# @param {stirng} - full path of source
-# @param {stirng} - full path of destination
+# @param {stirng} - full path of source (.gitconfig.template)
+# @param {stirng} - full path of destination (.gitconfig)
 # @return {void}
-function copy_file() {
+function copy_gitconfig() {
   if [[ -f $2 ]]; then
+    # local has_diff=$(diff $1 $2 --ignore-matching-lines "email\s=.*")
     local response=$(show_overprompt_for_overwrite $2)
     [[ ${response} != "y" ]] && return 0
     backup $2
   fi
-  cp --verbose $1 $2 | sed --regexp-extended --expression "s/(^.*$)/✅ newly copied: \1/"
+
+  # .gitconfig 用の email の入力を受け付ける
+  read -rp "Please enter your email for .gitconfig file: " email </dev/tty
+  local success_message=$(cp --verbose $1 $2 | sed --regexp-extended --expression "s/(^.*$)/✅ newly copied: \1/")
+  # .gitconfig の email の箇所を置換
+  sed --in-place --expression "2 s/email.*/email = ${email}/" $2
+  # email = <user's email> の形式になっているかチェック
+  if [[ -z $(cat $2 | grep --extended-regexp "email\s?=\s?${email}$") ]]; then
+    local error_line_number=$(cat $2 | grep --line-number "email" | cut -f 1 -d ":")
+    if [[ error_line_number ]]; then
+      echo "❌ An error occured when inserting email to $2 at line ${error_line_number}: "
+      echo "$(cat $2 | grep "email")"
+    else
+      echo "❌ An error occured when inserting email to $2:"
+      echo "$(cat $2)"
+    fi
+    return 1
+  fi
+  echo $success_message
   increment_file_counter
   return 0
 }
@@ -82,11 +101,9 @@ function symbolic_link() {
     fi
   # ディレクトリが存在する場合再帰的に呼び出す
   elif [[ -d $1 ]] && [[ -d $2 ]]; then
-    # file は full path
-    while read -d ":" file; do
-      symbolic_link ${file} $2/$(basename ${file})
-    # Process Substitution (標準出力を仮のファイルに出力させる感じ)
-    done < <(find $1/ -mindepth 1 -maxdepth 1 -printf "%p:")
+    for file in $(ls "$1/" -a --ignore "." --ignore=".."); do
+      symbolic_link "$1/${file}" "$2/${file}"
+    done
   else
     echo "❌ An error occuered when linking $1 to $2"
     return 1
@@ -106,8 +123,6 @@ function increment_file_counter() {
 
 # @return {void}
 function main() {
-  # .gitconfig 用の email の入力を受け付ける
-  read -rp "Please enter your email for .gitconfig file: " email
   cd $BASE_DIR
 
   # dot で始まる2文字以上のファイル
@@ -121,9 +136,7 @@ function main() {
 
       ".gitconfig.template" )
         gitconfig="${DESTINATION_BASE_DIR}/.gitconfig"
-        copy_file "${current}" "${gitconfig}"
-        # .gitconfig の email の箇所を置換
-        sed --in-place --expression "2 s/email.*/email = ${email}/" "${gitconfig}"
+        copy_gitconfig "${current}" "${gitconfig}"
         ;;
 
       *)
