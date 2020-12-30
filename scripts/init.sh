@@ -125,8 +125,8 @@ function increment_file_counter() {
 function main() {
   cd $BASE_DIR
 
-  # dot で始まる2文字以上のファイル
-  for file in $(ls -a . | grep --extended-regexp "^\.\w{2,}"); do
+  # dot で始まり、.swp を含まない2文字以上のファイル
+  for file in $(ls -a . --ignore "*.swp" | grep --extended-regexp "^\.\w{2,}"); do
     # フルパスで表示させないと ln できない
     local current="${PWD}/${file}"
     case ${file} in
