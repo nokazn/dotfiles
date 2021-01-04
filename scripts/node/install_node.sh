@@ -139,13 +139,20 @@ function install_global_npm_packages() {
   check_command "node"
 
   echo "installing npm packages ..."
-  npm i -g yarn \
-    typescript \
-    ts-node \
-    http-server \
+  npm i -g \
+    @nestjs/cli
     @vue/cli \
+    elm \
+    elm-format \
     eslint \
+    elm-test \
+    http-server \
+    netlify-cli \
     prettier
+    serverless \
+    ts-node \
+    typescript \
+    yarn
 
   # 各パッケージへのパスを通す
   nodenv rehash
