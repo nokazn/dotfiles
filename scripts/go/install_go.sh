@@ -59,7 +59,7 @@ function echo_already_installed_message() {
 # @return {void}
 function install_goenv() {
   local goenv_path=~/.goenv
-  if [[ -d ${goenv_path} ]] && has_command goenv; then
+  if [[ -d ${goenv_path} ]] && has_command "goenv"; then
     echo_already_installed_message "goenv" ${goenv_path}
     return 0
   elif [[ -e ${goenv_path} ]]; then
@@ -71,7 +71,7 @@ function install_goenv() {
   git clone https://github.com/syndbg/goenv.git ~/.goenv
   ~/.goenv/bin/goenv init
   source ~/.bashrc
-  if ! has_command goenv; then
+  if ! has_command "goenv"; then
     echo_fail_message "goenv"  ${nodenv_path}
   fi
   echo_success_message "goenv" ${goenv_path}
@@ -84,7 +84,7 @@ function install_go() {
   check_command "goenv"
 
   # Go の最新版をインストール
-  if has_command go; then
+  if has_command "go"; then
     local go_version=$(go version | sed -e "s/go version go//")
     echo_already_installed_message "Go ${go_version}" "$(which go)"
     return 0
@@ -95,7 +95,7 @@ function install_go() {
   echo "installing Go ${latest_version} (latest version of 1.x) ..."
   goenv install ${latest_version}
   goenv global ${latest_version}
-  if ! has_command go; then
+  if ! has_command "go"; then
     echo_fail_message "Go ${latest_version}"
   fi
   echo_success_message "Go ${latest_version}" "$(which go)"

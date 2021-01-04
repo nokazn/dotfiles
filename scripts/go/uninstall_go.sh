@@ -13,7 +13,7 @@ function has_command() {
 # @param {string} - command
 # @return {0|1}
 function uninstall_go() {
-  if ! has_command goenv; then
+  if ! has_command "goenv"; then
     echo "goenv doesn't exists."
     return 0
   fi
@@ -25,7 +25,7 @@ function uninstall_go() {
 
   local goenv_root=$(goenv root)
   rm -rf ${goenv_root}
-  if has_command gaoenv; then
+  if has_command "goenv"; then
     echo "❌ goenv has been failed to uninstalled from '${goenv_root}'."
     return 1
   fi
