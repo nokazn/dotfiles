@@ -28,7 +28,7 @@ function ls_all() {
 function show_overprompt_for_overwrite() {
   # TODO
   read -rp "warning: $1 already exists. Do you really want to backup and overwrite? (Y/n) " response  </dev/tty
-  if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  if [[ ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
     echo "y"
   else
     decho "🙈 ignored: $1"

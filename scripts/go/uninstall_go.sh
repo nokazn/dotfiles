@@ -14,12 +14,12 @@ function has_command() {
 # @return {0|1}
 function uninstall_go() {
   if ! has_command "goenv"; then
-    echo "goenv doesn't exists."
+    echo "goenv doesn't exist."
     return 0
   fi
 
   read -rp "Do you really want to uninstall goenv? (Y/n) " response
-  if [[ ! $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
     return 0;
   fi
 

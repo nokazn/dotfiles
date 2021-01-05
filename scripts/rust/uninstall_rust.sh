@@ -3,13 +3,20 @@
 set nounset
 set errexit
 
+# @param {string} - command
+# @return {0|1}
+function has_command() {
+  type $1 > /dev/null 2>&1
+  return $?
+}
+
 # @param None
 # @return {void}
 function uninstall_rust() {
-  if ! type "rustup" > /dev/null 2>&1; then
+  if ! has_command "rustup"; then
     echo "❌ Rust ('rustup' command) doesn't exist."
     return 0
-  elif ! type "cargo" > /dev/null 2>&1; then
+  elif ! has_command "cargo"; then
     echo "❌ Rust ('cargo' command) doesn't exist."
     return 0
   fi
