@@ -121,7 +121,7 @@ if [[ -d "${HOME}/.nodenv" ]]; then
     export NODENV_ROOT="${HOME}/.nodenv"
     export PATH="${NODENV_ROOT}/bin:${PATH}"
     # nodenv コマンドが存在する場合
-    if type "nodenv" >/dev/null 2>&1; then
+    if type "nodenv" > /dev/null 2>&1; then
         eval "$(nodenv init -)"
     fi
 fi
@@ -131,7 +131,7 @@ if [ -d "${HOME}/.goenv" ]; then
     export GOENV_ROOT="${HOME}/.goenv"
     export PATH="${GOENV_ROOT}/bin:${PATH}"
     # goenv コマンドが存在する場合
-    if type "goenv" >/dev/null 2>&1; then
+    if type "goenv" > /dev/null 2>&1; then
         eval "$(goenv init -)"
         # GOROOT はよしなに設定してくれる
         export GOPATH="${HOME}/go"
@@ -146,7 +146,7 @@ if [[ -d "${HOME}/.pyenv" ]]; then
     export PYENV_ROOT="${HOME}/.pyenv"
     export PATH="${PYENV_ROOT}/bin:${PATH}"
     # pyenv コマンドが存在する場合
-    if type "pyenv" >/dev/null 2>&1; then
+    if type "pyenv" > /dev/null 2>&1; then
         eval "$(pyenv init -)"
     fi
 fi

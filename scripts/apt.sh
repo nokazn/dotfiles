@@ -6,7 +6,7 @@ set errexit
 # @param none
 # @return {void}
 function run_apt() {
-  if type apt >/dev/null 2>&1; then
+  if type apt > /dev/null 2>&1; then
     echo "❌ apt doesn't exist."
     exit 1
   fi
