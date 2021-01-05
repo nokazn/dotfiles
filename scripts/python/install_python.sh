@@ -57,30 +57,6 @@ function echo_already_installed_message() {
 
 # @param None
 # @return {void}
-function install_build_packages() {
-  sudo apt update
-  sudo apt install --no-install-recommends -y \
-    make \
-    build-essential \
-    libssl-dev \
-    zlib1g-dev \
-    libbz2-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    wget \
-    curl \
-    llvm \
-    libncurses5-dev \
-    xz-utils \
-    tk-dev \
-    libxml2-dev \
-    libxmlsec1-dev \
-    libffi-dev \
-    liblzma-dev
-}
-
-# @param None
-# @return {void}
 function install_pyenv() {
   local pyenv_path=~/.pyenv
   if [[ -d ${pyenv_path} ]]; then
@@ -105,6 +81,35 @@ function install_pyenv() {
 
 # @param None
 # @return {void}
+function install_build_packages() {
+  # python がインストール済みの場合は不要
+  if has_command "python" ; then
+    return 0;
+  fi
+
+  sudo apt update
+  sudo apt install --no-install-recommends -y \
+    make \
+    build-essential \
+    libssl-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    wget \
+    curl \
+    llvm \
+    libncurses5-dev \
+    xz-utils \
+    tk-dev \
+    libxml2-dev \
+    libxmlsec1-dev \
+    libffi-dev \
+    liblzma-dev
+}
+
+# @param None
+# @return {void}
 function install_python() {
   check_command "pyenv"
 
@@ -125,7 +130,23 @@ function install_python() {
   return 0
 }
 
+# @param None
+# @return {void}
+function install_pip_packages() {
+  check_command "python"
+  check_command "pip"
+
+  echo "installing pip packages ..."
+  pip install --user \
+    pipenv
+
+  # 各パッケージへのパスを通す
+  pyenv rehash
+  echo_success_message "A set of pip packages"
+}
+
 install_pyenv
 install_build_packages
 install_python
+install_pip_packages
 exit 0
