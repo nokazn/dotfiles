@@ -91,8 +91,8 @@ function install_go() {
   fi
 
   # 1.x.x の最新バージョンをインストールする
-  local latest_version=$(goenv install -l | grep -E "^\s+1(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
-  echo "installing Go ${latest_version} (latest version of 1.x) ..."
+  local latest_version=$(goenv install -l | grep -E "^\s*1(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
+  echo "installing Go ${latest_version} (latest version of the major release) ..."
   goenv install ${latest_version}
   goenv global ${latest_version}
   if ! has_command "go"; then

@@ -120,8 +120,8 @@ function install_node() {
     local node_version=$(node --version)
     echo_already_installed_message "Node.js ${node_version}" "$(which node)"
   else
-    local latest_version=$(nodenv install -l | grep -E "^[1-9][0-9](\.[0-9]{1,2}){2}" | tail -n 1)
-    echo "installing Node.js ${latest_version} (latest version) ..."
+    local latest_version=$(nodenv install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
+    echo "installing Node.js ${latest_version} (latest version of the major release) ..."
     nodenv install ${latest_version}
     nodenv global ${latest_version}
     if ! has_command node; then
