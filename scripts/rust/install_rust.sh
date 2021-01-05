@@ -3,6 +3,8 @@
 set nounset
 set errexit
 
+# @param None
+# @return {void}
 function install_rust() {
   echo "installing Rust ..."
   # TODO: expect コマンドで自動化

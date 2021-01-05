@@ -93,7 +93,7 @@ function install_nodenv() {
   git clone https://github.com/nodenv/nodenv.git ${nodenv_path}
   cd ${nodenv_path} && src/configure && make -C src
   ~/.nodenv/bin/nodenv init
-  source ~/.bashrc
+  source ~/.bash_profile
   if ! has_command nodenv; then
     echo_fail_message "nodenv" ${nodenv_path}
   fi

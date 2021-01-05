@@ -70,7 +70,7 @@ function install_goenv() {
   echo "installing goenv ..."
   git clone https://github.com/syndbg/goenv.git ~/.goenv
   ~/.goenv/bin/goenv init
-  source ~/.bashrc
+  source ~/.bash_profile
   if ! has_command "goenv"; then
     echo_fail_message "goenv"  ${nodenv_path}
   fi

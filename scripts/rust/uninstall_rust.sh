@@ -3,6 +3,8 @@
 set nounset
 set errexit
 
+# @param None
+# @return {void}
 function uninstall_rust() {
   if ! type "rustup" > /dev/null 2>&1; then
     echo "❌ Rust ('rustup' command) doesn't exist."
