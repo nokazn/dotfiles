@@ -9,24 +9,14 @@
 #umask 022
 
 # if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+
+# MacOS では動作しない
+default_shell=$(grep $USER /etc/passwd | cut --delimiter ":" -f 7)
+
+# 正規表現はクォートしたら動かない
+if [[ ! ${default_shell} =~ bash ]] && [[ -n $BASH_VERSION ]]; then
+    # include .bash_profile if it exists and isn't the default shell.
+    if [[ -f "$HOME/.bash_profile" ]]; then
+        source "$HOME/.bash_profile"
     fi
-
-    # include .bash_profile if it exists
-    if [ -f "$HOME/.bash_profile" ]; then
-    source "$HOME/.bash_profile"
-    fi
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
 fi

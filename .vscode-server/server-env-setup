@@ -1,5 +1,3 @@
 # vscode-go で環境変数を認識させるため
 # https://code.visualstudio.com/docs/remote/wsl#_advanced-environment-setup-script
-source ~/.profile
 source ~/.bash_profile
-source ~/.bashrc
