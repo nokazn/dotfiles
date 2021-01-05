@@ -133,8 +133,8 @@ function install_python() {
 # @param None
 # @return {void}
 function install_pip_packages() {
-  check_command "python"
   check_command "pip"
+  check_command "pyenv"
 
   echo "installing pip packages ..."
   pip install --user \
