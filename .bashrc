@@ -125,4 +125,3 @@ if [[ -f ${START_VCXSRV_PATH} ]]; then
 else
     echo "⚠ file 'start_vcxsrv' doesn't exist at ${START_VCXSRV_PATH}" >&2
 fi
-source "$HOME/.cargo/env"
