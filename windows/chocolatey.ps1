@@ -12,7 +12,6 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
 
 choco install -y googlechrome `
 firefox `
-brave `
 visualstudiocode `
 git `
 vcxsrf `
@@ -25,6 +24,7 @@ discord `
 typora `
 boostnote `
 keepass `
+keepassxc `
 googledrive `
 everything `
 fastcopy `
