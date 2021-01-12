@@ -3,6 +3,12 @@
 	name = nokazn
 [core]
 	editor = vim
+	repositoryformatversion=0
+	eol=lf
+	autocrlf=input
+	filemode=true
+	bare=false
+	logallrefupdates=true
 [github]
 	user = nokazn
 [merge]
