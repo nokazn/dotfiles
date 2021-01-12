@@ -15,10 +15,12 @@ firefox `
 visualstudiocode `
 git `
 vcxsrf `
+# うまくセットアップできない
 # docker-desktop `
 pgadmin4
 postman `
 adobereader `
+thunderbird `
 keybase `
 discord `
 typora `
