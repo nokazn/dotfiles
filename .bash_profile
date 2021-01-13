@@ -12,8 +12,14 @@ if [[ -d "$HOME/bin" ]]; then
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
+if [[ -d "$HOME/.local/bin" ]]; then
     export PATH="$HOME/.local/bin:$PATH"
+fi
+
+if (type wsl.exe > /dev/null 2>&1) && (uname -r | grep "microsoft" > /dev/null); then
+    # WSL 環境下では時刻がずれる場合があるのでハードウェアと合わせておく
+    # https://github.com/microsoft/WSL/issues/5324
+    sudo hwclock -s
 fi
 
 # nodenv
