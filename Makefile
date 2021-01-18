@@ -13,16 +13,16 @@ install-node install-go install-python install-rust: # Install each language and
 	@echo
 	@echo "          (*)"
 	@echo "       γ‘´⌒ \`ヽ  ｷ―――ﾝ"
-	@echo "      {########}          run a script to install $(lang) at '$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh'"
+	@echo "      {########}"
 	@echo "      (・ω・｀ )  Л"
 	@echo "  ／‾‾<Γ‾‾‾‾二二ニ] ≡=-💨"
 	@echo "  ‾‾‾‾‾‾＼_ ＼"
 	@echo
-	@$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh
+	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh
 
 uninstall: $(addprefix uninstall-,$(LANGS)); # Uninstall all languages.
 
-# $(addprefix uninstall-,$(LANGS)):
+# $(addprefix uninstall-,$(LANGS)): # Uninstall each language and its packages.
 uninstall-node uninstall-go uninstall-python uninstall-rust: # Uninstall each language and its packages.
 	$(eval lang=$(subst uninstall-,,$@))
 	@echo
@@ -30,15 +30,36 @@ uninstall-node uninstall-go uninstall-python uninstall-rust: # Uninstall each la
 	@echo "       γ‘´⌒ \`ヽ  ｸﾞｯﾊﾞｲ"
 	@echo "      {########}"
 	@echo "  “ (\`(´・ω・｀)"
-	@echo "     \`(ΞΞΞ：ΞΞΞ)    run a script to install $(lang) at '$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh'"
+	@echo "     \`(ΞΞΞ：ΞΞΞ)"
 	@echo
-	@$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh
+	$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh
+
+update: update-apt update-npm update-rust; # Update all packages.
+
+update-apt: # Update apt packages.
+	sudo apt update && sudo apt upgrade
+
+update-npm: # Update global npm packages.
+	npm update -g
+
+update-go: install-go;# Update global npm packages.
+
+update-rust: # Update rust packages.
+	cargo install-update -a
 
 deploy: # Make symbolic links to dotfiles and back up original files if exists.
-	@$(SCRIPTS_DIR)/deploy.sh
+	$(SCRIPTS_DIR)/deploy.sh
 
 clean: # Restore backed-up files of dotfiles.
-	@$(SCRIPTS_DIR)/restore.sh
+	$(SCRIPTS_DIR)/restore.sh
+
+test-path: # Print paths.
+	@echo "PATH: "
+	@echo $$PATH | sed -E -e "s/:/\n/g" | sed -e "s/^/  /"
+	@echo "GOROOT: "
+	@echo "  " $$GOROOT
+	@echo "GOPATH: "
+	@echo "  " $$GOPATH
 
 help: # Show all commands.
 	@echo "📗 Displays help information for make commands."
