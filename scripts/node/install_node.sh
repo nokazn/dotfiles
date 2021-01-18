@@ -146,6 +146,7 @@ function install_global_npm_packages() {
     elm-format \
     eslint \
     elm-test \
+    firebase-tools \
     http-server \
     netlify-cli \
     prettier
