@@ -48,6 +48,11 @@ function restore() {
 function main() {
   cd ${BASE_DIR}
 
+  read -rp "Do you really want to restore backups? (Y/n) " response
+  if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    return 0;
+  fi
+
   for file in $(ls_all ${BACKUP_BASE_DIR}/ | grep --extended-regexp "^\.\w{2,}");do
     restore "${BACKUP_BASE_DIR}/${file}" "${DESTINATION_BASE_DIR}/${file}"
   done
