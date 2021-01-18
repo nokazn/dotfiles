@@ -8,7 +8,7 @@ set errexit
 function install_rust() {
   echo "installing Rust ..."
   # TODO: expect コマンドで自動化
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh "1"
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   if [[ $? -gt 0 ]]; then
     echo "❌ Rust has been failed to install."
     return 1
