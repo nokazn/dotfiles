@@ -127,7 +127,11 @@ else
 fi
 
 # パスが設定されてなければ設定する
-if [[ ! ${PATH_SET_CORRECTLY} == true ]] && [[ -f "$HOME/.path.sh" ]]; then
-    source "$HOME/.path.sh"
-    export PATH_SET_CORRECTLY=true
+if [[ ! ${PATH_SET_CORRECTLY} == true ]]; then
+    if [[ -f "$HOME/.path.sh" ]]; then
+        source "$HOME/.path.sh"
+        export PATH_SET_CORRECTLY=true
+    else
+        echo "⚠ .path.sh doesn't exist"
+    fi
 fi

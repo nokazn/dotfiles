@@ -140,7 +140,7 @@ function install_global_npm_packages() {
 
   echo "installing npm packages ..."
   npm i -g \
-    @nestjs/cli
+    @nestjs/cli \
     @vue/cli \
     elm \
     elm-format \
@@ -149,10 +149,11 @@ function install_global_npm_packages() {
     firebase-tools \
     http-server \
     netlify-cli \
-    prettier
+    prettier \
     serverless \
     ts-node \
     typescript \
+    vue \
     yarn
 
   # 各パッケージへのパスを通す
