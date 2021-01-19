@@ -152,16 +152,34 @@ test-path: # Print paths.
 	@echo "GOPATH:"
 	@echo "  " $$GOPATH
 
+apt-list: # Show a list of installed apt packages.
+	sudo apt list --installed | more
+
 HISTORY_LOG := /var/log/apt/history.log
-apt-list:
-	@echo "List of installed apt packages from '/var/log/apt/history.log'"
+apt-history:
+# tee でプロセス置換して、+ (緑) の場合と - (赤) の場合で色を分け、標準出力を捨てる
+# プロセス置換内の標準出力がなされるまでシェルを待たせるために cat に渡している
+	@cat /var/log/apt/history.log \
+		| grep -e "install" -e "remove" \
+		| sed -E -e "s/^.*apt(-get)?(\s--?\S+)*\s(install|remove)(\s--?\S+)*\s/\3:/" \
+		| sed -E -e "s/(^|\s)--?\S+//g" -e "s/install:/+ /" -e "s/remove:/- /" \
+		| tee >(xargs -I "{}" bash -c "[[ \"{}\" =~ ^\+ ]] && printf \"\033[32m{}\033[0m\n\"") \
+      >(xargs -I "{}" bash -c "[[ \"{}\" =~ ^- ]] && printf \"\033[31m{}\033[0m\n\"") \
+			> /dev/null \
+		| cat
+
+apt-history-installed:
+	@echo "List of apt packages you have ever installed. (from '/var/log/apt/history.log')"
 # ...apt|apt-get [options] install [options] を削除 -> 行中の options を削除 -> パッケージごとに改行
-	@cat $(HISTORY_LOG) \
+	@apt_list=$$(sudo apt list --installed); cat $(HISTORY_LOG) \
 		| grep install \
 		| sed -E -e "s/^.*apt(-get)?(\s--?\S+)*\sinstall(\s--?\S+)*\s//" \
-		| sed -E -e "s/(^|\s)--?\S+/\1/g" -e "s/(\S)\s+(\S)/\1\n\2/g" \
-		| sed -E -e "s/^/  - /g" \
+		| sed -E -e "s/(^|\s)--?\S+//g" -e "s/(\S)\s+(\S)/\1\n\2/g" \
 		| sort \
+		| uniq \
+		| xargs -I {} sh -c "echo \"$${apt_list}\" | grep -e '{}/'" \
+		| column -t -s " " \
+		| sed -E -e "s/^/  /g"
 
 npm-list: # List of installed npm packages.
 	npm list --depth=0 -g
@@ -192,5 +210,5 @@ help: # Show all commands.
 	@grep -E '^[a-zA-Z]\S+(\s\S+)*:.*' ./Makefile \
 		| sed --regexp-extended -e "s/:/:\n/" \
 		| sed --regexp-extended -e "/:/ s/\s/, /g; s/^.*#+\s*(.+)$$/\1/" \
-		| sed --regexp-extended -e "N; s/:\n/:/g; s/^/  - /" \
+		| sed --regexp-extended -e "N" -e "s/:\n/:/g;" -e "s/^/  /" \
 		| column -s ":" -t
