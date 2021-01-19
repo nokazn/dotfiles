@@ -36,7 +36,11 @@
 	a = add . && add -u && status -s
 	c = commit
 	cm = commit -m
+	# alias br のエラーを抑制
 	ps = !git push origin $(br >/dev/null 2>&1)
+	# alias br のエラーを抑制
+	pl = !git pull origin $(br >/dev/null 2>&1)
 	amend = !git commit -m \"$(git log --format="%s" -n 1)\" --amend
+	exact-amend = !git commit -m \"$(git log --format="%s" -n 1)\" --date="$(git log --format="%cd" -n 1)" --amend
 	reamend = reset --soft HEAD@{1}
 
