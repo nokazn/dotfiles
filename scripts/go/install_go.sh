@@ -3,6 +3,8 @@
 set nounset
 set errexit
 
+readonly PATH_SCRIPT=~/.path.sh
+
 # @param {string} - command
 # @return {0|1}
 function has_command() {
@@ -70,7 +72,7 @@ function install_goenv() {
   echo "installing goenv ..."
   git clone https://github.com/syndbg/goenv.git ~/.goenv
   ~/.goenv/bin/goenv init
-  source ~/.bash_profile
+  source ${PATH_SCRIPT}
   if ! has_command "goenv"; then
     echo_fail_message "goenv"  ${nodenv_path}
   fi
@@ -102,23 +104,5 @@ function install_go() {
   return 0
 }
 
-# @param None
-# @return {void}
-function run_go_get() {
-  check_command "goenv"
-  check_command "go"
-
-  echo "installing go packages ..."
-  go get -u github.com/motemen/ghq
-  go get -u golang.org/x/tools/gopls
-
-  # 各パッケージへのパスを通す
-  goenv rehash
-  echo_success_message "A set of go packages"
-  return 0
-}
-
 install_goenv
 install_go
-run_go_get
-exit 0

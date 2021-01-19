@@ -3,6 +3,8 @@
 set nounset
 set errexit
 
+readonly PATH_SCRIPT=~/.path.sh
+
 # @param {string} - command
 # @return {0|1}
 function has_command() {
@@ -93,7 +95,7 @@ function install_nodenv() {
   git clone https://github.com/nodenv/nodenv.git ${nodenv_path}
   cd ${nodenv_path} && src/configure && make -C src
   ~/.nodenv/bin/nodenv init
-  source ~/.bash_profile
+  source ${PATH_SCRIPT}
   if ! has_command nodenv; then
     echo_fail_message "nodenv" ${nodenv_path}
   fi
@@ -124,7 +126,7 @@ function install_node() {
     echo "installing Node.js ${latest_version} (latest version of the major release) ..."
     nodenv install ${latest_version}
     nodenv global ${latest_version}
-    if ! has_command node; then
+    if ! has_command "node" | ! has_command "npm" ; then
       echo_fail_message "❌ Node.js ${latest_version}"
     fi
     echo_success_message "Node.js ${latest_version}" "$(which node)"
@@ -132,38 +134,6 @@ function install_node() {
   return 0
 }
 
-# @param None
-# @return {void}
-function install_global_npm_packages() {
-  check_command "nodenv"
-  check_command "node"
-
-  echo "installing npm packages ..."
-  npm i -g \
-    @nestjs/cli \
-    @vue/cli \
-    elm \
-    elm-format \
-    eslint \
-    elm-test \
-    firebase-tools \
-    http-server \
-    netlify-cli \
-    prettier \
-    serverless \
-    ts-node \
-    typescript \
-    vue \
-    yarn
-
-  # 各パッケージへのパスを通す
-  nodenv rehash
-  echo_success_message "A set of npm packages"
-  return 0
-}
-
 install_nodenv
 install_nodenv_plugins
 install_node
-install_global_npm_packages
-exit 0
