@@ -126,7 +126,7 @@ function install_node() {
     echo "installing Node.js ${latest_version} (latest version of the major release) ..."
     nodenv install ${latest_version}
     nodenv global ${latest_version}
-    if ! has_command "node" | ! has_command "npm" ; then
+    if ! has_command "node" || ! has_command "npm" ; then
       echo_fail_message "❌ Node.js ${latest_version}"
     fi
     echo_success_message "Node.js ${latest_version}" "$(which node)"
