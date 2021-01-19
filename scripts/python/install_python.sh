@@ -3,6 +3,8 @@
 set nounset
 set errexit
 
+readonly PATH_SCRIPT=~/.path.sh
+
 # @param {string} - command
 # @return {0|1}
 function has_command() {
@@ -71,7 +73,7 @@ function install_pyenv() {
   git clone https://github.com/pyenv/pyenv.git ~/.pyenv
   cd ~/.pyenv && src/configure && make -C src
   ~/.pyenv/bin/pyenv init
-  source ~/.bash_profile
+  source ${PATH_SCRIPT}
   if ! has_command "pyenv" ${pyenv_path}; then
     echo_fail_message "pyenv" ${pyenv_path}
   fi
@@ -87,6 +89,7 @@ function install_build_packages() {
     return 0;
   fi
 
+  # TODO: Makefile でやる
   sudo apt update
   sudo apt install --no-install-recommends -y \
     make \
@@ -123,30 +126,13 @@ function install_python() {
   echo "installing Python the ${latest_version} (latest version of the major release) ..."
   pyenv install ${latest_version}
   pyenv global ${latest_version}
-  if ! has_command "python"; then
+  if ! has_command "python" || ! has_command "pip"; then
     echo_fail_message "Python ${latest_version}"
   fi
   echo_success_message "Python ${latest_version}" "$(which python)"
   return 0
 }
 
-# @param None
-# @return {void}
-function install_pip_packages() {
-  check_command "pip"
-  check_command "pyenv"
-
-  echo "installing pip packages ..."
-  pip install --user \
-    pipenv
-
-  # 各パッケージへのパスを通す
-  pyenv rehash
-  echo_success_message "A set of pip packages"
-}
-
 install_pyenv
 install_build_packages
 install_python
-install_pip_packages
-exit 0

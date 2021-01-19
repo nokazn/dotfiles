@@ -61,3 +61,5 @@ if [[ -d ${SDKMAN_DIR} ]]; then
     export SDKMAN_DIR="${SDKMAN_DIR}"
     [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 fi
+
+# exit 0 とするとプロセスが終了し、source コマンドが反映されない

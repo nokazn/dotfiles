@@ -3,6 +3,26 @@
 set nounset
 set errexit
 
+readonly PATH_SCRIPT=~/.path.sh
+
+# @param {string} - command
+# @return {0|1}
+function has_command() {
+  type $1 > /dev/null 2>&1
+  return $?
+}
+
+# @param {string} - command
+# @param {string} - command
+# @return {void}
+function check_command() {
+  if ! has_command $1; then
+    echo "❌ command '$1' doesn't exist. Probably the command isn't installed correctly."
+    exit 1
+  fi
+  return 0
+}
+
 # @param None
 # @return {void}
 function install_rust() {
@@ -13,6 +33,10 @@ function install_rust() {
     echo "❌ Rust has been failed to install."
     return 1
   fi
+  source ${PATH_SCRIPT}
+  check_command "cargo"
+  check_command "rustup"
+
   # cargo のパスから /bin/cargo を除く
   local cargo_path=$(which cargo | sed -e "s/\/bin\/cargo//")
   local rustup_path=$(rustup show home)
@@ -21,4 +45,3 @@ function install_rust() {
 }
 
 install_rust
-exit $?
