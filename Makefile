@@ -1,6 +1,7 @@
 SHELL := /bin/bash
-SCRIPTS_DIR := ./scripts
 MAKEFILE := ./Makefile
+SCRIPTS_DIR := ./scripts
+PATH_FILE := ~/.path.sh
 LANGS := node go python rust
 .DEFAULT_GOAL := help
 
@@ -13,21 +14,32 @@ init: install packaes deploy; # Install all languages and their packages.
 
 # ------------------------------ install ------------------------------
 
-install: $(addprefix install-,$(LANGS)); # Install all languages.
+install: install-nix $(addprefix install-,$(LANGS)); # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
 
-# $(addprefix install-,$(LANGS)): # Install each language and its packages.
-install-node install-go install-python install-rust: _print-airplane # Install each language and its packages.
+install-nix: _print-airplane # Install nix.
+	@if type "nix-env" > /dev/null 2>&1; then \
+		echo "✅ nix is already installed."; \
+	else \
+		curl -L https://nixos.org/nix/install | sh; \
+		source $(PATH_FILE); \
+		echo "✅ nix has been installed successfully!"; \
+	fi
+
+install-node install-go install-python install-rust: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
 
 
-uninstall: uninstall-nix $(addprefix uninstall-,$(LANGS)); # Uninstall all languages.
+uninstall: uninstall-nix $(addprefix uninstall-,$(LANGS)); # Uninstall all languages and tools. (runs scripts starting with 'unintall-' prefix.)
 
-# $(addprefix uninstall-,$(LANGS)): # Uninstall each language and its packages.
-uninstall-node uninstall-go uninstall-python uninstall-rust: _print-goodbye # Uninstall each language and its packages.
+uninstall-node uninstall-go uninstall-python uninstall-rust: _print-goodbye # Uninstall each language.
 	$(eval lang=$(subst uninstall-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh;
 
+uninstall-nix: _print-goodbye # Uninstall nix.
+	sudo rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
+	sudo rm -rf /nix
+	@echo "✅ nix has been uninstalled successfully!"
 
 # ------------------------------ packages ------------------------------
 
@@ -61,6 +73,12 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
     libxmlsec1-dev \
     libffi-dev \
     liblzma-dev
+
+packages-nix: # Install nix packages.
+	nix-env --install vim \
+		sl \
+		neofetch \
+		heroku
 
 packages-npm: ;
 # TODO: vue の next が stable になったら @next を外す
