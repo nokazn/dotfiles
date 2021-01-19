@@ -56,23 +56,23 @@ packages-apt: packages-apt-for-pyenv # Install apt packages.
 
 packages-apt-for-pyenv: # Install apt packages for building pyenv.
 	sudo apt install --no-install-recommends -y \
-    make \
-    build-essential \
-    libssl-dev \
-    zlib1g-dev \
-    libbz2-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    wget \
-    curl \
-    llvm \
-    libncurses5-dev \
-    xz-utils \
-    tk-dev \
-    libxml2-dev \
-    libxmlsec1-dev \
-    libffi-dev \
-    liblzma-dev
+		make \
+		build-essential \
+		libssl-dev \
+		zlib1g-dev \
+		libbz2-dev \
+		libreadline-dev \
+		libsqlite3-dev \
+		wget \
+		curl \
+		llvm \
+		libncurses5-dev \
+		xz-utils \
+		tk-dev \
+		libxml2-dev \
+		libxmlsec1-dev \
+		libffi-dev \
+		liblzma-dev
 
 packages-nix: # Install nix packages.
 	nix-env --install vim \
@@ -83,33 +83,33 @@ packages-nix: # Install nix packages.
 packages-npm: ;
 # TODO: vue の next が stable になったら @next を外す
 	npm i -g \
-    @nestjs/cli \
+		@nestjs/cli \
 		@octokit/core \
-    @vue/cli@next \
-    elm \
-    elm-format \
-    eslint \
-    elm-test \
-    firebase-tools \
-    http-server \
-    netlify-cli \
-    prettier \
-    serverless \
-    ts-node \
-    typescript \
-    vue@next \
+		@vue/cli@next \
+		elm \
+		elm-format \
+		eslint \
+		elm-test \
+		firebase-tools \
+		http-server \
+		netlify-cli \
+		prettier \
+		serverless \
+		ts-node \
+		typescript \
+		vue@next \
 		yarn;
 	nodenv rehash
 
 packages-go: # Install Go packages.
 	go get -u -v github.com/motemen/ghq; \
-  go get -u -v golang.org/x/tools/gopls; \
+	go get -u -v golang.org/x/tools/gopls; \
 	go get -u -v golang.org/x/tools/cmd/goimports;
 	goenv rehash
 
 packages-pip: # Install pip packages.
 	pip install --user \
-    pipenv;
+		pipenv;
 	pyenv rehash
 
 # ------------------------------ update ------------------------------
@@ -135,6 +135,10 @@ update-pip: # Update pip packages.
 
 deploy: # Make symbolic links to dotfiles and back up original files if exists.
 	$(SCRIPTS_DIR)/deploy.sh
+
+# TODO: 別のスクリプトに分ける
+deploy-gitconfig: # Copy .gitconfig.
+	cp ./.gitconfig ~/.gitconfig
 
 restore: # Restore backed-up files of dotfiles.
 	$(SCRIPTS_DIR)/restore.sh
@@ -164,7 +168,7 @@ apt-history:
 		| sed -E -e "s/^.*apt(-get)?(\s--?\S+)*\s(install|remove)(\s--?\S+)*\s/\3:/" \
 		| sed -E -e "s/(^|\s)--?\S+//g" -e "s/install:/+ /" -e "s/remove:/- /" \
 		| tee >(xargs -I "{}" bash -c "[[ \"{}\" =~ ^\+ ]] && printf \"\033[32m{}\033[0m\n\"") \
-      >(xargs -I "{}" bash -c "[[ \"{}\" =~ ^- ]] && printf \"\033[31m{}\033[0m\n\"") \
+			>(xargs -I "{}" bash -c "[[ \"{}\" =~ ^- ]] && printf \"\033[31m{}\033[0m\n\"") \
 			> /dev/null \
 		| cat
 
