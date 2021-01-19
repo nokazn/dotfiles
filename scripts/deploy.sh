@@ -61,8 +61,8 @@ function backup() {
   return 0
 }
 
-# @param {stirng} - full path of source (.gitconfig.template)
-# @param {stirng} - full path of destination (.gitconfig)
+# @param {stirng} - full path of source
+# @param {stirng} - full path of destination
 # @return {void}
 function copy_gitconfig() {
   if [[ -f $2 ]]; then
@@ -142,13 +142,12 @@ function main() {
         continue
         ;;
 
-      ".gitconfig.template" )
+      ".gitconfig" )
         copy_gitconfig "${current}" "${DESTINATION_BASE_DIR}/.gitconfig"
         ;;
 
       *)
-        destination="${DESTINATION_BASE_DIR}/${file}"
-        symbolic_link "${current}" "${destination}"
+        symbolic_link "${current}" "${DESTINATION_BASE_DIR}/${file}"
         ;;
     esac
   done
