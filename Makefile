@@ -131,12 +131,12 @@ update-pip: # Update pip packages.
 	pip install --upgrade pip
 	pip list --user | tail -n +3 | cut -d " " -f 1 | xargs pip install --user --upgrade
 
-# ------------------------------ deploy & clean dotfiles ------------------------------
+# ------------------------------ deploy & restore dotfiles ------------------------------
 
 deploy: # Make symbolic links to dotfiles and back up original files if exists.
 	$(SCRIPTS_DIR)/deploy.sh
 
-clean: # Restore backed-up files of dotfiles.
+restore: # Restore backed-up files of dotfiles.
 	$(SCRIPTS_DIR)/restore.sh
 
 
