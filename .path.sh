@@ -62,4 +62,9 @@ if [[ -d ${SDKMAN_DIR} ]]; then
     [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 fi
 
+# added by Nix installer
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+    . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+fi
+
 # exit 0 とするとプロセスが終了し、source コマンドが反映されない
