@@ -63,10 +63,11 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
     liblzma-dev
 
 packages-npm: ;
+# TODO: vue の next が stable になったら @next を外す
 	npm i -g \
     @nestjs/cli \
 		@octokit/core \
-    @vue/cli \
+    @vue/cli@next \
     elm \
     elm-format \
     eslint \
@@ -78,7 +79,7 @@ packages-npm: ;
     serverless \
     ts-node \
     typescript \
-    vue \
+    vue@next \
 		yarn;
 	nodenv rehash
 
@@ -143,7 +144,9 @@ apt-list:
 		| sed -E -e "s/(^|\s)--?\S+/\1/g" -e "s/(\S)\s+(\S)/\1\n\2/g" \
 		| sed -E -e "s/^/  - /g" \
 		| sort \
-		| uniq;
+
+npm-list: # List of installed npm packages.
+	npm list --depth=0 -g
 
 _print-airplane:
 	@echo
