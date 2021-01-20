@@ -11,7 +11,7 @@ file_counter=0
 # @param {string} - directory path
 # @return {void}
 function ls_all() {
-  ls $1 -a --ignore "." --ignore ".." --ignore "*.swp"
+  ls $1 --almost-all --ignore "." --ignore ".." --ignore "*.swp"
   return 0
 }
 
