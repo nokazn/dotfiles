@@ -27,6 +27,8 @@
 	d = diff
 	dc = diff --cached
 	dl = diff --stat
+	dlc = diff --stat --cached
+	dcl = diff --stat --cached
 	d1 = diff HEAD~1
 	d2 = diff HEAD~2
 	d3 = diff HEAD~3
