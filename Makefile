@@ -88,6 +88,7 @@ packages-npm: ;
 		@vue/cli@next \
 		elm \
 		elm-format \
+		envinfo \
 		eslint \
 		elm-test \
 		firebase-tools \
