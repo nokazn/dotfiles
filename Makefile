@@ -103,6 +103,7 @@ packages-npm: ;
 
 packages-go: # Install Go packages.
 	go get -u -v github.com/motemen/ghq; \
+	go get -u -v github.com/motemen/gore; \
 	go get -u -v golang.org/x/tools/gopls; \
 	go get -u -v golang.org/x/tools/cmd/goimports;
 	goenv rehash
