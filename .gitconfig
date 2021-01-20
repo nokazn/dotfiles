@@ -16,24 +16,26 @@
 [pull]
 	ff = only
 	rebase = true
+[pretty]
+	default = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white)%s%Creset %C(blue)- [%an] %C(cyan)(%cr)%Creset"
+	bold = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white bold)%s%Creset %C(blue)- %an %C(cyan)(%cr)%Creset"
 [alias]
 	alias = config --get-regexp alias.*
-	s = status
-	ss = status -s
-	lg = log --graph --branches --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(green)- %an, %cr%Creset'
-	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
-	ls = log --oneline -n 10
-	b = branch
+	br = branch
 	ch = checkout
 	chb = checkout -b
 	d = diff
 	dc = diff --cached
+	dl = diff --stat
 	d1 = diff HEAD~1
 	d2 = diff HEAD~2
 	d3 = diff HEAD~3
 	d4 = diff HEAD~4
 	d5 = diff HEAD~5
-	a = add . && add -u && status -s
+	s = status --show-stash
+	ss = status --show-stash -s
+	a = add
+	aa = !git add -u && git add . && git status --show-stash
 	c = commit
 	cm = commit -m
 	# alias br のエラーを抑制
@@ -43,4 +45,15 @@
 	amend = !git commit -m \"$(git log --format="%s" -n 1)\" --amend
 	exact-amend = !git commit -m \"$(git log --format="%s" -n 1)\" --date="$(git log --format="%cd" -n 1)" --amend
 	reamend = reset --soft HEAD@{1}
-
+	l = log --stat --pretty=bold
+	# --oneline option
+	ls = log --oneline --pretty=default
+	ls1 = log --oneline --pretty=default -n 1
+	ls2 = log --oneline --pretty=default -n 2
+	ls3 = log --oneline --pretty=default -n 3
+	# name status
+	ln = log --name-status --pretty=bold
+	# line number status
+	ll = log --numstat --decorate --pretty=bold
+	# graph
+	lg = log --graph --branches --pretty=default
