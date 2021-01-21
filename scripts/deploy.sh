@@ -89,9 +89,13 @@ function make_backup() {
 
 # 同名のファイルが存在し、バックアップがなければ実行
   if [[ -f $1 ]] && [[ ! -e ${backup_file} ]]; then
+    if [[ ${DEBUG} -eq 0 ]]; then
+      echo "[debug] ✔ backed up: $1 -> ${backup_file}"
+      return 0;
+    fi
     # バックアップ用のディレクトリがなければ作成
     [[ ! -d ${backup_dir} ]] && mkdir -p "${backup_dir}"
-    cp --verbose $1 "${backup_file}" | prepend_message "✔ backuped: "
+    cp --verbose $1 "${backup_file}" | prepend_message "✔ backed up: "
   fi
   return 0
 }
@@ -109,6 +113,12 @@ function copy_gitconfig() {
 
   # .gitconfig 用の email の入力を tty から受け付ける
   read -rp "Please enter your email for .gitconfig file: " email </dev/tty
+
+  if [[ ${DEBUG} -eq 0 ]]; then
+    echo "[debug] ✅ newly copied: $1 -> $2"
+    return 0;
+  fi
+
   local success_message=$(cp --verbose $1 $2 | prepend_message "✅ newly copied: ")
   # .gitconfig の email の箇所を置換
   sed --in-place -e "2 s/email.*/email = ${email}/" $2
@@ -130,6 +140,18 @@ function copy_gitconfig() {
   return 0
 }
 
+# @param {string} - source file path (always exists)
+# @param {string} - destination file path
+# @return {void}
+function newly_link() {
+  if [[ ${DEBUG} -eq 0 ]]; then
+    echo "[debug] ✅ newly linked: : $1 -> $2"
+    return 0;
+  fi
+  ln --symbolic --verbose --force $1 $2 | prepend_message "✅ newly linked: "
+  increment_file_counter
+}
+
 # @param {string} - source file path
 # @param {string} - destination file path
 # @param {stirng} - destination directory for back-up path
@@ -140,17 +162,9 @@ function make_symbolic_link() {
     echo "📌 already linked: $2"
     return 0
   elif [[ ! -e $1 ]]; then
-    echo "❌ invalid source file path."
+    echo "❌ invalid source file path: " $1
     exit 1
   fi
-
-  # @param {string} - source file path (always exists)
-  # @param {string} - destination file path
-  # @return {void}
-  function newly_link() {
-    ln --symbolic --verbose --force $1 $2 | prepend_message "✅ newly linked: "
-    increment_file_counter
-  }
 
   if [[ ! -e $2 ]]; then
     newly_link $1 $2
@@ -208,9 +222,11 @@ function deploy() {
 # @param - none
 # @return {void}
 function main() {
-  read -rp "Do you really want to deploy dotfiles? (Y/n) " response
-  if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    return 0;
+  if [[ ! ${DEBUG} -eq 0 ]]; then
+    read -rp "Do you really want to deploy dotfiles? (Y/n) " response
+    if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
+      return 0;
+    fi
   fi
 
   deploy . ${DESTINATION_BASE_DIR} ${BACKUP_BASE_DIR}
