@@ -230,7 +230,8 @@ function main() {
   fi
 
   deploy . ${DESTINATION_BASE_DIR} ${BACKUP_BASE_DIR}
-  deploy ./windows ${DESTINATION_BASE_DIR_FOR_WINDOWS} ${BACKUP_BASE_DIR_FOR_WINDOWS}
+  # TODO:
+  # deploy ./windows ${DESTINATION_BASE_DIR_FOR_WINDOWS} ${BACKUP_BASE_DIR_FOR_WINDOWS}
 }
 
 main
