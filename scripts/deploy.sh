@@ -1,7 +1,8 @@
 #!/bin/bash
 
-set nounset
-set errexit
+set -o nounset
+set -o errexit
+set -o pipefail
 
 readonly BASE_DIR=$(cd $(dirname $0)/..; pwd)
 readonly DEBUG=$([[ $# -gt 0 ]] && test $1 = --debug; echo $?)

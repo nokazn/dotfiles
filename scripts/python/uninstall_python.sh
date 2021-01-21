@@ -1,7 +1,8 @@
 #!/bin/bash
 
-set nounset
-set errexit
+set -o nounset
+set -o errexit
+set -o pipefail
 
 # @param {string} - command
 # @return {0|1}
