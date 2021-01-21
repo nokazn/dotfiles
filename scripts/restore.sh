@@ -5,6 +5,7 @@ set -o errexit
 set -o pipefail
 
 readonly BASE_DIR=$(cd $(dirname $0)/..; pwd)
+readonly DEBUG=$([[ $# -gt 0 ]] && test $1 = --debug; echo $?)
 readonly _BACKUP_DIR_NAME="backup_dotfiles"
 
 readonly DESTINATION_BASE_DIR=~
@@ -31,6 +32,17 @@ function prepend_message() {
 
 # ---------------------------------------- core ----------------------------------------
 
+# @param {string} - file path to remove
+# @return {void}
+function remove_with_confirmation() {
+  if [[ -L $1 ]]; then
+    rm $1
+  else
+    # 削除する前に確認
+    rm $1 --interactive
+  fi
+}
+
 # @param {string} - backed-up file path
 # @param {string} - destionation file path
 # @return {void}
@@ -41,17 +53,19 @@ function restore_file() {
   fi
 
   if [[ ! -e $2 ]]; then
+    if [[ ${DEBUG} -eq 0 ]]; then
+      echo "[debug]✅ restored: $1 -> $2"
+      return 0;
+    fi
     cp --verbose $1 $2 | prepend_message "✅ restored: "
   elif [[ -L $2 ]] || [[ $(basename $2) == ".gitconfig" ]]; then
-    # 事前に削除しないと、シンボリックリンクの中身を書き換えるだけでシンボリックリンク自体は消えない
-    if [[ -L $2 ]]; then
-      rm $2
-    else
-      # 削除する前に確認
-      rm $2 --interactive
-      [[ -e $2 ]] && return 0
+    if [[ ${DEBUG} -eq 0 ]]; then
+      echo "[debug]✅ deleted & restored: $1 -> $2"
+      return 0;
     fi
-    cp --verbose --no-clobber $1 $2 |  prepend_message "✅ deleted & restored: "
+    # 事前に削除しないと、シンボリックリンクの中身を書き換えるだけでシンボリックリンク自体は消えない
+    remove_with_confirmation $2
+    [[ ! -e $2 ]] && cp --verbose --no-clobber $1 $2 |  prepend_message "✅ deleted & restored: "
   elif [[ -d $1 ]] && [[ -d $2 ]]; then
     # ディレクトリが存在する場合再帰的に呼び出す
     for file in $(ls_all "$1/"); do
@@ -79,15 +93,16 @@ function restore() {
   return 0
 }
 
-
 # ---------------------------------------- main ----------------------------------------
 
 # @param - none
 # @return {void}
 function main() {
-  read -rp "Do you really want to restore backups? (Y/n) " response
-  if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    return 0;
+  if [[ ! ${DEBUG} -eq 0 ]]; then
+    read -rp "Do you really want to restore backups? (Y/n) " response
+    if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
+      return 0;
+    fi
   fi
 
   restore ${BACKUP_BASE_DIR} ${DESTINATION_BASE_DIR}
