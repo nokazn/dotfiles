@@ -50,10 +50,12 @@ function prepend_message() {
 # @param {string} - destination file path
 # @return {"y"|"n"}
 function show_prompt_for_overwrite() {
-  if [[ ! -f $2 ]]; then
-    echo "y"
-    return 0
+  if [[ ! -e $1 ]]; then
+    decho "❌ invalid destination file path: " $1
+    echo "n"
+    return 1
   fi
+
   # TODO
   read -rp "warning: $1 already exists. Do you really want to backup and overwrite? (Y/n) " response  </dev/tty
   if [[ ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
@@ -94,12 +96,13 @@ function backup() {
 
 # @param {stirng} - source file path
 # @param {stirng} - destination file path
+# @param {stirng} - destination directory for back-up path
 # @return {void}
 function copy_gitconfig() {
   if [[ -f $2 ]]; then
     local response=$(show_prompt_for_overwrite $2)
     [[ ${response} != "y" ]] && return 0
-    backup $2
+    make_backup $2 $3
   fi
 
   # .gitconfig 用の email の入力を tty から受け付ける
@@ -127,6 +130,7 @@ function copy_gitconfig() {
 
 # @param {string} - source file path
 # @param {string} - destination file path
+# @param {stirng} - destination directory for back-up path
 # @return {void}
 function make_symbolic_link() {
   # すでにシンボリックリンクが存在する場合は無視
@@ -152,13 +156,13 @@ function make_symbolic_link() {
     # ファイルでバックアップがある場合
     local response=$(show_prompt_for_overwrite $2)
     if [[ ${response} == "y" ]]; then
-      backup $2
+      make_backup $2 $3
       newly_link $1 $2
     fi
   elif [[ -d $1 ]] && [[ -d $2 ]]; then
     # ディレクトリが存在する場合再帰的に呼び出す
     for file in $(ls_all "$1/"); do
-      make_symbolic_link "$1/${file}" "$2/${file}"
+      make_symbolic_link "$1/${file}" "$2/${file}" $3
     done
   else
     echo "❌ An error occuered when linking $1 to $2"
@@ -170,6 +174,7 @@ function make_symbolic_link() {
 
 # @param {string} - source directory path for dotfiles
 # @param {string} - destination directory path
+# @param {stirng} - destination directory for back-up path
 # @return {void}
 function deploy() {
   if [[ ! -d $1 ]]; then
@@ -184,11 +189,11 @@ function deploy() {
         ;;
 
       ".gitconfig" )
-        copy_gitconfig "$1/${file}" "$2/${file}"
+        copy_gitconfig "$1/${file}" "$2/${file}" $3
         ;;
 
       *)
-        make_symbolic_link "$1/${file}" "$2/${file}"
+        make_symbolic_link "$1/${file}" "$2/${file}" $3
         ;;
     esac
   done
@@ -206,8 +211,8 @@ function main() {
     return 0;
   fi
 
-  deploy . ${DESTINATION_BASE_DIR}
-  deploy ./windows ${DESTINATION_BASE_DIR_FOR_WINDOWS}
+  deploy . ${DESTINATION_BASE_DIR} ${BACKUP_BASE_DIR}
+  deploy ./windows ${DESTINATION_BASE_DIR_FOR_WINDOWS} ${BACKUP_BASE_DIR_FOR_WINDOWS}
 }
 
 main
