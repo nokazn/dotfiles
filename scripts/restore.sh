@@ -1,7 +1,8 @@
 #!/bin/bash
 
-set nounset
-set errexit
+set -o nounset
+set -o errexit
+set -o pipefail
 
 readonly BASE_DIR=$(cd $(dirname $0)/..; pwd)
 readonly _BACKUP_DIR_NAME="backup_dotfiles"
