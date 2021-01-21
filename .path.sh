@@ -1,7 +1,8 @@
 #!/bin/bash
 
-set -o nounset
-set -o errexit
+# surpress errors in .bashrc
+# set -o nounset
+# set -o errexit
 set -o pipefail
 
 # nodenv
