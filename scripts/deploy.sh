@@ -79,11 +79,12 @@ function increment_file_counter() {
 
 # ---------------------------------------- core ----------------------------------------
 
-# @param {stirng} - destination file path
+# @param {stirng} - source for back-up file path
+# @param {stirng} - destination for back-up file path
 # @return {void}
-function backup() {
-  # $1 の先頭の "${DESTINATION_BASE_DIR}/" の部分を削除している
-  local backup_file="${BACKUP_BASE_DIR}/${1##"${DESTINATION_BASE_DIR}/"}"
+function make_backup() {
+  # $2 + $1 から先頭のバックアップ用のディレクトリの親の部分を削除したもの
+  local backup_file="$2/${1##"$(dirname $2)/"}"
   local backup_dir="$(dirname ${backup_file})"
 
 # 同名のファイルが存在し、バックアップがなければ実行
