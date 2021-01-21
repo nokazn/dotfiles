@@ -30,6 +30,34 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# ---------------------------------------- prompt ----------------------------------------
+
+readonly COL="\[\e["
+readonly LOC="\]"
+readonly RESET="\[\e[m\]"
+readonly GREEN="01;32m"
+readonly YELLOW="00;33m"
+readonly BLUE="01;34m"
+readonly CYAN="00;36m"
+
+function ps1_date() {
+    date +'%Y-%m-%d %-H:%M:%S'
+}
+
+function ps1_git() {
+    local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+    local hash=$(git log --pretty=format:'%h' -n 1 2>/dev/null)
+    if [[ -n ${branch} ]]; then
+        if [[ -n ${hash} ]]; then
+            echo -n "(${branch}: ${hash}) "
+        else
+            echo -n "(${branch}) "
+        fi
+    else
+        echo -n
+    fi
+}
+
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
@@ -57,7 +85,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # 実行ごとに評価させたい部分は ' で囲む
+    PS1='${debian_chroot:+($debian_chroot)}'"${COL}${BLUE}${LOC}\u@\h${RESET}: ${COL}${GREEN}${LOC}\w ${COL}${CYAN}${LOC}"'$(ps1_git)'"${COL}${YELLOW}${LOC}"'$(ps1_date)'"${RESET}\n\\$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -71,6 +101,8 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+# --------------------------------------------------------------------------------
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
