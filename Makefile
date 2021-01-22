@@ -147,11 +147,11 @@ restore: # Restore backed-up files of dotfiles.
 
 # ------------------------------ tools ------------------------------
 
-add-bash-it: # Add bash-it.
+add-bash-it: _print-airplane # Add bash-it.
 	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
 	~/.bash-it/install.sh
 
-remove-bash-it: # Remove bash-it.
+remove-bash-it: _print-goodbye # Remove bash-it.
 	sudo rm -i -r ~/.bash-it
 
 # ------------------------------ utilities ------------------------------
