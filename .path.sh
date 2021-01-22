@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# surpress errors in .bashrc
+# suppress errors in .bashrc
 # set -o nounset
 # set -o errexit
 set -o pipefail
