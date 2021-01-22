@@ -77,6 +77,16 @@ function increment_file_counter() {
   return 0
 }
 
+# @param {string} - path
+# @return {void}
+function check_absolute_path() {
+  # "/" からはじまるか
+  if [[ -z $(echo $1 | sed -E -n -e "/^\//p") ]]; then
+    echo "❌ invalid absolute path: $1"
+    exit 1
+  fi
+}
+
 # ---------------------------------------- core ----------------------------------------
 
 # @param {stirng} - source for back-up file path
@@ -144,8 +154,9 @@ function copy_gitconfig() {
 # @param {string} - destination file path
 # @return {void}
 function newly_link() {
+  check_absolute_path $1
   if [[ ${DEBUG} -eq 0 ]]; then
-    echo "[debug] ✅ newly linked: : $1 -> $2"
+    echo "[debug] ✅ newly linked: : $2 -> $1"
     return 0;
   fi
   ln --symbolic --verbose --force $1 $2 | prepend_message "✅ newly linked: "
@@ -229,9 +240,9 @@ function main() {
     fi
   fi
 
-  deploy . ${DESTINATION_BASE_DIR} ${BACKUP_BASE_DIR}
+  deploy ${BASE_DIR} ${DESTINATION_BASE_DIR} ${BACKUP_BASE_DIR}
   # TODO:
-  # deploy ./windows ${DESTINATION_BASE_DIR_FOR_WINDOWS} ${BACKUP_BASE_DIR_FOR_WINDOWS}
+  # deploy "${BASE_DIR}/windows" ${DESTINATION_BASE_DIR_FOR_WINDOWS} ${BACKUP_BASE_DIR_FOR_WINDOWS}
   if [[ $file_counter -gt 0 ]]; then
     echo "Successfully ${file_counter} dotfiles are initialized!"
   fi
