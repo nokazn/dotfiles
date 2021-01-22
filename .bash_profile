@@ -31,3 +31,8 @@ if [[ ! ${PATH_SET_CORRECTLY} == true ]]; then
         echo "⚠ .path.sh doesn't exist"
     fi
 fi
+
+CDHIST_PATH="$HOME/dotfiles/scripts/cdhist.sh"
+if [[ -f ${CDHIST_PATH} ]]; then
+    . ${CDHIST_PATH}
+fi
