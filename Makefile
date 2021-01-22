@@ -150,6 +150,24 @@ restore: # Restore backed-up files of dotfiles.
 add-bash-it: _print-airplane # Add bash-it.
 	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
 	~/.bash-it/install.sh
+	bash-it enable completion bash-it
+		cargo \
+		docker-compose \
+		docker \
+		export \
+		gcloud \
+		git \
+		go \
+		lerna \
+		makefile \
+		npm \
+		pip \
+		pipenv \
+		rustup \
+		ssh \
+		tmux
+	exec $$SHELL -l
+	echo "✅ bash-it has been installed successfully!"
 
 remove-bash-it: _print-goodbye # Remove bash-it.
 	sudo rm -i -r ~/.bash-it
