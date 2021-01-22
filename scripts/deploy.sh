@@ -232,6 +232,9 @@ function main() {
   deploy . ${DESTINATION_BASE_DIR} ${BACKUP_BASE_DIR}
   # TODO:
   # deploy ./windows ${DESTINATION_BASE_DIR_FOR_WINDOWS} ${BACKUP_BASE_DIR_FOR_WINDOWS}
+  if [[ $file_counter -gt 0 ]]; then
+    echo "Successfully ${file_counter} dotfiles are initialized!"
+  fi
 }
 
 main
