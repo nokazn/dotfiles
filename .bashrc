@@ -33,17 +33,17 @@ shopt -s checkwinsize
 # ---------------------------------------- prompt ----------------------------------------
 
 # TODO: "[${COL}${LOC}]" とすると関数内で色を埋め込むときに \[\] が表示されてしまう
- COL="\033[" # "\e[" と同義
- LOC=""
- RESET="${COL}m${LOC}" # "${COL}00m${LOC}" と同義
- RED="${COL}01;31m${LOC}"
- GREEN="${COL}01;32m${LOC}"
- YELLOW="${COL}00;33m${LOC}"
- BLUE="${COL}01;34m${LOC}"
- MAGENTA="${COL}00;35m${LOC}"
- CYAN="${COL}00;36m${LOC}"
- WHITE="${COL}00;37m${LOC}"
- BLUE_BG="${COL}01;44m${LOC}"
+COL="\033[" # "\e[" と同義
+LOC=""
+RESET="${COL}m${LOC}" # "${COL}00m${LOC}" と同義
+RED="${COL}01;31m${LOC}"
+GREEN="${COL}01;32m${LOC}"
+YELLOW="${COL}00;33m${LOC}"
+BLUE="${COL}01;34m${LOC}"
+MAGENTA="${COL}00;35m${LOC}"
+CYAN="${COL}00;36m${LOC}"
+WHITE="${COL}00;37m${LOC}"
+BLUE_BG="${COL}01;44m${LOC}"
 
 function ps1_date() {
     date +'%Y-%m-%d %-H:%M:%S'
@@ -170,7 +170,7 @@ fi
 # ---------------------------------------- VcXsrv  ----------------------------------------
 
 # WSL 内では X Server 経由で GUI を表示
- START_VCXSRV_PATH="${HOME}/dotfiles/scripts/start_vcxsrv.sh"
+START_VCXSRV_PATH="${HOME}/dotfiles/scripts/start_vcxsrv.sh"
 if [[ -f ${START_VCXSRV_PATH} ]]; then
     # WSL に割り当てられる IP アドレスを取得して設定
     export DISPLAY="$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0"
