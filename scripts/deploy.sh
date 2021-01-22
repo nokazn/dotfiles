@@ -29,7 +29,7 @@ function decho() {
 # @param {string} - directory path
 # @return {void}
 function ls_all() {
-  ls $1 --almost-all --ignore "*.swp"
+  ls $1 --almost-all --ignore ".*\.swp"
   return 0
 }
 
