@@ -47,10 +47,9 @@ packages: packages-apt packages-npm packaes-pip; # Get all packages.
 
 # TODO: pyenv
 packages-apt: packages-apt-for-pyenv # Install apt packages.
-	sudo apt install -y heroku \
-    vim-gtk \
-    xsel \
-    postgres-12;
+	sudo apt install -y \
+		xsel \
+		postgres-12;
 	# make packages-apt-for-pyenv
 	sudo apt update -y && sudo apt upgrade -y
 
@@ -145,6 +144,15 @@ deploy-gitconfig: # Copy .gitconfig.
 restore: # Restore backed-up files of dotfiles.
 	$(SCRIPTS_DIR)/restore.sh
 
+
+# ------------------------------ tools ------------------------------
+
+add-bash-it: # Add bash-it.
+	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
+	~/.bash-it/install.sh
+
+remove-bash-it: # Remove bash-it.
+	sudo rm -i -r ~/.bash-it
 
 # ------------------------------ utilities ------------------------------
 
