@@ -32,13 +32,18 @@ shopt -s checkwinsize
 
 # ---------------------------------------- prompt ----------------------------------------
 
-readonly COL="\[\e["
-readonly LOC="\]"
-readonly RESET="\[\e[m\]"
-readonly GREEN="01;32m"
-readonly YELLOW="00;33m"
-readonly BLUE="01;34m"
-readonly CYAN="00;36m"
+# TODO: "[${COL}${LOC}]" とすると関数内で色を埋め込むときに \[\] が表示されてしまう
+readonly COL="\033[" # "\e[" と同義
+readonly LOC=""
+readonly RESET="${COL}m${LOC}" # "${COL}00m${LOC}" と同義
+readonly RED="${COL}01;31m${LOC}"
+readonly GREEN="${COL}01;32m${LOC}"
+readonly YELLOW="${COL}00;33m${LOC}"
+readonly BLUE="${COL}01;34m${LOC}"
+readonly MAGENTA="${COL}00;35m${LOC}"
+readonly CYAN="${COL}00;36m${LOC}"
+readonly WHITE="${COL}00;37m${LOC}"
+readonly BLUE_BG="${COL}01;44m${LOC}"
 
 function ps1_date() {
     date +'%Y-%m-%d %-H:%M:%S'
@@ -49,12 +54,12 @@ function ps1_git() {
     local hash=$(git log --pretty=format:'%h' -n 1 2>/dev/null)
     if [[ -n ${branch} ]]; then
         if [[ -n ${hash} ]]; then
-            echo -n "(${branch}: ${hash}) "
+            echo -e -n "${CYAN}(${WHITE}${BLUE_BG}${branch}${CYAN}: ${hash})${RESET} "
         else
-            echo -n "(${branch}) "
+            echo -e -n "${CYAN}(${WHITE}${BLUE_BG}${branch}${CYAN})${RESET} "
         fi
     else
-        echo -n
+        echo -e -n
     fi
 }
 
@@ -87,7 +92,7 @@ fi
 if [ "$color_prompt" = yes ]; then
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     # 実行ごとに評価させたい部分は ' で囲む
-    PS1='${debian_chroot:+($debian_chroot)}'"${COL}${BLUE}${LOC}\u@\h${RESET}: ${COL}${GREEN}${LOC}\w ${COL}${CYAN}${LOC}"'$(ps1_git)'"${COL}${YELLOW}${LOC}"'$(ps1_date)'"${RESET}\n\\$ "
+    PS1='${debian_chroot:+($debian_chroot)}'"${GREEN}\u@\h${RESET}: ${BLUE}\w "'$(ps1_git)'"${YELLOW}"'$(ps1_date)'"${RESET}\n\\$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
