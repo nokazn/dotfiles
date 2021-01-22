@@ -182,15 +182,21 @@ fi
 # ---------------------------------------- bash-it  ----------------------------------------
 
 # Path to the bash it configuration
-export BASH_IT=~/.bash-it
+BASH_IT=~/.bash-it
 
 if [[ -d ${BASH_IT} ]]; then
+    export BASH_IT
 
     # Lock and Load a custom theme file.
     # Leave empty to disable theming.
     # location /.bash_it/themes/
-    export BASH_IT_THEME='bobby'
-
+    BASH_IT_THEME="${BASH_IT}/custom/bobby2/bobby2.theme.bash"
+    if [[ -f ${BASH_IT_THEME} ]]; then
+        export BASH_IT_THEME=${BASH_IT_THEME}
+    else
+        echo "⚠ custom theme doesn't exist at '${BASH_IT_THEME}'"
+        export BASH_IT_THEME="bobby"
+    fi
     # (Advanced): Change this to the name of your remote repo if you
     # cloned bash-it with a remote other than origin such as `bash-it`.
     # export BASH_IT_REMOTE='bash-it'
@@ -251,5 +257,5 @@ if [[ -d ${BASH_IT} ]]; then
     # export BASH_IT_RELOAD_LEGACY=1
 
     # Load Bash It
-    source "${BASH_IT}"/bash_it.sh
+    source "${BASH_IT}/bash_it.sh"
 fi
