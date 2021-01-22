@@ -6,11 +6,17 @@ SCM_THEME_PROMPT_PREFIX=" ${green}|"
 SCM_THEME_PROMPT_SUFFIX="${green}|"
 
 function git_hash() {
-  git log --pretty=format:'%h' -n 1 2>/dev/null
+  # TODO: コミットが存在するにもかかわらず hash が取得できないことがある
+  local hash=$(git log --pretty=format:'%h' -n 1 2>/dev/null)
+  if [[ -n ${hash} ]]; then
+    echo "(${hash})"
+  else
+    echo ""
+  fi
 }
 
-GIT_THEME_PROMPT_DIRTY=" ${cyan}($(git_hash))${red}✗"
-GIT_THEME_PROMPT_CLEAN=" ${cyan}($(git_hash))${bold_green}✓"
+GIT_THEME_PROMPT_DIRTY=" ${cyan}$(git_hash)${red}✗"
+GIT_THEME_PROMPT_CLEAN=" ${cyan}$(git_hash)${bold_green}✓"
 GIT_THEME_PROMPT_PREFIX=" ${cyan}["
 GIT_THEME_PROMPT_SUFFIX="${cyan}]"
 
