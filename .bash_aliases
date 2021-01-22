@@ -1,4 +1,4 @@
-alias relogin='exec $SHEL -l'
+alias relogin='exec $SHELL -l'
 
 ### git aliases
 ###
