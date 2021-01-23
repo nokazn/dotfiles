@@ -100,7 +100,7 @@ function make_backup() {
 # 同名のファイルが存在し、バックアップがなければ実行
   if [[ -f $1 ]] && [[ ! -e ${backup_file} ]]; then
     if [[ ${DEBUG} -eq 0 ]]; then
-      echo "[debug] ✔ backed up: $1 -> ${backup_file}"
+      echo "[debug] ✔ backed up: '$1' -> '${backup_file}'"
       return 0;
     fi
     # バックアップ用のディレクトリがなければ作成
@@ -125,7 +125,7 @@ function copy_gitconfig() {
   read -rp "Please enter your email for .gitconfig file: " email </dev/tty
 
   if [[ ${DEBUG} -eq 0 ]]; then
-    echo "[debug] ✅ newly copied: $1 -> $2"
+    echo "[debug] ✅ newly copied: '$1' -> '$2'"
     return 0;
   fi
 
@@ -156,10 +156,20 @@ function copy_gitconfig() {
 function newly_link() {
   check_absolute_path $1
   if [[ ${DEBUG} -eq 0 ]]; then
-    echo "[debug] ✅ newly linked: : $2 -> $1"
+    echo "[debug] ✅ newly linked: : '$2' -> '$1'"
     return 0;
   fi
-  ln --symbolic --verbose --force $1 $2 | prepend_message "✅ newly linked: "
+
+  WINDOWS_PATH="/mnt/c"
+  if [[ $2 =~ ${WINDOWS_PATH} ]]; then
+    # ショートカット作成事態はできるが、foo.lnk ファイルとして扱われ別物になる
+    # local source_win="$(wslpath -w $1)"
+    # local destination_win="$(wslpath -w $2).lnk"
+    # powershell.exe -c "\$wsh = New-Object -ComObject WScript.Shell; \$sc = \$wsh.CreateShortCut(\"${destination_win}\"); \$sc.TargetPath = \"${source_win}\"; \$sc.Save();"
+    cp --verbose $1 $2 | prepend_message "✅ newly copied: "
+  else
+    ln --symbolic --verbose --force $1 $2 | prepend_message "✅ newly linked: "
+  fi
   increment_file_counter
 }
 
@@ -242,7 +252,7 @@ function main() {
 
   deploy ${BASE_DIR} ${DESTINATION_BASE_DIR} ${BACKUP_BASE_DIR}
   # TODO:
-  # deploy "${BASE_DIR}/windows" ${DESTINATION_BASE_DIR_FOR_WINDOWS} ${BACKUP_BASE_DIR_FOR_WINDOWS}
+  deploy "${BASE_DIR}/windows" ${DESTINATION_BASE_DIR_FOR_WINDOWS} ${BACKUP_BASE_DIR_FOR_WINDOWS}
   if [[ $file_counter -gt 0 ]]; then
     echo "Successfully ${file_counter} dotfiles are initialized!"
   fi
