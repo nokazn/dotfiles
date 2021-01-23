@@ -15,10 +15,10 @@ filetype plugin indent on
 " vim 起動時に NerdTree を起動
 autocmd VimEnter * execute 'NERDTree'
 " Ctrl + e で NerdTree を toggle
-" map <silent><C-e> :NERDTreeToggle<CR>
 map <silent><C-e> :NERDTreeFocus<CR>
+" map <silent><C-e> :NERDTreeToggle<CR>
 map <silent><C-f> :NERDTreeFind<CR>
-" TODO: デフォルトですべてのファイルを表示
+let NERDTreeShowHidden=1
 
 " クリップボードと連携 (tmux-yunk 用)
 set clipboard=unnamedplus
