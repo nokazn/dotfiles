@@ -172,6 +172,13 @@ add-bash-it: _print-airplane # Add bash-it.
 remove-bash-it: _print-goodbye # Remove bash-it.
 	sudo rm -i -r ~/.bash-it
 
+add-dein-vim: _print-airplane # Add dein.vim.
+	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh -s ~/.vim/dein
+	echo "✅ dein.vim has been installed successfully!"
+
+remove-dein-vim: _print-goodbye # Remove dein.vim.
+	sudo rm ~/.vim/dein -ri
+
 # ------------------------------ utilities ------------------------------
 
 # TODO: カテゴリごとにわかりやすくする
