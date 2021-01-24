@@ -1,5 +1,6 @@
 alias dotfiles='cd ~/dotfiles'
 alias relogin='exec $SHELL -l'
+alias tmux-relaod='tmux source-file ~/.tmux.conf'
 alias alias-bash='alias | sed -E -e "s/^alias\s//" | column -s "=" -t'
 
 ### git aliases
