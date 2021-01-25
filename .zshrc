@@ -14,7 +14,7 @@ esac
 # ------------------------------ Prezto ------------------------------
 
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 # ------------------------------------------------------------
@@ -31,24 +31,24 @@ autoload -Uz compinit && compinit
 # ------------------------------ prompt ------------------------------
 
 function left-prompt {
-  local transparent='000m'
-  local name_t='136m'
-  local dir_t='255m'
-  local dir_b='027m'
-  # arrow color
-  local arrow='087m'
-  # set text color
-  local ct='\e[38;5;'
-  # set background color
-  local cb='\e[30;48;5;'
-  # reset
-  local reset='\e[0m'
-  # triangle
-  local sharp='\uE0B0'
+    local transparent='000m'
+    local name_t='136m'
+    local dir_t='255m'
+    local dir_b='027m'
+    # arrow color
+    local arrow='087m'
+    # set text color
+    local ct='\e[38;5;'
+    # set background color
+    local cb='\e[30;48;5;'
+    # reset
+    local reset='\e[0m'
+    # triangle
+    local sharp='\uE0B0'
 
-  local user="${cb}${transparent}${ct}${name_t}"
-  local dir="${cb}${dir_b}${ct}${dir_t}"
-  echo "${user}%n@%m${cb}${dir_b}${ct}${transparent}${sharp} ${dir}%~${reset}${ct}${dir_b}${sharp}${reset}\n${ct}${arrow}→ ${reset}"
+    local user="${cb}${transparent}${ct}${name_t}"
+    local dir="${cb}${dir_b}${ct}${dir_t}"
+    echo "${user}%n@%m${cb}${dir_b}${ct}${transparent}${sharp} ${dir}%~${reset}${ct}${dir_b}${sharp}${reset}\n${ct}${arrow}→ ${reset}"
 }
 
 # PROMPT=$(left-prompt)
@@ -88,10 +88,11 @@ alias l='ls -CF'
 # sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
+# custom aliases
 alias dotfiles='cd ~/dotfiles'
 alias relogin='exec $SHELL -l'
 alias tmux-relaod='tmux source-file ~/.tmux.conf'
-alias alias-bash='alias | sed -E -e "s/^alias\s//" | column -s "=" -t'
+alias aliases='alias | sed -E -e "s/^alias\s//" | column -s "=" -t'
 alias zsh-colors='seq -w 255 | xargs -I "{}" echo -n -e "\e[38;5;{}m {}"; echo "\e[0m"'
 
 # git aliases
