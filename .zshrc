@@ -32,20 +32,16 @@ fi
 
 # ------------------------------ prompt ------------------------------
 
-function left-prompt {
+function left-prompt() {
     local transparent='000m'
     local name_t='136m'
     local dir_t='255m'
     local dir_b='027m'
-    # arrow color
+
     local arrow='087m'
-    # set text color
     local ct='\e[38;5;'
-    # set background color
     local cb='\e[30;48;5;'
-    # reset
     local reset='\e[0m'
-    # triangle
     local sharp='\uE0B0'
 
     local user="${cb}${transparent}${ct}${name_t}"
@@ -53,7 +49,9 @@ function left-prompt {
     echo "${user}%n@%m${cb}${dir_b}${ct}${transparent}${sharp} ${dir}%~${reset}${ct}${dir_b}${sharp}${reset}\n${ct}${arrow}→ ${reset}"
 }
 
-# PROMPT=$(left-prompt)
+PROMPT='%F{133}%n%f @ %F{166}%m%f ✨ %F{118}%~%f ${vcs_info_msg_0_}
+%F{087}→%f '
+RPROMPT="🕙 %F{226}$(date +'%Y-%m-%d %-H:%M:%S (%a)')%f"
 
 # ------------------------------ history ------------------------------
 
