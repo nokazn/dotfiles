@@ -170,11 +170,10 @@ fi
 # ---------------------------------------- VcXsrv  ----------------------------------------
 
 # WSL 内では X Server 経由で GUI を表示
-START_VCXSRV_PATH="${HOME}/dotfiles/scripts/start_vcxsrv.sh"
-if [[ -f ${START_VCXSRV_PATH} ]]; then
+if [[ -f "$HOME/dotfiles/scripts/start_vcxsrv.sh" ]]; then
     # WSL に割り当てられる IP アドレスを取得して設定
     export DISPLAY="$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0"
-    "${START_VCXSRV_PATH}"
+    $HOME/dotfiles/scripts/start_vcxsrv.sh
 else
     echo "⚠ file 'start_vcxsrv' doesn't exist at ${START_VCXSRV_PATH}" >&2
 fi

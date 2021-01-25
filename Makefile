@@ -172,12 +172,22 @@ add-bash-it: _print-airplane # Add bash-it.
 remove-bash-it: _print-goodbye # Remove bash-it.
 	sudo rm -i -r ~/.bash-it
 
+add-prezto: _print-airplane # Add Prezto.
+	git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
+	ls $${ZDOTDIR:-$${HOME}}/.zprezto/runcoms --ignore README.md | xargs -I "{}" ln -s "$${HOME}/.zprezto/runcoms/{}" "$${HOME}/dotfiles/.{}"
+	echo "✅ prezto has been installed successfully!"
+
+remove-prezto: _print-goodbye # Remove Prezto.
+	sudo rm -i -r ~/.zprezto
+	echo "✅ prezto has been uninstalled successfully!"
+
 add-dein-vim: _print-airplane # Add dein.vim.
 	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh -s ~/.vim/dein
 	echo "✅ dein.vim has been installed successfully!"
 
 remove-dein-vim: _print-goodbye # Remove dein.vim.
 	sudo rm ~/.vim/dein -ri
+	echo "✅ dein.vim has been uninstalled successfully!"
 
 # ------------------------------ utilities ------------------------------
 
