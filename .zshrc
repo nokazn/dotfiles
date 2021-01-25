@@ -11,14 +11,6 @@ case $- in
       *) return;;
 esac
 
-# ------------------------------ Prezto ------------------------------
-
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-# ------------------------------------------------------------
-
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
 
@@ -27,6 +19,16 @@ autoload -Uz colors ; colors
 # 補完を有効化
 autoload -Uz compinit && compinit
 # End of lines added by compinstall
+
+# ------------------------------ Prezto ------------------------------
+
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+
+    # コマンドの補完が激遅になる
+    unsetopt PATH_DIRS
+    unsetopt AUTO_PARAM_SLASH
+fi
 
 # ------------------------------ prompt ------------------------------
 
