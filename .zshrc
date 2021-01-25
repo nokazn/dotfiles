@@ -49,7 +49,8 @@ function left-prompt() {
     echo "${user}%n@%m${cb}${dir_b}${ct}${transparent}${sharp} ${dir}%~${reset}${ct}${dir_b}${sharp}${reset}\n${ct}${arrow}→ ${reset}"
 }
 
-PROMPT='%F{133}%n%f @ %F{166}%m%f ✨ %F{118}%~%f ${vcs_info_msg_0_}
+PROMPT='
+%F{133}%n%f @ %F{166}%m%f ✨ %F{118}%~%f ${vcs_info_msg_0_}
 %F{087}→%f '
 RPROMPT="🕙 %F{226}$(date +'%Y-%m-%d %-H:%M:%S (%a)')%f"
 
