@@ -49,8 +49,8 @@ packages: packages-apt packages-npm packaes-pip; # Get all packages.
 packages-apt: packages-apt-for-pyenv # Install apt packages.
 	sudo apt install -y \
 		xsel \
-		postgres-12;
-	# make packages-apt-for-pyenv
+		postgres-12 \
+		zsh
 	sudo apt update -y && sudo apt upgrade -y
 
 packages-apt-for-pyenv: # Install apt packages for building pyenv.
@@ -79,7 +79,7 @@ packages-nix: # Install nix packages.
 		neofetch \
 		heroku
 
-packages-npm: ;
+packages-npm: # Install npm packages.
 # TODO: vue の next が stable になったら @next を外す
 	npm i -g \
 		@nestjs/cli \
@@ -138,7 +138,7 @@ deploy: # Make symbolic links to dotfiles and back up original files if exists.
 	$(SCRIPTS_DIR)/deploy.sh
 
 # TODO: 別のスクリプトに分ける
-deploy-gitconfig: # Copy .gitconfig.
+deploy-gitconfig: # Copy .gitconfig file.
 	cp ./.gitconfig ~/.gitconfig
 
 restore: # Restore backed-up files of dotfiles.
@@ -172,12 +172,12 @@ add-bash-it: _print-airplane # Add bash-it.
 remove-bash-it: _print-goodbye # Remove bash-it.
 	sudo rm -i -r ~/.bash-it
 
-add-prezto: _print-airplane # Add Prezto.
+add-prezto: _print-airplane # Add Prezto for zsh.
 	git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
 	ls $${ZDOTDIR:-$${HOME}}/.zprezto/runcoms --ignore README.md | xargs -I "{}" ln -s "$${HOME}/.zprezto/runcoms/{}" "$${HOME}/dotfiles/.{}"
 	echo "✅ prezto has been installed successfully!"
 
-remove-prezto: _print-goodbye # Remove Prezto.
+remove-prezto: _print-goodbye # Remove Prezto for zsh.
 	sudo rm -i -r ~/.zprezto
 	echo "✅ prezto has been uninstalled successfully!"
 
@@ -205,7 +205,7 @@ apt-list: # Show a list of installed apt packages.
 	sudo apt list --installed | more
 
 HISTORY_LOG := /var/log/apt/history.log
-apt-history:
+apt-history: # Show apt packages installed/uninstalled history.
 # tee でプロセス置換して、+ (緑) の場合と - (赤) の場合で色を分け、標準出力を捨てる
 # プロセス置換内の標準出力がなされるまでシェルを待たせるために cat に渡している
 	@cat /var/log/apt/history.log \
@@ -217,7 +217,7 @@ apt-history:
 			> /dev/null \
 		| cat
 
-apt-history-installed:
+apt-history-installed: # Show a list of apt packages a user manually installed.
 	@echo "List of apt packages you have ever installed. (from '/var/log/apt/history.log')"
 # ...apt|apt-get [options] install [options] を削除 -> 行中の options を削除 -> パッケージごとに改行
 	@apt_list=$$(sudo apt list --installed); cat $(HISTORY_LOG) \
@@ -258,6 +258,6 @@ help: # Show all commands.
 # コマンド一覧 -> ":" で改行 -> ":" を含む行 (前半) の \s を ", " に置換、"#" を含む行 (後半) からコメントを抽出 -> ":" で分けた個所を再連結 -> column で整形
 	@grep -E '^[a-zA-Z]\S+(\s\S+)*:.*' ./Makefile \
 		| sed --regexp-extended -e "s/:/:\n/" \
-		| sed --regexp-extended -e "/:/ s/\s/, /g; s/^.*#+\s*(.+)$$/\1/" \
+		| sed --regexp-extended -e "/:/ s/\s/, /g" -e "s/^.*[#|;]+\s*//" \
 		| sed --regexp-extended -e "N" -e "s/:\n/:/g;" -e "s/^/  /" \
 		| column -s ":" -t
