@@ -8,7 +8,7 @@ set -o pipefail
 # nodenv
 if [[ -d "$HOME/.nodenv" ]]; then
     export NODENV_ROOT="$HOME/.nodenv"
-    export PATH="${NODENV_ROOT}/bin:$PATH"
+    PATH="${NODENV_ROOT}/bin:$PATH"
     # nodenv コマンドが存在する場合
     if type "nodenv" > /dev/null 2>&1; then
         eval "$(nodenv init -)"
@@ -24,7 +24,7 @@ if [ -d "$HOME/.goenv" ]; then
         eval "$(goenv init -)"
         # GOROOT はよしなに設定してくれる
         export GOPATH="$HOME/go"
-        export PATH="$PATH:${GOPATH}/bin"
+        PATH="$PATH:${GOPATH}/bin"
         # Go Modules を有効にする
         export 'GO111MODULE=on'
     fi
@@ -33,7 +33,7 @@ fi
 # pyenv
 if [[ -d "$HOME/.pyenv" ]]; then
     export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="${PYENV_ROOT}/bin:$PATH"
+    PATH="${PYENV_ROOT}/bin:$PATH"
     # pyenv コマンドが存在する場合
     if type "pyenv" > /dev/null 2>&1; then
         eval "$(pyenv init -)"
@@ -41,14 +41,14 @@ if [[ -d "$HOME/.pyenv" ]]; then
 fi
 # ユーザーインストールした pipenv
 if [[ -e "$HOME/.local/bin/pipenv" ]]; then
-    export PATH="$HOME/.local/bin:$PATH"
+    PATH="$HOME/.local/bin:$PATH"
 fi
 
 # deno
 DENO_INSTALL="$HOME/.deno"
 if [[ -d "${DENO_INSTALL}" ]]; then
     export DENO_INSTALL=$DENO_INSTALL
-    export PATH="/${DENO_INSTALL}/bin:$PATH:"
+    PATH="${DENO_INSTALL}/bin:$PATH:"
 fi
 
 # Rust
@@ -65,8 +65,15 @@ if [[ -d ${SDKMAN_DIR} ]]; then
 fi
 
 # added by Nix installer
-if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
     . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
+
+# mkcert
+if [[ -d "$HOME/.mkcert" ]]; then
+    PATH="$HOME/.mkcert:$PATH"
+fi
+
+export PATH=$PATH
 
 # exit 0 とするとプロセスが終了し、source コマンドが反映されない

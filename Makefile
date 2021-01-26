@@ -167,7 +167,7 @@ add-bash-it: _print-airplane # Add bash-it.
 		ssh \
 		tmux
 	exec $$SHELL -l
-	echo "✅ bash-it has been installed successfully!"
+	@echo "✅ bash-it has been installed successfully!"
 
 remove-bash-it: _print-goodbye # Remove bash-it.
 	sudo rm -i -r ~/.bash-it
@@ -175,31 +175,32 @@ remove-bash-it: _print-goodbye # Remove bash-it.
 add-prezto: _print-airplane # Add Prezto for zsh.
 	git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
 	ls $${ZDOTDIR:-$${HOME}}/.zprezto/runcoms --ignore README.md | xargs -I "{}" ln -s "$${HOME}/.zprezto/runcoms/{}" "$${HOME}/dotfiles/.{}"
-	echo "✅ prezto has been installed successfully!"
+	@echo "✅ prezto has been installed successfully!"
 
 remove-prezto: _print-goodbye # Remove Prezto for zsh.
 	sudo rm -i -r ~/.zprezto
-	echo "✅ prezto has been uninstalled successfully!"
+	@echo "✅ prezto has been uninstalled successfully!"
 
 add-dein-vim: _print-airplane # Add dein.vim.
 	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh -s ~/.vim/dein
-	echo "✅ dein.vim has been installed successfully!"
+	@echo "✅ dein.vim has been installed successfully!"
 
 remove-dein-vim: _print-goodbye # Remove dein.vim.
 	sudo rm ~/.vim/dein -ri
-	echo "✅ dein.vim has been uninstalled successfully!"
+	@echo "✅ dein.vim has been uninstalled successfully!"
+
+add-mkcert: # Add mkcert (locally trusted development certificates tool).
+	sudo apt install libnss3-tools
+	mkdir ~/.mkcert -p; \
+	git clone https://github.com/FiloSottile/mkcert ~/.mkcert && cd ~/.mkcert; \
+	go build -ldflags "-X main.Version=$(git describe --tags)"
+	@echo "✅ mkcert has been installed successfully!"
+
+remove-mkcert: # Remove mkcert.
+	sudo rm -rI ~/.mkcert
+	@echo "✅ mkcert has been installed successfully!"
 
 # ------------------------------ utilities ------------------------------
-
-# TODO: カテゴリごとにわかりやすくする
-# TODO: コメントない行の処理
-test-path: # Print paths.
-	@echo "PATH:"
-	@echo $$PATH | sed -E -e "s/:/\n/g" | sed -e "s/^/  /"
-	@echo "GOROOT: "
-	@echo "  " $$GOROOT
-	@echo "GOPATH:"
-	@echo "  " $$GOPATH
 
 apt-list: # Show a list of installed apt packages.
 	sudo apt list --installed | more
@@ -252,6 +253,7 @@ _print-goodbye:
 	@echo "     \`(ΞΞΞ：ΞΞΞ)"
 	@echo
 
+# TODO: カテゴリごとにわかりやすくする
 help: # Show all commands.
 	@echo "📗 Displays help information for make commands."
 	@echo "Commands:"
