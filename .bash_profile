@@ -32,7 +32,6 @@ if [[ ! ${PATH_SET_CORRECTLY} == true ]]; then
     fi
 fi
 
-CDHIST_PATH="$HOME/dotfiles/scripts/cdhist.sh"
-if [[ -f ${CDHIST_PATH} ]]; then
-    . ${CDHIST_PATH}
+if [[ -f "$HOME/dotfiles/scripts/cdhist.sh" ]]; then
+    . "$HOME/dotfiles/scripts/cdhist.sh"
 fi
