@@ -126,3 +126,9 @@ if [[ -f "$HOME/dotfiles/scripts/start_vcxsrv.sh" ]]; then
 else
     echo "⚠ file 'start_vcxsrv' doesn't exist at ${START_VCXSRV_PATH}" >&2
 fi
+
+# ---------------------------------------- cdhist script  ----------------------------------------
+
+if [[ -f "$HOME/dotfiles/scripts/cdhist.sh" ]]; then
+    . "$HOME/dotfiles/scripts/cdhist.sh"
+fi
