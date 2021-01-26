@@ -1,7 +1,6 @@
-" -------------------- dein Scripts --------------------
-
 if &compatible
-  set nocompatible               " Be iMproved
+  " Be improved
+  set nocompatible
 endif
 
 " Required:
@@ -22,18 +21,19 @@ if dein#load_state('~/.vim/dein')
   " Required:
   call dein#end()
   call dein#save_state()
+  let g:dein#auto_recache = 1
 endif
 
 " Required:
 filetype plugin indent on
 
-" シンタックスハイライトを有効にする
-syntax enable
-
 " install not installed plugins on startup.
 if dein#check_install()
   call dein#install()
 endif
+
+call map(dein#check_clean(), "delete(v:val, 'rf')")
+call dein#recache_runtimepath()
 
 " -------------------- End dein Scripts -------------------------
 
@@ -44,6 +44,8 @@ autocmd VimEnter * execute 'NERDTree'
 
 let NERDTreeShowHidden=1
 
+" Go to previous (last accessed) window.
+autocmd VimEnter * wincmd p
 " Ctrl + e で NerdTree を toggle
 map <silent><C-e> :NERDTreeFocus<CR>
 " map <silent><C-e> :NERDTreeToggle<CR>
@@ -56,14 +58,20 @@ set updatetime=500
 
 " -------------------- config --------------------
 
-" クリップボードと連携 (tmux-yunk 用)
-set clipboard=unnamedplus
+" 文字コード
+set fileencodings=utf-8,cp932
+
+" 256色設定
+set t_Co=256
+
+" シンタックスハイライトを有効にする
+syntax enable
 
 " テーマを onedark にする
 colorscheme onedark
 
-" 文字コード
-set fileencodings=utf-8,cp932
+" クリップボードと連携 (tmux-yunk 用)
+set clipboard=unnamedplus
 
 " 行末のスペースを可視化
 set list
@@ -74,6 +82,10 @@ set number
 
 " カーソルのある行をハイライト
 set cursorline
+set cursorcolumn
+
+" カーソルの座標を表示
+set ruler
 
 " メッセージ欄を2行に
 set cmdheight=2
@@ -96,7 +108,7 @@ set hlsearch
 " -------------------- key bindings --------------------
 
 " ESC を押下した後に noh (nohlsearch)
-nnoremap <esc> :noh<return><esc> 
+nnoremap <esc> :noh<return><esc>
 nnoremap <esc>^[ <esc>^[
 
 " gr で前のタブへ移動 (gt で次のタブへ移動)
