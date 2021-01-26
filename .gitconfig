@@ -17,8 +17,8 @@
 	ff = only
 	rebase = true
 [pretty]
-	default = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white)%s%Creset %C(blue)- [%an] %C(cyan)(%cr)%Creset"
-	bold = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white bold)%s%Creset %C(blue)- %an %C(cyan)(%cr)%Creset"
+	default = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white)%s%Creset %C(green)- [%an] %C(cyan)(%cr)%Creset"
+	bold = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white bold)%s%Creset %C(green)- %an %C(cyan)(%cr)%Creset"
 [alias]
 	alias = config --get-regexp alias.*
 	br = branch
