@@ -5,8 +5,7 @@ PATH_FILE := ~/.path.sh
 LANGS := node go python rust
 .DEFAULT_GOAL := help
 
-.PHONY: all deploy install node go python rust
-
+.PHONY: init add-tools remove-tools add-nix remove-nix add-prezto remove-prezto add-dein-vim remove-dein-vim add-mkcert remove-mkcert add-bash-it remove-bash-it install install-node, install-go, install-python, install-rust uninstall uninstall-node, uninstall-go, uninstall-python, uninstall-rust packages packages-apt packages-apt-for-pyenv packages-nix packages-npm packages-go packages-pip update update-apt update-npm update-go update-pip deploy deploy-gitconfig restore apt-list apt-history apt-history-installed npm-list help
 
 # ------------------------------ init ------------------------------
 
