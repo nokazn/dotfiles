@@ -38,7 +38,7 @@ add-prezto: _print-airplane # Add Prezto for zsh.
 	@echo "✅ prezto has been installed successfully!"
 
 remove-prezto: _print-goodbye # Remove Prezto for zsh.
-	sudo rm -i -r ~/.zprezto
+	sudo rm -I -r ~/.zprezto
 	@echo "✅ prezto has been uninstalled successfully!"
 
 add-dein-vim: _print-airplane # Add dein.vim.
@@ -83,7 +83,7 @@ add-bash-it: _print-airplane # Add bash-it.
 	@echo "✅ bash-it has been installed successfully!"
 
 remove-bash-it: _print-goodbye # Remove bash-it.
-	sudo rm -i -r ~/.bash-it
+	sudo rm -I -r ~/.bash-it
 
 # ------------------------------ languages ------------------------------
 
