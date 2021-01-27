@@ -52,7 +52,7 @@ function left-prompt() {
 PROMPT='
 %F{133}%n%f @ %F{166}%m%f ✨ %F{118}%~%f ${vcs_info_msg_0_}
 %F{087}→%f '
-RPROMPT="🕙 %F{226}$(date +'%Y-%m-%d %-H:%M:%S (%a)')%f"
+RPROMPT="🕙 %F{226}"'$(date +"%Y-%m-%d %-H:%M:%S (%a)")'"%f"
 
 # ------------------------------ history ------------------------------
 
@@ -75,6 +75,10 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+fi
+
+if type colordiff > /dev/null 2>&1; then
+    alias diff='colordiff'
 fi
 
 # colored GCC warnings and errors
