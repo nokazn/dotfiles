@@ -10,13 +10,15 @@ LANGS := node go python rust
 
 # ------------------------------ init ------------------------------
 
-init: install packaes deploy; # Install all languages and their packages.
+init: add-tools install packaes deploy; # Install all languages and their packages.
 
-# ------------------------------ install ------------------------------
+# ------------------------------ tools ------------------------------
 
-install: install-nix $(addprefix install-,$(LANGS)); # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
+add-tools: add-nix add-prezto add-dein-vim add-mkcert; # Add developing tools.
 
-install-nix: _print-airplane # Install nix.
+remove-tools: remove-nix remove-prezto remove-dein-vim remove-mkcert; # Remove developing tools.
+
+add-nix: _print-airplane # Install nix.
 	@if type "nix-env" > /dev/null 2>&1; then \
 		echo "✅ nix is already installed."; \
 	else \
@@ -25,21 +27,79 @@ install-nix: _print-airplane # Install nix.
 		echo "✅ nix has been installed successfully!"; \
 	fi
 
+remove-nix: _print-goodbye # Uninstall nix.
+	sudo rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
+	sudo rm -rf /nix
+	@echo "✅ nix has been uninstalled successfully!"
+
+
+add-prezto: _print-airplane # Add Prezto for zsh.
+	git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
+	ls $${ZDOTDIR:-$${HOME}}/.zprezto/runcoms --ignore README.md | xargs -I "{}" ln -s "$${HOME}/.zprezto/runcoms/{}" "$${HOME}/dotfiles/.{}"
+	@echo "✅ prezto has been installed successfully!"
+
+remove-prezto: _print-goodbye # Remove Prezto for zsh.
+	sudo rm -i -r ~/.zprezto
+	@echo "✅ prezto has been uninstalled successfully!"
+
+add-dein-vim: _print-airplane # Add dein.vim.
+	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh -s ~/.vim/dein
+	@echo "✅ dein.vim has been installed successfully!"
+
+remove-dein-vim: _print-goodbye # Remove dein.vim.
+	sudo rm ~/.vim/dein -ri
+	@echo "✅ dein.vim has been uninstalled successfully!"
+
+add-mkcert: # Add mkcert (locally trusted development certificates tool).
+	sudo apt install libnss3-tools
+	mkdir ~/.mkcert -p; \
+	git clone https://github.com/FiloSottile/mkcert ~/.mkcert && cd ~/.mkcert; \
+	go build -ldflags "-X main.Version=$(git describe --tags)"
+	@echo "✅ mkcert has been installed successfully!"
+
+remove-mkcert: # Remove mkcert.
+	sudo rm -rI ~/.mkcert
+	@echo "✅ mkcert has been installed successfully!"
+
+add-bash-it: _print-airplane # Add bash-it.
+	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
+	~/.bash-it/install.sh
+	bash-it enable completion bash-it
+		cargo \
+		docker-compose \
+		docker \
+		export \
+		gcloud \
+		git \
+		go \
+		lerna \
+		makefile \
+		npm \
+		pip \
+		pipenv \
+		rustup \
+		ssh \
+		tmux
+	exec $$SHELL -l
+	@echo "✅ bash-it has been installed successfully!"
+
+remove-bash-it: _print-goodbye # Remove bash-it.
+	sudo rm -i -r ~/.bash-it
+
+# ------------------------------ languages ------------------------------
+
+install: $(addprefix install-,$(LANGS)); # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
+
 install-node install-go install-python install-rust: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
 
 
-uninstall: uninstall-nix $(addprefix uninstall-,$(LANGS)); # Uninstall all languages and tools. (runs scripts starting with 'unintall-' prefix.)
+uninstall: $(addprefix uninstall-,$(LANGS)); # Uninstall all languages and tools. (runs scripts starting with 'unintall-' prefix.)
 
 uninstall-node uninstall-go uninstall-python uninstall-rust: _print-goodbye # Uninstall each language.
 	$(eval lang=$(subst uninstall-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh;
-
-uninstall-nix: _print-goodbye # Uninstall nix.
-	sudo rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
-	sudo rm -rf /nix
-	@echo "✅ nix has been uninstalled successfully!"
 
 # ------------------------------ packages ------------------------------
 
@@ -143,62 +203,6 @@ deploy-gitconfig: # Copy .gitconfig file.
 
 restore: # Restore backed-up files of dotfiles.
 	$(SCRIPTS_DIR)/restore.sh
-
-
-# ------------------------------ tools ------------------------------
-
-add-bash-it: _print-airplane # Add bash-it.
-	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
-	~/.bash-it/install.sh
-	bash-it enable completion bash-it
-		cargo \
-		docker-compose \
-		docker \
-		export \
-		gcloud \
-		git \
-		go \
-		lerna \
-		makefile \
-		npm \
-		pip \
-		pipenv \
-		rustup \
-		ssh \
-		tmux
-	exec $$SHELL -l
-	@echo "✅ bash-it has been installed successfully!"
-
-remove-bash-it: _print-goodbye # Remove bash-it.
-	sudo rm -i -r ~/.bash-it
-
-add-prezto: _print-airplane # Add Prezto for zsh.
-	git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
-	ls $${ZDOTDIR:-$${HOME}}/.zprezto/runcoms --ignore README.md | xargs -I "{}" ln -s "$${HOME}/.zprezto/runcoms/{}" "$${HOME}/dotfiles/.{}"
-	@echo "✅ prezto has been installed successfully!"
-
-remove-prezto: _print-goodbye # Remove Prezto for zsh.
-	sudo rm -i -r ~/.zprezto
-	@echo "✅ prezto has been uninstalled successfully!"
-
-add-dein-vim: _print-airplane # Add dein.vim.
-	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh -s ~/.vim/dein
-	@echo "✅ dein.vim has been installed successfully!"
-
-remove-dein-vim: _print-goodbye # Remove dein.vim.
-	sudo rm ~/.vim/dein -ri
-	@echo "✅ dein.vim has been uninstalled successfully!"
-
-add-mkcert: # Add mkcert (locally trusted development certificates tool).
-	sudo apt install libnss3-tools
-	mkdir ~/.mkcert -p; \
-	git clone https://github.com/FiloSottile/mkcert ~/.mkcert && cd ~/.mkcert; \
-	go build -ldflags "-X main.Version=$(git describe --tags)"
-	@echo "✅ mkcert has been installed successfully!"
-
-remove-mkcert: # Remove mkcert.
-	sudo rm -rI ~/.mkcert
-	@echo "✅ mkcert has been installed successfully!"
 
 # ------------------------------ utilities ------------------------------
 
