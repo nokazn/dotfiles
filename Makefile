@@ -138,7 +138,17 @@ packages-nix: # Install nix packages.
 		nixpkgs.direnv \
 		nixpkgs.sl \
 		nixpkgs.neofetch \
-		nixpkgs.heroku
+		nixpkgs.heroku \
+		nixpkgs.colordiff \
+		nixpkgs.htop \
+		nixpkgs.tree \
+		nixpkgs.nkf \
+		nixpkgs.tldr \
+		nixpkgs.jq \
+		nixpkgs.yq \
+		nixpkgs.ncdu \
+		nixpkgs.inetutils \
+		nixpkgs.rsync
 
 packages-npm: # Install npm packages.
 # TODO: vue の next が stable になったら @next を外す
