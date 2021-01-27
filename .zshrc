@@ -97,6 +97,8 @@ alias tmux-relaod='tmux source-file ~/.tmux.conf'
 alias path='echo $PATH | sed -E -e "s/:/\n/g" | sed -e "s/^/  /"'
 alias aliases='alias | sed -E -e "s/^alias\s//" | column -s "=" -t'
 alias zsh-colors='seq -w 255 | xargs -I "{}" echo -n -e "\e[38;5;{}m {}"; echo "\e[0m"'
+alias apt-install='apt install --no-install-recommends'
+alias apt-purge='apt --purge remove'
 
 # git aliases
 alias g='git'
