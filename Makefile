@@ -134,6 +134,7 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 
 packages-nix: # Install nix packages.
 	nix-env --install vim \
+		git \
 		sl \
 		neofetch \
 		heroku
