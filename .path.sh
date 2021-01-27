@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# suppress errors in .bashrc
-# set -o nounset
-# set -o errexit
-set -o pipefail
-
 # nodenv
 if [[ -d "$HOME/.nodenv" ]]; then
     export NODENV_ROOT="$HOME/.nodenv"
