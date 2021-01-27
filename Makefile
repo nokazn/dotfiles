@@ -133,11 +133,12 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 		liblzma-dev
 
 packages-nix: # Install nix packages.
-	nix-env --install vim \
-		git \
-		sl \
-		neofetch \
-		heroku
+	nix-env --install -A nixpkgs.git \
+		nixpkgs.vimHugeX \
+		nixpkgs.direnv \
+		nixpkgs.sl \
+		nixpkgs.neofetch \
+		nixpkgs.heroku
 
 packages-npm: # Install npm packages.
 # TODO: vue の next が stable になったら @next を外す
