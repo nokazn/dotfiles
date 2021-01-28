@@ -1,3 +1,5 @@
+#!/usr/bin/make -f
+
 SHELL := /bin/bash
 MAKEFILE := ./Makefile
 SCRIPTS_DIR := ./scripts
@@ -148,7 +150,8 @@ packages-nix: # Install nix packages.
 		nixpkgs.yq \
 		nixpkgs.ncdu \
 		nixpkgs.inetutils \
-		nixpkgs.rsync
+		nixpkgs.rsync \
+		nixpkgs.gcc
 
 packages-npm: # Install npm packages.
 # TODO: vue の next が stable になったら @next を外す
