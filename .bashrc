@@ -268,5 +268,9 @@ if [[ -d ${BASH_IT} ]]; then
     # export BASH_IT_RELOAD_LEGACY=1
 
     # Load Bash It
-    source "${BASH_IT}/bash_it.sh"
+    if [[ -f  ${BASH_IT}/bash_it.sh ]]; then
+        source "${BASH_IT}/bash_it.sh"
+    else
+        echo "⚠ the entry file of bash-it doesn't exist at '${BASH_IT}/bash_it.sh'" >&2
+    fi
 fi

@@ -34,4 +34,6 @@ fi
 
 if [[ -f "$HOME/dotfiles/scripts/cdhist.sh" ]]; then
     . "$HOME/dotfiles/scripts/cdhist.sh"
+else
+    echo "⚠ cdhist doesn't exist at '$HOME/dotfiles/scripts/cdhist.sh'" >&2
 fi
