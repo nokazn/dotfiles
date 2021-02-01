@@ -238,9 +238,10 @@ docker-postgresql: # Run PostgreSQL in Docker.
 	@echo "✅ Running PostgreSQL at port 5432 in 'postgresql' container. You can connect by executing 'psql -h localhost -p 5432 -U postgres'."
 
 docker-mysql: # Run MySQL in Docker/
+	docker network create mysql-network
 	docker run -d --rm \
 			--name mysql \
-			--network wp-network \
+			--network mysql-network \
 			-e MYSQL_ROOT_PASSWORD=password \
 			-p 3306:3306 \
 			-v mysql-tmp-data:/var/lib/mysql \
@@ -248,10 +249,25 @@ docker-mysql: # Run MySQL in Docker/
 			mysql:5.7
 	@echo "✅ Running MySQL at port 3306 in 'mysql' container."
 
+docker-mysql-rm: # Remove mysql container./
+	docker stop mysql; \
+	docker network rm mysql-network;
+	@echo "✅ Running MySQL at port 3306 in 'mysql' container."
+
+docker-redis: # Run Redis in Docker.
+	docker network create redis-network
+	docker run -d --rm \
+		--name redis \
+		--network redis-network \
+		-p 6379:6379 \
+		-v redis-tmp:/data \
+		redis:6.0.10-alpine \
+		redis-server --appendonly yes
+	@echo "✅ Running Redis at port 6379 in 'redis' container."
+
 docker-wordpress: docker-mysql # Run Wordpress & MySQL in Docker.
-	docker network create wp-network; \
 	docker run -d --rm --name wordpress \
-		--network wp-network \
+		--network mysql-network \
 		-e WORDPRESS_DB_PASSWORD=password \
 		-p 8080:80 \
 		wordpress
