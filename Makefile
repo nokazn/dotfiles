@@ -19,6 +19,7 @@ add-tools: add-nix add-prezto add-dein-vim add-mkcert; # Add developing tools.
 
 remove-tools: remove-nix remove-prezto remove-dein-vim remove-mkcert; # Remove developing tools.
 
+
 add-nix: _print-airplane # Install nix.
 	@if type "nix-env" > /dev/null 2>&1; then \
 		echo "✅ nix is already installed."; \
@@ -43,6 +44,7 @@ remove-prezto: _print-goodbye # Remove Prezto for zsh.
 	sudo rm -I -r ~/.zprezto
 	@echo "✅ prezto has been uninstalled successfully!"
 
+
 add-dein-vim: _print-airplane # Add dein.vim.
 	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh -s ~/.vim/dein
 	@echo "✅ dein.vim has been installed successfully!"
@@ -50,6 +52,7 @@ add-dein-vim: _print-airplane # Add dein.vim.
 remove-dein-vim: _print-goodbye # Remove dein.vim.
 	sudo rm ~/.vim/dein -ri
 	@echo "✅ dein.vim has been uninstalled successfully!"
+
 
 add-mkcert: # Add mkcert (locally trusted development certificates tool).
 	sudo apt install libnss3-tools
@@ -61,6 +64,7 @@ add-mkcert: # Add mkcert (locally trusted development certificates tool).
 remove-mkcert: # Remove mkcert.
 	sudo rm -rI ~/.mkcert
 	@echo "✅ mkcert has been installed successfully!"
+
 
 add-bash-it: _print-airplane # Add bash-it.
 	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
@@ -217,6 +221,44 @@ deploy-gitconfig: # Copy .gitconfig file.
 
 restore: # Restore backed-up files of dotfiles.
 	$(SCRIPTS_DIR)/restore.sh
+
+# ------------------------------ docker ------------------------------
+
+docker-nginx: # Run nginx in Docker.
+	docker run -d --name nginx -p 8080:80 nginx
+	@echo "✅ Running nginx at port 8080 in 'nginx' container."
+
+docker-postgresql: # Run PostgreSQL in Docker.
+	docker run --rm -d \
+		--name postgres \
+		-e POSTGRES_PASSWORD=password \
+		-p 5432:5432 \
+		-v postgres-tmp:/var/lib/postgresql/data \
+		postgres:12-alpine
+	@echo "✅ Running PostgreSQL at port 5432 in 'postgresql' container. You can connect by executing 'psql -h localhost -p 5432 -U postgres'."
+
+docker-mysql: # Run MySQL in Docker/
+	docker run -d --rm \
+			--name mysql \
+			--network wp-network \
+			-e MYSQL_ROOT_PASSWORD=password \
+			-p 3306:3306 \
+			-v mysql-tmp-data:/var/lib/mysql \
+			-v mysql-tmp-log:/var/log/mysql \
+			mysql:5.7
+	@echo "✅ Running MySQL at port 3306 in 'mysql' container."
+
+docker-wordpress: docker-mysql # Run Wordpress & MySQL in Docker.
+	docker network create wp-network; \
+	docker run -d --rm --name wordpress \
+		--network wp-network \
+		-e WORDPRESS_DB_PASSWORD=password \
+		-p 8080:80 \
+		wordpress
+	@echo "✅ Running Wordpress at port 8080 in 'wordpress' container."
+
+docker-rmi-untagged-images: # Remove all untagged images.
+	docker rmi $$(docker images -f "dangling=true" -q --no-trunc)
 
 # ------------------------------ utilities ------------------------------
 
