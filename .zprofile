@@ -61,3 +61,17 @@ export LESS='-F -g -i -M -R -S -w -X -z-4'
 if (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
+
+# ------------------------------------------------------------------------------------
+
+if (type wsl.exe > /dev/null 2>&1) && (uname -r | grep "microsoft" > /dev/null); then
+    # WSL 環境下では時刻がずれる場合があるのでハードウェアと合わせておく
+    # https://github.com/microsoft/WSL/issues/5324
+    sudo hwclock -s
+fi
+
+if [[ -f "$HOME/dotfiles/scripts/cdhist.sh" ]]; then
+    . "$HOME/dotfiles/scripts/cdhist.sh"
+else
+    echo "⚠ cdhist doesn't exist at '$HOME/dotfiles/scripts/cdhist.sh'" >&2
+fi
