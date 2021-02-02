@@ -91,6 +91,25 @@ add-bash-it: _print-airplane # Add bash-it.
 remove-bash-it: _print-goodbye # Remove bash-it.
 	sudo rm -I -r ~/.bash-it
 
+
+add-wsl-sudo-hello: # Add WSL-Hello-sudo (https://github.com/nullpo-head/WSL-Hello-sudo).
+	mkdir -p ~/downloads
+	if [[ ! -f ~/downloads/wsl-hello-sudo/install.sh ]]; then \
+		if [[ ! -e ~/downloads/wsl-hello-sudo.tar.gz ]]; then \
+			wget http://github.com/nullpo-head/WSL-Hello-sudo/releases/latest/download/release.tar.gz -O wsl-hello-sudo; \
+		fi; \
+		mkdir -p ~/downloads/wsl-hello-sudo; \
+		tar -xvf ~/downloads/wsl-hello-sudo.tar.gz -C ~/downloads/wsl-hello-sudo --strip-components 1; \
+	fi
+	cd ~/downloads/wsl-hello-sudo; \
+	./install.sh
+	@echo "✅ WSL-Hello-sudo has been installed successfully!"
+
+remove-wsl-hello-sudo: # Remove WSL-Hello-sudo
+	~/downloads/wsl-hello-sudo/uninstall.sh
+	sudo rm -Ir ~/downloads/wsl-hello-sudo
+	@echo "✅ WSL-Hello-sudo has been uninstalled successfully!"
+
 # ------------------------------ languages ------------------------------
 
 install: $(addprefix install-,$(LANGS)); # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
