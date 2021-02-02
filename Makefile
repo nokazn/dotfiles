@@ -175,7 +175,8 @@ packages-nix: # Install nix packages.
 		nixpkgs.inetutils \
 		nixpkgs.rsync \
 		nixpkgs.gcc \
-		nixpkgs.redis
+		nixpkgs.redis \
+		nixpkgs.gist
 
 packages-npm: # Install npm packages.
 # TODO: vue の next が stable になったら @next を外す
