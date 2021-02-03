@@ -11,32 +11,33 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
 }
 
 choco install -y googlechrome `
-firefox `
-visualstudiocode `
-git `
-vcxsrf `
-# うまくセットアップできない
-# docker-desktop `
-pgadmin4
-postman `
-adobereader `
-thunderbird `
-keybase `
-discord `
-typora `
-boostnote `
-keepass `
-keepassxc `
-googledrive `
-everything `
-fastcopy `
-crystaldiskmark `
-crystaldiskinfo `
-7zip `
-gimp `
-vlc `
-screentogif `
-spotify `
-lastfmscrobbler `
-todoist `
-slack
+  firefox `
+  opera `
+  visualstudiocode `
+  git `
+  vcxsrf `
+  # うまくセットアップできない
+  # docker-desktop `
+  pgadmin4
+  postman `
+  adobereader `
+  thunderbird `
+  keybase `
+  discord `
+  typora `
+  boostnote `
+  keepass `
+  keepassxc `
+  googledrive `
+  everything `
+  fastcopy `
+  crystaldiskmark `
+  crystaldiskinfo `
+  7zip `
+  gimp `
+  vlc `
+  screentogif `
+  spotify `
+  lastfmscrobbler `
+  todoist `
+  slack
