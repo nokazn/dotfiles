@@ -24,6 +24,8 @@
 	br = branch
 	ch = checkout
 	chb = checkout -b
+	sw = switch
+	swc = switch -c
 	d = diff
 	dc = diff --cached
 	dl = diff --stat
