@@ -7,19 +7,22 @@ PATH_FILE := ~/.path.sh
 LANGS := node go python rust
 .DEFAULT_GOAL := help
 
-.PHONY: init add-tools remove-tools add-nix remove-nix add-prezto remove-prezto add-dein-vim remove-dein-vim add-mkcert remove-mkcert add-bash-it remove-bash-it install install-node, install-go, install-python, install-rust uninstall uninstall-node, uninstall-go, uninstall-python, uninstall-rust packages packages-apt packages-apt-for-pyenv packages-nix packages-npm packages-go packages-pip update update-apt update-npm update-go update-pip deploy deploy-gitconfig restore apt-list apt-history apt-history-installed npm-list help
 
 # ------------------------------ init ------------------------------
 
+.PHONY: init
 init: add-tools install packaes deploy; # Install all languages and their packages.
 
 # ------------------------------ tools ------------------------------
 
+.PHONY: add-tools
 add-tools: add-nix add-prezto add-dein-vim add-mkcert; # Add developing tools.
 
+.PHONY: remove-tools
 remove-tools: remove-nix remove-prezto remove-dein-vim remove-mkcert; # Remove developing tools.
 
 
+.PHONY: add-nix
 add-nix: _print-airplane # Install nix.
 	@if type "nix-env" > /dev/null 2>&1; then \
 		echo "✅ nix is already installed."; \
@@ -29,31 +32,37 @@ add-nix: _print-airplane # Install nix.
 		echo "✅ nix has been installed successfully!"; \
 	fi
 
+.PHONY: remove-nix
 remove-nix: _print-goodbye # Uninstall nix.
 	sudo rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
 	sudo rm -rf /nix
 	@echo "✅ nix has been uninstalled successfully!"
 
 
+.PHONY: add-prezto
 add-prezto: _print-airplane # Add Prezto for zsh.
 	git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
 	ls $${ZDOTDIR:-$${HOME}}/.zprezto/runcoms --ignore README.md | xargs -I "{}" ln -s "$${HOME}/.zprezto/runcoms/{}" "$${HOME}/dotfiles/.{}"
 	@echo "✅ prezto has been installed successfully!"
 
+.PHONY: remove-prezto
 remove-prezto: _print-goodbye # Remove Prezto for zsh.
 	sudo rm -I -r ~/.zprezto
 	@echo "✅ prezto has been uninstalled successfully!"
 
 
+.PHONY: add-dein-vim
 add-dein-vim: _print-airplane # Add dein.vim.
 	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh -s ~/.vim/dein
 	@echo "✅ dein.vim has been installed successfully!"
 
+.PHONY: remove-dein-vim
 remove-dein-vim: _print-goodbye # Remove dein.vim.
 	sudo rm ~/.vim/dein -ri
 	@echo "✅ dein.vim has been uninstalled successfully!"
 
 
+.PHONY: add-mkcert
 add-mkcert: # Add mkcert (locally trusted development certificates tool).
 	sudo apt install libnss3-tools
 	mkdir ~/.mkcert -p; \
@@ -61,11 +70,13 @@ add-mkcert: # Add mkcert (locally trusted development certificates tool).
 	go build -ldflags "-X main.Version=$(git describe --tags)"
 	@echo "✅ mkcert has been installed successfully!"
 
+.PHONY: remove-mkcert
 remove-mkcert: # Remove mkcert.
 	sudo rm -rI ~/.mkcert
 	@echo "✅ mkcert has been installed successfully!"
 
 
+.PHONY: add-bash-it
 add-bash-it: _print-airplane # Add bash-it.
 	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
 	~/.bash-it/install.sh
@@ -88,10 +99,12 @@ add-bash-it: _print-airplane # Add bash-it.
 	exec $$SHELL -l
 	@echo "✅ bash-it has been installed successfully!"
 
+.PHONY: remove-bash-it
 remove-bash-it: _print-goodbye # Remove bash-it.
 	sudo rm -I -r ~/.bash-it
 
 
+.PHONY: add-wsl-sudo-hello
 add-wsl-sudo-hello: # Add WSL-Hello-sudo (https://github.com/nullpo-head/WSL-Hello-sudo).
 	mkdir -p ~/downloads
 	if [[ ! -f ~/downloads/wsl-hello-sudo/install.sh ]]; then \
@@ -105,6 +118,7 @@ add-wsl-sudo-hello: # Add WSL-Hello-sudo (https://github.com/nullpo-head/WSL-Hel
 	./install.sh
 	@echo "✅ WSL-Hello-sudo has been installed successfully!"
 
+.PHONY: remove-wsl-hello-sudo
 remove-wsl-hello-sudo: # Remove WSL-Hello-sudo
 	~/downloads/wsl-hello-sudo/uninstall.sh
 	sudo rm -Ir ~/downloads/wsl-hello-sudo
@@ -112,24 +126,28 @@ remove-wsl-hello-sudo: # Remove WSL-Hello-sudo
 
 # ------------------------------ languages ------------------------------
 
+.PHONY: install
 install: $(addprefix install-,$(LANGS)); # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
 
+.PHONY: install-node install-go install-python install-rust
 install-node install-go install-python install-rust: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
 
-
+.PHONY: uninstall
 uninstall: $(addprefix uninstall-,$(LANGS)); # Uninstall all languages and tools. (runs scripts starting with 'unintall-' prefix.)
 
+.PHONY: uninstall-node uninstall-go uninstall-python uninstall-rust
 uninstall-node uninstall-go uninstall-python uninstall-rust: _print-goodbye # Uninstall each language.
 	$(eval lang=$(subst uninstall-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh;
 
 # ------------------------------ packages ------------------------------
 
+.PHONY: packages
 packages: packages-apt packages-npm packaes-pip; # Get all packages.
 
-# TODO: pyenv
+.PHONY: packagegs-apt
 packages-apt: packages-apt-for-pyenv # Install apt packages.
 	sudo apt install -y \
 		xsel \
@@ -137,6 +155,7 @@ packages-apt: packages-apt-for-pyenv # Install apt packages.
 		zsh
 	sudo apt update -y && sudo apt upgrade -y
 
+.PHONY: packages-apt-for-pyenv
 packages-apt-for-pyenv: # Install apt packages for building pyenv.
 	sudo apt install --no-install-recommends -y \
 		make \
@@ -157,6 +176,7 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 		libffi-dev \
 		liblzma-dev
 
+.PHONY: packages-nix
 packages-nix: # Install nix packages.
 	nix-env --install -A nixpkgs.git \
 		nixpkgs.vimHugeX \
@@ -178,6 +198,7 @@ packages-nix: # Install nix packages.
 		nixpkgs.redis \
 		nixpkgs.gist
 
+.PHONY: packages-npm
 packages-npm: # Install npm packages.
 # TODO: vue の next が stable になったら @next を外す
 	npm i -g \
@@ -200,6 +221,7 @@ packages-npm: # Install npm packages.
 		yarn;
 	nodenv rehash
 
+.PHONY: packages-go
 packages-go: # Install Go packages.
 	go get -u -v github.com/motemen/ghq; \
 	go get -u -v github.com/motemen/gore; \
@@ -207,6 +229,7 @@ packages-go: # Install Go packages.
 	go get -u -v golang.org/x/tools/cmd/goimports;
 	goenv rehash
 
+.PHONY: packages-pip
 packages-pip: # Install pip packages.
 	pip install --user \
 		pipenv;
@@ -214,41 +237,51 @@ packages-pip: # Install pip packages.
 
 # ------------------------------ update ------------------------------
 
+.PHONY: update
 update: update-apt update-npm update-go update-rust; # Update all packages.
 
+.PHONY: update-apt
 update-apt: # Update apt packages.
 	sudo apt update -y; \
 	if [[ $$(apt list --upgradable 2>/dev/null | grep upgradable | wc -l) -gt 0 ]]; then \
 		sudo apt upgrade -y; \
 	fi;
 
+.PHONY: update-npm
 update-npm: # Update global npm packages.
 	npm update -g
 
+.PHONY: update-go
 update-go: install-go; # Update Go packages.
 
+.PHONY: update-pip
 update-pip: # Update pip packages.
 	pip install --upgrade pip
 	pip list --user | tail -n +3 | cut -d " " -f 1 | xargs pip install --user --upgrade
 
 # ------------------------------ deploy & restore dotfiles ------------------------------
 
+.PHONY: deploy
 deploy: # Make symbolic links to dotfiles and back up original files if exists.
 	$(SCRIPTS_DIR)/deploy.sh
 
 # TODO: 別のスクリプトに分ける
+.PHONY: deploy-gitconfig
 deploy-gitconfig: # Copy .gitconfig file.
 	cp ./.gitconfig ~/.gitconfig
 
+.PHONY: restore
 restore: # Restore backed-up files of dotfiles.
 	$(SCRIPTS_DIR)/restore.sh
 
 # ------------------------------ docker ------------------------------
 
+.PHONY: docker-nginx
 docker-nginx: # Run nginx in Docker.
 	docker run -d --name nginx -p 8080:80 nginx
 	@echo "✅ Running nginx at port 8080 in 'nginx' container."
 
+.PHONY: docker-postgresql
 docker-postgresql: # Run PostgreSQL in Docker.
 	docker run --rm -d \
 		--name postgres \
@@ -258,6 +291,7 @@ docker-postgresql: # Run PostgreSQL in Docker.
 		postgres:12-alpine
 	@echo "✅ Running PostgreSQL at port 5432 in 'postgresql' container. You can connect by executing 'psql -h localhost -p 5432 -U postgres'."
 
+.PHONY: docker-mysql
 docker-mysql: # Run MySQL in Docker/
 	docker network create mysql-network
 	docker run -d --rm \
@@ -270,11 +304,13 @@ docker-mysql: # Run MySQL in Docker/
 			mysql:5.7
 	@echo "✅ Running MySQL at port 3306 in 'mysql' container."
 
+.PHONY: docker-mysql-rm
 docker-mysql-rm: # Remove mysql container./
 	docker stop mysql; \
 	docker network rm mysql-network;
 	@echo "✅ Running MySQL at port 3306 in 'mysql' container."
 
+.PHONY: docker-redis
 docker-redis: # Run Redis in Docker.
 	docker network create redis-network
 	docker run -d --rm \
@@ -286,6 +322,7 @@ docker-redis: # Run Redis in Docker.
 		redis-server --appendonly yes
 	@echo "✅ Running Redis at port 6379 in 'redis' container."
 
+.PHONY: docker-wordpress
 docker-wordpress: docker-mysql # Run Wordpress & MySQL in Docker.
 	docker run -d --rm --name wordpress \
 		--network mysql-network \
@@ -294,14 +331,17 @@ docker-wordpress: docker-mysql # Run Wordpress & MySQL in Docker.
 		wordpress
 	@echo "✅ Running Wordpress at port 8080 in 'wordpress' container."
 
+.PHONY: docker-rmi-untagged-images
 docker-rmi-untagged-images: # Remove all untagged images.
 	docker rmi $$(docker images -f "dangling=true" -q --no-trunc)
 
 # ------------------------------ utilities ------------------------------
 
+.PHONY: apt-list
 apt-list: # Show a list of installed apt packages.
 	sudo apt list --installed | more
 
+.PHONY: apt-history
 HISTORY_LOG := /var/log/apt/history.log
 apt-history: # Show apt packages installed/uninstalled history.
 # tee でプロセス置換して、+ (緑) の場合と - (赤) の場合で色を分け、標準出力を捨てる
@@ -315,6 +355,7 @@ apt-history: # Show apt packages installed/uninstalled history.
 			> /dev/null \
 		| cat
 
+.PHONY: apt-history-installed
 apt-history-installed: # Show a list of apt packages a user manually installed.
 	@echo "List of apt packages you have ever installed. (from '/var/log/apt/history.log')"
 # ...apt|apt-get [options] install [options] を削除 -> 行中の options を削除 -> パッケージごとに改行
@@ -328,9 +369,11 @@ apt-history-installed: # Show a list of apt packages a user manually installed.
 		| column -t -s " " \
 		| sed -E -e "s/^/  /g"
 
+.PHONY: npm-list
 npm-list: # List of installed npm packages.
 	npm list --depth=0 -g
 
+.PHONY: _print-airplane
 _print-airplane:
 	@echo
 	@echo "          (*)"
@@ -341,6 +384,7 @@ _print-airplane:
 	@echo "  ‾‾‾‾‾‾＼_ ＼"
 	@echo
 
+.PHONY: _print-goodbye
 _print-goodbye:
 	@echo
 	@echo "            (*)"
@@ -351,6 +395,7 @@ _print-goodbye:
 	@echo
 
 # TODO: カテゴリごとにわかりやすくする
+.PHONY: help
 help: # Show all commands.
 	@echo "📗 Displays help information for make commands."
 	@echo "Commands:"
