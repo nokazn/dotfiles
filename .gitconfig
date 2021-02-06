@@ -42,10 +42,8 @@
 	aa = !git add -u && git add . && git status --show-stash
 	c = commit
 	cm = commit -m
-	# alias br のエラーを抑制
-	ps = !git push origin $(br >/dev/null 2>&1)
-	# alias br のエラーを抑制
-	pl = !git pull origin $(br >/dev/null 2>&1)
+	ps = !git push origin $(git symbolic-ref --short HEAD)
+	pl = !git pull origin $(git symbolic-ref --short HEAD)
 	amend = !git commit -m \"$(git log --format="%s" -n 1)\" --amend
 	exact-amend = !git commit -m \"$(git log --format="%s" -n 1)\" --date="$(git log --format="%cd" -n 1)" --amend
 	reamend = reset --soft HEAD@{1}
