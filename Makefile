@@ -196,6 +196,7 @@ packages-nix: # Install nix packages.
 		nixpkgs.rsync \
 		nixpkgs.gcc \
 		nixpkgs.redis \
+		nixpkgs.memcached \
 		nixpkgs.gist
 
 .PHONY: packages-npm
@@ -305,10 +306,10 @@ docker-mysql: # Run MySQL in Docker/
 	@echo "✅ Running MySQL at port 3306 in 'mysql' container."
 
 .PHONY: docker-mysql-rm
-docker-mysql-rm: # Remove mysql container./
+docker-mysql-rm: # Remove MySql container./
 	docker stop mysql; \
-	docker network rm mysql-network;
-	@echo "✅ Running MySQL at port 3306 in 'mysql' container."
+	docker network rm mysql-network
+	@echo "✅ Removed 'mysql' container."
 
 .PHONY: docker-redis
 docker-redis: # Run Redis in Docker.
@@ -321,6 +322,28 @@ docker-redis: # Run Redis in Docker.
 		redis:6.0.10-alpine \
 		redis-server --appendonly yes
 	@echo "✅ Running Redis at port 6379 in 'redis' container."
+
+.PHONY: docker-redis-rm
+docker-redis-rm: # Remove Redis container.
+	docker stop redis; \
+	docker network rm redis-network
+	@echo "✅ Removed 'redis' container."
+
+.PHONY: docker-memcached
+docker-memcached: # Run Memcached in Docker.
+	docker network create memcached-network
+	docker run -d --rm \
+		--name memcached \
+		--network memcached-network \
+		-p 11211:11211 \
+		memcached:1.6-alpine
+	@echo "✅ Running Memcached at port 11211 in 'memcached' container."
+
+.PHONY: docker-memcached-rm
+docker-memcached-rm: # Remove Memcached container.
+	docker stop memcached; \
+	docker network rm memcached-network
+	@echo "✅ Removed 'memcached' container."
 
 .PHONY: docker-wordpress
 docker-wordpress: docker-mysql # Run Wordpress & MySQL in Docker.
