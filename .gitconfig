@@ -9,6 +9,7 @@
 	filemode = true
 	bare = false
 	logallrefupdates = true
+	pager = delta
 [github]
 	user = nokazn
 [merge]
@@ -65,3 +66,6 @@
 	reb3 = rebase -i HEAD~3
 	reb4 = rebase -i HEAD~4
 	reb5 = rebase -i HEAD~5
+[delta]
+	line-numbers = true
+	side-by-side = true
