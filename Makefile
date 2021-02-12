@@ -198,7 +198,11 @@ packages-nix: # Install nix packages.
 		nixpkgs.redis \
 		nixpkgs.memcached \
 		nixpkgs.gist \
-		nixpkgs.gitAndTools.delta
+		nixpkgs.gitAndTools.delta \
+		nixpkgs.broot \
+		nixpkgs.hyperfine \
+		nixpkgs.tokei \
+		nixpkgs.gping
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
