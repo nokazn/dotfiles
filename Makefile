@@ -199,6 +199,7 @@ packages-nix: # Install nix packages.
 		nixpkgs.memcached \
 		nixpkgs.gist \
 		nixpkgs.gitAndTools.delta \
+		nixpkgs.bat \
 		nixpkgs.broot \
 		nixpkgs.hyperfine \
 		nixpkgs.tokei \
