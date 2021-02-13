@@ -220,11 +220,13 @@ packages-npm: # Install npm packages.
 		elm-test \
 		firebase-tools \
 		http-server \
+		lerna \
 		netlify-cli \
 		prettier \
 		serverless \
 		ts-node \
 		typescript \
+		vercel \
 		vue@next \
 		yarn;
 	nodenv rehash
