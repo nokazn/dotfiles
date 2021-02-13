@@ -202,7 +202,8 @@ packages-nix: # Install nix packages.
 		nixpkgs.broot \
 		nixpkgs.hyperfine \
 		nixpkgs.tokei \
-		nixpkgs.gping
+		nixpkgs.gping \
+		nixpkgs.google-cloud-sdk
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
