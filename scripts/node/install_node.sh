@@ -9,7 +9,7 @@ readonly PATH_SCRIPT=~/.path.sh
 # @param {string} - command
 # @return {0|1}
 function has_command() {
-  type $1 > /dev/null 2>&1
+  type "$1" > /dev/null 2>&1
   return $?
 }
 
@@ -17,7 +17,7 @@ function has_command() {
 # @param {string} - command
 # @return {void}
 function check_command() {
-  if ! has_command $1; then
+  if ! has_command "$1"; then
     echo "❌ command '$1' doesn't exist. Probably the command isn't installed correctly."
     exit 1
   fi
@@ -59,10 +59,11 @@ function echo_already_installed_message() {
 # @param {string} - package name
 # @return {void}
 function install_nodenv_plugin() {
-  local nodenv_root=$(nodenv root)
+  local nodenv_root
+  nodenv_root=$(nodenv root)
   local plugin_path="${nodenv_root}/plugins/$1"
   if [[ -d ${plugin_path} ]]; then
-    echo_already_installed_message $1 ${plugin_path}
+    echo_already_installed_message "$1" "${plugin_path}"
     return 0
   elif [[ -e ${plugin_path} ]]; then
     echo "❌ The other package exists at '${plugin_path}'."
@@ -70,11 +71,11 @@ function install_nodenv_plugin() {
   fi
 
   echo "installing $1 plugin ..."
-  git clone "https://github.com/nodenv/$1.git" ${plugin_path}
+  git clone "https://github.com/nodenv/$1.git" "${plugin_path}"
   if [[ $? -gt 0 ]]; then
-    echo_fail_message $1 ${plugin_path}
+    echo_fail_message "$1" "${plugin_path}"
   fi
-  echo_success_message $1 ${plugin_path}
+  echo_success_message "$1" "${plugin_path}"
   return 0
 }
 
@@ -96,6 +97,7 @@ function install_nodenv() {
   git clone https://github.com/nodenv/nodenv.git ${nodenv_path}
   cd ${nodenv_path} && src/configure && make -C src
   ~/.nodenv/bin/nodenv init
+  # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   if ! has_command nodenv; then
     echo_fail_message "nodenv" ${nodenv_path}
@@ -120,13 +122,15 @@ function install_node() {
   check_command "nodenv"
 
   if has_command node; then
-    local node_version=$(node --version)
+    local node_version
+    node_version=$(node --version)
     echo_already_installed_message "Node.js ${node_version}" "$(which node)"
   else
-    local latest_version=$(nodenv install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
+    local latest_version
+    latest_version=$(nodenv install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
     echo "installing Node.js ${latest_version} (latest version of the major release) ..."
-    nodenv install ${latest_version}
-    nodenv global ${latest_version}
+    nodenv install "${latest_version}"
+    nodenv global "${latest_version}"
     if ! has_command "node" || ! has_command "npm" ; then
       echo_fail_message "❌ Node.js ${latest_version}"
     fi

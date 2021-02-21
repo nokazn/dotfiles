@@ -7,7 +7,7 @@ set -o pipefail
 # @param {string} - command
 # @return {0|1}
 function has_command() {
-  type $1 > /dev/null 2>&1
+  type "$1" > /dev/null 2>&1
   return $?
 }
 
@@ -24,8 +24,9 @@ function uninstall_go() {
     return 0;
   fi
 
-  local goenv_root=$(goenv root)
-  rm -rf ${goenv_root}
+  local goenv_root
+  goenv_root=$(goenv root)
+  rm -rf "${goenv_root}"
   if has_command "goenv"; then
     echo "❌ goenv has failed to be uninstalled from '${goenv_root}'."
     return 1

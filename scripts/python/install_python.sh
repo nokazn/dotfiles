@@ -9,7 +9,7 @@ readonly PATH_SCRIPT=~/.path.sh
 # @param {string} - command
 # @return {0|1}
 function has_command() {
-  type $1 > /dev/null 2>&1
+  type "$1" > /dev/null 2>&1
   return $?
 }
 
@@ -17,7 +17,7 @@ function has_command() {
 # @param {string} - command
 # @return {void}
 function check_command() {
-  if ! has_command $1; then
+  if ! has_command "$1"; then
     echo "❌ command '$1' doesn't exist. Probably the command isn't installed correctly."
     exit 1
   fi
@@ -74,6 +74,7 @@ function install_pyenv() {
   git clone https://github.com/pyenv/pyenv.git ~/.pyenv
   cd ~/.pyenv && src/configure && make -C src
   ~/.pyenv/bin/pyenv init
+  # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   if ! has_command "pyenv" ${pyenv_path}; then
     echo_fail_message "pyenv" ${pyenv_path}
@@ -118,15 +119,17 @@ function install_python() {
   check_command "pyenv"
 
   if has_command "python"; then
-    local python_version=$(python --version | cut --delimiter " " -f 2)
+    local python_version
+    python_version=$(python --version | cut --delimiter " " -f 2)
     echo_already_installed_message "Python ${python_version}" "$(which python)"
     return 0
   fi
 
-  local latest_version=$(pyenv install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
+  local latest_version
+  latest_version=$(pyenv install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
   echo "installing Python the ${latest_version} (latest version of the major release) ..."
-  pyenv install ${latest_version}
-  pyenv global ${latest_version}
+  pyenv install "${latest_version}"
+  pyenv global "${latest_version}"
   if ! has_command "python" || ! has_command "pip"; then
     echo_fail_message "Python ${latest_version}"
   fi

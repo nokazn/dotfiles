@@ -4,8 +4,8 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-readonly BASE_DIR=$(cd $(dirname $0)/..; pwd)
-readonly DEBUG=$([[ $# -gt 0 ]] && test $1 = --debug; echo $?)
+readonly BASE_DIR=$(cd "$(dirname "$0")"/..; pwd)
+readonly DEBUG=$([[ $# -gt 0 ]] && test "$1" = --debug; echo $?)
 readonly _BACKUP_DIR_NAME="backup_dotfiles"
 file_counter=0
 
@@ -13,7 +13,7 @@ readonly DESTINATION_BASE_DIR=~
 readonly BACKUP_BASE_DIR=~/${_BACKUP_DIR_NAME}
 
 # 一度 Windows 内のディレクトリに移動して %USERPROFILE% を出力してからもといたディレクトリに戻る
-readonly DESTINATION_BASE_DIR_FOR_WINDOWS=$(cd /mnt/c; wslpath -u $(cmd.exe /c "echo %USERPROFILE%" | tr -d "\r"); cd $OLDPWD)
+readonly DESTINATION_BASE_DIR_FOR_WINDOWS=$(cd /mnt/c; wslpath -u "$(cmd.exe /c "echo %USERPROFILE%" | tr -d "\r")"; cd "$OLDPWD")
 readonly BACKUP_BASE_DIR_FOR_WINDOWS="${DESTINATION_BASE_DIR_FOR_WINDOWS}/${_BACKUP_DIR_NAME}"
 
 # ---------------------------------------- utils ----------------------------------------
@@ -29,7 +29,7 @@ function decho() {
 # @param {string} - directory path
 # @return {void}
 function ls_all() {
-  ls $1 --almost-all --ignore ".*\.swp"
+  ls "$1" --almost-all --ignore ".*\.swp"
   return 0
 }
 
@@ -37,7 +37,7 @@ function ls_all() {
 # @return {void}
 function ls_dotfiles() {
   # dot で始まる2文字以上のファイル
-  ls_all $1 | grep --extended-regexp "^\.[[:alnum:]]{2,}"
+  ls_all "$1" | grep --extended-regexp "^\.[[:alnum:]]{2,}"
   return 0
 }
 
@@ -52,7 +52,7 @@ function prepend_message() {
 # @return {"y"|"n"}
 function show_prompt_for_overwrite() {
   if [[ ! -e $1 ]]; then
-    decho "❌ invalid destination file path: " $1
+    decho "❌ invalid destination file path: " "$1"
     echo "n"
     return 1
   fi
@@ -81,7 +81,7 @@ function increment_file_counter() {
 # @return {void}
 function check_absolute_path() {
   # "/" からはじまるか
-  if [[ -z $(echo $1 | sed -E -n -e "/^\//p") ]]; then
+  if [[ -z $(echo "$1" | sed -E -n -e "/^\//p") ]]; then
     echo "❌ invalid absolute path: $1"
     exit 1
   fi
@@ -94,8 +94,9 @@ function check_absolute_path() {
 # @return {void}
 function make_backup() {
   # $2 + $1 から先頭のバックアップ用のディレクトリの親の部分を削除したもの
-  local backup_file="$2/${1##"$(dirname $2)/"}"
-  local backup_dir="$(dirname ${backup_file})"
+  local backup_file backup_dir
+  backup_file="$2/${1##"$(dirname "$2")/"}"
+  backup_dir="$(dirname "${backup_file}")"
 
 # 同名のファイルが存在し、バックアップがなければ実行
   if [[ -f $1 ]] && [[ ! -e ${backup_file} ]]; then
@@ -105,7 +106,7 @@ function make_backup() {
     fi
     # バックアップ用のディレクトリがなければ作成
     [[ ! -d ${backup_dir} ]] && mkdir -p "${backup_dir}"
-    cp --verbose $1 "${backup_file}" | prepend_message "✔ backed up: "
+    cp --verbose "$1" "${backup_file}" | prepend_message "✔ backed up: "
   fi
   return 0
 }
@@ -116,9 +117,10 @@ function make_backup() {
 # @return {void}
 function copy_gitconfig() {
   if [[ -f $2 ]]; then
-    local response=$(show_prompt_for_overwrite $2)
+    local response
+    response=$(show_prompt_for_overwrite "$2")
     [[ ${response} != "y" ]] && return 0
-    make_backup $2 $3
+    make_backup "$2" "$3"
   fi
 
   # .gitconfig 用の email の入力を tty から受け付ける
@@ -129,23 +131,26 @@ function copy_gitconfig() {
     return 0;
   fi
 
-  local success_message=$(cp --verbose $1 $2 | prepend_message "✅ newly copied: ")
+  local success_message
+  success_message=$(cp --verbose "$1" "$2" | prepend_message "✅ newly copied: ")
   # .gitconfig の email の箇所を置換
-  sed --in-place -e "2 s/email.*/email = ${email}/" $2
+  sed --in-place -e "2 s/email.*/email = ${email}/" "$2"
 
-  local email_line=$(cat $2 | grep --extended-regexp --line-number "email\s?=\s?${email}$")
+  local email_line
+  email_line=$(< "$2" grep --extended-regexp --line-number "email\s?=\s?${email}$")
   # email = <user's email> の形式になっているかチェック
   if [[ -z ${email_line} ]]; then
-    local error_line_number=$(echo ${email_line} | cut -f 1 -d ":")
+    local error_line_number
+    error_line_number=$(echo "${email_line}" | cut -f 1 -d ":")
     echo -n "❌ An error occured when inserting email to $2"
-    if [[ error_line_number ]]; then
+    if [[ ${error_line_number} ]]; then
       echo -n "at line ${error_line_number}"
     fi
     echo -e ": \n  ${email_line}"
     return 1
   fi
 
-  echo $success_message
+  echo "$success_message"
   increment_file_counter
   return 0
 }
@@ -154,7 +159,7 @@ function copy_gitconfig() {
 # @param {string} - destination file path
 # @return {void}
 function newly_link() {
-  check_absolute_path $1
+  check_absolute_path "$1"
   if [[ ${DEBUG} -eq 0 ]]; then
     echo "[debug] ✅ newly linked: : '$2' -> '$1'"
     return 0;
@@ -166,9 +171,9 @@ function newly_link() {
     # local source_win="$(wslpath -w $1)"
     # local destination_win="$(wslpath -w $2).lnk"
     # powershell.exe -c "\$wsh = New-Object -ComObject WScript.Shell; \$sc = \$wsh.CreateShortCut(\"${destination_win}\"); \$sc.TargetPath = \"${source_win}\"; \$sc.Save();"
-    cp --verbose $1 $2 | prepend_message "✅ newly copied: "
+    cp --verbose "$1" "$2" | prepend_message "✅ newly copied: "
   else
-    ln --symbolic --verbose --force $1 $2 | prepend_message "✅ newly linked: "
+    ln --symbolic --verbose --force "$1" "$2" | prepend_message "✅ newly linked: "
   fi
   increment_file_counter
 }
@@ -183,23 +188,24 @@ function make_symbolic_link() {
     echo "📌 already linked: $2"
     return 0
   elif [[ ! -e $1 ]]; then
-    echo "❌ invalid source file path: " $1
+    echo "❌ invalid source file path: " "$1"
     exit 1
   fi
 
   if [[ ! -e $2 ]]; then
-    newly_link $1 $2
+    newly_link "$1" "$2"
   elif [[ -f $2 ]] && [[ -f $1 ]]; then
     # ファイルでバックアップがある場合
-    local response=$(show_prompt_for_overwrite $2)
+    local response
+    response=$(show_prompt_for_overwrite "$2")
     if [[ ${response} == "y" ]]; then
-      make_backup $2 $3
-      newly_link $1 $2
+      make_backup "$2" "$3"
+      newly_link "$1" "$2"
     fi
   elif [[ -d $1 ]] && [[ -d $2 ]]; then
     # ディレクトリが存在する場合再帰的に呼び出す
     for file in $(ls_all "$1/"); do
-      make_symbolic_link "$1/${file}" "$2/${file}" $3
+      make_symbolic_link "$1/${file}" "$2/${file}" "$3"
     done
   else
     echo "❌ An error occuered when linking $1 to $2"
@@ -219,18 +225,18 @@ function deploy() {
     return 0;
   fi
 
-  for file in $(ls_dotfiles $1); do
+  for file in $(ls_dotfiles "$1"); do
     case ${file} in
       ".git" | ".gitignore" )
         continue
         ;;
 
       ".gitconfig" )
-        copy_gitconfig "$1/${file}" "$2/${file}" $3
+        copy_gitconfig "$1/${file}" "$2/${file}" "$3"
         ;;
 
       *)
-        make_symbolic_link "$1/${file}" "$2/${file}" $3
+        make_symbolic_link "$1/${file}" "$2/${file}" "$3"
         ;;
     esac
   done
@@ -250,9 +256,9 @@ function main() {
     fi
   fi
 
-  deploy ${BASE_DIR} ${DESTINATION_BASE_DIR} ${BACKUP_BASE_DIR}
+  deploy "${BASE_DIR}" ${DESTINATION_BASE_DIR} ${BACKUP_BASE_DIR}
   # TODO:
-  deploy "${BASE_DIR}/windows" ${DESTINATION_BASE_DIR_FOR_WINDOWS} ${BACKUP_BASE_DIR_FOR_WINDOWS}
+  deploy "${BASE_DIR}/windows" "${DESTINATION_BASE_DIR_FOR_WINDOWS}" "${BACKUP_BASE_DIR_FOR_WINDOWS}"
   if [[ $file_counter -gt 0 ]]; then
     echo "Successfully ${file_counter} dotfiles are initialized!"
   fi

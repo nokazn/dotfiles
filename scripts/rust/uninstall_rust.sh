@@ -7,7 +7,7 @@ set -o pipefail
 # @param {string} - command
 # @return {0|1}
 function has_command() {
-  type $1 > /dev/null 2>&1
+  type "$1" > /dev/null 2>&1
   return $?
 }
 
@@ -23,8 +23,9 @@ function uninstall_rust() {
   fi
 
   # cargo のパスから /bin/cargo を除く
-  local cargo_path=$(which cargo | sed -e "s/\/bin\/cargo//")
-  local rustup_path=$(rustup show home)
+  local cargo_path rustup_path
+  cargo_path=$(which cargo | sed -e "s/\/bin\/cargo//")
+  rustup_path=$(rustup show home)
 
   echo "uninstalling Rust ..."
   rustup self uninstall
