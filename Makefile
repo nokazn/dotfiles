@@ -222,6 +222,7 @@ packages-npm: # Install npm packages.
 		http-server \
 		lerna \
 		netlify-cli \
+		node-gyp \
 		prettier \
 		serverless \
 		ts-node \
