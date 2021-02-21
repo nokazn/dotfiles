@@ -7,7 +7,7 @@ set -o pipefail
 # @param {string} - command
 # @return {0|1}
 function has_command() {
-  type $1 > /dev/null 2>&1
+  type "$1" > /dev/null 2>&1
   return $?
 }
 
@@ -15,7 +15,7 @@ function has_command() {
 # @param {string} - command
 # @return {void}
 function check_command() {
-  if ! has_command $1; then
+  if ! has_command "$1"; then
     echo "❌ command '$1' doesn't exist. Probably the command isn't installed correctly."
     exit 1
   fi

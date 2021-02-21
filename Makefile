@@ -204,7 +204,8 @@ packages-nix: # Install nix packages.
 		nixpkgs.hyperfine \
 		nixpkgs.tokei \
 		nixpkgs.gping \
-		nixpkgs.google-cloud-sdk
+		nixpkgs.google-cloud-sdk \
+		nixpkgs.shellcheck
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
@@ -402,6 +403,14 @@ apt-history-installed: # Show a list of apt packages a user manually installed.
 .PHONY: npm-list
 npm-list: # List of installed npm packages.
 	npm list --depth=0 -g
+
+.PHONY: shellcheck
+shellcheck: # Check schell scripts.
+	find ./scripts/ -type f | grep -e "\.sh$$" | xargs shellcheck
+
+.PHONY: shellcheck-fix
+shellcheck-fix: # Check & fix schell scripts.
+	find ./scripts/ -type f | grep -e "\.sh$$" | xargs shellcheck --format diff | patch -p1
 
 .PHONY: _print-airplane
 _print-airplane:

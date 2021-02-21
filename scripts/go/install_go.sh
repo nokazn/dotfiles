@@ -9,7 +9,7 @@ readonly PATH_SCRIPT=~/.path.sh
 # @param {string} - command
 # @return {0|1}
 function has_command() {
-  type $1 > /dev/null 2>&1
+  type "$1" > /dev/null 2>&1
   return $?
 }
 
@@ -17,7 +17,7 @@ function has_command() {
 # @param {string} - command
 # @return {void}
 function check_command() {
-  if ! has_command $1; then
+  if ! has_command "$1"; then
     echo "❌ command '$1' doesn't exist. Probably the command isn't installed correctly."
     exit 1
   fi
@@ -73,6 +73,7 @@ function install_goenv() {
   echo "installing goenv ..."
   git clone https://github.com/syndbg/goenv.git ~/.goenv
   ~/.goenv/bin/goenv init
+  # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   if ! has_command "goenv"; then
     echo_fail_message "goenv" ${goenv_path}
@@ -88,16 +89,18 @@ function install_go() {
 
   # Go の最新版をインストール
   if has_command "go"; then
-    local go_version=$(go version | sed -e "s/go version go//")
+    local go_version
+    go_version=$(go version | sed -e "s/go version go//")
     echo_already_installed_message "Go ${go_version}" "$(which go)"
     return 0
   fi
 
   # 1.x.x の最新バージョンをインストールする
-  local latest_version=$(goenv install -l | grep -E "^\s*1(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
+  local latest_version
+  latest_version=$(goenv install -l | grep -E "^\s*1(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
   echo "installing Go ${latest_version} (latest version of the major release) ..."
-  goenv install ${latest_version}
-  goenv global ${latest_version}
+  goenv install "${latest_version}"
+  goenv global "${latest_version}"
   if ! has_command "go"; then
     echo_fail_message "Go ${latest_version}"
   fi

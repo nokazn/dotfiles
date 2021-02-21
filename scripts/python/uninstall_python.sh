@@ -7,7 +7,7 @@ set -o pipefail
 # @param {string} - command
 # @return {0|1}
 function has_command() {
-  type $1 > /dev/null 2>&1
+  type "$1" > /dev/null 2>&1
   return $?
 }
 
@@ -24,8 +24,9 @@ function uninstall_python() {
     return 0;
   fi
 
-  local pyenv_root=$(pyenv root)
-  rm -rf ${pyenv_root}
+  local pyenv_root
+  pyenv_root=$(pyenv root)
+  rm -rf "${pyenv_root}"
   if has_command "pyenv"; then
     echo "❌ pyenv has failed to be uninstalled from '${pyenv_root}'."
     return 1

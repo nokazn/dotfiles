@@ -7,7 +7,7 @@ set -o pipefail
 # @param {string} - command
 # @return {0|1}
 function has_command() {
-  type $1 > /dev/null 2>&1
+  type "$1" > /dev/null 2>&1
   return $?
 }
 
@@ -24,8 +24,9 @@ function uninstall_node() {
     return 0;
   fi
 
-  local nodenv_root=$(nodenv root)
-  rm -rf ${nodenv_root}
+  local nodenv_root
+  nodenv_root=$(nodenv root)
+  rm -rf "${nodenv_root}"
   if has_command "nodenv"; then
     echo "❌ nodenv has failed to be uninstalled from '${nodenv_root}'."
     return 1
