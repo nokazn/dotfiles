@@ -27,12 +27,12 @@ function check_command() {
 # @param None
 # @return {void}
 function install_elm() {
-  local elm_path=~/.local/bin/elm
-  if [[ -d ${elm_path} ]] && has_command "elm"; then
-    echo "✅ Elm is already installed at '${elm_path}'."
+  local ELM_PATH=~/.local/bin/elm
+  if [[ -d ${ELM_PATH} ]] && has_command "elm"; then
+    echo "✅ Elm is already installed at '${ELM_PATH}'."
     return 0
-  elif [[ -e ${elm_path} ]]; then
-    echo "❌ The other package exists at '${elm_path}', but the path to Elm doesn't exist."
+  elif [[ -e ${ELM_PATH} ]]; then
+    echo "❌ The other package exists at '${ELM_PATH}', but the path to Elm doesn't exist."
     exit 1
   fi
 
@@ -42,11 +42,10 @@ function install_elm() {
   chmod +x ~/downloads/elm
   mv ~/downloads/elm ~/.local/bin/
   if ! has_command "elm"; then
-    "❌ Elm has failed to be installed at '${elm_path}'!"
+    "❌ Elm has failed to be installed at '${ELM_PATH}'!"
   fi
-  "✅ Elm has been installed successfully at '${elm_path}'!"
+  "✅ Elm has been installed successfully at '${ELM_PATH}'!"
   return 0
 }
 
 install_elm
-exit 0

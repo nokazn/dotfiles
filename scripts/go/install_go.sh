@@ -41,9 +41,9 @@ function echo_success_message() {
 # @return {void}
 function echo_fail_message() {
   if [[ $1 ]]; then
-    echo "❌ $1 has been failed to install at '$2'."
+    echo "❌ $1 has failed to be installed at '$2'."
   else
-    echo "❌ $1 has been failed to install."
+    echo "❌ $1 has failed to be installed."
   fi
   exit 1
 }
@@ -75,7 +75,7 @@ function install_goenv() {
   ~/.goenv/bin/goenv init
   source ${PATH_SCRIPT}
   if ! has_command "goenv"; then
-    echo_fail_message "goenv"  ${nodenv_path}
+    echo_fail_message "goenv" ${goenv_path}
   fi
   echo_success_message "goenv" ${goenv_path}
   return 0
