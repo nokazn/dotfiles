@@ -31,7 +31,7 @@ function install_rust() {
   # TODO: expect コマンドで自動化
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   if [[ $? -gt 0 ]]; then
-    echo "❌ Rust has been failed to install."
+    echo "❌ Rust has failed to be installed."
     return 1
   fi
   source ${PATH_SCRIPT}

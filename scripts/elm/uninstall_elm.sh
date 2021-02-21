@@ -29,4 +29,3 @@ function uninstall_elm() {
 }
 
 uninstall_elm
-exit 0

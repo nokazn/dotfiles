@@ -28,9 +28,8 @@ function uninstall_rust() {
 
   echo "uninstalling Rust ..."
   rustup self uninstall
-  echo "✅ Rust has been uninstalled successfully from '${cargo_path}' and '${rustup_path}'!"
+  echo "✅ Rust has been uninstalled successfully from '${cargo_path}' and '${rustup_path}'."
   return 0
 }
 
 uninstall_rust
-exit 0

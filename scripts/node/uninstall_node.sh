@@ -27,10 +27,10 @@ function uninstall_node() {
   local nodenv_root=$(nodenv root)
   rm -rf ${nodenv_root}
   if has_command "nodenv"; then
-    echo "❌ nodenv has been failed to uninstalled from '${nodenv_root}'."
+    echo "❌ nodenv has failed to be uninstalled from '${nodenv_root}'."
     return 1
   fi
-  echo "✅ nodenv has been uninstalled successfully from '${nodenv_root}'!"
+  echo "✅ nodenv has been uninstalled successfully from '${nodenv_root}'."
   return 0
 }
 

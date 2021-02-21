@@ -27,10 +27,10 @@ function uninstall_go() {
   local goenv_root=$(goenv root)
   rm -rf ${goenv_root}
   if has_command "goenv"; then
-    echo "❌ goenv has been failed to uninstalled from '${goenv_root}'."
+    echo "❌ goenv has failed to be uninstalled from '${goenv_root}'."
     return 1
   fi
-  echo "✅ goenv has been uninstalled successfully from '${goenv_root}'!."
+  echo "✅ goenv has been uninstalled successfully from '${goenv_root}'."
   return 0
 }
 
