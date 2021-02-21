@@ -129,16 +129,16 @@ remove-wsl-hello-sudo: # Remove WSL-Hello-sudo
 .PHONY: install
 install: $(addprefix install-,$(LANGS)); # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
 
-.PHONY: install-node install-go install-python install-rust
-install-node install-go install-python install-rust: _print-airplane # Install each language.
+.PHONY: install-node install-go install-python install-rust install-elm
+install-node install-go install-python install-rust install-elm: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
 
 .PHONY: uninstall
 uninstall: $(addprefix uninstall-,$(LANGS)); # Uninstall all languages and tools. (runs scripts starting with 'unintall-' prefix.)
 
-.PHONY: uninstall-node uninstall-go uninstall-python uninstall-rust
-uninstall-node uninstall-go uninstall-python uninstall-rust: _print-goodbye # Uninstall each language.
+.PHONY: uninstall-node uninstall-go uninstall-python uninstall-rust uninstall-elm
+uninstall-node uninstall-go uninstall-python uninstall-rust uninstall-elm: _print-goodbye # Uninstall each language.
 	$(eval lang=$(subst uninstall-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh;
 
@@ -213,11 +213,8 @@ packages-npm: # Install npm packages.
 		@nestjs/cli \
 		@octokit/core \
 		@vue/cli@next \
-		elm \
-		elm-format \
 		envinfo \
 		eslint \
-		elm-test \
 		firebase-tools \
 		http-server \
 		lerna \
