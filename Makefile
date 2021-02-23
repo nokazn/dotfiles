@@ -205,7 +205,8 @@ packages-nix: # Install nix packages.
 		nixpkgs.tokei \
 		nixpkgs.gping \
 		nixpkgs.google-cloud-sdk \
-		nixpkgs.shellcheck
+		nixpkgs.shellcheck \
+		nixpkgs.expect
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
