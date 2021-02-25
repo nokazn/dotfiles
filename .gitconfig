@@ -60,12 +60,13 @@
 	ll = log --numstat --decorate --pretty=bold
 	# graph
 	lg = log --graph --branches --pretty=default
-	reb = rebase -i HEAD
-	reb1 = rebase -i HEAD~
-	reb2 = rebase -i HEAD~~
-	reb3 = rebase -i HEAD~3
-	reb4 = rebase -i HEAD~4
-	reb5 = rebase -i HEAD~5
+	reb = rebase
+	rebi = rebase -i HEAD
+	rebi1 = rebase -i HEAD~
+	rebi2 = rebase -i HEAD~~
+	rebi3 = rebase -i HEAD~3
+	rebi4 = rebase -i HEAD~4
+	rebi5 = rebase -i HEAD~5
 [delta]
 	line-numbers = true
 	side-by-side = true
