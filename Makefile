@@ -212,6 +212,7 @@ packages-nix: # Install nix packages.
 packages-npm: # Install npm packages.
 # TODO: vue の next が stable になったら @next を外す
 	npm i -g \
+		aws-cdk \
 		@nestjs/cli \
 		@octokit/core \
 		@vue/cli@next \
@@ -242,6 +243,7 @@ packages-go: # Install Go packages.
 .PHONY: packages-pip
 packages-pip: # Install pip packages.
 	pip install --user \
+		awscli \
 		pipenv;
 	pyenv rehash
 
