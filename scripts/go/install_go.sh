@@ -9,7 +9,7 @@ readonly PATH_SCRIPT=~/.path.sh
 # @param {string} - command
 # @return {0|1}
 function has_command() {
-  type "$1" > /dev/null 2>&1
+  type "$1" >/dev/null 2>&1
   return $?
 }
 
