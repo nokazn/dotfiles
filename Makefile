@@ -24,7 +24,7 @@ remove-tools: remove-nix remove-prezto remove-dein-vim remove-mkcert; # Remove d
 
 .PHONY: add-nix
 add-nix: _print-airplane # Install nix.
-	@if type "nix-env" > /dev/null 2>&1; then \
+	@if type "nix-env" >/dev/null 2>&1; then \
 		echo "✅ nix is already installed."; \
 	else \
 		curl -L https://nixos.org/nix/install | sh; \
@@ -386,7 +386,7 @@ apt-history: # Show apt packages installed/uninstalled history.
 		| sed -E -e "s/(^|\s)--?\S+//g" -e "s/install:/+ /" -e "s/remove:/- /" \
 		| tee >(xargs -I "{}" bash -c "[[ \"{}\" =~ ^\+ ]] && printf \"\033[32m{}\033[0m\n\"") \
 			>(xargs -I "{}" bash -c "[[ \"{}\" =~ ^- ]] && printf \"\033[31m{}\033[0m\n\"") \
-			> /dev/null \
+			>/dev/null \
 		| cat
 
 .PHONY: apt-history-installed

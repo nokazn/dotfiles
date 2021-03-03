@@ -6,17 +6,10 @@ set -o pipefail
 
 readonly ELM_PATH=~/.local/bin.elm
 
-# @param {string} - command
-# @return {0|1}
-function has_command() {
-  type "$1" > /dev/null 2>&1
-  return $?
-}
-
 # @param None
 # @return {void}
 function uninstall_elm() {
-  if ! has_command "elm"; then
+  if ! type "elm" >/dev/null 2>&1; then
     echo "❌ Elm doesn't exist at '${ELM_PATH}'."
     return 0
   fi
