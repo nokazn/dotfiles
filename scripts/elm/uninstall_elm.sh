@@ -1,8 +1,6 @@
 #!/bin/bash
 
-set -o nounset
-set -o errexit
-set -o pipefail
+set -eu -o pipefail
 
 readonly ELM_PATH=~/.local/bin.elm
 
