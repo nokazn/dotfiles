@@ -1,8 +1,6 @@
 #!/bin/bash
 
-set -o nounset
-set -o errexit
-set -o pipefail
+set -eu -o pipefail
 
 readonly DEBUG=$([[ $# -gt 0 ]] && test "$1" = --debug; echo $?)
 readonly _BACKUP_DIR_NAME="backup_dotfiles"
