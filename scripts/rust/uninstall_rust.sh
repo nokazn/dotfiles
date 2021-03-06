@@ -20,12 +20,11 @@ function uninstall_rust() {
     return 0
   fi
 
-  # cargo のパスから /bin/cargo を除く
+  echo "uninstalling Rust ..."
   local cargo_path rustup_path
+  # cargo のパスから /bin/cargo を除く
   cargo_path=$(which cargo | sed -e "s/\/bin\/cargo//")
   rustup_path=$(rustup show home)
-
-  echo "uninstalling Rust ..."
   rustup self uninstall
   echo "✅ Rust has been uninstalled successfully from '${cargo_path}' and '${rustup_path}'."
   return 0

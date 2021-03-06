@@ -10,7 +10,7 @@ if [[ -d "$HOME/.local/bin" ]]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# nodenv
+# Node.js (nodenv)
 if [[ -d "$HOME/.nodenv" ]]; then
     export NODENV_ROOT="$HOME/.nodenv"
     PATH="${NODENV_ROOT}/bin:$PATH"
@@ -18,9 +18,11 @@ if [[ -d "$HOME/.nodenv" ]]; then
     if type "nodenv" >/dev/null 2>&1; then
         eval "$(nodenv init -)"
     fi
+else
+    echo "⚠ nodenv doesn't exist at '$HOME/.nodenv'."
 fi
 
-# goenv
+# Golang (goenv)
 if [ -d "$HOME/.goenv" ]; then
     export GOENV_ROOT="$HOME/.goenv"
     export PATH="${GOENV_ROOT}/bin:$PATH"
@@ -33,9 +35,11 @@ if [ -d "$HOME/.goenv" ]; then
         # Go Modules を有効にする
         export 'GO111MODULE=on'
     fi
+else
+    echo "⚠ goenv doesn't exist at '$HOME/.goenv'."
 fi
 
-# pyenv
+# Python (pyenv)
 if [[ -d "$HOME/.pyenv" ]]; then
     export PYENV_ROOT="$HOME/.pyenv"
     PATH="${PYENV_ROOT}/bin:$PATH"
@@ -43,26 +47,41 @@ if [[ -d "$HOME/.pyenv" ]]; then
     if type "pyenv" >/dev/null 2>&1; then
         eval "$(pyenv init -)"
     fi
+else
+    echo "⚠ pyenv doesn't exist at '$HOME/.pyenv'"
 fi
 # ユーザーインストールした pipenv
 if [[ -e "$HOME/.local/bin/pipenv" ]]; then
     PATH="$HOME/.local/bin:$PATH"
+else
+    echo "⚠ pipenv doesn't exist at '$HOME/.local/bin/pipenv'."
 fi
 
-# deno
+# Deno
 DENO_INSTALL="$HOME/.deno"
 if [[ -d "${DENO_INSTALL}" ]]; then
     export DENO_INSTALL=$DENO_INSTALL
     PATH="${DENO_INSTALL}/bin:$PATH:"
+else
+    echo "⚠ Deno doesn't exist at '$HOME/.deno'"
 fi
 
 # Rust
 if [[ -f "$HOME/.cargo/env" ]]; then
     source "$HOME/.cargo/env"
+else
+    echo "⚠ cargo doesn't exist at '$HOME/.cargo'"
+fi
+
+# Nim (choosenim)
+if [[ -d "$HOME/.nimble/bin" ]]; then
+    PATH="$HOME/.nimble/bin:$PATH"
+else
+    echo "⚠ Nim doesn't exist at '$HOME/.nimble'"
 fi
 
 # TODO
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 SDKMAN_DIR="$HOME/.sdkman"
 if [[ -d ${SDKMAN_DIR} ]]; then
     export SDKMAN_DIR="${SDKMAN_DIR}"

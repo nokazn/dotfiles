@@ -5,7 +5,6 @@ set -eu -o pipefail
 readonly PATH_SCRIPT=~/.path.sh
 
 # @param {string} - command
-# @param {string} - command
 # @return {void}
 function check_command() {
   if ! type "$1" >/dev/null 2>&1; then
