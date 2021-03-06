@@ -152,7 +152,8 @@ packages-apt: packages-apt-for-pyenv # Install apt packages.
 	sudo apt install -y \
 		xsel \
 		postgres-12 \
-		zsh
+		zsh \
+		tshark
 	sudo apt update -y && sudo apt upgrade -y
 
 .PHONY: packages-apt-for-pyenv
@@ -206,8 +207,7 @@ packages-nix: # Install nix packages.
 		nixpkgs.gping \
 		nixpkgs.google-cloud-sdk \
 		nixpkgs.shellcheck \
-		nixpkgs.expect \
-		nixpkgs.wireshark
+		nixpkgs.expect
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
@@ -403,6 +403,10 @@ apt-history-installed: # Show a list of apt packages a user manually installed.
 		| xargs -I {} sh -c "echo \"$${apt_list}\" | grep -e '{}/'" \
 		| column -t -s " " \
 		| sed -E -e "s/^/  /g"
+
+.PHONY: nix-list
+nix-list: # List of installed nix packages.
+	nix-env -qa --installed
 
 .PHONY: npm-list
 npm-list: # List of installed npm packages.
