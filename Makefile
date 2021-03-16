@@ -152,6 +152,7 @@ packages-apt: packages-apt-for-pyenv # Install apt packages.
 	sudo apt install -y \
 		xsel \
 		postgres-12 \
+		mysql-server \
 		zsh \
 		tshark
 	sudo apt update -y && sudo apt upgrade -y
@@ -207,7 +208,9 @@ packages-nix: # Install nix packages.
 		nixpkgs.gping \
 		nixpkgs.google-cloud-sdk \
 		nixpkgs.shellcheck \
-		nixpkgs.expect
+		nixpkgs.expect \
+		nixpkgs.php \
+		nixpkgs.php74Packages.composer
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
