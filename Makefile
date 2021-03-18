@@ -223,6 +223,7 @@ packages-npm: # Install npm packages.
 		envinfo \
 		eslint \
 		firebase-tools \
+		generator-code \
 		http-server \
 		lerna \
 		netlify-cli \
@@ -233,7 +234,8 @@ packages-npm: # Install npm packages.
 		typescript \
 		vercel \
 		vue@next \
-		yarn;
+		yarn \
+		yo;
 	nodenv rehash
 
 .PHONY: packages-go
