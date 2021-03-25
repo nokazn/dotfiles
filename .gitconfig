@@ -10,6 +10,8 @@
 	bare = false
 	logallrefupdates = true
 	pager = delta
+[init]
+	defaultBranch = main
 [github]
 	user = nokazn
 [merge]
