@@ -45,6 +45,8 @@
 	aa = !git add -u && git add . && git status --show-stash
 	c = commit
 	cm = commit -m
+	# ローカルの ref が最新でなければ失敗させる
+	push-f = !git push --force-with-lease origin $(git symbolic-ref --short HEAD)
 	ps = !git push origin $(git symbolic-ref --short HEAD)
 	pl = !git pull origin $(git symbolic-ref --short HEAD)
 	amend = !git commit -m \"$(git log --format="%s" -n 1)\" --amend
