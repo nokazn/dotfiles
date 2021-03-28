@@ -26,7 +26,6 @@ choco install -y googlechrome `
   discord `
   typora `
   boostnote `
-  keepass `
   keepassxc `
   googledrive `
   everything `
