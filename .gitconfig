@@ -10,6 +10,7 @@
 	bare = false
 	logallrefupdates = true
 	pager = delta
+	excludesfile = ~/.config/git/ignore
 [init]
 	defaultBranch = main
 [github]
