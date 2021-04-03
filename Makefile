@@ -230,6 +230,7 @@ packages-npm: # Install npm packages.
 		node-gyp \
 		prettier \
 		serverless \
+		sort-package-json \
 		ts-node \
 		typescript \
 		vercel \
