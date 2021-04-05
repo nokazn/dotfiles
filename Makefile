@@ -226,6 +226,7 @@ packages-npm: # Install npm packages.
 		generator-code \
 		http-server \
 		lerna \
+		minimum-node-version \
 		netlify-cli \
 		node-gyp \
 		prettier \
