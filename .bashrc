@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -30,17 +32,25 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# ---------------------------------------- common settings  ----------------------------------------
+
+if [ -f ~/.shrc.sh ]; then
+    . ~/.shrc.sh
+else
+    echo "⚠ ~/.shrc.sh doesn't exist"
+fi
+
 # ---------------------------------------- prompt ----------------------------------------
 
 # TODO: "[${COL}${LOC}]" とすると関数内で色を埋め込むときに \[\] が表示されてしまう
 COL="\033[" # "\e[" と同義
 LOC=""
 RESET="${COL}m${LOC}" # "${COL}00m${LOC}" と同義
-RED="${COL}01;31m${LOC}"
+# RED="${COL}01;31m${LOC}"
 GREEN="${COL}01;32m${LOC}"
 YELLOW="${COL}00;33m${LOC}"
 BLUE="${COL}01;34m${LOC}"
-MAGENTA="${COL}00;35m${LOC}"
+# MAGENTA="${COL}00;35m${LOC}"
 CYAN="${COL}00;36m${LOC}"
 WHITE="${COL}00;37m${LOC}"
 BLUE_BG="${COL}01;44m${LOC}"
@@ -50,8 +60,9 @@ function ps1_date() {
 }
 
 function ps1_git() {
-    local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
-    local hash=$(git log --pretty=format:'%h' -n 1 2>/dev/null)
+    local branch hash
+    branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+    hash=$(git log --pretty=format:'%h' -n 1 2>/dev/null)
     if [[ -n ${branch} ]]; then
         if [[ -n ${hash} ]]; then
             echo -e -n "${CYAN}(${WHITE}${BLUE_BG}${branch}${CYAN}: ${hash})${RESET} "
@@ -107,17 +118,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-# ---------------------------------------- aliases ----------------------------------------
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 # ---------------------------------------- completion ----------------------------------------
 
 # enable programmable completion features (you don't need to enable
@@ -129,29 +129,6 @@ if ! shopt -oq posix; then
     elif [ -f /etc/bash_completion ]; then
         . /etc/bash_completion
     fi
-fi
-
-# ---------------------------------------- path  ----------------------------------------
-
-# パスが設定されてなければ設定する
-if [[ ! ${PATH_SET_CORRECTLY} == true ]]; then
-    if [[ -f "$HOME/.path.sh" ]]; then
-        source "$HOME/.path.sh"
-        export PATH_SET_CORRECTLY=true
-    else
-        echo "⚠ .path.sh doesn't exist"
-    fi
-fi
-
-# ---------------------------------------- VcXsrv  ----------------------------------------
-
-# WSL 内では X Server 経由で GUI を表示
-if [[ -f "$HOME/dotfiles/scripts/start_vcxsrv.sh" ]]; then
-    # WSL に割り当てられる IP アドレスを取得して設定
-    export DISPLAY="$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0"
-    $HOME/dotfiles/scripts/start_vcxsrv.sh
-else
-    echo "⚠ file 'start_vcxsrv' doesn't exist at ${START_VCXSRV_PATH}" >&2
 fi
 
 # ---------------------------------------- bash-it  ----------------------------------------

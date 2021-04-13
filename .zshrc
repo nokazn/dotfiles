@@ -20,6 +20,14 @@ autoload -Uz colors ; colors
 autoload -Uz compinit && compinit
 # End of lines added by compinstall
 
+# ---------------------------------------- common settings  ----------------------------------------
+
+if [ -f ~/.shrc.sh ]; then
+    . ~/.shrc.sh
+else
+    echo "⚠ ~/.shrc.sh doesn't exist"
+fi
+
 # ------------------------------ Prezto ------------------------------
 
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -62,32 +70,3 @@ HISTSIZE=1000
 SAVEHIST=1000
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
-
-# ------------------------------ aliases ------------------------------
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# ---------------------------------------- path  ----------------------------------------
-
-# パスが設定されてなければ設定する
-if [[ ! ${PATH_SET_CORRECTLY} == true ]]; then
-    if [[ -f "$HOME/.path.sh" ]]; then
-        source "$HOME/.path.sh"
-        export PATH_SET_CORRECTLY=true
-    else
-        echo "⚠ .path.sh doesn't exist"
-    fi
-fi
-
-# ---------------------------------------- VcXsrv  ----------------------------------------
-
-# WSL 内では X Server 経由で GUI を表示
-if [[ -f "$HOME/dotfiles/scripts/start_vcxsrv.sh" ]]; then
-    # WSL に割り当てられる IP アドレスを取得して設定
-    export DISPLAY="$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0"
-    $HOME/dotfiles/scripts/start_vcxsrv.sh
-else
-    echo "⚠ file 'start_vcxsrv' doesn't exist at ${START_VCXSRV_PATH}" >&2
-fi

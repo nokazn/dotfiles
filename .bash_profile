@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # if running bash
 if [[ -n $BASH_VERSION ]]; then
     # include .bashrc if it exists
@@ -20,7 +22,7 @@ if [[ ! ${PATH_SET_CORRECTLY} == true ]]; then
         source "$HOME/.path.sh"
         export PATH_SET_CORRECTLY=true
     else
-        echo "⚠ .path.sh doesn't exist"
+        echo "⚠ ~/.path.sh doesn't exist"
     fi
 fi
 
