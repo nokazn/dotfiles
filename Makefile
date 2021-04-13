@@ -181,6 +181,7 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 .PHONY: packages-nix
 packages-nix: # Install nix packages.
 	nix-env --install -A nixpkgs.git \
+		nixpkgs.gitAndTools.gh \
 		nixpkgs.vimHugeX \
 		nixpkgs.direnv \
 		nixpkgs.sl \
