@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# @param {string}
+# @param {string}
+# @return {string}
+function is_unregistered_path() {
+    ! (echo "$1" | grep -q "$2")
+}
+
 # set PATH so it includes user's private bin if it exists
 if [[ -d "$HOME/bin" ]]; then
     PATH="$HOME/bin:$PATH"
@@ -12,11 +19,13 @@ fi
 
 # Node.js (nodenv)
 if [[ -d "$HOME/.nodenv" ]]; then
-    export NODENV_ROOT="$HOME/.nodenv"
-    PATH="${NODENV_ROOT}/bin:$PATH"
-    # nodenv コマンドが存在する場合
-    if type "nodenv" >/dev/null 2>&1; then
-        eval "$(nodenv init -)"
+    if is_unregistered_path "$PATH" "$HOME/.nodenv"; then
+        export NODENV_ROOT="$HOME/.nodenv"
+        PATH="${NODENV_ROOT}/bin:$PATH"
+        # nodenv コマンドが存在する場合
+        if type "nodenv" >/dev/null 2>&1; then
+            eval "$(nodenv init -)"
+        fi
     fi
 else
     echo "⚠ nodenv doesn't exist at '$HOME/.nodenv'."
@@ -24,16 +33,18 @@ fi
 
 # Golang (goenv)
 if [ -d "$HOME/.goenv" ]; then
-    export GOENV_ROOT="$HOME/.goenv"
-    export PATH="${GOENV_ROOT}/bin:$PATH"
-    # goenv コマンドが存在する場合
-    if type "goenv" >/dev/null 2>&1; then
-        eval "$(goenv init -)"
-        # GOROOT はよしなに設定してくれる
-        export GOPATH="$HOME/go"
-        PATH="$PATH:${GOPATH}/bin"
-        # Go Modules を有効にする
-        export 'GO111MODULE=on'
+    if is_unregistered_path "$PATH" "$HOME/.goenv"; then
+        export GOENV_ROOT="$HOME/.goenv"
+        export PATH="${GOENV_ROOT}/bin:$PATH"
+        # goenv コマンドが存在する場合
+        if type "goenv" >/dev/null 2>&1; then
+            eval "$(goenv init -)"
+            # GOROOT はよしなに設定してくれる
+            export GOPATH="$HOME/go"
+            PATH="$PATH:${GOPATH}/bin"
+            # Go Modules を有効にする
+            export 'GO111MODULE=on'
+        fi
     fi
 else
     echo "⚠ goenv doesn't exist at '$HOME/.goenv'."
@@ -41,27 +52,28 @@ fi
 
 # Python (pyenv)
 if [[ -d "$HOME/.pyenv" ]]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    PATH="${PYENV_ROOT}/bin:$PATH"
-    # pyenv コマンドが存在する場合
-    if type "pyenv" >/dev/null 2>&1; then
-        eval "$(pyenv init -)"
+    if is_unregistered_path "$PATH" "$HOME/.pyenv"; then
+        export PYENV_ROOT="$HOME/.pyenv"
+        PATH="${PYENV_ROOT}/bin:$PATH"
+        # pyenv コマンドが存在する場合
+        if type "pyenv" >/dev/null 2>&1; then
+            eval "$(pyenv init -)"
+        fi
     fi
 else
     echo "⚠ pyenv doesn't exist at '$HOME/.pyenv'"
 fi
 # ユーザーインストールした pipenv
-if [[ -e "$HOME/.local/bin/pipenv" ]]; then
-    PATH="$HOME/.local/bin:$PATH"
-else
+if [[ ! -e "$HOME/.local/bin/pipenv" ]]; then
     echo "⚠ pipenv doesn't exist at '$HOME/.local/bin/pipenv'."
 fi
 
 # Deno
-DENO_INSTALL="$HOME/.deno"
-if [[ -d "${DENO_INSTALL}" ]]; then
-    export DENO_INSTALL=$DENO_INSTALL
-    PATH="${DENO_INSTALL}/bin:$PATH:"
+if [[ -d "$HOME/.deno" ]]; then
+    if is_unregistered_path "$PATH" "$HOME/.deno"; then
+        export DENO_INSTALL="$HOME/.deno"
+        PATH="$HOME/.deno/bin:$PATH:"
+    fi
 else
     echo "⚠ Deno doesn't exist at '$HOME/.deno'"
 fi
@@ -75,17 +87,18 @@ fi
 
 # Nim (choosenim)
 if [[ -d "$HOME/.nimble/bin" ]]; then
-    PATH="$HOME/.nimble/bin:$PATH"
+    if is_unregistered_path "$PATH" "$HOME/.nimble"; then
+        PATH="$HOME/.nimble/bin:$PATH"
+    fi
 else
     echo "⚠ Nim doesn't exist at '$HOME/.nimble'"
 fi
 
 # TODO
 # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-SDKMAN_DIR="$HOME/.sdkman"
-if [[ -d ${SDKMAN_DIR} ]]; then
-    export SDKMAN_DIR="${SDKMAN_DIR}"
-    [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+if [[ -d "$HOME/.sdkman" ]]; then
+    export SDKMAN_DIR="$HOME/.sdkman"
+    [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
 # added by Nix installer
@@ -95,7 +108,9 @@ fi
 
 # mkcert
 if [[ -d "$HOME/.mkcert" ]]; then
-    PATH="$HOME/.mkcert:$PATH"
+    if is_unregistered_path "$PATH" "$HOME/.mkcert"; then
+        PATH="$HOME/.mkcert:$PATH"
+    fi
 fi
 
 export PATH=$PATH
