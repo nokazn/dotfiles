@@ -16,14 +16,10 @@ if (type wsl.exe >/dev/null 2>&1) && (uname -r | grep "microsoft" >/dev/null); t
     sudo hwclock -s
 fi
 
-# パスが設定されてなければ設定する
-if [[ ! ${PATH_SET_CORRECTLY} == true ]]; then
-    if [[ -f "$HOME/.path.sh" ]]; then
-        source "$HOME/.path.sh"
-        export PATH_SET_CORRECTLY=true
-    else
-        echo "⚠ ~/.path.sh doesn't exist"
-    fi
+if [[ -f "$HOME/.path.sh" ]]; then
+    source "$HOME/.path.sh"
+else
+    echo "⚠ ~/.path.sh doesn't exist"
 fi
 
 if [[ -f "$HOME/dotfiles/scripts/cdhist.sh" ]]; then
