@@ -93,7 +93,11 @@ function install_nodenv() {
 
   echo "installing nodenv ..."
   git clone https://github.com/nodenv/nodenv.git ${nodenv_path}
-  cd ${nodenv_path} && src/configure && make -C src
+  # Optionally, try to compile dynamic bash extension to speed up nodenv. Don't worry if it fails; nodenv will still work normally
+  # https://github.com/nodenv/nodenv#basic-github-checkout
+  if ! (cd ${nodenv_path} && src/configure && make -C src); then
+    echo "⚠ Failed to execute make or configure scripts."
+  fi
   ~/.nodenv/bin/nodenv init
   # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
