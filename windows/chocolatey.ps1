@@ -15,10 +15,10 @@ choco install -y googlechrome `
   opera `
   visualstudiocode `
   git `
-  vcxsrf `
-  # うまくセットアップできない
+  vcxsrv `
+  # うまくセットアップできない `
   # docker-desktop `
-  pgadmin4
+  pgadmin4 `
   postman `
   adobereader `
   thunderbird `
