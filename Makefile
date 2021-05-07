@@ -16,10 +16,10 @@ init: add-tools install packaes deploy; # Install all languages and their packag
 # ------------------------------ tools ------------------------------
 
 .PHONY: add-tools
-add-tools: add-nix add-prezto add-dein-vim add-mkcert; # Add developing tools.
+add-tools: add-nix add-prezto add-dein-vim add-mkcert add-bash-it add-wsl-sudo-hello; # Add developing tools.
 
 .PHONY: remove-tools
-remove-tools: remove-nix remove-prezto remove-dein-vim remove-mkcert; # Remove developing tools.
+remove-tools: remove-nix remove-prezto remove-dein-vim remove-mkcert remove-bash-it add-wsl-sudo-hello; # Remove developing tools.
 
 
 .PHONY: add-nix
