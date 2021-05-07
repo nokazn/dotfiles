@@ -107,9 +107,10 @@ remove-bash-it: _print-goodbye # Remove bash-it.
 .PHONY: add-wsl-sudo-hello
 add-wsl-sudo-hello: # Add WSL-Hello-sudo (https://github.com/nullpo-head/WSL-Hello-sudo).
 	mkdir -p ~/downloads
+	cd ~/downloads; \
 	if [[ ! -f ~/downloads/wsl-hello-sudo/install.sh ]]; then \
 		if [[ ! -e ~/downloads/wsl-hello-sudo.tar.gz ]]; then \
-			wget http://github.com/nullpo-head/WSL-Hello-sudo/releases/latest/download/release.tar.gz -O wsl-hello-sudo; \
+			wget http://github.com/nullpo-head/WSL-Hello-sudo/releases/latest/download/release.tar.gz -O wsl-hello-sudo.tar.gz; \
 		fi; \
 		mkdir -p ~/downloads/wsl-hello-sudo; \
 		tar -xvf ~/downloads/wsl-hello-sudo.tar.gz -C ~/downloads/wsl-hello-sudo --strip-components 1; \
