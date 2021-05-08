@@ -70,7 +70,9 @@ function install_pyenv() {
 
   echo "installing pyenv ..."
   git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-  cd ~/.pyenv && src/configure && make -C src
+  if ! (cd ~/.pyenv && src/configure && make -C src); then
+    echo "⚠ Failed to execute make or configure scripts."
+  fi
   ~/.pyenv/bin/pyenv init
   # shellcheck disable=SC1090
   source ${PATH_SCRIPT}

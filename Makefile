@@ -146,7 +146,7 @@ uninstall-node uninstall-go uninstall-python uninstall-deno uninstall-rust unins
 # ------------------------------ packages ------------------------------
 
 .PHONY: packages
-packages: packages-apt packages-npm packaes-pip; # Get all packages.
+packages: packages-apt packages-nix packages-npm packages-go packaes-pip; # Get all packages.
 
 .PHONY: packagegs-apt
 packages-apt: packages-apt-for-pyenv # Install apt packages.
@@ -260,7 +260,7 @@ packages-pip: # Install pip packages.
 # ------------------------------ update ------------------------------
 
 .PHONY: update
-update: update-apt update-npm update-go update-rust; # Update all packages.
+update: update-apt update-npm update-go update-go; # Update all packages.
 
 .PHONY: update-apt
 update-apt: # Update apt packages.
