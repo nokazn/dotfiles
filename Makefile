@@ -11,7 +11,7 @@ LANGS := node go python rust
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init: add-tools install packaes deploy; # Install all languages and their packages.
+init: packages-apt add-tools install packaes deploy; # Install all languages and their packages.
 
 # ------------------------------ tools ------------------------------
 
@@ -146,22 +146,23 @@ uninstall-node uninstall-go uninstall-python uninstall-deno uninstall-rust unins
 # ------------------------------ packages ------------------------------
 
 .PHONY: packages
-packages: packages-apt packages-nix packages-npm packages-go packaes-pip; # Get all packages.
+packages: packages-nix packages-npm packages-go packaes-pip; # Get all packages except the ones from apt.
 
 .PHONY: packagegs-apt
 packages-apt: packages-apt-for-pyenv # Install apt packages.
+	sudo apt update -y && sudo apt upgrade -y
 	sudo apt install -y \
 		xsel \
 		postgres-12 \
 		mysql-server \
 		zsh \
 		tshark
-	sudo apt update -y && sudo apt upgrade -y
 
 .PHONY: packages-apt-for-pyenv
 packages-apt-for-pyenv: # Install apt packages for building pyenv.
 	sudo apt install --no-install-recommends -y \
 		make \
+		gcc \
 		build-essential \
 		libssl-dev \
 		zlib1g-dev \
