@@ -16,10 +16,10 @@ init: packages-apt add-tools install packaes deploy; # Install all languages and
 # ------------------------------ tools ------------------------------
 
 .PHONY: add-tools
-add-tools: add-nix add-prezto add-dein-vim add-mkcert add-bash-it add-wsl-sudo-hello; # Add developing tools.
+add-tools: add-nix add-prezto add-dein-vim add-mkcert add-bash-it add-wsl-hello-sudo; # Add developing tools.
 
 .PHONY: remove-tools
-remove-tools: remove-nix remove-prezto remove-dein-vim remove-mkcert remove-bash-it add-wsl-sudo-hello; # Remove developing tools.
+remove-tools: remove-nix remove-prezto remove-dein-vim remove-mkcert remove-bash-it add-wsl-hello-sudo; # Remove developing tools.
 
 
 .PHONY: add-nix
@@ -28,6 +28,7 @@ add-nix: _print-airplane # Install nix.
 		echo "✅ nix is already installed."; \
 	else \
 		curl -L https://nixos.org/nix/install | sh; \
+		source /home/nokazn/.nix-profile/etc/profile.d/nix.sh \
 		source $(PATH_FILE); \
 		echo "✅ nix has been installed successfully!"; \
 	fi
@@ -104,8 +105,8 @@ remove-bash-it: _print-goodbye # Remove bash-it.
 	sudo rm -I -r ~/.bash-it
 
 
-.PHONY: add-wsl-sudo-hello
-add-wsl-sudo-hello: # Add WSL-Hello-sudo (https://github.com/nullpo-head/WSL-Hello-sudo).
+.PHONY: add-wsl-hello-sudo
+add-wsl-hello-sudo: # Add WSL-Hello-sudo (https://github.com/nullpo-head/WSL-Hello-sudo).
 	mkdir -p ~/downloads
 	cd ~/downloads; \
 	if [[ ! -f ~/downloads/wsl-hello-sudo/install.sh ]]; then \
@@ -213,7 +214,8 @@ packages-nix: # Install nix packages.
 		nixpkgs.shellcheck \
 		nixpkgs.expect \
 		nixpkgs.php \
-		nixpkgs.php74Packages.composer
+		nixpkgs.php74Packages.composer \
+		nixpkgs.unzip
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
