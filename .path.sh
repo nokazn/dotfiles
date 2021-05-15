@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
 # @param {string}
-# @param {string}
 # @return {string}
 function is_unregistered_path() {
-    ! (echo "$1" | grep -q "$2")
+    ! (echo "$PATH" | grep -q "$2")
 }
 
 # set PATH so it includes user's private bin if it exists
@@ -19,7 +18,7 @@ fi
 
 # Node.js (nodenv)
 if [[ -d "$HOME/.nodenv" ]]; then
-    if is_unregistered_path "$PATH" "$HOME/.nodenv"; then
+    if is_unregistered_path "$HOME/.nodenv"; then
         export NODENV_ROOT="$HOME/.nodenv"
         PATH="${NODENV_ROOT}/bin:$PATH"
         # nodenv コマンドが存在する場合
@@ -33,7 +32,7 @@ fi
 
 # Golang (goenv)
 if [ -d "$HOME/.goenv" ]; then
-    if is_unregistered_path "$PATH" "$HOME/.goenv"; then
+    if is_unregistered_path "$HOME/.goenv"; then
         export GOENV_ROOT="$HOME/.goenv"
         export PATH="${GOENV_ROOT}/bin:$PATH"
         # goenv コマンドが存在する場合
@@ -52,7 +51,7 @@ fi
 
 # Python (pyenv)
 if [[ -d "$HOME/.pyenv" ]]; then
-    if is_unregistered_path "$PATH" "$HOME/.pyenv"; then
+    if is_unregistered_path "$HOME/.pyenv"; then
         export PYENV_ROOT="$HOME/.pyenv"
         PATH="${PYENV_ROOT}/bin:$PATH"
         # pyenv コマンドが存在する場合
@@ -70,7 +69,7 @@ fi
 
 # Deno
 if [[ -d "$HOME/.deno" ]]; then
-    if is_unregistered_path "$PATH" "$HOME/.deno"; then
+    if is_unregistered_path "$HOME/.deno"; then
         export DENO_INSTALL="$HOME/.deno"
         PATH="$HOME/.deno/bin:$PATH:"
     fi
@@ -87,7 +86,7 @@ fi
 
 # Nim (choosenim)
 if [[ -d "$HOME/.nimble/bin" ]]; then
-    if is_unregistered_path "$PATH" "$HOME/.nimble"; then
+    if is_unregistered_path "$HOME/.nimble"; then
         PATH="$HOME/.nimble/bin:$PATH"
     fi
 else
@@ -103,12 +102,14 @@ fi
 
 # added by Nix installer
 if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
-    . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+    if is_unregistered_path "$HOME/.nix-profile"; then
+        . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+    fi
 fi
 
 # mkcert
 if [[ -d "$HOME/.mkcert" ]]; then
-    if is_unregistered_path "$PATH" "$HOME/.mkcert"; then
+    if is_unregistered_path "$HOME/.mkcert"; then
         PATH="$HOME/.mkcert:$PATH"
     fi
 fi
