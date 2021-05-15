@@ -7,12 +7,12 @@ function is_unregistered_path() {
 }
 
 # set PATH so it includes user's private bin if it exists
-if [[ -d "$HOME/bin" ]]; then
+if [[ -d "$HOME/bin" ]] && is_unregistered_path "$HOME/bin"; then
     PATH="$HOME/bin:$PATH"
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [[ -d "$HOME/.local/bin" ]]; then
+if [[ -d "$HOME/.local/bin" ]] && is_unregistered_path "$HOME/.local/bin"; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
@@ -56,15 +56,12 @@ if [[ -d "$HOME/.pyenv" ]]; then
         PATH="${PYENV_ROOT}/bin:$PATH"
         # pyenv コマンドが存在する場合
         if type "pyenv" >/dev/null 2>&1; then
-            eval "$(pyenv init -)"
+            # TODO: 警告を無視
+            eval "$(pyenv init - > /dev/null)"
         fi
     fi
 else
     echo "⚠ pyenv doesn't exist at '$HOME/.pyenv'"
-fi
-# ユーザーインストールした pipenv
-if [[ ! -e "$HOME/.local/bin/pipenv" ]]; then
-    echo "⚠ pipenv doesn't exist at '$HOME/.local/bin/pipenv'."
 fi
 
 # Deno
@@ -100,11 +97,13 @@ if [[ -d "$HOME/.sdkman" ]]; then
     [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
-# added by Nix installer
+# Nix installer
 if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
     if is_unregistered_path "$HOME/.nix-profile"; then
         . "$HOME/.nix-profile/etc/profile.d/nix.sh"
     fi
+else
+    echo "⚠ nix-profile doesn't exist at '$HOME/.nix-profile'"
 fi
 
 # mkcert
@@ -112,6 +111,8 @@ if [[ -d "$HOME/.mkcert" ]]; then
     if is_unregistered_path "$HOME/.mkcert"; then
         PATH="$HOME/.mkcert:$PATH"
     fi
+else
+    echo "⚠ mkcert doesn't exist at '$HOME/.mkcert'"
 fi
 
 export PATH=$PATH
