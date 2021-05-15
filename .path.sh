@@ -106,15 +106,6 @@ else
     echo "⚠ nix-profile doesn't exist at '$HOME/.nix-profile'"
 fi
 
-# mkcert
-if [[ -d "$HOME/.mkcert" ]]; then
-    if is_unregistered_path "$HOME/.mkcert"; then
-        PATH="$HOME/.mkcert:$PATH"
-    fi
-else
-    echo "⚠ mkcert doesn't exist at '$HOME/.mkcert'"
-fi
-
 export PATH=$PATH
 
 # exit 0 とするとプロセスが終了し、source コマンドが反映されない
