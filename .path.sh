@@ -18,7 +18,7 @@ fi
 
 # Node.js (nodenv)
 if [[ -d "$HOME/.nodenv" ]]; then
-    if is_unregistered_path "$HOME/.nodenv"; then
+    if is_unregistered_path "$HOME/.nodenv/bin"; then
         export NODENV_ROOT="$HOME/.nodenv"
         PATH="${NODENV_ROOT}/bin:$PATH"
         # nodenv コマンドが存在する場合
@@ -32,7 +32,7 @@ fi
 
 # Golang (goenv)
 if [ -d "$HOME/.goenv" ]; then
-    if is_unregistered_path "$HOME/.goenv"; then
+    if is_unregistered_path "$HOME/.goenv/bin"; then
         export GOENV_ROOT="$HOME/.goenv"
         export PATH="${GOENV_ROOT}/bin:$PATH"
         # goenv コマンドが存在する場合
@@ -51,7 +51,7 @@ fi
 
 # Python (pyenv)
 if [[ -d "$HOME/.pyenv" ]]; then
-    if is_unregistered_path "$HOME/.pyenv"; then
+    if is_unregistered_path "$HOME/.pyenv/bin"; then
         export PYENV_ROOT="$HOME/.pyenv"
         PATH="${PYENV_ROOT}/bin:$PATH"
         # pyenv コマンドが存在する場合
@@ -66,7 +66,7 @@ fi
 
 # Deno
 if [[ -d "$HOME/.deno" ]]; then
-    if is_unregistered_path "$HOME/.deno"; then
+    if is_unregistered_path "$HOME/.deno/bin"; then
         export DENO_INSTALL="$HOME/.deno"
         PATH="$HOME/.deno/bin:$PATH:"
     fi
