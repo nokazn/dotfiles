@@ -73,7 +73,7 @@ function install_pyenv() {
   if ! (cd ~/.pyenv && src/configure && make -C src); then
     echo "⚠ Failed to execute make or configure scripts."
   fi
-  ~/.pyenv/bin/pyenv init
+  eval "$(~/.pyenv/bin/pyenv init -)"
   # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   if ! has_command "pyenv" ${pyenv_path}; then
@@ -126,7 +126,7 @@ function install_python() {
   fi
 
   local latest_version
-  latest_version=$(pyenv install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
+  latest_version=$(pyenv install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}$" | tail -n 1 | awk '{print $1}')
   echo "installing Python the ${latest_version} (latest version of the major release) ..."
   pyenv install "${latest_version}"
   pyenv global "${latest_version}"
