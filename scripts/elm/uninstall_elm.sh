@@ -2,7 +2,7 @@
 
 set -eu -o pipefail
 
-readonly ELM_PATH=~/.local/bin.elm
+readonly ELM_PATH=~/.local/bin/elm
 
 # @param None
 # @return {void}
@@ -13,7 +13,7 @@ function uninstall_elm() {
   fi
 
   echo "uninstalling Elm ..."
-  sudo rm -f ~/.local/bin/elm
+  rm -f ~/.local/bin/elm
   rm -rf ~/.elm
   echo "✅ Elm has been uninstalled successfully from '${ELM_PATH}'."
   return 0
