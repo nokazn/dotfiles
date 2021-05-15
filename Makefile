@@ -4,14 +4,14 @@ SHELL := /bin/bash
 MAKEFILE := ./Makefile
 SCRIPTS_DIR := ./scripts
 PATH_FILE := ~/.path.sh
-LANGS := node go python rust
+LANGS := node go deno rust elm nim
 .DEFAULT_GOAL := help
 
 
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init: packages-apt add-tools install packaes deploy; # Install all languages and their packages.
+init: deploy update-apt packages-apt add-tools packages-nix packaes-apt-for-pyenv install packaes; # Install all languages and their packages.
 
 # ------------------------------ tools ------------------------------
 
@@ -43,8 +43,12 @@ remove-nix: _print-goodbye # Uninstall nix.
 .PHONY: add-prezto
 add-prezto: _print-airplane # Add Prezto for zsh.
 	git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
-	ls $${ZDOTDIR:-$${HOME}}/.zprezto/runcoms --ignore README.md | xargs -I "{}" ln -s "$${HOME}/.zprezto/runcoms/{}" "$${HOME}/dotfiles/.{}"
+# dotfiles 内の設定ファイルを使うのでここでシンボリックリンクを張る必要はない
+# ls $${ZDOTDIR:-$${HOME}}/.zprezto/runcoms --ignore README.md | xargs -I "{}" ln -s "$${HOME}/.zprezto/runcoms/{}" "$${HOME}/dotfiles/.{}"
 	@echo "✅ prezto has been installed successfully!"
+	@if ! (echo $$SHELL | grep -q "zsh"); then \
+		echo "👉 To change default shell, run a command 'chsh -s $$(which zsh)'."; \
+	fi
 
 .PHONY: remove-prezto
 remove-prezto: _print-goodbye # Remove Prezto for zsh.
@@ -119,6 +123,7 @@ add-wsl-hello-sudo: # Add WSL-Hello-sudo (https://github.com/nullpo-head/WSL-Hel
 	cd ~/downloads/wsl-hello-sudo; \
 	./install.sh
 	@echo "✅ WSL-Hello-sudo has been installed successfully!"
+	@echo "👉 You need to add 'auth sufficient pam_wsl_hello.so' to the top line of your '/etc/pam.d/sudo'. See also https://github.com/nullpo-head/WSL-Hello-sudo/#configuration."
 
 .PHONY: remove-wsl-hello-sudo
 remove-wsl-hello-sudo: # Remove WSL-Hello-sudo
@@ -147,21 +152,22 @@ uninstall-node uninstall-go uninstall-python uninstall-deno uninstall-rust unins
 # ------------------------------ packages ------------------------------
 
 .PHONY: packages
-packages: packages-nix packages-npm packages-go packaes-pip; # Get all packages except the ones from apt.
+packages: packages-npm packages-go packaes-pip; # Get all packages except the ones from apt.
 
 .PHONY: packagegs-apt
-packages-apt: packages-apt-for-pyenv # Install apt packages.
+packages-apt: # Install apt packages.
 	sudo apt update -y && sudo apt upgrade -y
 	sudo apt install -y \
 		xsel \
-		postgres-12 \
+		postgresql-12 \
 		mysql-server \
 		zsh \
 		tshark
 
 .PHONY: packages-apt-for-pyenv
 packages-apt-for-pyenv: # Install apt packages for building pyenv.
-	sudo apt install --no-install-recommends -y \
+	sudo apt update -y ; \
+	sudo apt install -y \
 		make \
 		gcc \
 		build-essential \
