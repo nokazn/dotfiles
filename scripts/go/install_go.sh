@@ -70,7 +70,7 @@ function install_goenv() {
 
   echo "installing goenv ..."
   git clone https://github.com/syndbg/goenv.git ~/.goenv
-  eval "$(~/.goenv/bin/goenv init - >/dev/null 2>&1)"
+  eval "$(~/.goenv/bin/goenv init - || true)"
   # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   if ! has_command "goenv"; then
