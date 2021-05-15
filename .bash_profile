@@ -10,12 +10,6 @@ fi
 
 # ------------------------------------------------------------------------------------
 
-if (type wsl.exe >/dev/null 2>&1) && (uname -r | grep "microsoft" >/dev/null); then
-    # WSL 環境下では時刻がずれる場合があるのでハードウェアと合わせておく
-    # https://github.com/microsoft/WSL/issues/5324
-    sudo hwclock -s
-fi
-
 if [[ -f "$HOME/.path.sh" ]]; then
     source "$HOME/.path.sh"
 else
