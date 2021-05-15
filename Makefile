@@ -208,7 +208,9 @@ packages-nix: # Install nix packages.
 		nixpkgs.php \
 		nixpkgs.php74Packages.composer \
 		nixpkgs.unzip \
-		nixpkgs.mkcert
+		nixpkgs.mkcert \
+		nixpkgs.lazygit \
+		nixpkgs.dive
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
