@@ -18,8 +18,7 @@ function check_command() {
 # @return {void}
 function install_nim() {
   echo "installing Nim ..."
-  curl https://nim-lang.org/choosenim/init.sh -sSf | sh
-  if [[ $? -gt 0 ]]; then
+  if ! (curl https://nim-lang.org/choosenim/init.sh -sSf | sh); then
     echo "❌ Nim has failed to be installed."
     return 1
   fi

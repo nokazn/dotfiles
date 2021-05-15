@@ -69,8 +69,7 @@ function install_nodenv_plugin() {
   fi
 
   echo "installing $1 plugin ..."
-  git clone "https://github.com/nodenv/$1.git" "${plugin_path}"
-  if [[ $? -gt 0 ]]; then
+  if ! (git clone "https://github.com/nodenv/$1.git" "${plugin_path}"); then
     echo_fail_message "$1" "${plugin_path}"
   fi
   echo_success_message "$1" "${plugin_path}"
