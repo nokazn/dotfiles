@@ -19,7 +19,7 @@ init: deploy update-apt packages-apt add-tools packages-nix packaes-apt-for-pyen
 add-tools: add-nix add-prezto add-dein-vim add-bash-it add-wsl-hello-sudo; # Add developing tools.
 
 .PHONY: remove-tools
-remove-tools: remove-nix remove-prezto remove-dein-vim remove-bash-it add-wsl-hello-sudo; # Remove developing tools.
+remove-tools: remove-nix remove-prezto remove-dein-vim remove-bash-it remove-wsl-hello-sudo; # Remove developing tools.
 
 
 .PHONY: add-nix
@@ -52,7 +52,7 @@ add-prezto: _print-airplane # Add Prezto for zsh.
 
 .PHONY: remove-prezto
 remove-prezto: _print-goodbye # Remove Prezto for zsh.
-	sudo rm -I -r ~/.zprezto
+	sudo rm -rf ~/.zprezto
 	@echo "✅ prezto has been uninstalled successfully!"
 
 
@@ -63,12 +63,13 @@ add-dein-vim: _print-airplane # Add dein.vim.
 
 .PHONY: remove-dein-vim
 remove-dein-vim: _print-goodbye # Remove dein.vim.
-	sudo rm ~/.vim/dein -ri
+	sudo rm -rf ~/.vim/dein
 	@echo "✅ dein.vim has been uninstalled successfully!"
 
 
 .PHONY: add-bash-it
 add-bash-it: _print-airplane # Add bash-it.
+	rm -rf ~/.bash-it
 	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
 	~/.bash-it/install.sh
 	bash-it enable completion bash-it
@@ -92,7 +93,7 @@ add-bash-it: _print-airplane # Add bash-it.
 
 .PHONY: remove-bash-it
 remove-bash-it: _print-goodbye # Remove bash-it.
-	sudo rm -I -r ~/.bash-it
+	sudo rm -rf ~/.bash-it
 
 
 .PHONY: add-wsl-hello-sudo
@@ -113,8 +114,10 @@ add-wsl-hello-sudo: # Add WSL-Hello-sudo (https://github.com/nullpo-head/WSL-Hel
 
 .PHONY: remove-wsl-hello-sudo
 remove-wsl-hello-sudo: # Remove WSL-Hello-sudo
-	~/downloads/wsl-hello-sudo/uninstall.sh
-	sudo rm -Ir ~/downloads/wsl-hello-sudo
+	if [[ -f ~/downloads/wsl-hello-sudo/uninstall.sh ]]; then \
+		~/downloads/wsl-hello-sudo/uninstall.sh; \
+		sudo rm -rf ~/downloads/wsl-hello-sudo; \
+	fi
 	@echo "✅ WSL-Hello-sudo has been uninstalled successfully!"
 
 # ------------------------------ languages ------------------------------
