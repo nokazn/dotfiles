@@ -2,7 +2,8 @@
 
 set -eu -o pipefail
 
-readonly BASE_DIR=$(cd "$(dirname "${0}")/.."; pwd)
+BASE_DIR=$(cd "$(dirname "${0}")/.."; pwd)
+readonly BASE_DIR
 readonly CONFIG_PATH="${BASE_DIR}/windows/config.xlaunch"
 
 # @param - none

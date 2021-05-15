@@ -2,8 +2,10 @@
 
 set -eu -o pipefail
 
-readonly BASE_DIR=$(cd "$(dirname "$0")"/..; pwd)
-readonly DEBUG=$([[ $# -gt 0 ]] && test "$1" = --debug; echo $?)
+BASE_DIR=$(cd "$(dirname "$0")"/..; pwd)
+readonly BASE_DIR
+DEBUG=$([[ $# -gt 0 ]] && test "$1" = --debug; echo $?)
+readonly DEBUG
 readonly _BACKUP_DIR_NAME="backup_dotfiles"
 file_counter=0
 
@@ -11,7 +13,8 @@ readonly DESTINATION_BASE_DIR=~
 readonly BACKUP_BASE_DIR=~/${_BACKUP_DIR_NAME}
 
 # 一度 Windows 内のディレクトリに移動して %USERPROFILE% を出力してからもといたディレクトリに戻る
-readonly DESTINATION_BASE_DIR_FOR_WINDOWS=$(cd /mnt/c; wslpath -u "$(cmd.exe /c "echo %USERPROFILE%" | tr -d "\r")"; cd "$OLDPWD")
+DESTINATION_BASE_DIR_FOR_WINDOWS=$(cd /mnt/c; wslpath -u "$(cmd.exe /c "echo %USERPROFILE%" | tr -d "\r")"; cd "$OLDPWD")
+readonly DESTINATION_BASE_DIR_FOR_WINDOWS
 readonly BACKUP_BASE_DIR_FOR_WINDOWS="${DESTINATION_BASE_DIR_FOR_WINDOWS}/${_BACKUP_DIR_NAME}"
 
 # ---------------------------------------- utils ----------------------------------------

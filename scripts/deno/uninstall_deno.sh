@@ -18,7 +18,7 @@ function uninstall_deno() {
   echo "uninstalling Deno ..."
   local deno_path
   deno_path=$(which deno | sed -e "s/\/bin\/deno//")
-  rm -rf ${deno_path}
+  rm -rf "${deno_path}"
   echo "✅ Deno has been uninstalled successfully from '${deno_path}'."
   return 0
 }
