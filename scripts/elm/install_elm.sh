@@ -2,6 +2,8 @@
 
 set -eu -o pipefail
 
+readonly PATH_SCRIPT=~/.path.sh
+
 # @param {string} - command
 # @return {0|1}
 function has_command() {
@@ -26,7 +28,7 @@ function check_command() {
 # @return {void}
 function install_elm() {
   local ELM_PATH=~/.local/bin/elm
-  if [[ -d ${ELM_PATH} ]] && has_command "elm"; then
+  if [[ -e ${ELM_PATH} ]] && has_command "elm"; then
     echo "✅ Elm is already installed at '${ELM_PATH}'."
     return 0
   elif [[ -e ${ELM_PATH} ]]; then
@@ -35,14 +37,18 @@ function install_elm() {
   fi
 
   echo "installing Elm ..."
+  mkdir -p ~/downloads
+  mkdir -p ~/.local/bin
   curl --location --output ~/downloads/elm.gz https://github.com/elm/compiler/releases/download/0.19.1/binary-for-linux-64-bit.gz
   gunzip ~/downloads/elm.gz
   chmod +x ~/downloads/elm
   mv ~/downloads/elm ~/.local/bin/
+  # shellcheck disable=SC1090
+  source ${PATH_SCRIPT}
   if ! has_command "elm"; then
-    "❌ Elm has failed to be installed at '${ELM_PATH}'!"
+    echo "❌ Elm has failed to be installed at '${ELM_PATH}'!"
   fi
-  "✅ Elm has been installed successfully at '${ELM_PATH}'!"
+  echo "✅ Elm has been installed successfully at '${ELM_PATH}'!"
   return 0
 }
 
