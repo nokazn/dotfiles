@@ -16,10 +16,10 @@ init: deploy update-apt packages-apt add-tools packages-nix packaes-apt-for-pyen
 # ------------------------------ tools ------------------------------
 
 .PHONY: add-tools
-add-tools: add-nix add-prezto add-dein-vim add-mkcert add-bash-it add-wsl-hello-sudo; # Add developing tools.
+add-tools: add-nix add-prezto add-dein-vim add-bash-it add-wsl-hello-sudo; # Add developing tools.
 
 .PHONY: remove-tools
-remove-tools: remove-nix remove-prezto remove-dein-vim remove-mkcert remove-bash-it add-wsl-hello-sudo; # Remove developing tools.
+remove-tools: remove-nix remove-prezto remove-dein-vim remove-bash-it add-wsl-hello-sudo; # Remove developing tools.
 
 
 .PHONY: add-nix
@@ -65,20 +65,6 @@ add-dein-vim: _print-airplane # Add dein.vim.
 remove-dein-vim: _print-goodbye # Remove dein.vim.
 	sudo rm ~/.vim/dein -ri
 	@echo "✅ dein.vim has been uninstalled successfully!"
-
-
-.PHONY: add-mkcert
-add-mkcert: # Add mkcert (locally trusted development certificates tool).
-	sudo apt install libnss3-tools
-	mkdir ~/.mkcert -p; \
-	git clone https://github.com/FiloSottile/mkcert ~/.mkcert && cd ~/.mkcert; \
-	go build -ldflags "-X main.Version=$(git describe --tags)"
-	@echo "✅ mkcert has been installed successfully!"
-
-.PHONY: remove-mkcert
-remove-mkcert: # Remove mkcert.
-	sudo rm -rI ~/.mkcert
-	@echo "✅ mkcert has been installed successfully!"
 
 
 .PHONY: add-bash-it
@@ -221,7 +207,8 @@ packages-nix: # Install nix packages.
 		nixpkgs.expect \
 		nixpkgs.php \
 		nixpkgs.php74Packages.composer \
-		nixpkgs.unzip
+		nixpkgs.unzip \
+		nixpkgs.mkcert
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
