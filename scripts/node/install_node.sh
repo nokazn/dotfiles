@@ -98,7 +98,7 @@ function install_nodenv() {
   if ! (cd ${nodenv_path} && src/configure && make -C src); then
     echo "⚠ Failed to execute make or configure scripts."
   fi
-  ~/.nodenv/bin/nodenv init
+  eval "$(~/.nodenv/bin/nodenv init -)"
   # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   if ! has_command nodenv; then
