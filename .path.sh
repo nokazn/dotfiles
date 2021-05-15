@@ -3,7 +3,7 @@
 # @param {string}
 # @return {string}
 function is_unregistered_path() {
-    ! (echo "$PATH" | grep -q "$2")
+    ! (echo "$PATH" | grep -q "$1")
 }
 
 # set PATH so it includes user's private bin if it exists
