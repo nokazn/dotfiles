@@ -1,3 +1,6 @@
 .*.swp
 .aws
 .ssh
+.config/wslu
+.config/configstore
+.config/nextjs-nodejs
