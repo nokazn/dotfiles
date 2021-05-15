@@ -85,36 +85,6 @@ function install_pyenv() {
 
 # @param None
 # @return {void}
-function install_build_packages() {
-  # python がインストール済みの場合は不要
-  if has_command "python" ; then
-    return 0;
-  fi
-
-  # TODO: Makefile でやる
-  sudo apt update
-  sudo apt install --no-install-recommends -y \
-    make \
-    build-essential \
-    libssl-dev \
-    zlib1g-dev \
-    libbz2-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    wget \
-    curl \
-    llvm \
-    libncurses5-dev \
-    xz-utils \
-    tk-dev \
-    libxml2-dev \
-    libxmlsec1-dev \
-    libffi-dev \
-    liblzma-dev
-}
-
-# @param None
-# @return {void}
 function install_python() {
   check_command "pyenv"
 
@@ -138,5 +108,4 @@ function install_python() {
 }
 
 install_pyenv
-install_build_packages
 install_python
