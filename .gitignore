@@ -2,5 +2,6 @@
 .aws
 .ssh
 .config/wslu
+.config/lazygit
 .config/configstore
 .config/nextjs-nodejs
