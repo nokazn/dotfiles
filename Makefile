@@ -196,7 +196,8 @@ packages-nix: # Install nix packages.
 		nixpkgs.unzip \
 		nixpkgs.mkcert \
 		nixpkgs.lazygit \
-		nixpkgs.dive
+		nixpkgs.dive \
+		nixpkgs.pastel
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
