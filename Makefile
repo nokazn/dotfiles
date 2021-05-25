@@ -197,7 +197,8 @@ packages-nix: # Install nix packages.
 		nixpkgs.mkcert \
 		nixpkgs.lazygit \
 		nixpkgs.dive \
-		nixpkgs.pastel
+		nixpkgs.pastel \
+		nixpkgs.yarn
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
@@ -223,7 +224,6 @@ packages-npm: # Install npm packages.
 		typescript \
 		vercel \
 		vue@next \
-		yarn \
 		yo;
 	nodenv rehash
 
