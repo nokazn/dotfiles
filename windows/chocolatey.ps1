@@ -39,4 +39,5 @@ choco install -y googlechrome `
   spotify `
   lastfmscrobbler `
   todoist `
-  slack
+  slack `
+  keycastow
