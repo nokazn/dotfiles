@@ -80,7 +80,7 @@ remove-bash-it: _print-goodbye # Remove bash-it.
 
 
 .PHONY: add-wsl-hello-sudo
-add-wsl-hello-sudo: # Add WSL-Hello-sudo (https://github.com/nullpo-head/WSL-Hello-sudo).
+add-wsl-hello-sudo: # Add WSL-Hello-sudo
 	mkdir -p ~/downloads
 	cd ~/downloads; \
 	if [[ ! -f ~/downloads/wsl-hello-sudo/install.sh ]]; then \
