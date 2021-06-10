@@ -29,6 +29,9 @@ if [[ -d "$HOME/.anyenv" ]]; then
         if is_unregistered_path "$HOME/.anyenv/envs/$(basename "${file}")/bin"; then
             PATH="$HOME/.anyenv/envs/$(basename "${file}")/bin:$PATH"
         fi
+        if is_unregistered_path "$HOME/.anyenv/envs/$(basename "${file}")/shims"; then
+            PATH="$HOME/.anyenv/envs/$(basename "${file}")/shims:$PATH"
+        fi
     done
 else
     echo "⚠ anynv doesn't exist at '$HOME/.anynv'."
