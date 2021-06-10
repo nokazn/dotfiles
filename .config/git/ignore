@@ -1,5 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 
+# VS Code config directories
+.vscode
+
 ### Node template
 # Logs
 /logs
