@@ -41,11 +41,11 @@ if type wsl.exe >/dev/null 2>&1; then
         echo "⚠ file 'start_vcxsrv.sh' doesn't exist at ${START_VCXSRV_PATH}" >&2
     fi
 
-    # ブラウザのランチャー
-    if type "wslview" >/dev/null 2>&1; then
-        BROWSER="wslview"
-        export BROWSER
-    else
+    # TODO: ブラウザのランチャー
+    # if type "wslview" >/dev/null 2>&1; then
+        # BROWSER="wslview"
+        # export BROWSER
+    # else
         echo "⚠ wslview doesn't exist" >&2
     fi
 fi
