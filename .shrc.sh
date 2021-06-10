@@ -46,6 +46,6 @@ if type wsl.exe >/dev/null 2>&1; then
         # BROWSER="wslview"
         # export BROWSER
     # else
-        echo "⚠ wslview doesn't exist" >&2
-    fi
+    #     echo "⚠ wslview doesn't exist" >&2
+    # fi
 fi
