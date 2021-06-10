@@ -198,7 +198,8 @@ packages-nix: # Install nix packages.
 		nixpkgs.lazygit \
 		nixpkgs.dive \
 		nixpkgs.pastel \
-		nixpkgs.yarn
+		nixpkgs.yarn \
+		nixpkgs.act
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
