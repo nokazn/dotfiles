@@ -30,6 +30,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias dotfiles='cd ~/dotfiles'
 alias relogin='exec $SHELL -l'
 alias repath='source ~/.path.sh'
+alias realias='source ~/.bash_aliases'
 alias tmux-relaod='tmux source-file ~/.tmux.conf'
 alias path='echo $PATH | sed -E -e "s/:/\n/g" | sed -e "s/^/  /"'
 alias aliases='alias | sed -E -e "s/^alias\s//" | column -s "=" -t'
