@@ -22,123 +22,32 @@ function check_command() {
   return 0
 }
 
-# @param {string} - package name
-# @param {string?} - package location path
-# @return {void}
-function echo_success_message() {
-  if [[ $2 ]]; then
-    echo "✅ $1 has been installed successfully at '$2'!"
-  else
-    echo "✅ $1 has been installed successfully!"
-  fi
-  return 0
-}
-
-# @param {string} - package name
-# @param {string?} - package location path
-# @return {void}
-function echo_fail_message() {
-  if [[ $1 ]]; then
-    echo "❌ $1 has failed to be installed at '$2'."
-  else
-    echo "❌ $1 has failed to be installed."
-  fi
-  exit 1
-}
-
-# @param {string} - package name
-# @param {string} - package location path
-# @return {void}
-function echo_already_installed_message() {
-  echo "✅ $1 is already installed at '$2'."
-  return 0
-}
-
-# @param {string} - package name
-# @return {void}
-function install_nodenv_plugin() {
-  local nodenv_root
-  nodenv_root=$(nodenv root)
-  local plugin_path="${nodenv_root}/plugins/$1"
-  if [[ -d ${plugin_path} ]]; then
-    echo_already_installed_message "$1" "${plugin_path}"
-    return 0
-  elif [[ -e ${plugin_path} ]]; then
-    echo "❌ The other package exists at '${plugin_path}'."
-    exit 1
-  fi
-
-  echo "installing $1 plugin ..."
-  if ! (git clone "https://github.com/nodenv/$1.git" "${plugin_path}"); then
-    echo_fail_message "$1" "${plugin_path}"
-  fi
-  echo_success_message "$1" "${plugin_path}"
-  return 0
-}
 
 # main -------------------------------------------------------------------------------
-
-# @param None
-# @return {void}
-function install_nodenv() {
-  local nodenv_path=~/.nodenv
-  if [[ -d ${nodenv_path} ]] && has_command nodenv; then
-    echo_already_installed_message "nodenv" ${nodenv_path}
-    return 0
-  elif [[ -e ${nodenv_path} ]]; then
-    echo "❌ The Other package exists at '${nodenv_path}', but the path to nodenv doesn't exist."
-    exit 1
-  fi
-
-  echo "installing nodenv ..."
-  git clone https://github.com/nodenv/nodenv.git ${nodenv_path}
-  # Optionally, try to compile dynamic bash extension to speed up nodenv. Don't worry if it fails; nodenv will still work normally
-  # https://github.com/nodenv/nodenv#basic-github-checkout
-  # if ! bash -c "cd ${nodenv_path} && src/configure && make -C src" || true; then
-  #   echo "⚠ Failed to execute make or configure scripts."
-  # fi
-  # shellcheck disable=SC1090
-  source ${PATH_SCRIPT}
-  if ! has_command "nodenv"; then
-    echo_fail_message "nodenv" ${nodenv_path}
-  fi
-  echo_success_message "nodenv" ${nodenv_path}
-  return 0
-}
-
-# @param None
-# @return {void}
-function install_nodenv_plugins() {
-  check_command "nodenv"
-
-  install_nodenv_plugin "node-build"
-  install_nodenv_plugin "nodenv-update"
-  return 0
-}
 
 # @param None
 # @return {void}
 function install_node() {
   check_command "nodenv"
 
-  if has_command node; then
+  if has_command "node"; then
     local node_version
     node_version=$(node --version)
-    echo_already_installed_message "Node.js ${node_version}" "$(which node)"
+    echo "Node.js ${node_version} is already installed at '$(which node)'"
   else
     local latest_version
     latest_version=$(nodenv install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
     echo "installing Node.js ${latest_version} (latest version of the major release) ..."
     nodenv install "${latest_version}"
     nodenv global "${latest_version}"
+    # shellcheck disable=SC1090
+    source ${PATH_SCRIPT}
     if ! has_command "node" || ! has_command "npm" ; then
-      echo_fail_message "❌ Node.js ${latest_version}"
+      "❌ Node.js ${latest_version} has failed to be installed."
     fi
-    echo_success_message "Node.js ${latest_version}" "$(which node)"
+    echo "✅ Node.js ${latest_version} has been installed successfully at '$(which node)'!"
   fi
   return 0
 }
 
-install_nodenv
-install_nodenv_plugins
 install_node
