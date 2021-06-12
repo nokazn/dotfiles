@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# @deprecated
+
 set -eu -o pipefail
 
 # @param {string} - command
