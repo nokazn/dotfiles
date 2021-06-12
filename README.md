@@ -1,5 +1,7 @@
 # dotfiles
 
+[![CI](https://github.com/nokazn/dotfiles/actions/workflows/static-check.yml/badge.svg?branch=main)](https://github.com/nokazn/dotfiles/actions/workflows/static-check.yml)
+
 ## installation
 
 ```bash
