@@ -43,7 +43,6 @@ function install_go() {
   echo "installing Go ${latest_version} (latest version of the major release) ..."
   goenv install "${latest_version}"
   goenv global "${latest_version}"
-  # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   if ! has_command "go" ; then
     "❌ Go ${latest_version} has failed to be installed."
