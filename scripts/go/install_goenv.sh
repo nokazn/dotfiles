@@ -40,7 +40,6 @@ function install_goenv() {
 
   echo "installing goenv ..."
   git clone https://github.com/syndbg/goenv.git ~/.goenv
-  # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   if ! has_command "goenv"; then
     echo "❌ goenv has failed to be installed at '${goenv_path}'"

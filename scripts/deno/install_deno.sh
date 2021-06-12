@@ -35,7 +35,6 @@ function install_deno() {
     return 1
   fi
 
-  # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   check_command "deno"
 

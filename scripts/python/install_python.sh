@@ -41,7 +41,6 @@ function install_python() {
   echo "installing Python the ${latest_version} (latest version of the major release) ..."
   pyenv install "${latest_version}"
   pyenv global "${latest_version}"
-  # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   if ! has_command "python" || ! has_command "pip"; then
     echo "❌ Python ${latest_version} has failed to be installed."
