@@ -4,14 +4,15 @@ SHELL := /bin/bash
 MAKEFILE := ./Makefile
 SCRIPTS_DIR := ./scripts
 PATH_FILE := ~/.path.sh
-LANGS := node go deno rust elm nim
+ANYENV_LANGS := node go
+LANGS := deno rust elm nim
 .DEFAULT_GOAL := help
 
 
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init: deploy update-apt packages-apt add-tools packages-nix packaes-apt-for-pyenv install packaes; # Install all languages and their packages.
+init: deploy update-apt packages-apt add-tools packages-nix packaes-apt-for-pyenv install packaes; # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 
@@ -106,20 +107,35 @@ remove-wsl-hello-sudo: # Remove WSL-Hello-sudo
 # ------------------------------ languages ------------------------------
 
 .PHONY: install
-install: $(addprefix install-,$(LANGS)); # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
+install: install-anyenv $(addprefix install-,$(ANYENV_LANGS)) $(addprefix install-,$(LANGS)); # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
 
-.PHONY: install-node install-go install-python install-deno install-rust install-elm install-nim
-install-node install-go install-python install-deno install-rust install-elm install-nim: _print-airplane # Install each language.
+.PHONY: install-deno install-rust install-elm install-nim
+install-deno install-rust install-elm install-nim: _print-airplane # Install each language.
+	$(eval lang=$(subst install-,,$@))
+	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
+
+.PHONY: install-node install-go install-python
+install-node install-go install-python: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
 
 .PHONY: uninstall
-uninstall: $(addprefix uninstall-,$(LANGS)); # Uninstall all languages and tools. (runs scripts starting with 'unintall-' prefix.)
+uninstall: $(addprefix uninstall-,$(LANGS)); # Uninstall all languages & tools. (runs scripts starting with 'unintall-' prefix.)
 
-.PHONY: uninstall-node uninstall-go uninstall-python uninstall-deno uninstall-rust uninstall-elm uninstall-nim
-uninstall-node uninstall-go uninstall-python uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Uninstall each language.
+.PHONY: uninstall-deno uninstall-rust uninstall-elm uninstall-nim
+uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Uninstall each language.
 	$(eval lang=$(subst uninstall-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh;
+
+.PHONY: install-anyenv
+install-anyenv: # Install anyenv
+	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh
+	source $(PATH_FILE)
+	anyenv install nodenv
+	anyenv install goenv
+
+uninstall-anyenv: # Install anyenv
+	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh
 
 # ------------------------------ packages ------------------------------
 
@@ -270,7 +286,7 @@ update-pip: # Update pip packages.
 # ------------------------------ deploy & restore dotfiles ------------------------------
 
 .PHONY: deploy
-deploy: # Make symbolic links to dotfiles and back up original files if exists.
+deploy: # Make symbolic links to dotfiles & back up original files if exists.
 	$(SCRIPTS_DIR)/deploy.sh
 
 # TODO: 別のスクリプトに分ける
