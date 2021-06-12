@@ -35,7 +35,6 @@ function install_rust() {
     echo "❌ Rust has failed to be installed."
     return 1
   fi
-  # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   check_command "cargo"
   check_command "rustup"

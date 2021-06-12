@@ -40,7 +40,6 @@ function install_node() {
     echo "installing Node.js ${latest_version} (latest version of the major release) ..."
     nodenv install "${latest_version}"
     nodenv global "${latest_version}"
-    # shellcheck disable=SC1090
     source ${PATH_SCRIPT}
     if ! has_command "node" || ! has_command "npm" ; then
       "❌ Node.js ${latest_version} has failed to be installed."

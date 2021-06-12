@@ -43,7 +43,6 @@ function install_elm() {
   gunzip ~/downloads/elm.gz
   chmod +x ~/downloads/elm
   mv ~/downloads/elm ~/.local/bin/
-  # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   if ! has_command "elm"; then
     echo "❌ Elm has failed to be installed at '${ELM_PATH}'!"

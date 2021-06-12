@@ -42,7 +42,6 @@ function install_pyenv() {
   # if ! (cd ~/.pyenv && src/configure && make -C src) >/dev/null 2>&1; then
   #   echo "⚠ Failed to execute make or configure scripts."
   # fi
-  # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   if ! has_command "pyenv" ${pyenv_path}; then
     echo "❌ pyenv has failed to be installed at '${pyenv_path}'."

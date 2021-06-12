@@ -72,6 +72,7 @@ function show_prompt_for_overwrite() {
 # @param - none
 # @return {void}
 function increment_file_counter() {
+  # shellcheck disable=2181
   if [[ $? -eq 0 ]]; then
     file_counter=$((file_counter+1))
   fi
