@@ -22,7 +22,6 @@ function install_nim() {
     echo "❌ Nim has failed to be installed."
     return 1
   fi
-  # shellcheck disable=SC1090
   source ${PATH_SCRIPT}
   check_command "choosenim"
   echo "✅ Nim has been installed successfully!"
