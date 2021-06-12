@@ -229,7 +229,7 @@ function deploy() {
 
   for file in $(ls_dotfiles "$1"); do
     case ${file} in
-      ".git" | ".gitignore" )
+      ".git" | ".gitignore" | ".github")
         continue
         ;;
 
