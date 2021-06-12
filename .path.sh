@@ -16,52 +16,25 @@ if [[ -d "$HOME/.local/bin" ]] && is_unregistered_path "$HOME/.local/bin"; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Node.js (nodenv)
-if [[ -d "$HOME/.nodenv" ]]; then
-    if is_unregistered_path "$HOME/.nodenv/bin"; then
-        export NODENV_ROOT="$HOME/.nodenv"
-        PATH="${NODENV_ROOT}/bin:$PATH"
-        # nodenv コマンドが存在する場合
-        if type "nodenv" >/dev/null 2>&1; then
-            eval "$(nodenv init -)"
+# anyenv
+if [[ -d "$HOME/.anyenv" ]]; then
+    if is_unregistered_path "$HOME/.anyenv/bin"; then
+        PATH="$HOME/.anyenv/bin:$PATH"
+        # anyenv コマンドが存在する場合
+        if type "anyenv" >/dev/null 2>&1; then
+            eval "$(anyenv init -)"
         fi
     fi
-else
-    echo "⚠ nodenv doesn't exist at '$HOME/.nodenv'."
-fi
-
-# Golang (goenv)
-if [ -d "$HOME/.goenv" ]; then
-    if is_unregistered_path "$HOME/.goenv/bin"; then
-        export GOENV_ROOT="$HOME/.goenv"
-        export PATH="${GOENV_ROOT}/bin:$PATH"
-        # goenv コマンドが存在する場合
-        if type "goenv" >/dev/null 2>&1; then
-            eval "$(goenv init -)"
-            # GOROOT はよしなに設定してくれる
-            export GOPATH="$HOME/go"
-            PATH="$PATH:${GOPATH}/bin"
-            # Go Modules を有効にする
-            export 'GO111MODULE=on'
+    for file in  ~/.anyenv/envs/*; do
+        if is_unregistered_path "$HOME/.anyenv/envs/$(basename "${file}")/bin"; then
+            PATH="$HOME/.anyenv/envs/$(basename "${file}")/bin:$PATH"
         fi
-    fi
-else
-    echo "⚠ goenv doesn't exist at '$HOME/.goenv'."
-fi
-
-# Python (pyenv)
-if [[ -d "$HOME/.pyenv" ]]; then
-    if is_unregistered_path "$HOME/.pyenv/bin"; then
-        export PYENV_ROOT="$HOME/.pyenv"
-        PATH="${PYENV_ROOT}/bin:$PATH"
-        # pyenv コマンドが存在する場合
-        if type "pyenv" >/dev/null 2>&1; then
-            # TODO: 警告を無視
-            eval "$(pyenv init - > /dev/null)"
+        if is_unregistered_path "$HOME/.anyenv/envs/$(basename "${file}")/shims"; then
+            PATH="$HOME/.anyenv/envs/$(basename "${file}")/shims:$PATH"
         fi
-    fi
+    done
 else
-    echo "⚠ pyenv doesn't exist at '$HOME/.pyenv'"
+    echo "⚠ anynv doesn't exist at '$HOME/.anynv'."
 fi
 
 # Deno
