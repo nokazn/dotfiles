@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -41,6 +43,10 @@ alias apt-purge='apt --purge remove'
 alias lg='lazygit'
 alias python='python3'
 alias chrome='google-chrome-stable'
+
+function chshs() {
+    chsh -s "$(which "$1")"
+}
 
 # git aliases
 alias g='git'
