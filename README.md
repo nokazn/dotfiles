@@ -4,11 +4,11 @@
 
 ## installation
 
-If `make`, `curl`, `wget` and `xz-utils` are not available, you need to install these packages.
+If `git`, `make`, `curl`, `wget` and `xz-utils` are not available in your environment, you need to install these packages.
 
 ```bash
 # Ubuntu/Debian
-$ suo apt install -y make curl wget xz-utils
+$ suo apt install -y git make curl wget xz-utils
 ```
 
 `make init` makes symbolic links to files that starting with a dot and followed 2 or more chars in `~/dotfiles/` directory.  
