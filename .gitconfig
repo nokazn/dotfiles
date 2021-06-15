@@ -50,6 +50,8 @@
 	push-f = !git push --force-with-lease origin $(git symbolic-ref --short HEAD)
 	ps = !git push origin $(git symbolic-ref --short HEAD)
 	pl = !git pull origin $(git symbolic-ref --short HEAD)
+	# 引数に渡した番号の PR を pr/#<番号> というブランチに pull する
+	plpr="!f(){ git pull origin \"pull/$1/head:pr/#$1\";};f"
 	amend = !git commit -m \"$(git log --format="%s" -n 1)\" --amend
 	exact-amend = !git commit -m \"$(git log --format="%s" -n 1)\" --date="$(git log --format="%cd" -n 1)" --amend
 	reamend = reset --soft HEAD@{1}
