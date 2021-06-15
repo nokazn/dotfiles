@@ -202,6 +202,7 @@ packages-nix: # Install nix packages.
 		nixpkgs.yq \
 		nixpkgs.ncdu \
 		nixpkgs.inetutils \
+		nixpkgs.tmux \
 		nixpkgs.rsync \
 		nixpkgs.gcc \
 		nixpkgs.redis \
