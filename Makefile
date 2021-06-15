@@ -183,10 +183,7 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 .PHONY: packages-nix
 packages-nix: # Install nix packages.
 # nix-env が存在しなければパスを通す
-	if ! type "nix-env" >/dev/null 2>&1; then \
-		exec $$SHELL -l; \
-	fi
-	nix-env --install -A nixpkgs.git \
+	~/.nix-profile/bin/nix-env --install -A nixpkgs.git \
 		nixpkgs.gitAndTools.gh \
 		nixpkgs.vimHugeX \
 		nixpkgs.direnv \
