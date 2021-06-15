@@ -12,7 +12,7 @@ LANGS := deno rust elm nim
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init: deploy update-apt packages-apt add-tools packages-nix packaes-apt-for-pyenv install packaes; # Install all languages & their packages.
+init: deploy update-apt packages-apt add-tools packages-nix install-anyenv install-anyenv-langs install-langs packaes; # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 
@@ -109,6 +109,12 @@ remove-wsl-hello-sudo: # Remove WSL-Hello-sudo
 .PHONY: install
 install: install-anyenv $(addprefix install-,$(ANYENV_LANGS)) $(addprefix install-,$(LANGS)); # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
 
+.PHONY: install-anyenv-langs
+install-anyenv-langs: $(addprefix install-,$(ANYENV_LANGS)); # Install languages by anyenv.
+
+.PHONY: install-langs
+install-langs: $(addprefix install-,$(LANGS)); # Install languages except ones installed by anyenv.
+
 .PHONY: install-deno install-rust install-elm install-nim
 install-deno install-rust install-elm install-nim: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
@@ -129,13 +135,12 @@ uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Unin
 
 .PHONY: install-anyenv
 install-anyenv: # Install anyenv
-	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh
-	source $(PATH_FILE)
-	anyenv install nodenv
-	anyenv install goenv
+	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh; \
+	~/.anyenv/bin/anyenv install nodenv; \
+	~/.anyenv/bin/anyenv install goenv; \
 
 uninstall-anyenv: # Install anyenv
-	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh
+	$(SCRIPTS_DIR)/anyenv/uninstall_anyenv.sh
 
 # ------------------------------ packages ------------------------------
 
@@ -177,6 +182,10 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 
 .PHONY: packages-nix
 packages-nix: # Install nix packages.
+# nix-env が存在しなければパスを通す
+	if ! type "nix-env" >/dev/null 2>&1; then \
+		exec $$SHELL -l; \
+	fi
 	nix-env --install -A nixpkgs.git \
 		nixpkgs.gitAndTools.gh \
 		nixpkgs.vimHugeX \
