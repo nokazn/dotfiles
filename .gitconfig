@@ -27,9 +27,11 @@
 	alias = config --get-regexp alias.*
 	br = branch
 	ch = checkout
-	chb = checkout -b
+	# 親ブランチの指定がなければ実行させない
+	chb = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git checkout -b $1 $2; }; f"
 	sw = switch
-	swc = switch -c
+	# 親ブランチの指定がなければ実行させない
+	swc = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git switch -c $1 $2; }; f"
 	d = diff
 	dc = diff --cached
 	dl = diff --stat
