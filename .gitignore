@@ -1,5 +1,7 @@
 .*.swp
 .aws
 .ssh
-.config
-!.config/git
+!.config/
+.config/*
+!.config/git/
+!.config/nixpkgs/

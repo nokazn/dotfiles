@@ -222,7 +222,8 @@ packages-nix: # Install nix packages.
 		nixpkgs.dive \
 		nixpkgs.pastel \
 		nixpkgs.yarn \
-		nixpkgs.act
+		nixpkgs.act \
+		nixpkgs.google-chrome
 
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
