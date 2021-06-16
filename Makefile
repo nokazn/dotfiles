@@ -42,8 +42,9 @@ remove-nix: _print-goodbye # Uninstall nix.
 
 .PHONY: add-home-manager
 add-home-manager: _print-airplane # Add home-manager
-	~/.nix-profile/bin/nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-	~/.nix-profile/bin/nix-channel --update
+	~/.nix-profile/bin/nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager; \
+	~/.nix-profile/bin/nix-channel --update; \
+	source ${PATH_FILE}; \
 	~/.nix-profile/bin/nix-shell '<home-manager>' -A install
 
 .PHONY: add-prezto
@@ -157,10 +158,11 @@ packages-apt: # Install apt packages.
 	sudo apt update -y && sudo apt upgrade -y
 	sudo apt install -y \
 		xsel \
-		postgresql-12 \
-		mysql-server \
 		zsh \
 		tshark
+# TODO: リポジトリ追加
+# mysql-server
+# postgresql-12
 
 .PHONY: packages-apt-for-pyenv
 packages-apt-for-pyenv: # Install apt packages for building pyenv.

@@ -4,11 +4,11 @@
 
 ## Installation
 
-If `git`, `make`, `curl`, `wget` and `xz-utils` are not available in your environment, you need to install these packages.
+If `git`, `make`, `gcc`, `curl`, `wget`, `unzip` and `xz-utils` are not available in your environment, you need to install these packages.
 
 ```bash
 # Ubuntu/Debian
-$ suo apt install -y git make curl wget xz-utils
+$ suo apt install -y git make gcc curl wget unzip xz-utils
 ```
 
 `make deploy` command makes symbolic links to files that starting with a dot and followed 2 or more chars in `~/dotfiles/` directory.  
@@ -36,6 +36,13 @@ If a existing file conflicts with the symbolic link, this is backed up in `~/dot
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
 $ cd ~/dotfiles
 $ make init
+```
+
+After `make init` has completed, you can source paths and execute `make install-anyenv-langs`.
+
+```bash
+$ source ~/.path.sh
+$ make install-anyenv-langs
 ```
 
 ## Configuration
