@@ -12,16 +12,15 @@ LANGS := deno rust elm nim
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init: deploy update-apt packages-apt add-tools packages-nix install-anyenv install-anyenv-langs install-langs packaes; # Install all languages & their packages.
+init: deploy update-apt packages-apt add-tools install-anyenv install-anyenv-langs install-langs packaes; # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 
 .PHONY: add-tools
-add-tools: add-nix add-prezto add-dein-vim add-bash-it add-wsl-hello-sudo; # Add developing tools.
+add-tools: add-nix add-home-manager add-prezto add-dein-vim add-bash-it add-wsl-hello-sudo; # Add developing tools.
 
 .PHONY: remove-tools
 remove-tools: remove-nix remove-prezto remove-dein-vim remove-bash-it remove-wsl-hello-sudo; # Remove developing tools.
-
 
 .PHONY: add-nix
 add-nix: _print-airplane # Install nix.
@@ -40,6 +39,12 @@ remove-nix: _print-goodbye # Uninstall nix.
 	sudo rm -rf /nix
 	@echo "✅ nix has been uninstalled successfully!"
 
+
+.PHONY: add-home-manager
+add-home-manager: _print-airplane # Add home-manager
+	~/.nix-profile/bin/nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+	~/.nix-profile/bin/nix-channel --update
+	~/.nix-profile/bin/nix-shell '<home-manager>' -A install
 
 .PHONY: add-prezto
 add-prezto: _print-airplane # Add Prezto for zsh.
@@ -180,51 +185,6 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 		libffi-dev \
 		liblzma-dev
 
-.PHONY: packages-nix
-packages-nix: # Install nix packages.
-# nix-env が存在しなければパスを通す
-	~/.nix-profile/bin/nix-env --install -A nixpkgs.git \
-		nixpkgs.gitAndTools.gh \
-		nixpkgs.vimHugeX \
-		nixpkgs.direnv \
-		nixpkgs.sl \
-		nixpkgs.neofetch \
-		nixpkgs.heroku \
-		nixpkgs.colordiff \
-		nixpkgs.htop \
-		nixpkgs.tree \
-		nixpkgs.nkf \
-		nixpkgs.tldr \
-		nixpkgs.jq \
-		nixpkgs.yq \
-		nixpkgs.ncdu \
-		nixpkgs.inetutils \
-		nixpkgs.tmux \
-		nixpkgs.rsync \
-		nixpkgs.gcc \
-		nixpkgs.redis \
-		nixpkgs.memcached \
-		nixpkgs.gist \
-		nixpkgs.gitAndTools.delta \
-		nixpkgs.bat \
-		nixpkgs.broot \
-		nixpkgs.hyperfine \
-		nixpkgs.tokei \
-		nixpkgs.gping \
-		nixpkgs.google-cloud-sdk \
-		nixpkgs.shellcheck \
-		nixpkgs.expect \
-		nixpkgs.php \
-		nixpkgs.php74Packages.composer \
-		nixpkgs.unzip \
-		nixpkgs.mkcert \
-		nixpkgs.lazygit \
-		nixpkgs.dive \
-		nixpkgs.pastel \
-		nixpkgs.yarn \
-		nixpkgs.act \
-		nixpkgs.google-chrome
-
 .PHONY: packages-npm
 packages-npm: # Install npm packages.
 # TODO: vue の next が stable になったら @next を外す
@@ -263,7 +223,6 @@ packages-go: # Install Go packages.
 .PHONY: packages-pip
 packages-pip: # Install pip packages.
 	pip install --user \
-		awscli \
 		pipenv;
 	pyenv rehash
 
