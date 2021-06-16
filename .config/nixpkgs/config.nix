@@ -1,4 +1,4 @@
 {
-  # google-chrome ヲインストールするため
+  # google-chrome をインストールするため
   allowUnfree = true;
 }
