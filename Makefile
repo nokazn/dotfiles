@@ -12,7 +12,7 @@ LANGS := deno rust elm nim
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init: deploy update-apt packages-apt add-tools install-anyenv install-langs packaes; # Install all languages & their packages.
+init: deploy update-apt packages-apt add-tools install-anyenv install-langs; # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 

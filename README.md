@@ -11,9 +11,26 @@ If `git`, `make`, `curl`, `wget` and `xz-utils` are not available in your enviro
 $ suo apt install -y git make curl wget xz-utils
 ```
 
-`make init` makes symbolic links to files that starting with a dot and followed 2 or more chars in `~/dotfiles/` directory.  
+`make deploy` command makes symbolic links to files that starting with a dot and followed 2 or more chars in `~/dotfiles/` directory.  
 If a existing file conflicts with the symbolic link, this is backed up in `~/dotfiles_backup/` directory.
 
+`make init` command executes targets below.
+
+- `update-apt` - Update apt packages
+- `packages-apt` - Install apt packages
+- `add-tools`
+  - `add-nix` - Add nix
+  - `add-home`-manager - Add home-manager
+  - `add-prezto` - Add prezto
+  - `add-dein-vim` - Add dein-vim
+  - `add-bash-it` - Add bash-it
+  - `add-wsl-hello-sudo` - Add wsl-hello-sudo
+- `install-anyenv` - Install anyenv
+- `install-langs`
+  - `install-deno` - Install Deno
+  - `install-rust` - Install Rust
+  - `install-elm` - Install Elm
+  - `install-nim` - Install Nim
 
 ```bash
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
