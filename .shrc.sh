@@ -28,8 +28,7 @@ fi
 # ---------------------------------------- WSL  ----------------------------------------
 
 if type wsl.exe >/dev/null 2>&1; then
-    # VcXsrv
-    # WSL 内では X Server 経由で GUI を表示
+    # WSL 内では X Server (VcXsrv) 経由で GUI を表示
     if [[ -f "$HOME/dotfiles/scripts/start_vcxsrv.sh" ]]; then
         # WSL に割り当てられる IP アドレスを取得して設定
         DISPLAY="$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0"
@@ -41,8 +40,8 @@ if type wsl.exe >/dev/null 2>&1; then
 
     # TODO: ブラウザのランチャー
     # if type "wslview" >/dev/null 2>&1; then
-        # BROWSER="wslview"
-        # export BROWSER
+    #     BROWSER="wslview"
+    #     export BROWSER
     # else
     #     echo "⚠ wslview doesn't exist" >&2
     # fi
