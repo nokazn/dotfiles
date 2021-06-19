@@ -113,47 +113,47 @@ function make_backup() {
   return 0
 }
 
-# @param {stirng} - source file path
-# @param {stirng} - destination file path
-# @param {stirng} - destination directory for back-up path
+# email のフィールドが所定の形式になっているかチェックする
+# @param {string} - file path
+# @param {string} - email
 # @return {void}
-function copy_gitconfig() {
-  if [[ -f $2 ]]; then
-    local response
-    response=$(show_prompt_for_overwrite "$2")
-    [[ ${response} != "y" ]] && return 0
-    make_backup "$2" "$3"
-  fi
-
-  # .gitconfig 用の email の入力を tty から受け付ける
-  read -rp "Please enter your email for .gitconfig file: " email </dev/tty
-
-  if [[ ${DEBUG} -eq 0 ]]; then
-    echo "[debug] ✅ newly copied: '$1' -> '$2'"
-    return 0;
-  fi
-
-  local success_message
-  success_message=$(cp --verbose "$1" "$2" | prepend_message "✅ newly copied: ")
-  # .gitconfig の email の箇所を置換
-  sed --in-place -e "2 s/email.*/email = ${email}/" "$2"
-
+function check_email_attribute() {
+  # dotfiles 内の .gitconfig で該当行が email = ${email} の形式になっているかチェック
   local email_line
-  email_line=$(< "$2" grep --extended-regexp --line-number "email\s?=\s?${email}$")
-  # email = <user's email> の形式になっているかチェック
+  email_line=$(< "$1" grep --extended-regexp --line-number "email\s?=\s?$2$")
   if [[ -z ${email_line} ]]; then
     local error_line_number
     error_line_number=$(echo "${email_line}" | cut -f 1 -d ":")
-    echo -n "❌ An error occured when inserting email to $2"
+    # 1行目にエラーの行番号が取得できればを表示し、2行目にエラーのあった行を表示
+    echo -n "❌ An error occured when inserting email to $1"
     if [[ ${error_line_number} ]]; then
       echo -n "at line ${error_line_number}"
     fi
     echo -e ": \n  ${email_line}"
     return 1
   fi
+  return 0
+}
 
-  echo "$success_message"
-  increment_file_counter
+# シンボリックリンクを貼る前に実行させる
+# @param {stirng} - source file path
+# @return {void}
+function insert_email_to_gitconfig() {
+  # .gitconfig 用の email の入力を tty から受け付ける
+  read -rp "Please enter your email for .gitconfig file: " email </dev/tty
+
+  if [[ ${DEBUG} -eq 0 ]]; then
+    echo "[debug] 📧 '${email}' has been inserted to email attribute in '$1'."
+    return 0;
+  fi
+
+  # .gitconfig の email の箇所を置換
+  sed --in-place -e "2 s/email.*/email = ${email}/" "$1"
+
+  # dotfiles 内の .gitconfig で該当行が email = ${email} の形式になっているかチェック
+  check_email_attribute "$1" "${email}"
+
+  echo "📧 '${email}' has been inserted to email attribute in '$1'."
   return 0
 }
 
@@ -163,21 +163,23 @@ function copy_gitconfig() {
 function newly_link() {
   check_absolute_path "$1"
   if [[ ${DEBUG} -eq 0 ]]; then
-    echo "[debug] ✅ newly linked: : '$2' -> '$1'"
+    echo "[debug] ✅ newly linked: '$2' -> '$1'"
     return 0;
   fi
 
   WINDOWS_PATH="/mnt/c"
   if [[ $2 =~ ${WINDOWS_PATH} ]]; then
-    # ショートカット作成事態はできるが、foo.lnk ファイルとして扱われ別物になる
+    # TODO: ショートカット作成事態はできるが、.lnk ファイルとして扱われ別物になる
     # local source_win="$(wslpath -w $1)"
     # local destination_win="$(wslpath -w $2).lnk"
     # powershell.exe -c "\$wsh = New-Object -ComObject WScript.Shell; \$sc = \$wsh.CreateShortCut(\"${destination_win}\"); \$sc.TargetPath = \"${source_win}\"; \$sc.Save();"
     cp --verbose "$1" "$2" | prepend_message "✅ newly copied: "
   else
-    ln --symbolic --verbose --force "$1" "$2" | prepend_message "✅ newly linked: "
+    ln --symbolic --verbose --force "$1" "$2" | prepend_message "✅ newly linked:"
   fi
+
   increment_file_counter
+  return 0
 }
 
 # @param {string} - source file path
@@ -234,7 +236,8 @@ function deploy() {
         ;;
 
       ".gitconfig" )
-        copy_gitconfig "$1/${file}" "$2/${file}" "$3"
+        [[ ! -L "$2/${file}" ]] && insert_email_to_gitconfig "$1/${file}"
+        make_symbolic_link "$1/${file}" "$2/${file}" "$3"
         ;;
 
       *)
@@ -259,7 +262,7 @@ function main() {
   fi
 
   deploy "${BASE_DIR}" ${DESTINATION_BASE_DIR} ${BACKUP_BASE_DIR}
-  # TODO:
+  # TODO: option で Windows のファイルを反映するか分けたい
   deploy "${BASE_DIR}/windows" "${DESTINATION_BASE_DIR_FOR_WINDOWS}" "${BACKUP_BASE_DIR_FOR_WINDOWS}"
   if [[ $file_counter -gt 0 ]]; then
     echo "Successfully ${file_counter} dotfiles are initialized!"
