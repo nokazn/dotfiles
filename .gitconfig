@@ -3,14 +3,15 @@
 	name = nokazn
 [core]
 	editor = vim
-	repositoryformatversion = 0
+	repositoryFormatVersion = 0
 	eol = lf
 	autocrlf = input
 	filemode = true
 	bare = false
-	logallrefupdates = true
+	logAllRefUpdates = true
 	pager = delta
-	excludesfile = ~/.config/git/ignore
+	excludesFile = ~/.config/git/ignore
+	attributesFile = ~/.config/git/attributes
 [init]
 	defaultBranch = main
 [github]
@@ -23,6 +24,10 @@
 [pretty]
 	default = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white)%s%Creset %C(green)- [%an] %C(cyan)(%cr)%Creset"
 	bold = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white bold)%s%Creset %C(green)- %an %C(cyan)(%cr)%Creset"
+[filter "ignore-npm-registry-token"]
+	smudge = cat
+	# npm の認証トークンを含めない
+	clean = sed "/registry.npmjs.org/d"
 [alias]
 	alias = config --get-regexp alias.*
 	br = branch
