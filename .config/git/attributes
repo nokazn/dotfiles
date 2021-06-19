@@ -1,0 +1,2 @@
+.npmrc filter=ignore-npm-registry-token
+.gitconfig filter=ignore-email-attribute

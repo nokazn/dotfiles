@@ -1,28 +1,46 @@
 [user]
 	email =
 	name = nokazn
+
 [core]
 	editor = vim
-	repositoryformatversion = 0
+	repositoryFormatVersion = 0
 	eol = lf
 	autocrlf = input
 	filemode = true
 	bare = false
-	logallrefupdates = true
+	logAllRefUpdates = true
 	pager = delta
-	excludesfile = ~/.config/git/ignore
+	excludesFile = ~/.config/git/ignore
+	attributesFile = ~/.config/git/attributes
+
 [init]
 	defaultBranch = main
+
 [github]
 	user = nokazn
+
 [merge]
 	ff = false
+
 [pull]
 	ff = only
 	rebase = true
+
 [pretty]
 	default = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white)%s%Creset %C(green)- [%an] %C(cyan)(%cr)%Creset"
 	bold = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white bold)%s%Creset %C(green)- %an %C(cyan)(%cr)%Creset"
+
+# npm の認証トークンを含めない
+[filter "ignore-npm-registry-token"]
+	smudge = cat
+	clean = sed -e "/registry.npmjs.org/d"
+
+# .gitconfig の email を含めない
+[filter "ignore-email-attribute"]
+	smudge = cat
+	clean = sed -E -e 's/email\\s=\\s.+/email =/'
+
 [alias]
 	alias = config --get-regexp alias.*
 	br = branch
@@ -78,8 +96,10 @@
 	rebi3 = rebase -i HEAD~3
 	rebi4 = rebase -i HEAD~4
 	rebi5 = rebase -i HEAD~5
+	cp = cherry-pick
 	remote-add-me = !git remote add origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
 	remote-set-url-me = !git remote set-url origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
+
 [delta]
 	line-numbers = true
 	side-by-side = true
