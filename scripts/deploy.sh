@@ -172,7 +172,7 @@ function newly_link() {
     # local source_win="$(wslpath -w $1)"
     # local destination_win="$(wslpath -w $2).lnk"
     # powershell.exe -c "\$wsh = New-Object -ComObject WScript.Shell; \$sc = \$wsh.CreateShortCut(\"${destination_win}\"); \$sc.TargetPath = \"${source_win}\"; \$sc.Save();"
-    cp --verbose "$1" "$2" | prepend_message "✅ newly copied: "
+    cp --verbose "$1" "$2" | prepend_message "✅ newly copied:"
   else
     ln --symbolic --verbose --force "$1" "$2" | prepend_message "✅ newly linked:"
   fi

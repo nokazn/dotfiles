@@ -63,5 +63,6 @@
     pkgs.dive
     pkgs.pastel
     pkgs.act
+    pkgs.powershell
   ];
 }
