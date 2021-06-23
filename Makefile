@@ -40,8 +40,16 @@ remove-nix: _print-goodbye # Uninstall nix.
 	@echo "✅ nix has been uninstalled successfully!"
 
 
+# TODO: nix 以外のパッケージを削除するスクリプト
+.PHONY: _remove-nix-packages
+_remove-nix-packages:
+	[[ -e ~/.nix-profile/bin/nix-env ]] && \
+	[[ "$(~/.nix-profile/bin/nix-env -q)" ]] && \
+	~/.nix-profile/bin/nix-env -q | xargs ~/.nix-profile/bin/nix-env -e
+
 .PHONY: add-home-manager
-add-home-manager: _print-airplane # Add home-manager
+add-home-manager: _print-airplane _remove-nix-packages # Add home-manager
+	[[ -e ~/.nix-profile/bin/nix-env ]] && [[ "$(~/.nix-profile/bin/nix-env -q)" ]] &&  ~/.nix-profile/bin/nix-env -e \
 	~/.nix-profile/bin/nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager; \
 	~/.nix-profile/bin/nix-channel --update; \
 	source ${PATH_FILE}; \
