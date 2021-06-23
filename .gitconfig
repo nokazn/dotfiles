@@ -72,6 +72,7 @@
 	push-f = !git push --force-with-lease origin $(git symbolic-ref --short HEAD)
 	ps = !git push origin $(git symbolic-ref --short HEAD)
 	pl = !git pull origin $(git symbolic-ref --short HEAD)
+	plst = "!git stash; git pull origin $(git symbolic-ref --short HEAD); git stash pop;"
 	# 引数に渡した番号の PR を pr/#<番号> というブランチに pull する
 	plpr="!f(){ git pull origin \"pull/$1/head:pr/#$1\";};f"
 	amend = !git commit -m \"$(git log --format="%s" -n 1)\" --amend
