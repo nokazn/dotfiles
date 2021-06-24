@@ -50,6 +50,7 @@
 	sw = switch
 	# 親ブランチの指定がなければ実行させない
 	swc = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git switch -c $1 $2; }; f"
+	stsw = "!f(){ git stash; git switch $1; }; f"
 	st = stash
 	stu = stash -u --keep-index
 	d = diff
