@@ -44,6 +44,7 @@ alias dc='docker'
 alias dcc='docker-compose'
 alias lg='lazygit'
 alias python='python3'
+alias tf='terraform'
 alias chrome='google-chrome-stable'
 
 function chshs() {
