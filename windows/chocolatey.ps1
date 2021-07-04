@@ -10,34 +10,14 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
   }
 }
 
-choco install -y googlechrome `
-  firefox `
-  opera `
-  visualstudiocode `
-  git `
-  vcxsrv `
+choco install -y vcxsrv `
+  pgadmin4
   # うまくセットアップできない `
   # docker-desktop `
-  pgadmin4 `
-  postman `
   adobereader `
-  thunderbird `
   keybase `
-  discord `
-  typora `
-  boostnote `
-  keepassxc `
   googledrive `
-  everything `
-  fastcopy `
-  crystaldiskmark `
-  crystaldiskinfo `
-  7zip `
-  gimp `
-  vlc `
-  screentogif `
-  spotify `
   lastfmscrobbler `
   todoist `
-  slack `
-  keycastow
+  keycastow `
+  7zip `
