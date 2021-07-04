@@ -1,0 +1,42 @@
+if (!(Get-Command "scoop" -ErrorAction SilentlyContinue)) {
+  Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+
+  if (!(Get-Command "scoop" -ErrorAction SilentlyContinue)) {
+    Write-Error "❌ Failed to install Scoop."
+    exit 1;
+  }
+  Write-Host "✅ Scoop is successfully installed."
+}
+
+scoop bucket add extras
+scoop bucket add games
+scoop bucket add nirsoft
+scoop bucket add nonportable
+scoop bucket add spotify "https://github.com/TheRandomLabs/Scoop-Spotify.git"
+
+scoop install googlechrome `
+  firefox `
+  opera `
+  vivaldi `
+  vscode `
+  git `
+  vcxsrv `
+  # pgadmin4-np `
+  postman `
+  jasper
+  gimp `
+  vlc `
+  thunderbird `
+  discord `
+  slack `
+  zoom `
+  typora `
+  notion `
+  boostnote `
+  keepassxc `
+  everything `
+  fastcopy `
+  crystaldiskmark `
+  crystaldiskinfo `
+  screentogif `
+  spotify `
