@@ -27,7 +27,6 @@ scoop install googlechrome `
   gimp `
   vlc `
   thunderbird `
-  discord `
   slack `
   zoom `
   typora `

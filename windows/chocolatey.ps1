@@ -16,6 +16,8 @@ choco install -y vcxsrv `
   # docker-desktop `
   adobereader `
   keybase `
+  # scoop だと動かない
+  discord `
   googledrive `
   lastfmscrobbler `
   todoist `
