@@ -23,3 +23,4 @@ choco install -y vcxsrv `
   todoist `
   keycastow `
   7zip `
+  spotify
