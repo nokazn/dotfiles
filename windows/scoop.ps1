@@ -12,7 +12,6 @@ scoop bucket add extras
 scoop bucket add games
 scoop bucket add nirsoft
 scoop bucket add nonportable
-scoop bucket add spotify "https://github.com/TheRandomLabs/Scoop-Spotify.git"
 
 scoop install googlechrome `
   firefox `
@@ -38,4 +37,3 @@ scoop install googlechrome `
   crystaldiskmark `
   crystaldiskinfo `
   screentogif `
-  spotify `
