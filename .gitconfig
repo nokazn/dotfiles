@@ -25,7 +25,8 @@
 
 [pull]
 	ff = only
-	rebase = true
+	rebase = false
+	merge = true
 
 [pretty]
 	default = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white)%s%Creset %C(green)- [%an] %C(cyan)(%cr)%Creset"
