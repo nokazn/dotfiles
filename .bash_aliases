@@ -20,9 +20,13 @@ fi
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
+alias ls='exa --icons --git'
+alias lst='ls --tree'
+alias la='ls -a'
+alias lat='lst -a'
 alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+alias llt='lst -alF'
+alias l='ls -F'
 
 # Add an "alert" alias for long running commands.  Use like so:
 # sleep 10; alert
@@ -46,6 +50,7 @@ alias lg='lazygit'
 alias python='python3'
 alias tf='terraform'
 alias chrome='google-chrome-stable'
+alias hm='home-manager'
 
 function chshs() {
     chsh -s "$(which "$1")"
