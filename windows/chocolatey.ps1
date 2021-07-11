@@ -10,8 +10,8 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
   }
 }
 
-choco install -y vcxsrv `
-  pgadmin4
+choco install -y  `
+  pgadmin4 `
   # うまくセットアップできない `
   # docker-desktop `
   adobereader `
@@ -22,5 +22,7 @@ choco install -y vcxsrv `
   lastfmscrobbler `
   todoist `
   keycastow `
+  # scoop だと動かない
   7zip `
-  spotify
+  spotify `
+  font-hackgen-nerd
