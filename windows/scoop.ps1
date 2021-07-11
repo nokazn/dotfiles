@@ -13,7 +13,8 @@ scoop bucket add games
 scoop bucket add nirsoft
 scoop bucket add nonportable
 
-scoop install googlechrome `
+scoop install `
+  googlechrome `
   firefox `
   opera `
   vivaldi `

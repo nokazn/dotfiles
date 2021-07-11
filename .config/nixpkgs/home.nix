@@ -64,5 +64,7 @@
     pkgs.pastel
     pkgs.act
     pkgs.powershell
+    pkgs.xfce.thunar
+    pkgs.gnome.gedit
   ];
 }
