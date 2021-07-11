@@ -51,6 +51,7 @@
     pkgs.rsync
     pkgs.gcc
     pkgs.bat
+    pkgs.exa
     pkgs.broot
     pkgs.hyperfine
     pkgs.tokei

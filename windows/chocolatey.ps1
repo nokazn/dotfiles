@@ -24,4 +24,5 @@ choco install -y  `
   keycastow `
   # scoop だと動かない
   7zip `
-  spotify
+  spotify `
+  font-hackgen-nerd
