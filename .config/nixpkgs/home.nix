@@ -51,6 +51,7 @@
     pkgs.rsync
     pkgs.gcc
     pkgs.bat
+    pkgs.exa
     pkgs.broot
     pkgs.hyperfine
     pkgs.tokei
@@ -64,5 +65,7 @@
     pkgs.pastel
     pkgs.act
     pkgs.powershell
+    pkgs.xfce.thunar
+    pkgs.gnome.gedit
   ];
 }
