@@ -42,25 +42,25 @@ fi
 
 # ---------------------------------------- prompt ----------------------------------------
 
-# TODO: "[${COL}${LOC}]" とすると関数内で色を埋め込むときに \[\] が表示されてしまう
-COL="\033[" # "\e[" と同義
-LOC=""
-RESET="${COL}m${LOC}" # "${COL}00m${LOC}" と同義
-# RED="${COL}01;31m${LOC}"
-GREEN="${COL}01;32m${LOC}"
-YELLOW="${COL}00;33m${LOC}"
-BLUE="${COL}01;34m${LOC}"
-# MAGENTA="${COL}00;35m${LOC}"
-CYAN="${COL}00;36m${LOC}"
-WHITE="${COL}00;37m${LOC}"
-BLUE_BG="${COL}01;44m${LOC}"
-
 function ps1_date() {
     date +'%Y-%m-%d %-H:%M:%S'
 }
 
 function ps1_git() {
-    local branch hash
+    # TODO: "[${COL}${LOC}]" とすると関数内で色を埋め込むときに \[\] が表示されてしまう
+    local -r COL="\033[" # "\e[" と同義
+    local -r LOC=""
+    local -r RESET="${COL}m${LOC}" # "${COL}00m${LOC}" と同義
+    # local -r RED="${COL}01;31m${LOC}"
+    local -r GREEN="${COL}01;32m${LOC}"
+    local -r YELLOW="${COL}00;33m${LOC}"
+    local -r BLUE="${COL}01;34m${LOC}"
+    # local -r MAGENTA="${COL}00;35m${LOC}"
+    local -r CYAN="${COL}00;36m${LOC}"
+    local -r WHITE="${COL}00;37m${LOC}"
+    local -r BLUE_BG="${COL}01;44m${LOC}"
+
+    local -r branch hash
     branch=$(git symbolic-ref --short HEAD 2>/dev/null)
     hash=$(git log --pretty=format:'%h' -n 1 2>/dev/null)
     if [[ -n ${branch} ]]; then

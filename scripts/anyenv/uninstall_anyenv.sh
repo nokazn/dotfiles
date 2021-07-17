@@ -22,8 +22,7 @@ function uninstall_anyenv() {
     return 0;
   fi
 
-  local anynv_root
-  anynv_root=$(anyenv root)
+  local -r anynv_root=$(anyenv root)
   rm -rf "${anynv_root}"
   if has_command "anyenv"; then
     echo "❌ anyenv has failed to be uninstalled from '${anynv_root}'."

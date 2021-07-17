@@ -10,7 +10,7 @@ function has_command() {
 }
 
 function install_anyenv() {
-  local anyenv_path=~/.anyenv
+  local -r anyenv_path=~/.anyenv
   if [[ -d ${anyenv_path} ]] && has_command "anyenv"; then
     echo "anyenv is already installed at $(which anyenv)"
     return 0

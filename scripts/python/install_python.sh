@@ -30,14 +30,12 @@ function install_python() {
   check_command "pyenv"
 
   if has_command "python"; then
-    local python_version
-    python_version=$(python --version | cut --delimiter " " -f 2)
+    local -r python_version=$(python --version | cut --delimiter " " -f 2)
     echo "Python ${python_version} is already installed at '$(which python)'."
     return 0
   fi
 
-  local latest_version
-  latest_version=$(pyenv install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}$" | tail -n 1 | awk '{print $1}')
+  local -r latest_version=$(pyenv install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}$" | tail -n 1 | awk '{print $1}')
   echo "installing Python the ${latest_version} (latest version of the major release) ..."
   pyenv install "${latest_version}"
   pyenv global "${latest_version}"

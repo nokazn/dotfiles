@@ -29,7 +29,7 @@ function check_command() {
 # @param None
 # @return {void}
 function install_goenv() {
-  local goenv_path=~/.goenv
+  local -r goenv_path=~/.goenv
   if [[ -d ${goenv_path} ]] && has_command "goenv"; then
     echo "✅ goenv is already installed at '${goenv_path}'."
     return 0
