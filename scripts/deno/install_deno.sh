@@ -38,8 +38,7 @@ function install_deno() {
   source ${PATH_SCRIPT}
   check_command "deno"
 
-  local deno_path
-  deno_path=$(which deno | sed -e "s/\/bin\/deno//")
+  local -r deno_path=$(which deno | sed -e "s/\/bin\/deno//")
   echo "✅ Deno has been installed successfully at '${deno_path}'!"
   return 0
 }

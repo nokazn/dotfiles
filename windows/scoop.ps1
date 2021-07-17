@@ -20,8 +20,6 @@ scoop install `
   vivaldi `
   vscode `
   git `
-  vcxsrv `
-  # pgadmin4-np `
   postman `
   jasper
   gimp `
@@ -37,4 +35,4 @@ scoop install `
   fastcopy `
   crystaldiskmark `
   crystaldiskinfo `
-  screentogif `
+  screentogif

@@ -28,7 +28,7 @@ function check_command() {
 # @param None
 # @return {void}
 function install_pyenv() {
-  local pyenv_path=~/.pyenv
+  local -r pyenv_path=~/.pyenv
   if [[ -d ${pyenv_path} ]]; then
     echo "✅ pyenv is already installed at '${pyenv_path}'."
     return 0

@@ -22,8 +22,7 @@ function uninstall_python() {
     return 0;
   fi
 
-  local pyenv_root
-  pyenv_root=$(pyenv root)
+  local -r pyenv_root=$(pyenv root)
   rm -rf "${pyenv_root}"
   if has_command "pyenv"; then
     echo "❌ pyenv has failed to be uninstalled from '${pyenv_root}'."

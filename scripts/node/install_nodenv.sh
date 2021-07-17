@@ -27,9 +27,8 @@ function check_command() {
 # @param {string} - package name
 # @return {void}
 function install_nodenv_plugin() {
-  local nodenv_root
-  nodenv_root=$(nodenv root)
-  local plugin_path="${nodenv_root}/plugins/$1"
+  local -r nodenv_root=$(nodenv root)
+  local -r plugin_path="${nodenv_root}/plugins/$1"
   if [[ -d ${plugin_path} ]]; then
     echo "✅ $1 is already installed at '${plugin_path}'."
     return 0
@@ -52,7 +51,7 @@ function install_nodenv_plugin() {
 # @param None
 # @return {void}
 function install_nodenv() {
-  local nodenv_path=~/.nodenv
+  local -r nodenv_path=~/.nodenv
   if [[ -d ${nodenv_path} ]] && has_command nodenv; then
     echo "✅ noednv is already installed at '${nodenv_path}'."
     return 0

@@ -95,9 +95,8 @@ function check_absolute_path() {
 # @return {void}
 function make_backup() {
   # $2 + $1 から先頭のバックアップ用のディレクトリの親の部分を削除したもの
-  local backup_file backup_dir
-  backup_file="$2/${1##"$(dirname "$2")/"}"
-  backup_dir="$(dirname "${backup_file}")"
+  local -r backup_file="$2/${1##"$(dirname "$2")/"}"
+  local -r backup_dir="$(dirname "${backup_file}")"
 
 # 同名のファイルが存在し、バックアップがなければ実行
   if [[ -f $1 ]] && [[ ! -e ${backup_file} ]]; then
@@ -118,11 +117,9 @@ function make_backup() {
 # @return {void}
 function check_email_attribute() {
   # dotfiles 内の .gitconfig で該当行が email = ${email} の形式になっているかチェック
-  local email_line
-  email_line=$(< "$1" grep --extended-regexp --line-number "email\s?=\s?$2$")
+  local -r email_line=$(< "$1" grep --extended-regexp --line-number "email\s?=\s?$2$")
   if [[ -z ${email_line} ]]; then
-    local error_line_number
-    error_line_number=$(echo "${email_line}" | cut -f 1 -d ":")
+    local -r error_line_number=$(echo "${email_line}" | cut -f 1 -d ":")
     # 1行目にエラーの行番号が取得できればを表示し、2行目にエラーのあった行を表示
     echo -n "❌ An error occured when inserting email to $1"
     if [[ ${error_line_number} ]]; then
@@ -169,8 +166,8 @@ function newly_link() {
   WINDOWS_PATH="/mnt/c"
   if [[ $2 =~ ${WINDOWS_PATH} ]]; then
     # TODO: ショートカット作成事態はできるが、.lnk ファイルとして扱われ別物になる
-    # local source_win="$(wslpath -w $1)"
-    # local destination_win="$(wslpath -w $2).lnk"
+    # local -r source_win="$(wslpath -w $1)"
+    # local -r destination_win="$(wslpath -w $2).lnk"
     # powershell.exe -c "\$wsh = New-Object -ComObject WScript.Shell; \$sc = \$wsh.CreateShortCut(\"${destination_win}\"); \$sc.TargetPath = \"${source_win}\"; \$sc.Save();"
     cp --verbose "$1" "$2" | prepend_message "✅ newly copied:"
   else
@@ -199,7 +196,7 @@ function make_symbolic_link() {
     newly_link "$1" "$2"
   elif [[ -f $2 ]] && [[ -f $1 ]]; then
     # ファイルでバックアップがある場合
-    local response
+    local -r response
     response=$(show_prompt_for_overwrite "$2")
     if [[ ${response} == "y" ]]; then
       make_backup "$2" "$3"

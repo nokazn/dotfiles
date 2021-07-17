@@ -12,6 +12,8 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
 
 choco install -y  `
   pgadmin4 `
+  # scoop だと動かない
+  vcxsrv `
   # うまくセットアップできない `
   # docker-desktop `
   adobereader `
