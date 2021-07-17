@@ -27,7 +27,7 @@ function check_command() {
 # @param None
 # @return {void}
 function install_elm() {
-  local ELM_PATH=~/.local/bin/elm
+  local -r ELM_PATH=~/.local/bin/elm
   if [[ -e ${ELM_PATH} ]] && has_command "elm"; then
     echo "✅ Elm is already installed at '${ELM_PATH}'."
     return 0

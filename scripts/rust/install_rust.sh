@@ -40,9 +40,8 @@ function install_rust() {
   check_command "rustup"
 
   # cargo のパスから /bin/cargo を除く
-  local cargo_path rustup_path
-  cargo_path=$(which cargo | sed -e "s/\/bin\/cargo//")
-  rustup_path=$(rustup show home)
+  local -r cargo_path=$(which cargo | sed -e "s/\/bin\/cargo//")
+  local -r rustup_path=$(rustup show home)
   echo "✅ Rust has been installed successfully at '${cargo_path}' and '${rustup_path}'!"
   return 0
 }
