@@ -24,7 +24,8 @@ choco install -y  `
   lastfmscrobbler `
   todoist `
   keycastow `
+  spotify `
+  everything `
   # scoop だと動かない
   7zip `
-  spotify `
   font-hackgen-nerd
