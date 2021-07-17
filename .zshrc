@@ -41,19 +41,19 @@ fi
 # ------------------------------ prompt ------------------------------
 
 function left-prompt() {
-    local transparent='000m'
-    local name_t='136m'
-    local dir_t='255m'
-    local dir_b='027m'
+    local -r transparent='000m'
+    local -r name_t='136m'
+    local -r dir_t='255m'
+    local -r dir_b='027m'
 
-    local arrow='087m'
-    local ct='\e[38;5;'
-    local cb='\e[30;48;5;'
-    local reset='\e[0m'
-    local sharp='\uE0B0'
+    local -r arrow='087m'
+    local -r ct='\e[38;5;'
+    local -r cb='\e[30;48;5;'
+    local -r reset='\e[0m'
+    local -r sharp='\uE0B0'
 
-    local user="${cb}${transparent}${ct}${name_t}"
-    local dir="${cb}${dir_b}${ct}${dir_t}"
+    local -r user="${cb}${transparent}${ct}${name_t}"
+    local -r dir="${cb}${dir_b}${ct}${dir_t}"
     echo "${user}%n@%m${cb}${dir_b}${ct}${transparent}${sharp} ${dir}%~${reset}${ct}${dir_b}${sharp}${reset}\n${ct}${arrow}▶${reset} "
 }
 

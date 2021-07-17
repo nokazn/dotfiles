@@ -29,9 +29,8 @@ function uninstall_nim() {
   fi
 
   echo "uninstalling Nim ..."
-  local nimble_path choosenim_path
-  nimble_path=$(which choosenim | sed -e "s/\/bin\/choosenim//")
-  choosenim_path=~/.choosenim
+  local -r nimble_path=$(which choosenim | sed -e "s/\/bin\/choosenim//")
+  local -r choosenim_path=~/.choosenim
   rm_dir "${nimble_path}"
   rm_dir ${choosenim_path}
   echo "✅ Nim has been uninstalled successfully from '${nimble_path}' and '${choosenim_path}'."

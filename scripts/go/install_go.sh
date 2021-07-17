@@ -31,15 +31,13 @@ function install_go() {
   check_command "goenv"
 
   if has_command "go"; then
-    local go_version
-    go_version=$(go version | sed -e "s/go version go//")
+    local -r go_version=$(go version | sed -e "s/go version go//")
     echo "Go ${go_version} is already installed at '$(which go)'."
     return 0
   fi
 
   # 1.x.x の最新バージョンをインストールする
-  local latest_version
-  latest_version=$(goenv install -l | grep -E "^\s*1(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
+  local -r latest_version=$(goenv install -l | grep -E "^\s*1(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
   echo "installing Go ${latest_version} (latest version of the major release) ..."
   goenv install "${latest_version}"
   goenv global "${latest_version}"
