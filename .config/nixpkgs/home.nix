@@ -45,6 +45,7 @@
     pkgs.tldr
     pkgs.jq
     pkgs.yq
+    pkgs.zip
     pkgs.ncdu
     pkgs.inetutils
     pkgs.tmux

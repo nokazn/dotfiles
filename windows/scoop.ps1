@@ -31,7 +31,6 @@ scoop install `
   notion `
   boostnote `
   keepassxc `
-  everything `
   fastcopy `
   crystaldiskmark `
   crystaldiskinfo `
