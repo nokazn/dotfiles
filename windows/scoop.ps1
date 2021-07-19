@@ -21,7 +21,7 @@ scoop install `
   vscode `
   git `
   postman `
-  jasper
+  jasper `
   gimp `
   vlc `
   thunderbird `

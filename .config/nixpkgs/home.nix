@@ -45,7 +45,6 @@
     pkgs.tldr
     pkgs.jq
     pkgs.yq
-    pkgs.zip
     pkgs.ncdu
     pkgs.inetutils
     pkgs.tmux
@@ -59,6 +58,7 @@
     pkgs.gping
     pkgs.shellcheck
     pkgs.expect
+    pkgs.zip
     pkgs.unzip
     pkgs.mkcert
     pkgs.lazygit
