@@ -11,21 +11,39 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
 }
 
 choco install -y  `
-  pgadmin4 `
-  # scoop だと動かない
+  googlechrome `
+  firefox `
+  opera `
+  vivaldi `
+  vscode `
+  git `
   vcxsrv `
+  postman `
+  pgadmin4 `
+  jasper
+  font-hackgen-nerd `
   # うまくセットアップできない `
   # docker-desktop `
-  adobereader `
-  keybase `
-  # scoop だと動かない
+  thunderbird `
   discord `
-  googledrive `
-  lastfmscrobbler `
+  slack `
+  zoom `
+  keybase `
+  typora `
   todoist `
-  keycastow `
-  spotify `
+  notion `
+  boostnote `
+  keepassxc `
   everything `
-  # scoop だと動かない
+  fastcopy `
+  crystaldiskmark `
+  crystaldiskinfo `
+  adobereader `
+  googledrive `
+  keycastow `
   7zip `
-  font-hackgen-nerd
+  screentogif `
+  spotify `
+  lastfmscrobbler `
+  gimp `
+  vlc
