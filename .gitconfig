@@ -45,6 +45,8 @@
 [alias]
 	alias = config --get-regexp alias.*
 	br = branch
+	# マージ済みのブランチを削除
+	br-clean = "!f(){ git branch --merged | grep -v -E '\\*|develop|main|master' | xargs git branch -d; }; f"
 	ch = checkout
 	# 親ブランチの指定がなければ実行させない
 	chb = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git checkout -b $1 $2; }; f"
@@ -77,6 +79,7 @@
 	# 引数に渡した番号の PR を pr/#<番号> というブランチに pull する
 	plpr="!f(){ git pull origin \"pull/$1/head:pr/#$1\";};f"
 	amend = !git commit -m \"$(git log --format="%s" -n 1)\" --amend
+	amend-author = !git commit -m \"$(git log --format="%s" -n 1)\" --author=\"$(git config --get user.name) <$(git config --get user.email)>\" --amend
 	exact-amend = !git commit -m \"$(git log --format="%s" -n 1)\" --date="$(git log --format="%cd" -n 1)" --amend
 	reamend = reset --soft HEAD@{1}
 	l = log --stat --pretty=bold
