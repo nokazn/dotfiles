@@ -58,6 +58,7 @@
     pkgs.gping
     pkgs.shellcheck
     pkgs.expect
+    pkgs.zip
     pkgs.unzip
     pkgs.mkcert
     pkgs.lazygit

@@ -58,11 +58,11 @@
 	dl = diff --stat
 	dlc = diff --stat --cached
 	dcl = diff --stat --cached
-	d1 = diff HEAD~1
-	d2 = diff HEAD~2
-	d3 = diff HEAD~3
-	d4 = diff HEAD~4
-	d5 = diff HEAD~5
+	d1 = diff HEAD~1 HEAD
+	d2 = diff HEAD~2 HEAD
+	d3 = diff HEAD~3 HEAD
+	d4 = diff HEAD~4 HEAD
+	d5 = diff HEAD~5 HEAD
 	s = status --show-stash
 	ss = status --show-stash -s
 	a = add
