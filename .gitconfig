@@ -47,6 +47,9 @@
 	br = branch
 	# マージ済みのブランチを削除
 	br-clean = "!f(){ git branch --merged | grep -v -E '\\*|develop|main|master' | xargs git branch -d; }; f"
+	cl = clone
+	clgh = "!f() { git clone git@github.com:$1/$2; }; f"
+	clgh-me = "!f() { git clone git@github.com:$(git config --get user.name)/$1; }; f"
 	ch = checkout
 	# 親ブランチの指定がなければ実行させない
 	chb = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git pull origin $2:$2; git checkout -b $1 $2; }; f"
