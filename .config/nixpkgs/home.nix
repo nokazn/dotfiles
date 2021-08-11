@@ -28,7 +28,7 @@
     pkgs.php
     pkgs.php74Packages.composer
     pkgs.google-cloud-sdk
-    pkgs.aws
+    pkgs.awscli2
     pkgs.heroku
     pkgs.yarn
     pkgs.redis
