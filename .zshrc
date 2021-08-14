@@ -30,9 +30,14 @@ fi
 
 # ------------------------------ Prezto ------------------------------
 
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+# TODO: 華僑変数 $NIX_PROFILES から読みたい
+if [[ -s ~/.nix-profile/share/zsh-prezto/init.zsh ]]; then
+    source ~/.nix-profile/share/zsh-prezto/init.zsh
+    # コマンドの補完が激遅になる
+    unsetopt PATH_DIRS
+    unsetopt AUTO_PARAM_SLASH
+elif [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
     source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-
     # コマンドの補完が激遅になる
     unsetopt PATH_DIRS
     unsetopt AUTO_PARAM_SLASH
