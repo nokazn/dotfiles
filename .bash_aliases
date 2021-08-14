@@ -20,13 +20,16 @@ fi
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ls='exa --icons --git'
-alias lst='ls --tree'
-alias la='ls -a'
-alias lat='lst -a'
+alias la='ls -A'
 alias ll='ls -alF'
-alias llt='lst -alF'
 alias l='ls -F'
+alias exa='exa --icons --git'
+alias exat='exa --tree'
+
+# git aliases
+alias g='git'
+alias hg='git config --get-regexp alias.* | sed -E -n -e "/\[alias\]/,/^$$/p" ~/.gitconfig | sed -E -e "/alias/d" -e "/#/d" -e "s/^(.+)\s=\s/\1 | /" | column -s "|" -t | more'
+alias branch='git symbolic-ref --short HEAD'
 
 # Add an "alert" alias for long running commands.  Use like so:
 # sleep 10; alert
@@ -37,7 +40,7 @@ alias dotfiles='cd ~/dotfiles'
 alias relogin='exec $SHELL -l'
 alias repath='source ~/.path.sh'
 alias realias='source ~/.bash_aliases'
-alias tmux-relaod='tmux source-file ~/.tmux.conf'
+alias relaod-tmux='tmux source-file ~/.tmux.conf'
 alias path='echo $PATH | sed -E -e "s/:/\n/g" | sed -e "s/^/  /"'
 alias aliases='alias | sed -E -e "s/^alias\s//" | column -s "=" -t'
 alias ssh-keygen-rsa="ssh-keygen -t rsa -b 4096 -C"
@@ -55,9 +58,3 @@ alias hm='home-manager'
 function chshs() {
     chsh -s "$(which "$1")"
 }
-
-# git aliases
-alias g='git'
-alias alias-git='git config --get-regexp alias.* | sed -E -e "s/^alias\.(\S+)\s/  git \1 | /" -e "s/\s\|\s([a-z])/ | git \1/" -e "s/\!git/git/" | column -s "|" -t | more'
-# alias git-alias='git config --get-regexp alias.* | sed -E -n -e "/\[alias\]/,/^$$/p" ~/.gitconfig | sed -E -e "/alias/d" -e "/#/d" -e "s/^(.+)\s=\s/\1 | /" | column -s "|" -t | more'
-alias branch='git symbolic-ref --short HEAD'
