@@ -17,10 +17,10 @@ init: deploy update-apt packages-apt add-tools install-anyenv install-langs; # I
 # ------------------------------ tools ------------------------------
 
 .PHONY: add-tools
-add-tools: add-nix add-home-manager add-prezto add-dein-vim add-bash-it add-wsl-hello-sudo; # Add developing tools.
+add-tools: add-nix add-home-manager add-dein-vim add-bash-it add-wsl-hello-sudo; # Add developing tools.
 
 .PHONY: remove-tools
-remove-tools: remove-nix remove-prezto remove-dein-vim remove-bash-it remove-wsl-hello-sudo; # Remove developing tools.
+remove-tools: remove-nix remove-dein-vim remove-bash-it remove-wsl-hello-sudo; # Remove developing tools.
 
 .PHONY: add-nix
 add-nix: _print-airplane # Install nix.
@@ -46,22 +46,6 @@ add-home-manager: _print-airplane # Add home-manager
 	~/.nix-profile/bin/nix-channel --update; \
 	source ${PATH_FILE}; \
 	~/.nix-profile/bin/nix-shell '<home-manager>' -A install
-
-.PHONY: add-prezto
-add-prezto: _print-airplane # Add Prezto for zsh.
-	git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
-# dotfiles 内の設定ファイルを使うのでここでシンボリックリンクを張る必要はない
-# ls $${ZDOTDIR:-$${HOME}}/.zprezto/runcoms --ignore README.md | xargs -I "{}" ln -s "$${HOME}/.zprezto/runcoms/{}" "$${HOME}/dotfiles/.{}"
-	@echo "✅ prezto has been installed successfully!"
-	@if ! (echo $$SHELL | grep -q "zsh"); then \
-		echo "👉 To change default shell, run a command 'chsh -s $$(which zsh)'."; \
-	fi
-
-.PHONY: remove-prezto
-remove-prezto: _print-goodbye # Remove Prezto for zsh.
-	sudo rm -rf ~/.zprezto
-	@echo "✅ prezto has been uninstalled successfully!"
-
 
 .PHONY: add-dein-vim
 add-dein-vim: _print-airplane # Add dein.vim.
