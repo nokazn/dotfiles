@@ -18,9 +18,7 @@ with pkgs; [
   google-chrome
   # classic CLI tools ----------------------------------------------------------------------------------------------------
   gcc
-  vimHugeX
   gnome.gedit                       # The default text editor of the GNOME desktop environment and part of the GNOME Core Applications
-  tmux
   rsync
   xfce.thunar                       # A file manager for Linux and other Unix-like systems
   inetutils
