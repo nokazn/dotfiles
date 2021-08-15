@@ -11,7 +11,7 @@ LANGS := deno rust elm nim
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init: deploy update-apt packages-apt add-tools install-anyenv install-langs; # Install all languages & their packages.
+init:  update-apt packages-apt add-tools home-manager-switch install-anyenv install-langs home-manager-switch; # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 
@@ -183,6 +183,7 @@ packages-go: # Install Go packages.
 
 .PHONY: home-manager-switch
 home-manager-switch: generate-npm-packages-list # Run 'home-manager switch'
+	[[ -e $$HOME/.config/nixpkgs ]] && ln -sb ./.config/.nixpkgs $$HOME/.config/nixpkgs
 	home-manager switch
 
 # ------------------------------ update ------------------------------
