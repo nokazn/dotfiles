@@ -136,7 +136,7 @@ uninstall-anyenv: # Install anyenv
 # ------------------------------ packages ------------------------------
 
 .PHONY: packages
-packages: packages-npm packages-go packaes-pip; # Get all packages except the ones from apt.
+packages: generate-npm-packages-list packages-go packaes-pip; # Get all packages except the ones from apt.
 
 .PHONY: packagegs-apt
 packages-apt: # Install apt packages.
@@ -172,46 +172,15 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 		libffi-dev \
 		liblzma-dev
 
-.PHONY: packages-npm
-packages-npm: # Install npm packages.
-# TODO: vue の next が stable になったら @next を外す
-	npm i -g \
-		aws-cdk \
-		@nestjs/cli \
-		@octokit/core \
-		@vue/cli@next \
-		envinfo \
-		eslint \
-		firebase-tools \
-		generator-code \
-		http-server \
-		lerna \
-		minimum-node-version \
-		netlify-cli \
-		node-gyp \
-		prettier \
-		serverless \
-		sort-package-json \
-		ts-node \
-		typescript \
-		vercel \
-		vue@next \
-		yo;
-	nodenv rehash
+.PHONY: generate-npm-packages-list
+generate-npm-packages-list: # Install npm packages.
+	cd ./.config/nixpkgs/node; \
+	nix-shell -p nodePackages.node2nix --command "node2nix -i ./packages.json -o ./packages.nix"
 
 .PHONY: packages-go
 packages-go: # Install Go packages.
-	go get -u -v github.com/motemen/ghq; \
-	go get -u -v github.com/motemen/gore; \
-	go get -u -v golang.org/x/tools/gopls; \
 	go get -u -v golang.org/x/tools/cmd/goimports;
 	goenv rehash
-
-.PHONY: packages-pip
-packages-pip: # Install pip packages.
-	pip install --user \
-		pipenv;
-	pyenv rehash
 
 # ------------------------------ update ------------------------------
 
@@ -225,17 +194,8 @@ update-apt: # Update apt packages.
 		sudo apt upgrade -y; \
 	fi;
 
-.PHONY: update-npm
-update-npm: # Update global npm packages.
-	npm update -g
-
 .PHONY: update-go
 update-go: install-go; # Update Go packages.
-
-.PHONY: update-pip
-update-pip: # Update pip packages.
-	pip install --upgrade pip
-	pip list --user | tail -n +3 | cut -d " " -f 1 | xargs pip install --user --upgrade
 
 # ------------------------------ deploy & restore dotfiles ------------------------------
 
