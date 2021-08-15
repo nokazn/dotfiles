@@ -86,6 +86,8 @@ in rec {
 
   programs.vim = {
     enable = true;
+    # TODO: ホームディレクトリにあるだけでは読み込まれない
+    extraConfig = builtins.readFile ../../.vimrc;
   };
 
   programs.neovim = {
