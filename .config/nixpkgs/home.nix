@@ -3,6 +3,7 @@
 let
   nixPackages = import ./modules/packages.nix { pkgs = pkgs; };
   extraNodePackages = with import ./node/default.nix {}; [
+    # TODO: 入れられない
     # https://discourse.nixos.org/t/aws-cdk-node-modules-json-addition-failing-at-yaml-dependency/12812
     # aws-cdk
     # "@nestjs/cli"
