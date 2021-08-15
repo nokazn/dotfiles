@@ -17,6 +17,7 @@ let
     vercel
     yo
   ];
+  files = import ./modules/files.nix;
 in rec {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -40,28 +41,7 @@ in rec {
   home.packages = nixPackages ++ extraNodePackages;
 
   # dotfiles in home directory
-  home.file = {
-    # TODO: うまく書きたい
-    ".config/git/attributes".source = ../../.config/git/attributes;
-    ".config/git/ignore".source = ../../.config/git/ignore;
-    ".bash_aliases".source = ../../.bash_aliases;
-    ".bash_profile".source = ../../.bash_profile;
-    ".bashrc".source = ../../.bashrc;
-    ".gitconfig".source = ../../.gitconfig;
-    ".npmrc".source = ../../.npmrc;
-    ".path.sh".source = ../../.path.sh;
-    ".prettierrc.json".source = ../../.prettierrc.json;
-    ".profile".source = ../../.profile;
-    ".shellcheckrc".source = ../../.shellcheckrc;
-    ".shrc.sh".source = ../../.shrc.sh;
-    ".tmux.conf".source = ../../.tmux.conf;
-    ".vimrc".source = ../../.vimrc;
-    ".zlogin".source = ../../.zlogin;
-    ".zlogout".source = ../../.zlogout;
-    ".zprofile".source = ../../.zprofile;
-    ".zshenv".source = ../../.zshenv;
-    ".zshrc".source = ../../.zshrc;
-  };
+  home.file = files;
 
   programs.zsh = {
     enable = true;
