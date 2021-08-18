@@ -171,7 +171,7 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 
 
 .PHONY: home-manager-switch
-home-manager-switch: # generate-npm-packages-list # Run 'home-manager switch'
+home-manager-switch: generate-npm-packages-list backup # Run 'home-manager switch'
 # ln コマンドでは絶対パスで指定しないとうまくシンボリックリンクが張れない
 	if [[ ! -L $${HOME}/.config/nixpkgs ]]; then \
 		mv $${HOME}/.config/nixpkgs $${HOME}/.config/nixpkgs.bk; \
@@ -220,6 +220,12 @@ deploy-gitconfig: # Copy .gitconfig file.
 .PHONY: restore
 restore: # Restore backed-up files of dotfiles.
 	$(SCRIPTS_DIR)/restore.sh
+
+.PHONY: backup
+backup: # Backup dotfiles in .config/nixpkgs/modules/files.txt
+	xargs -I {} ls "$${HOME}/{}" 2>/dev/null < ./.config/nixpkgs/modules/files.txt \
+		| xargs -I {} mv --verbose {} {}.bak
+	
 
 # ------------------------------ utilities ------------------------------
 
