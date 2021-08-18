@@ -2,7 +2,7 @@
 
 SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
-PATH_FILE := ~/.path.sh
+PATH_FILE := ./.path.sh
 ANYENV_LANGS := node go
 LANGS := deno rust elm nim
 .DEFAULT_GOAL := help
@@ -11,7 +11,7 @@ LANGS := deno rust elm nim
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init:  update-apt packages-apt add-tools home-manager-switch install-anyenv install-langs home-manager-switch; # Install all languages & their packages.
+init:  update-apt packages-apt add-tools home-manager-switch install-anyenv install-langs; # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 
@@ -27,24 +27,23 @@ add-nix: _print-airplane # Install nix.
 		echo "✅ nix is already installed."; \
 	else \
 		curl -L https://nixos.org/nix/install | sh; \
-		source /home/nokazn/.nix-profile/etc/profile.d/nix.sh \
-		source $(PATH_FILE); \
+		source ~/.nix-profile/etc/profile.d/nix.sh \
 		echo "✅ nix has been installed successfully!"; \
 	fi
 
 .PHONY: remove-nix
 remove-nix: _print-goodbye # Uninstall nix.
-	sudo rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
+	rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
 	sudo rm -rf /nix
 	@echo "✅ nix has been uninstalled successfully!"
-
 
 .PHONY: add-home-manager
 add-home-manager: _print-airplane # Add home-manager
 	~/.nix-profile/bin/nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager; \
 	~/.nix-profile/bin/nix-channel --update; \
 	source ${PATH_FILE}; \
-	~/.nix-profile/bin/nix-shell '<home-manager>' -A install
+	~/.nix-profile/bin/nix-shell '<home-manager>' -A install -I ~/.nix-defexpr/channels
+
 
 .PHONY: add-dein-vim
 add-dein-vim: _print-airplane # Add dein.vim.
@@ -61,12 +60,13 @@ remove-dein-vim: _print-goodbye # Remove dein.vim.
 add-bash-it: _print-airplane # Add bash-it.
 	rm -rf ~/.bash-it
 	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
-	~/.bash-it/install.sh
+# keep your .bashrc and append bash-it templates at the end
+	yes | ~/.bash-it/install.sh
 	@echo "✅ bash-it has been installed successfully!"
 
 .PHONY: remove-bash-it
 remove-bash-it: _print-goodbye # Remove bash-it.
-	sudo rm -rf ~/.bash-it
+	rm -rf ~/.bash-it
 
 
 .PHONY: add-wsl-hello-sudo
@@ -80,8 +80,9 @@ add-wsl-hello-sudo: # Add WSL-Hello-sudo
 		mkdir -p ~/downloads/wsl-hello-sudo; \
 		tar -xvf ~/downloads/wsl-hello-sudo.tar.gz -C ~/downloads/wsl-hello-sudo --strip-components 1; \
 	fi
+# TODO: write failed 32: Broken pipe のエラーを無視するために標準エラー出力を捨てているため
 	cd ~/downloads/wsl-hello-sudo; \
-	./install.sh
+	yes | ./install.sh 2>/dev/null
 	@echo "✅ WSL-Hello-sudo has been installed successfully!"
 	@echo "👉 You need to add 'auth sufficient pam_wsl_hello.so' to the top line of your '/etc/pam.d/sudo'. See also https://github.com/nullpo-head/WSL-Hello-sudo/#configuration."
 
@@ -89,7 +90,7 @@ add-wsl-hello-sudo: # Add WSL-Hello-sudo
 remove-wsl-hello-sudo: # Remove WSL-Hello-sudo
 	if [[ -f ~/downloads/wsl-hello-sudo/uninstall.sh ]]; then \
 		~/downloads/wsl-hello-sudo/uninstall.sh; \
-		sudo rm -rf ~/downloads/wsl-hello-sudo; \
+		rm -rf ~/downloads/wsl-hello-sudo; \
 	fi
 	@echo "✅ WSL-Hello-sudo has been uninstalled successfully!"
 
@@ -134,9 +135,6 @@ uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Unin
 
 # ------------------------------ packages ------------------------------
 
-.PHONY: packages
-packages: generate-npm-packages-list packages-go; # Get all packages except the ones from apt.
-
 .PHONY: packagegs-apt
 packages-apt: # Install apt packages.
 	sudo apt update -y && sudo apt upgrade -y
@@ -171,20 +169,27 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 		libffi-dev \
 		liblzma-dev
 
+
+.PHONY: home-manager-switch
+home-manager-switch: # generate-npm-packages-list # Run 'home-manager switch'
+# ln コマンドでは絶対パスで指定しないとうまくシンボリックリンクが張れない
+	if [[ ! -L $${HOME}/.config/nixpkgs ]]; then \
+		mv $${HOME}/.config/nixpkgs $${HOME}/.config/nixpkgs.bk; \
+		ln --symbolic --verbose $${PWD}/.config/nixpkgs $${HOME}/.config; \
+	fi
+	source ${PATH_FILE}; \
+	~/.nix-profile/bin/home-manager switch
+
 .PHONY: generate-npm-packages-list
-generate-npm-packages-list: # Install npm packages.
+generate-npm-packages-list: # Generate Nix packages list for npm packages.
 	cd ./.config/nixpkgs/node; \
-	nix-shell -p nodePackages.node2nix --command "node2nix -i ./packages.json -o ./packages.nix"
+	~/.nix-profile/bin/nix-shell -p nodePackages.node2nix --command "node2nix -i ./packages.json -o ./packages.nix" -I ~/.nix-defexpr/channels
+
 
 .PHONY: packages-go
 packages-go: # Install Go packages.
 	go get -u -v golang.org/x/tools/cmd/goimports;
 	goenv rehash
-
-.PHONY: home-manager-switch
-home-manager-switch: generate-npm-packages-list # Run 'home-manager switch'
-	[[ -e $$HOME/.config/nixpkgs ]] && ln -sb ./.config/.nixpkgs $$HOME/.config/nixpkgs
-	home-manager switch
 
 # ------------------------------ update ------------------------------
 
