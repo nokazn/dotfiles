@@ -1,6 +1,24 @@
 { config, pkgs, ... }:
 
-{
+let
+  nixPackages = import ./modules/packages.nix { pkgs = pkgs; };
+  extraNodePackages = with import ./node/default.nix {}; [
+    # TODO: 入れられない
+    # https://discourse.nixos.org/t/aws-cdk-node-modules-json-addition-failing-at-yaml-dependency/12812
+    # aws-cdk
+    # "@nestjs/cli"
+    # "@octokit/core"
+    envinfo
+    generator-code
+    http-server
+    minimum-node-version
+    sort-package-json
+    ts-node
+    vercel
+    yo
+  ];
+  files = import ./modules/files.nix;
+in rec {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -20,53 +38,86 @@
   home.stateVersion = "21.11";
 
   # nix packages
-  home.packages = [
-    pkgs.git
-    pkgs.gitAndTools.gh
-    pkgs.gitAndTools.delta
-    pkgs.gist
-    pkgs.php
-    pkgs.php74Packages.composer
-    pkgs.google-cloud-sdk
-    pkgs.awscli2
-    pkgs.heroku
-    pkgs.yarn
-    pkgs.redis
-    pkgs.memcached
-    pkgs.google-chrome
-    pkgs.vimHugeX
-    pkgs.direnv
-    pkgs.sl
-    pkgs.neofetch
-    pkgs.colordiff
-    pkgs.htop
-    pkgs.tree
-    pkgs.nkf
-    pkgs.tldr
-    pkgs.jq
-    pkgs.yq
-    pkgs.ncdu
-    pkgs.inetutils
-    pkgs.tmux
-    pkgs.rsync
-    pkgs.gcc
-    pkgs.bat
-    pkgs.exa
-    pkgs.broot
-    pkgs.hyperfine
-    pkgs.tokei
-    pkgs.gping
-    pkgs.shellcheck
-    pkgs.expect
-    pkgs.zip
-    pkgs.unzip
-    pkgs.mkcert
-    pkgs.lazygit
-    pkgs.dive
-    pkgs.pastel
-    pkgs.act
-    pkgs.powershell
-    pkgs.xfce.thunar
-    pkgs.gnome.gedit
-  ];
+  home.packages = nixPackages ++ extraNodePackages;
+
+  # dotfiles in home directory
+  home.file = files;
+
+  programs.zsh = {
+    enable = true;
+  };
+
+  programs.zsh.prezto = {
+    enable = true;
+    color = true;
+    # the Prezto modules to load (browse modules)
+    pmodules = [
+      "environment"
+      "terminal"
+      "editor"
+      "history"
+      "directory"
+      "spectrum"
+      "utility"
+      "completion"
+      "prompt"
+      "git"
+      "node"
+      "tmux"
+    ];
+    editor.keymap = "vi";
+    git.submoduleIgnore = "all";
+    prompt.theme = "steeef";
+    ssh.identities = [
+      "id_rsa"
+      "id_rsa2"
+      "github"
+      "gitlab"
+      ];
+    syntaxHighlighting.highlighters = [
+      "main"
+      "brackets"
+      "pattern"
+      "line"
+      "cursor"
+      "root"
+    ];
+  };
+
+  programs.vim = {
+    enable = true;
+    # TODO: ホームディレクトリにあるだけでは読み込まれない
+    extraConfig = builtins.readFile ../../.vimrc;
+  };
+
+  programs.neovim = {
+    enable = true;
+    package = pkgs.neovim-unwrapped;
+  };
+
+  programs.tmux = {
+    enable = true;
+    package = pkgs.tmux;
+    plugins = with pkgs; [
+      {
+        # A set of tmux options that should be acceptable to everyone
+        plugin = tmuxPlugins.sensible;
+      }
+      {
+        # Saves all the little details from your tmux environment
+        plugin = tmuxPlugins.resurrect;
+      }
+      {
+        # Copying to system clipboard
+        plugin = tmuxPlugins.yank;
+      }
+    ];
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv = {
+      enable = true;
+    };
+  };
 }
