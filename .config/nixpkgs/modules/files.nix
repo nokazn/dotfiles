@@ -1,3 +1,5 @@
+{ config, ... }:
+
 let
   files = [
     ".config/git/attributes"
@@ -23,7 +25,7 @@ let
   fileSourceList = builtins.map (file: {
     name = file;
     value = {
-      source = ../../.. + ("/" + file);
+      source = config.lib.file.mkOutOfStoreSymlink ../../.. + ("/" + file);
     };
   }) files;
 in builtins.listToAttrs fileSourceList

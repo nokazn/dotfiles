@@ -17,8 +17,8 @@ let
     vercel
     yo
   ];
-  files = import ./modules/files.nix;
-in rec {
+  files = import ./modules/files.nix { config = config; };
+in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
