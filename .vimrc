@@ -117,4 +117,3 @@ nnoremap gr :tabprevious<return><esc>
 "タブを左右に移動する
 nnoremap <Tab>l :+tabmove<return><esc>
 nnoremap <Tab>h :-tabmove<return><esc>
-
