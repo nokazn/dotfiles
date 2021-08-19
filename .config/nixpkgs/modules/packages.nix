@@ -26,6 +26,7 @@ with pkgs; [
   zip
   unzip
   tree                              # Recursive directory listing command
+  unixtools.column
   redis
   memcached
   # modern CLI tools ----------------------------------------------------------------------------------------------------
