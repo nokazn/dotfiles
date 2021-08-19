@@ -11,7 +11,7 @@ LANGS := deno rust elm nim
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init:  update-apt packages-apt add-tools home-manager-switch install-anyenv install-langs; # Install all languages & their packages.
+init:  update-apt packages-apt add-tools generate-npm-packages-list home-manager-switch install-anyenv install-langs; # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 
@@ -171,7 +171,7 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 
 
 .PHONY: home-manager-switch
-home-manager-switch: generate-npm-packages-list backup # Run 'home-manager switch'
+home-manager-switch: backup # Run 'home-manager switch'
 # ln コマンドでは絶対パスで指定しないとうまくシンボリックリンクが張れない
 	if [[ ! -L $${HOME}/.config/nixpkgs ]]; then \
 		mv $${HOME}/.config/nixpkgs $${HOME}/.config/nixpkgs.bk; \
@@ -223,7 +223,9 @@ restore: # Restore backed-up files of dotfiles.
 
 .PHONY: backup
 backup: # Backup dotfiles in .config/nixpkgs/modules/files.txt
+# シンボリックリンクでないファイルがあればバックアップする
 	xargs -I {} ls "$${HOME}/{}" 2>/dev/null < ./.config/nixpkgs/modules/files.txt \
+		| xargs -I "{}" bash -c "[ ! -L {} ] && echo {}" \
 		| xargs -I {} mv --verbose {} {}.bak
 	
 

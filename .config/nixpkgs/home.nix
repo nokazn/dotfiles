@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   nixPackages = import ./modules/packages.nix { pkgs = pkgs; };
@@ -17,7 +17,7 @@ let
     vercel
     yo
   ];
-  files = import ./modules/files.nix { config = config; };
+  files = import ./modules/files.nix { lib = lib; };
 in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

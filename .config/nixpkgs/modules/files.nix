@@ -1,11 +1,12 @@
-{ config, ... }:
+{ lib, ... }:
 
 let
   files = builtins.readFile ./files.txt;
+  fileList = lib.splitString "\n" files;
   fileSourceList = builtins.map (file: {
     name = file;
     value = {
-      source = config.lib.file.mkOutOfStoreSymlink ../../.. + ("/" + file);
+      source = ../../.. + ("/" + file);
     };
-  }) files;
+  }) fileList;
 in builtins.listToAttrs fileSourceList
