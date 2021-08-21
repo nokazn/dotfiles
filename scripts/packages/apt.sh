@@ -27,8 +27,8 @@ function install_apt_packages() {
     add_postgresql_server_repository
 		sudo apt update -y
 		sudo apt install -y \
-      # mysql-server \
       postgresql-12
+      # mysql-server \
 	fi
 }
 
