@@ -48,6 +48,7 @@ with pkgs; [
   act                               # Run your GitHub Actions locally 噫
   hyperfine                         # A command-line benchmarking tool
   powershell
+  xorg.xeyes
   # modern command replacements ----------------------------------------------------------------------------------------------------
   colordiff                         # Compare FILES line by line.hto
   htop                              # A cross-platform interactive process viewer
