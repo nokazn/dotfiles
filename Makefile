@@ -21,6 +21,7 @@ add-tools: add-nix add-home-manager add-dein-vim add-bash-it add-wsl-hello-sudo;
 .PHONY: remove-tools
 remove-tools: remove-nix remove-dein-vim remove-bash-it remove-wsl-hello-sudo; # Remove developing tools.
 
+
 .PHONY: add-nix
 add-nix: _print-airplane # Install nix.
 	@if type "nix-env" >/dev/null 2>&1; then \
@@ -137,14 +138,7 @@ uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Unin
 
 .PHONY: packagegs-apt
 packages-apt: # Install apt packages.
-	sudo apt update -y && sudo apt upgrade -y
-	sudo apt install -y \
-		xsel \
-		zsh \
-		tshark
-# TODO: リポジトリ追加
-# mysql-server
-# postgresql-12
+	./scripts/packages/apt.sh
 
 .PHONY: packages-apt-for-pyenv
 packages-apt-for-pyenv: # Install apt packages for building pyenv.
@@ -227,7 +221,7 @@ backup: # Backup dotfiles in .config/nixpkgs/modules/files.txt
 	xargs -I {} ls "$${HOME}/{}" 2>/dev/null < ./.config/nixpkgs/modules/files.txt \
 		| xargs -I "{}" bash -c "[ ! -L {} ] && echo {}" \
 		| xargs -I {} mv --verbose {} {}.bak
-	
+
 
 # ------------------------------ utilities ------------------------------
 
