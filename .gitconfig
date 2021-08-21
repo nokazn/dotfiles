@@ -1,5 +1,5 @@
 [user]
-	email =
+	email = 41154684+nokazn@users.noreply.github.com
 	name = nokazn
 
 [core]
@@ -36,11 +36,6 @@
 [filter "ignore-npm-registry-token"]
 	smudge = cat
 	clean = sed -e "/registry.npmjs.org/d"
-
-# .gitconfig の email を含めない
-[filter "ignore-email-attribute"]
-	smudge = cat
-	clean = sed -E -e 's/email\\s=\\s.+/email =/'
 
 [alias]
 	alias = config --get-regexp alias.*
