@@ -1,3 +1,4 @@
+.config/broot/conf.hjson
 .config/git/attributes
 .config/git/ignore
 .config/nixpkgs
