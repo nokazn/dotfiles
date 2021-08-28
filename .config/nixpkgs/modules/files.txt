@@ -1,5 +1,6 @@
 .config/git/attributes
 .config/git/ignore
+.config/nixpkgs
 .bash_aliases
 .bash_profile
 .bashrc
