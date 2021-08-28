@@ -8,4 +8,5 @@
 !.config/git/
 !.config/htop/
 !.config/lazygit/
+!.config/neofetch/
 !.config/nixpkgs/
