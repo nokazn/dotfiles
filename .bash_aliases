@@ -55,7 +55,7 @@ alias python='python3'
 alias tf='terraform'
 alias chrome='google-chrome-stable'
 alias hm='home-manager'
-alias hmsw='home-manager switch'
+alias hmsw='home-manager switch -f ./.config/nixpkgs/home.nix'
 alias search='fd | xargs rg'
 
 # docker ----------------------------------------------------------------------------------------------------
