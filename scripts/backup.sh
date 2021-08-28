@@ -2,7 +2,8 @@
 
 set -eu -o pipefail
 
-function backup_non_symlink() {
+# @param ユーザーディレクトリからの相対パス
+function backup_non_symlink_file() {
   if [[ ! -e ~/"$1" ]]; then
     return 0
   fi
@@ -14,11 +15,12 @@ function backup_non_symlink() {
   return 0
 }
 
+# @param ユーザーディレクトリからの相対パスの一覧
 function backup_files() {
   xargs -n 1 < "$1" \
-    | xargs -I {} bash -c "backup_non_symlink {}"
+    | xargs -I {} bash -c "backup_non_symlink_file {}"
 }
 
 # xargs 内で使用できるように export する
-export -f backup_non_symlink
+export -f backup_non_symlink_file
 backup_files "$*"
