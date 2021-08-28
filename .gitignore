@@ -6,4 +6,5 @@
 !.config/broot/
 !.config/gh/
 !.config/git/
+!.config/htop/
 !.config/nixpkgs/
