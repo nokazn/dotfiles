@@ -3,5 +3,10 @@
 .ssh
 !.config/
 .config/*
+!.config/broot/
+!.config/gh/
 !.config/git/
+!.config/htop/
+!.config/lazygit/
+!.config/neofetch/
 !.config/nixpkgs/
