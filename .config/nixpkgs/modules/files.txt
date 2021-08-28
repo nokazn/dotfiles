@@ -1,3 +1,4 @@
+.bash-it/custom/bobby2/bobby2.theme.bash
 .config/broot/conf.hjson
 .config/gh/config.yml
 .config/git/attributes
