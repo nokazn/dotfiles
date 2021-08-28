@@ -2,6 +2,7 @@
 .config/gh/config.yml
 .config/git/attributes
 .config/git/ignore
+.config/htop/htoprc
 .config/nixpkgs
 .bash_aliases
 .bash_profile
