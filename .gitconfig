@@ -50,7 +50,7 @@
 	chb = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git pull origin $2:$2; git checkout -b $1 $2; }; f"
 	sw = switch
 	# 親ブランチの指定がなければ実行させない
-	swc = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git pull origin $2:$2; git switch -c $1 $2; }; f"
+	swc = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git switch -c $1 $2; }; f"
 	st = stash
 	stu = stash -u --keep-index
 	d = diff
