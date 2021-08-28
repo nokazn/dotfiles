@@ -4,5 +4,6 @@
 !.config/
 .config/*
 !.config/broot/
+!.config/gh/
 !.config/git/
 !.config/nixpkgs/
