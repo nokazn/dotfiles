@@ -1,5 +1,10 @@
+.config/broot/conf.hjson
+.config/gh/config.yml
 .config/git/attributes
 .config/git/ignore
+.config/htop/htoprc
+.config/lazygit/config.yml
+.config/neofetch/config.conf
 .config/nixpkgs
 .bash_aliases
 .bash_profile
