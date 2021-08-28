@@ -171,14 +171,11 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 
 
 .PHONY: home-manager-switch
-home-manager-switch: backup # Run 'home-manager switch'
-# ln コマンドでは絶対パスで指定しないとうまくシンボリックリンクが張れない
-	if [[ ! -L $${HOME}/.config/nixpkgs ]]; then \
-		mv $${HOME}/.config/nixpkgs $${HOME}/.config/nixpkgs.bk; \
-		ln --symbolic --verbose $${PWD}/.config/nixpkgs $${HOME}/.config; \
-	fi
+home-manager-switch: # Run 'home-manager switch'
+	$(SCRIPTS_DIR)/backup.sh ./.config/nixpkgs/modules/files.txt
 	source ${PATH_FILE}; \
-	~/.nix-profile/bin/home-manager switch
+	export NIXPKGS_ALLOW_UNFREE=1; \
+	~/.nix-profile/bin/home-manager switch -f ./.config/nixpkgs/home.nix
 
 .PHONY: generate-npm-packages-list
 generate-npm-packages-list: # Generate Nix packages list for npm packages.
@@ -220,14 +217,6 @@ deploy-gitconfig: # Copy .gitconfig file.
 .PHONY: restore
 restore: # Restore backed-up files of dotfiles.
 	$(SCRIPTS_DIR)/restore.sh
-
-.PHONY: backup
-backup: # Backup dotfiles in .config/nixpkgs/modules/files.txt
-# シンボリックリンクでないファイルがあればバックアップする
-	xargs -I {} ls "$${HOME}/{}" 2>/dev/null < ./.config/nixpkgs/modules/files.txt \
-		| xargs -I "{}" bash -c "[ ! -L {} ] && echo {}" \
-		| xargs -I {} mv --verbose {} {}.bak
-	
 
 # ------------------------------ utilities ------------------------------
 
