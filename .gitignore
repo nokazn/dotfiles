@@ -7,4 +7,5 @@
 !.config/gh/
 !.config/git/
 !.config/htop/
+!.config/lazygit/
 !.config/nixpkgs/
