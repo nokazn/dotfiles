@@ -3,5 +3,6 @@
 .ssh
 !.config/
 .config/*
+!.config/broot/
 !.config/git/
 !.config/nixpkgs/
