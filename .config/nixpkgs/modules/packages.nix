@@ -32,6 +32,7 @@ with pkgs; [
   # modern CLI tools ----------------------------------------------------------------------------------------------------
   neofetch                          # CLI system information tool written in BASH that displays information about your system next to an image, your OS logo, or any ASCII file of your choice
   direnv
+  fzf                               # A command-line fuzzy finder written in Go
   nkf                               # A Kanji code converter among networks
   shellcheck                        # A static analysis tool for shell scripts
   expect
@@ -50,6 +51,7 @@ with pkgs; [
   powershell
   # modern command replacements ----------------------------------------------------------------------------------------------------
   colordiff                         # Compare FILES line by line.hto
+  procs                             # A modern replacement for ps written in Rust
   htop                              # A cross-platform interactive process viewer
   bat                               # A cat(1) clone with syntax highlighting and Git integration
   exa                               # A modern replacement for the venerable file-listing command-line program
