@@ -46,4 +46,8 @@ choco install -y  `
   spotify `
   lastfmscrobbler `
   gimp `
-  vlc
+  vlc `
+  unity `
+  anaconda3 `
+  miniconda3 `
+  blender
