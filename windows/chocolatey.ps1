@@ -50,4 +50,5 @@ choco install -y  `
   unity `
   anaconda3 `
   miniconda3 `
-  blender
+  blender `
+  cpu-z
