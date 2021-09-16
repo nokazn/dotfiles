@@ -6,7 +6,8 @@ let
   fileSourceList = builtins.map (file: {
     name = file;
     value = {
-      source = ../../.. + ("/" + file);
+      # https://discourse.nixos.org/t/how-to-refer-to-current-directory-in-shell-nix/9526
+      source = builtins.toString ../../.. + ("/" + file);
     };
   }) fileList;
 in builtins.listToAttrs fileSourceList
