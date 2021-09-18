@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 with pkgs; [
+  nixpkgs-fmt
   # Git tools  ----------------------------------------------------------------------------------------------------
   git
   gitAndTools.gh                    # Work seamlessly with GitHub from the command line
