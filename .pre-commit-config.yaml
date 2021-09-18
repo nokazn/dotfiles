@@ -1,18 +1,23 @@
 default_stages:
+  - "commit"
   - "push"
-
-exclude: "\\.txt$"
 
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v2.3.0
   hooks:
-  -   id: check-yaml
+  -   id: check-symlinks
   -   id: check-json
+  -   id: check-toml
+  -   id: check-yaml
   -   id: pretty-format-json
   -   id: end-of-file-fixer
+      exclude: "\\.txt$"
+  -   id: detect-private-key
+  -   id: mixed-line-ending
 
 -   repo: https://github.com/nix-community/nixpkgs-fmt
     rev: v1.2.0
     hooks:
     -   id: nixpkgs-fmt
+        exclude: "\\.config/nixpkgs/modules/packages\\.nix$"
