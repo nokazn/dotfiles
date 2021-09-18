@@ -2,9 +2,10 @@
 
 let
   nixPackages = import ./modules/packages.nix { pkgs = pkgs; };
-  extraNodePackages = builtins.attrValues (import ./node/default.nix {});
+  extraNodePackages = builtins.attrValues (import ./node/default.nix { });
   files = import ./modules/files.nix { lib = lib; };
-in {
+in
+{
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -29,6 +30,7 @@ in {
   # dotfiles in home directory
   home.file = files;
 
+  # programs settings
   programs.zsh = {
     enable = true;
   };
@@ -36,7 +38,7 @@ in {
   programs.zsh.prezto = {
     enable = true;
     color = true;
-    # the Prezto modules to load (browse modules)
+    # Prezto modules to load (browse modules)
     pmodules = [
       "environment"
       "terminal"
@@ -59,7 +61,7 @@ in {
       "id_rsa2"
       "github"
       "gitlab"
-      ];
+    ];
     syntaxHighlighting.highlighters = [
       "main"
       "brackets"
@@ -76,7 +78,8 @@ in {
     extraConfig =
       let
         vimrc = builtins.toString ../../.vimrc;
-      in builtins.readFile vimrc;
+      in
+      builtins.readFile vimrc;
   };
 
   programs.neovim = {
@@ -134,14 +137,14 @@ in {
         threshold = 3;
         symbol = "↑";
         style = "fg:212";
-        format="\\([$symbol$shlvl]($style)\\) ";
+        format = "\\([$symbol$shlvl]($style)\\) ";
       };
       directory = {
         disabled = false;
         truncation_length = 5;
         truncate_to_repo = false;
         style = "bold fg:156";
-        format="in [$path]($style)[$read_only]() ";
+        format = "in [$path]($style)[$read_only]() ";
       };
       memory_usage = {
         disabled = false;
@@ -152,7 +155,7 @@ in {
         format = "🕙[$time]($style) ";
       };
 
-      git_branch  = {
+      git_branch = {
         symbol = "";
         disabled = false;
         style = "bold fg:159";
