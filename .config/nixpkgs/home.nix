@@ -3,7 +3,6 @@
 let
   nixPackages = import ./modules/packages.nix { pkgs = pkgs; };
   extraNodePackages = builtins.attrValues (import ./node/default.nix { });
-  files = import ./modules/files.nix { lib = lib; };
 in
 {
   # Let Home Manager install and manage itself.
@@ -28,7 +27,7 @@ in
   home.packages = nixPackages ++ extraNodePackages;
 
   # dotfiles in home directory
-  home.file = files;
+  home.file = import ./modules/files.nix { lib = lib; };
 
   # programs settings
   programs.zsh = import ./programs/zsh { } // {
