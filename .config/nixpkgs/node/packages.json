@@ -1,12 +1,12 @@
 [
-    "@nestjs/cli",
-    "@octokit/core",
-    "envinfo",
-    "generator-code",
-    "http-server",
-    "minimum-node-version",
-    "sort-package-json",
-    "ts-node",
-    "vercel",
-    "yo"
+  "@nestjs/cli",
+  "@octokit/core",
+  "envinfo",
+  "generator-code",
+  "http-server",
+  "minimum-node-version",
+  "sort-package-json",
+  "ts-node",
+  "vercel",
+  "yo"
 ]
