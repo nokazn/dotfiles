@@ -172,7 +172,7 @@ packages-apt-for-pyenv: # Install apt packages for building pyenv.
 
 .PHONY: home-manager-switch
 home-manager-switch: # Run 'home-manager switch'
-	$(SCRIPTS_DIR)/backup.sh ./.config/nixpkgs/modules/files.txt
+	$(SCRIPTS_DIR)/backup.sh ./.config/nixpkgs/home/files.txt
 	source ${PATH_FILE}; \
 	export NIXPKGS_ALLOW_UNFREE=1; \
 	~/.nix-profile/bin/home-manager switch -f ./.config/nixpkgs/home.nix
