@@ -30,6 +30,7 @@ with pkgs; [
   redis
   memcached
   # modern CLI tools ----------------------------------------------------------------------------------------------------
+  starship
   neofetch                          # CLI system information tool written in BASH that displays information about your system next to an image, your OS logo, or any ASCII file of your choice
   direnv
   fzf                               # A command-line fuzzy finder written in Go
