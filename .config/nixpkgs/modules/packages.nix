@@ -7,6 +7,7 @@ with pkgs; [
   gitAndTools.gh                    # Work seamlessly with GitHub from the command line
   gitAndTools.delta                 # viewer for git and diff output
   gist                              # Gist lets you upload to https://gist.github.com/
+  pre-commit
   # specific language related tools ----------------------------------------------------------------------------------------------------
   php
   php74Packages.composer
