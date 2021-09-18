@@ -228,6 +228,14 @@ shellcheck: # Check schell scripts.
 shellcheck-fix: # Check & fix schell scripts.
 	find ./scripts/ -type f | grep -e "\.sh$$" | xargs shellcheck --format diff | patch -p1
 
+.PHONY: nixpkgs-fmt
+nixpkgs-fmt: # Check .nix files.
+	find ./.config/nixpkgs/ -type f | grep -e "\.nix$$" | grep -v -e "\.config/nixpkgs/modules/packages\.nix$$" | xargs nixpkgs-fmt
+
+.PHONY: nixpkgs-fmt-check
+nixpkgs-fmt-fix: # Format .nix files.
+	find ./.config/nixpkgs/ -type f | grep -e "\.nix$$" | grep -v -e "\.config/nixpkgs/modules/packages\.nix$$" |xargs nixpkgs-fmt --check
+
 .PHONY: _print-airplane
 _print-airplane:
 	@echo
