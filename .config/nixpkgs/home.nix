@@ -2,21 +2,7 @@
 
 let
   nixPackages = import ./modules/packages.nix { pkgs = pkgs; };
-  extraNodePackages = with import ./node/default.nix {}; [
-    # TODO: 入れられない
-    # https://discourse.nixos.org/t/aws-cdk-node-modules-json-addition-failing-at-yaml-dependency/12812
-    # aws-cdk
-    # "@nestjs/cli"
-    # "@octokit/core"
-    envinfo
-    generator-code
-    http-server
-    minimum-node-version
-    sort-package-json
-    ts-node
-    vercel
-    yo
-  ];
+  extraNodePackages = builtins.attrValues (import ./node/default.nix {});
   files = import ./modules/files.nix { lib = lib; };
 in {
   # Let Home Manager install and manage itself.
