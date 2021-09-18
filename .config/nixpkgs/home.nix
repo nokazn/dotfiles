@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  nixPackages = import ./modules/packages.nix { pkgs = pkgs; };
+  nixPackages = import ./home/packages.nix { pkgs = pkgs; };
   extraNodePackages = builtins.attrValues (import ./node/default.nix { });
 in
 {
@@ -27,7 +27,7 @@ in
   home.packages = nixPackages ++ extraNodePackages;
 
   # dotfiles in home directory
-  home.file = import ./modules/files.nix { lib = lib; };
+  home.file = import ./home/files.nix { lib = lib; };
 
   # programs settings
   programs.zsh = import ./programs/zsh { } // {
