@@ -10,7 +10,12 @@ function backup_non_symlink_file() {
   local -r file_path=$(find ~/"$1" -maxdepth 0)
   # シンボリックリンクでないファイルが存在している場合はバックアップ
   if [[ ! -L "${file_path}" ]]; then
-    mv --verbose "${file_path}" "${file_path}.bk" | sed "s/^/✅ /"
+    if [[ ! -e ${file_path}.bk ]]; then
+      mv --verbose "${file_path}" "${file_path}.bk" | sed "s/^/✅ /"
+    else
+      echo "❌ ${file_path}.bk already exists."
+      return 1
+    fi
   fi
   return 0
 }
