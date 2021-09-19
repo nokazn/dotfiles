@@ -104,6 +104,7 @@
     scala.disabled = true;
 
     gcloud.disabled = true;
+    aws.disabled = true;
 
     package.disabled = true;
   };
