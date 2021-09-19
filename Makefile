@@ -205,18 +205,13 @@ update-go: install-go; # Update Go packages.
 
 # ------------------------------ deploy & restore dotfiles ------------------------------
 
-.PHONY: deploy
-deploy: # Make symbolic links to dotfiles & back up original files if exists.
-	$(SCRIPTS_DIR)/deploy.sh
+.PHONY: _deploy
+_deploy: # Make symbolic links to dotfiles & back up original files if exists.
+	$(SCRIPTS_DIR)/_deploy.sh
 
-# TODO: 別のスクリプトに分ける
-.PHONY: deploy-gitconfig
-deploy-gitconfig: # Copy .gitconfig file.
-	cp ./.gitconfig ~/.gitconfig
-
-.PHONY: restore
-restore: # Restore backed-up files of dotfiles.
-	$(SCRIPTS_DIR)/restore.sh
+.PHONY: _restore
+_restore: # Restore backed-up files of dotfiles.
+	$(SCRIPTS_DIR)/_restore.sh
 
 # ------------------------------ utilities ------------------------------
 
