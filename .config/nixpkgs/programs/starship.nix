@@ -60,6 +60,7 @@
       untracked = "🔍";
       stashed = "📦";
       modified = "📝";
+      renamed = "🔄";
       deleted = "🗑️";
       ahead = "⇡$count";
       diverged = "⇕⇡$ahead_count⇣$behind_count";
