@@ -10,6 +10,7 @@
 .bash_aliases
 .bash_profile
 .bashrc
+.curlrc
 .gitconfig
 .npmrc
 .path.sh
