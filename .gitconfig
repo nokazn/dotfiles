@@ -51,7 +51,8 @@
 	sw = switch
 	# 親ブランチの指定がなければ実行させない
 	swc = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git switch -c $1 $2; }; f"
-	st = stash
+	# untracked のファイルも退避させる
+	st = stash -u
 	stp = stash -p
 	stpsm = stash push -m
 	stu = stash -u --keep-index
