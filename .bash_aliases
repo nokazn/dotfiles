@@ -56,6 +56,7 @@ alias tf='terraform'
 alias chrome='google-chrome-stable'
 alias hm='home-manager'
 alias hmsw='home-manager switch -f ~/dotfiles/.config/nixpkgs/home.nix'
+alias sampler='sampler -c ~/.config/sampler/config.yml'
 
 # docker ----------------------------------------------------------------------------------------------------
 
