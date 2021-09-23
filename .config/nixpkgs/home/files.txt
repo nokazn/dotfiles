@@ -8,6 +8,7 @@
 .config/lazygit/config.yml
 .config/neofetch/config.conf
 .config/nixpkgs
+.config/sampler/config.yml
 .bash_aliases
 .bash_profile
 .bashrc
