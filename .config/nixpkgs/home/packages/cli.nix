@@ -20,6 +20,7 @@ with pkgs; let
     neofetch # CLI system information tool written in BASH that displays information about your system next to an image, your OS logo, or any ASCII file of your choice
     nkf # A Kanji code converter among networks
     pastel # A command-line tool to generate, analyze, convert and manipulate colors
+    sampler # Tool for shell commands execution, visualization and alerting. Configured with a simple YAML file.
     shellcheck # A static analysis tool for shell scripts
     sl # SL(1): Cure your bad habit of mistyping
     starship # ☄🌌️ The minimal, blazing-fast, and infinitely customizable prompt for any shell!
