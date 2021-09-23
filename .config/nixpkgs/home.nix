@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  nixPackages = import ./home/packages.nix { pkgs = pkgs; };
+  nixPackages = import ./home/packages { pkgs = pkgs; lib = lib; };
   extraNodePackages = builtins.attrValues (import ./node { });
 in
 {
