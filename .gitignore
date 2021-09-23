@@ -1,13 +1,3 @@
 .*.swp
 .aws
 .ssh
-!.config/
-.config/*
-!.config/bat/
-!.config/broot/
-!.config/gh/
-!.config/git/
-!.config/htop/
-!.config/lazygit/
-!.config/neofetch/
-!.config/nixpkgs/
