@@ -6,6 +6,8 @@ function is_unregistered_path() {
     ! (echo "$PATH" | grep -q "$1")
 }
 
+# ----------------------------------------------------------------------------------------------------
+
 # set PATH so it includes user's private bin if it exists
 if [[ -d "$HOME/bin" ]] && is_unregistered_path "$HOME/bin"; then
     PATH="$HOME/bin:$PATH"
@@ -33,8 +35,6 @@ if [[ -d "$HOME/.anyenv" ]]; then
             PATH="$HOME/.anyenv/envs/$(basename "${file}")/shims:$PATH"
         fi
     done
-else
-    echo "⚠ anynv doesn't exist at '$HOME/.anynv'."
 fi
 
 # Deno
@@ -43,15 +43,11 @@ if [[ -d "$HOME/.deno" ]]; then
         export DENO_INSTALL="$HOME/.deno"
         PATH="$HOME/.deno/bin:$PATH:"
     fi
-else
-    echo "⚠ Deno doesn't exist at '$HOME/.deno'"
 fi
 
 # Rust
 if [[ -f "$HOME/.cargo/env" ]]; then
     source "$HOME/.cargo/env"
-else
-    echo "⚠ cargo doesn't exist at '$HOME/.cargo'"
 fi
 
 # Nim (choosenim)
@@ -59,8 +55,6 @@ if [[ -d "$HOME/.nimble/bin" ]]; then
     if is_unregistered_path "$HOME/.nimble"; then
         PATH="$HOME/.nimble/bin:$PATH"
     fi
-else
-    echo "⚠ Nim doesn't exist at '$HOME/.nimble'"
 fi
 
 # TODO
@@ -75,8 +69,6 @@ if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
     if is_unregistered_path "$HOME/.nix-profile"; then
         . "$HOME/.nix-profile/etc/profile.d/nix.sh"
     fi
-else
-    echo "⚠ nix-profile doesn't exist at '$HOME/.nix-profile'"
 fi
 
 export PATH=$PATH
