@@ -4,6 +4,7 @@ let
   sources = [
     "cli"
     "cloud"
+    "container"
     "git"
     "go"
     "gui"
