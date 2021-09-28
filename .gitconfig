@@ -100,8 +100,8 @@
 	lg = log --graph --branches --pretty=default
 	# pretty
 	lp = log --pretty
+	ls-pr = log --format="- %s (%h) --reverse"
 	reb = rebase
-	rebi = rebase -i HEAD
 	rebi1 = rebase -i HEAD~
 	rebi2 = rebase -i HEAD~~
 	rebi3 = rebase -i HEAD~3
