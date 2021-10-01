@@ -210,7 +210,11 @@ function aliases() {
 
 # Change default shell for a current user
 function chshs() {
-    chsh -s "$(which  "$1")"
+	local -r shell_path="$(command -v "$1")"
+	if ! grep "${shell_path}" /etc/shells; then
+		echo "${shell_path}" > /etc/shells
+	fi
+	chsh -s "${shell_path}" "${USER}"
 }
 
 function zsh-colors() {
