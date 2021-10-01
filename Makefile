@@ -207,7 +207,11 @@ update-go: install-go; # Update Go packages.
 
 .PHONY: _deploy
 _deploy: # Make symbolic links to dotfiles & back up original files if exists.
-	$(SCRIPTS_DIR)/_deploy.sh
+	$(SCRIPTS_DIR)/_deploy/unix.sh
+
+.PHONY: _deploy-windows
+_deploy-windows: # Make symbolic links to dotfiles & back up original files if exists in Windows.
+	$(SCRIPTS_DIR)/_deploy/windows.sh
 
 .PHONY: _restore
 _restore: # Restore backed-up files of dotfiles.
