@@ -56,6 +56,17 @@ alias hm='home-manager'
 alias hmsw='home-manager switch -f ~/dotfiles/.config/nixpkgs/home.nix'
 alias sampler='sampler -c ~/.config/sampler/config.yml'
 
+# WSL
+if type wslsys >/dev/null 2>&1; then
+	alias explorer.exe='/mnt/c/Windows/explorer.exe'
+	alias bash.exe='/mnt/c/Windows/system32/bash.exe'
+	alias cmd.exe='/mnt/c/Windows/system32/cmd.exe'
+	alias tasklist.exe='/mnt/c/Windows/system32/tasklist.exe'
+	alias wsl.exe='/mnt/c/Windows/system32/wsl.exe'
+	alias powershell.exe='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
+	alias code='/mnt/c/Users/nokaz/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code'
+fi
+
 # docker ----------------------------------------------------------------------------------------------------
 
 # Run nginx in Docker.

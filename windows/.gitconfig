@@ -5,7 +5,7 @@
 [core]
 	editor = vim
 	repositoryFormatVersion = 0
-	eol = lf
+	eol = crlf
 	autocrlf = input
 	filemode = true
 	bare = false
