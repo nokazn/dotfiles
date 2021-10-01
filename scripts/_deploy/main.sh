@@ -247,7 +247,7 @@ function main() {
     fi
   fi
 
-  deploy "$1" "$2" $3
+  deploy "$1" "$2" "$3"
   if [[ $file_counter -gt 0 ]]; then
     echo "Successfully ${file_counter} dotfiles are initialized!"
   fi
