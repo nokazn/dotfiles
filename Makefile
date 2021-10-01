@@ -218,7 +218,7 @@ _restore: # Restore backed-up files of dotfiles.
 	$(SCRIPTS_DIR)/_restore/unix.sh
 
 .PHONY: _restore-windows
-_restore: # Restore backed-up files of dotfiles in Windows.
+_restore-windows: # Restore backed-up files of dotfiles in Windows.
 	$(SCRIPTS_DIR)/_restore/windows.sh
 
 # ------------------------------ utilities ------------------------------
