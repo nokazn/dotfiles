@@ -2,17 +2,8 @@
 
 set -eu -o pipefail
 
-DEBUG=$([[ $# -gt 0 ]] && test "$1" = --debug; echo $?)
+DEBUG=$([[ $# -gt 3 ]] && test "$3" = --debug; echo $?)
 readonly DEBUG
-readonly _BACKUP_DIR_NAME="backup_dotfiles"
-
-readonly DESTINATION_BASE_DIR=~
-readonly BACKUP_BASE_DIR=~/${_BACKUP_DIR_NAME}
-
-# 一度 Windows 内のディレクトリに移動して %USERPROFILE% を出力してからもといたディレクトリに戻る
-DESTINATION_BASE_DIR_FOR_WINDOWS=$(cd /mnt/c; wslpath -u "$(cmd.exe /c "echo %USERPROFILE%" | tr -d "\r")"; cd "$OLDPWD")
-readonly DESTINATION_BASE_DIR_FOR_WINDOWS
-readonly BACKUP_BASE_DIR_FOR_WINDOWS="${DESTINATION_BASE_DIR_FOR_WINDOWS}/${_BACKUP_DIR_NAME}"
 
 # @param {string} - directory path
 # @return {void}
@@ -93,7 +84,8 @@ function restore() {
 
 # ---------------------------------------- main ----------------------------------------
 
-# @param - none
+# @param {string} - backed-up source directory path
+# @param {string} - destination directory path
 # @return {void}
 function main() {
   if [[ ! ${DEBUG} -eq 0 ]]; then
@@ -103,10 +95,9 @@ function main() {
     fi
   fi
 
-  restore ${BACKUP_BASE_DIR} ${DESTINATION_BASE_DIR}
-  restore "${BACKUP_BASE_DIR_FOR_WINDOWS}" "${DESTINATION_BASE_DIR_FOR_WINDOWS}"
+  restore "$1" "$2"
   return 0
 }
 
-main
+main "$1" "$2"
 exit 0

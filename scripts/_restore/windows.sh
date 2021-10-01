@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+BASE_DIR=$(cd "$(dirname "${0}")"; pwd)
+readonly BASE_DIR
+
+function main() {
+  # 一度 Windows 内のディレクトリに移動して %USERPROFILE% を出力する
+  local -r DESTINATION_BASE_DIR="$(cd /mnt/c; wslpath -u "$(/mnt/c/Windows/system32/cmd.exe /c "echo %USERPROFILE%" | tr -d "\r")")"
+  local -r BACKUP_DIR_NAME='backup_dotfiles'
+
+  "${BASE_DIR}/main.sh" "${DESTINATION_BASE_DIR}/${BACKUP_DIR_NAME}" "${DESTINATION_BASE_DIR}" --debug
+}
+
+main
