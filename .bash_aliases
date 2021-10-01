@@ -42,10 +42,7 @@ alias relogin='exec $SHELL -l'
 alias repath='source ~/.path.sh'
 alias realias='source ~/.bash_aliases'
 alias relaod-tmux='tmux source-file ~/.tmux.conf'
-alias path='echo $PATH | sed -E -e "s/:/\n/g" | sed -e "s/^/  /"'
-alias aliases='alias | sed -E -e "s/^alias\s//" | column -s "=" -t'
 alias ssh-keygen-rsa="ssh-keygen -t rsa -b 4096 -C"
-alias zsh-colors='seq -w 255 | xargs -I "{}" echo -n -e "\e[38;5;{}m {}"; echo "\e[0m"'
 alias apt-install='apt install --no-install-recommends'
 alias apt-purge='apt --purge remove'
 alias dc='docker'
@@ -196,6 +193,27 @@ function npm-list() {
     npm list --depth=0 -g
 }
 
+function path() {
+	echo "${PATH}" \
+		| sed -E -e "s/:/\n/g" \
+		| sed -e "s/^/  /"
+}
+
+function aliases() {
+		alias \
+			| sed -E -e "s/^alias\s//" \
+			| sed -E -e "s/([a-zA-Z]+)=/\1Γ/" \
+			| sed -E -e "s/Γ'/Γ/" \
+			| sed -E -e "s/'$//" \
+			| column -s "Γ" -t
+}
+
+# Change default shell for a current user
 function chshs() {
-    chsh -s "$(which "$1")"
+    chsh -s "$(which  "$1")"
+}
+
+function zsh-colors() {
+		seq -w 255 \
+			| xargs -I "{}" echo -n -e "\e[38;5;{}m {}"; echo "\e[0m"
 }
