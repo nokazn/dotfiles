@@ -11,6 +11,7 @@ function main() {
   local -r BACKUP_DIR_NAME='backup_dotfiles'
 
   "${ROOT_DIR}/scripts/_deploy/main.sh" "${ROOT_DIR}"/windows "${DESTINATION_BASE_DIR}" "${DESTINATION_BASE_DIR}/${BACKUP_DIR_NAME}" --debug
+  sudo cp "${ROOT_DIR}/wsl/etc/wsl.conf" /etc/wsl.conf
 }
 
 main
