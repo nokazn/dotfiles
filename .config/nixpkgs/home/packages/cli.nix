@@ -10,7 +10,6 @@ with pkgs; let
     direnv
     dive # A tool for exploring each layer in a docker image
     expect
-    fzf # A command-line fuzzy finder written in Go
     hyperfine # A command-line benchmarking tool
     jq # A lightweight and flexible command-line JSON processor
     lazydocker # The lazier way to manage everything docker
