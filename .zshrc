@@ -25,30 +25,9 @@ fi
 
 # ------------------------------ Prezto ------------------------------
 
-# TODO: 華僑変数 $NIX_PROFILES から読みたい
-if [[ -s ~/.nix-profile/share/zsh-prezto/init.zsh ]]; then
-    source ~/.nix-profile/share/zsh-prezto/init.zsh
-    # コマンドの補完が激遅になる
-    unsetopt PATH_DIRS
-    unsetopt AUTO_PARAM_SLASH
-elif [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
     source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
     # コマンドの補完が激遅になる
     unsetopt PATH_DIRS
     unsetopt AUTO_PARAM_SLASH
 fi
-
-# ------------------------------ prompt ------------------------------
-
-if type starship >/dev/null 2>&1; then
-    eval "$(starship init zsh)"
-fi
-
-# ------------------------------ history ------------------------------
-
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-# don't put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth
