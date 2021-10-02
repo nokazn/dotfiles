@@ -31,6 +31,7 @@ in
       prezto = import ./programs/zsh/prezto.nix { };
     };
     direnv = import ./programs/direnv.nix { };
+    fzf = import ./programs/fzf.nix { };
     neovim = import ./programs/neovim.nix { pkgs = pkgs; };
     starship = import ./programs/starship.nix { };
     tmux = import ./programs/tmux.nix { pkgs = pkgs; };

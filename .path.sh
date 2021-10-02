@@ -6,6 +6,14 @@ function is_unregistered_path() {
     ! (echo "$PATH" | grep -q "$1")
 }
 
+function regester_forward_if_not() {
+    is_unregistered_path "$1" && PATH="$1:${PATH}"
+}
+
+function regester_backward_if_not() {
+    is_unregistered_path "$1" && PATH="${PATH}:$1"
+}
+
 # ----------------------------------------------------------------------------------------------------
 
 # set PATH so it includes user's private bin if it exists
@@ -28,12 +36,8 @@ if [[ -d "$HOME/.anyenv" ]]; then
         fi
     fi
     for file in  ~/.anyenv/envs/*; do
-        if is_unregistered_path "$HOME/.anyenv/envs/$(basename "${file}")/bin"; then
-            PATH="$HOME/.anyenv/envs/$(basename "${file}")/bin:$PATH"
-        fi
-        if is_unregistered_path "$HOME/.anyenv/envs/$(basename "${file}")/shims"; then
-            PATH="$HOME/.anyenv/envs/$(basename "${file}")/shims:$PATH"
-        fi
+        regester_forward_if_not "$HOME/.anyenv/envs/$(basename "${file}")/bin"
+        regester_forward_if_not "$HOME/.anyenv/envs/$(basename "${file}")/shims"
     done
 fi
 
@@ -52,9 +56,7 @@ fi
 
 # Nim (choosenim)
 if [[ -d "$HOME/.nimble/bin" ]]; then
-    if is_unregistered_path "$HOME/.nimble"; then
-        PATH="$HOME/.nimble/bin:$PATH"
-    fi
+    regester_forward_if_not "$HOME/.nimble/bin:$PATH"
 fi
 
 # TODO
