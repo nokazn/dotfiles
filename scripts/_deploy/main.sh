@@ -2,20 +2,9 @@
 
 set -eu -o pipefail
 
-BASE_DIR=$(cd "$(dirname "$0")"/..; pwd)
-readonly BASE_DIR
 DEBUG=$([[ $# -gt 0 ]] && test "$1" = --debug; echo $?)
 readonly DEBUG
-readonly _BACKUP_DIR_NAME="backup_dotfiles"
 file_counter=0
-
-readonly DESTINATION_BASE_DIR=~
-readonly BACKUP_BASE_DIR=~/${_BACKUP_DIR_NAME}
-
-# 一度 Windows 内のディレクトリに移動して %USERPROFILE% を出力してからもといたディレクトリに戻る
-DESTINATION_BASE_DIR_FOR_WINDOWS=$(cd /mnt/c; wslpath -u "$(cmd.exe /c "echo %USERPROFILE%" | tr -d "\r")"; cd "$OLDPWD")
-readonly DESTINATION_BASE_DIR_FOR_WINDOWS
-readonly BACKUP_BASE_DIR_FOR_WINDOWS="${DESTINATION_BASE_DIR_FOR_WINDOWS}/${_BACKUP_DIR_NAME}"
 
 # ---------------------------------------- utils ----------------------------------------
 
@@ -163,7 +152,7 @@ function newly_link() {
     return 0;
   fi
 
-  WINDOWS_PATH="/mnt/c"
+  local -r WINDOWS_PATH="/mnt/c"
   if [[ $2 =~ ${WINDOWS_PATH} ]]; then
     # TODO: ショートカット作成事態はできるが、.lnk ファイルとして扱われ別物になる
     # local -r source_win="$(wslpath -w $1)"
@@ -196,8 +185,7 @@ function make_symbolic_link() {
     newly_link "$1" "$2"
   elif [[ -f $2 ]] && [[ -f $1 ]]; then
     # ファイルでバックアップがある場合
-    local -r response
-    response=$(show_prompt_for_overwrite "$2")
+    local -r response=$(show_prompt_for_overwrite "$2")
     if [[ ${response} == "y" ]]; then
       make_backup "$2" "$3"
       newly_link "$1" "$2"
@@ -247,7 +235,9 @@ function deploy() {
 
 # ---------------------------------------- main ----------------------------------------
 
-# @param - none
+# @param {string} - source directory path for dotfiles
+# @param {string} - destination directory path
+# @param {stirng} - destination directory for back-up path
 # @return {void}
 function main() {
   if [[ ! ${DEBUG} -eq 0 ]]; then
@@ -257,13 +247,11 @@ function main() {
     fi
   fi
 
-  deploy "${BASE_DIR}" ${DESTINATION_BASE_DIR} ${BACKUP_BASE_DIR}
-  # TODO: option で Windows のファイルを反映するか分けたい
-  deploy "${BASE_DIR}/windows" "${DESTINATION_BASE_DIR_FOR_WINDOWS}" "${BACKUP_BASE_DIR_FOR_WINDOWS}"
+  deploy "$1" "$2" "$3"
   if [[ $file_counter -gt 0 ]]; then
     echo "Successfully ${file_counter} dotfiles are initialized!"
   fi
 }
 
-main
+main "$1" "$2" "$3"
 exit 0
