@@ -17,13 +17,13 @@ function regester_backward_if_not() {
 # ----------------------------------------------------------------------------------------------------
 
 # set PATH so it includes user's private bin if it exists
-if [[ -d "$HOME/bin" ]] && is_unregistered_path "$HOME/bin"; then
-    PATH="$HOME/bin:$PATH"
+if [[ -d "$HOME/bin" ]]; then
+    regester_forward_if_not "$HOME/bin"
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [[ -d "$HOME/.local/bin" ]] && is_unregistered_path "$HOME/.local/bin"; then
-    PATH="$HOME/.local/bin:$PATH"
+if [[ -d "$HOME/.local/bin" ]]; then
+    regester_forward_if_not "$HOME/.local/bin"
 fi
 
 # anyenv
@@ -43,10 +43,8 @@ fi
 
 # Deno
 if [[ -d "$HOME/.deno" ]]; then
-    if is_unregistered_path "$HOME/.deno/bin"; then
-        export DENO_INSTALL="$HOME/.deno"
-        PATH="$HOME/.deno/bin:$PATH:"
-    fi
+    regester_forward_if_not "$HOME/.deno/bin"
+    export DENO_INSTALL="$HOME/.deno"
 fi
 
 # Rust
@@ -56,20 +54,22 @@ fi
 
 # Nim (choosenim)
 if [[ -d "$HOME/.nimble/bin" ]]; then
-    regester_forward_if_not "$HOME/.nimble/bin:$PATH"
+    regester_forward_if_not "$HOME/.nimble/bin"
 fi
 
 # TODO
 # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 if [[ -d "$HOME/.sdkman" ]]; then
     export SDKMAN_DIR="$HOME/.sdkman"
-    [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+    if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
+        source "$HOME/.sdkman/bin/sdkman-init.sh"
+    fi
 fi
 
 # Nix installer
 if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
     if is_unregistered_path "$HOME/.nix-profile"; then
-        . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+        source "$HOME/.nix-profile/etc/profile.d/nix.sh"
     fi
 fi
 
