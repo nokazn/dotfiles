@@ -18,7 +18,7 @@ autoload -Uz compinit && compinit
 # ---------------------------------------- common settings  ----------------------------------------
 
 if [ -f ~/.shrc.sh ]; then
-    . ~/.shrc.sh
+    source ~/.shrc.sh
 else
     echo "⚠ ~/.shrc.sh doesn't exist"
 fi
