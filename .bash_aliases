@@ -64,7 +64,6 @@ if type wslsys >/dev/null 2>&1; then
 	alias tasklist.exe='/mnt/c/Windows/system32/tasklist.exe'
 	alias wsl.exe='/mnt/c/Windows/system32/wsl.exe'
 	alias powershell.exe='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
-	alias code='/mnt/c/Users/nokaz/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code'
 fi
 
 # docker ----------------------------------------------------------------------------------------------------
@@ -161,6 +160,27 @@ function docker-rmi-untagged-images() {
 }
 
 # utilities ----------------------------------------------------------------------------------------------------
+
+# cmd.exe で echo する
+# @path {string}
+function echoInCmd() {
+	cd /mnt/c || exit 1;
+	wslpath -u "$(/mnt/c/Windows/system32/cmd.exe /c "echo $1" | tr -d "\r")";
+	cd "${OLDPWD}" || exit 1;
+}
+
+# VSCode を開く
+function code() {
+	local -r codeForUser="$(echoInCmd %USERPROFILE%)/AppData/Local/Programs/Microsoft VS Code/bin/code"
+	local -r codeForSystem="/mnt/c/Program Files/Microsoft VS Code/bin/code"
+	if [[ -e ${codeForUser} ]]; then
+		${codeForUser} "$@"
+	elif [[ -e ${codeForSystem} ]]; then
+		${codeForSystem} "$@"
+	else
+		code "$@"
+	fi
+}
 
 # Show a list of installed apt packages.
 function apt-list() {
