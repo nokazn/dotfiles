@@ -8,6 +8,7 @@ with pkgs.nodePackages; [
   # netlify-cli
   node-gyp
   prettier
+  pyright
   serverless
   typescript
   webpack-cli
