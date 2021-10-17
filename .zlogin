@@ -19,3 +19,11 @@ if [[ -o INTERACTIVE && -t 2 ]]; then
   fi
 
 fi >&2
+
+# ------------------------------------------------------------------------------------
+
+if [ -f ~/.sh_profile.sh ]; then
+    source ~/.sh_profile.sh
+else
+    echo "⚠ ~/.sh_profile.sh doesn't exist"
+fi

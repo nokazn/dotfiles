@@ -10,8 +10,8 @@ fi
 
 # ------------------------------------------------------------------------------------
 
-if [[ -f "$HOME/.path.sh" ]]; then
-    source "$HOME/.path.sh"
+if [ -f ~/.sh_profile.sh ]; then
+    source ~/.sh_profile.sh
 else
-    echo "⚠ ~/.path.sh doesn't exist"
+    echo "⚠ ~/.sh_profile.sh doesn't exist"
 fi

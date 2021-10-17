@@ -18,6 +18,7 @@
 .path.sh
 .prettierrc.json
 .profile
+.sh_profile.sh
 .shellcheckrc
 .shrc.sh
 .tmux.conf
