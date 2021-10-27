@@ -67,90 +67,150 @@ fi
 
 # docker ----------------------------------------------------------------------------------------------------
 
+#
+# Nginx
+#
+readonly NGINX_CONTAINER="nginx"
+readonly NGINX_PORT=8080
+
 # Run nginx in Docker.
 function docker-nginx() {
-	docker run -d --name nginx -p 8080:80 ngin
-	echo "✅ Running nginx at port 8080 in 'nginx' container."
+	docker run -d --name "${NGINX_CONTAINER}" -p "${NGINX_PORT}:80" nginx
+	echo "✅ Running nginx at port ${NGINX_PORT} in '${NGINX_CONTAINER}' container."
 }
+
+# Remove nginx in Docker.
+function docker-nginx() {
+	docker stop "${NGINX_CONTAINER}"
+	echo "✅ Removed '${NGINX_CONTAINER}' container."
+}
+
+#
+# PostgresQL
+#
+readonly POSTGRESQL_CONTAINER="postgresql"
+readonly POSTGRESQL_PORT=5432
 
 # Run PostgreSQL in Docker.
 function docker-postgresql() {
 	docker run --rm -d \
-		--name postgres \
+		--name "${POSTGRESQL_CONTAINER}" \
 		-e POSTGRES_PASSWORD=password \
-		-p 5432:5432 \
+		-p "${POSTGRESQL_CONTAINER}:${POSTGRESQL_CONTAINER}" \
 		-v postgres-tmp:/var/lib/postgresql/data \
 		postgres:12-alpine
-	echo "✅ Running PostgreSQL at port 5432 in 'postgresql' container. You can connect by executing 'psql -h localhost -p 5432 -U postgres'."
+	echo "✅ Running PostgreSQL at port ${POSTGRESQL_PORT} in '${POSTGRESQL_CONTAINER}' container. You can connect by executing 'psql -h localhost -p 5432 -U postgres'."
 }
+
+# Run PostgreSQL in Docker.
+function docker-postgresql-rm() {
+	docker stop "${POSTGRESQL_CONTAINER}"
+	echo "✅ Removed '${POSTGRESQL_CONTAINER}' container."
+}
+
+#
+# MySQL
+#
+readonly MYSQL_CONTAINER="mysql"
+readonly MYSQL_NETWORK="mysql-network"
+readonly MYSQL_PORT=3306
 
 # Run MySQL in Docker/
 function docker-mysql() {
-	docker network create mysql-network
+	docker network create "${MYSQL_NETWORK}"
 	docker run -d --rm \
-		--name mysql \
-		--network mysql-network \
+		--name "${MYSQL_CONTAINER}" \
+		--network "${MYSQL_NETWORK}" \
 		-e MYSQL_ROOT_PASSWORD=password \
-		-p 3306:3306 \
+		-p "${MYSQL_PORT}:${MYSQL_PORT}" \
 		-v mysql-tmp-data:/var/lib/mysql \
 		-v mysql-tmp-log:/var/log/mysql \
 		mysql:5.7
-	echo "✅ Running MySQL at port 3306 in 'mysql' container."
+	echo "✅ Running MySQL at port ${MYSQL_PORT} in '${MYSQL_CONTAINER}' container."
 }
 
 # Remove MySql container.
 function docker-mysql-rm() {
-	docker stop mysql
-	docker network rm mysql-network
-	echo "✅ Removed 'mysql' container."
+	docker stop "${MYSQL_CONTAINER}"
+	docker network rm "${MYSQL_NETWORK}"
+	echo "✅ Removed '${MYSQL_CONTAINER}' container."
 }
+
+#
+# Redis
+#
+readonly REDIS_CONTAINER="redis"
+readonly REDIS_NETWORK=redis-"network"
+readonly REDIS_PORT=6379
 
 # Run Redis in Docker.
 function docker-redis() {
-	docker network create redis-network
+	docker network create "${REDIS_NETWORK}"
 	docker run -d --rm \
-		--name redis \
-		--network redis-network \
-		-p 6379:6379 \
+		--name "${REDIS_CONTAINER}" \
+		--network "${REDIS_NETWORK}" \
+		-p "${REDIS_PORT}:${REDIS_PORT}" \
 		-v redis-tmp:/data \
 		redis:6.0.10-alpine \
 		redis-server --appendonly yes
-	echo "✅ Running Redis at port 6379 in 'redis' container."
+	echo "✅ Running Redis at port ${REDIS_PORT} in '${REDIS_CONTAINER}' container."
 }
 
 # Remove Redis container.
 function docker-redis-rm() {
-	docker stop redis
-	docker network rm redis-network
-	echo "✅ Removed 'redis' container."
+	docker stop "${REDIS_CONTAINER}"
+	docker network rm "${REDIS_NETWORK}"
+	echo "✅ Removed '${REDIS_CONTAINER}' container."
 }
+
+#
+# Memcached
+#
+readonly MEMCACHED_CONTAINER="memcached"
+readonly MEMCACHED_NETWORK="memcached-network"
+readonly MEMCACHED_PORT=${MEMCACHED_PORT}
 
 # Run Memcached in Docker.
 function docker-memcached() {
-	docker network create memcached-network
+	docker network create "${MEMCACHED_NETWORK}"
 	docker run -d --rm \
-		--name memcached \
-		--network memcached-network \
-		-p 11211:11211 \
+		--name "${MEMCACHED_CONTAINER}" \
+		--network "${MEMCACHED_NETWORK}" \
+		-p "${MEMCACHED_PORT}:${MEMCACHED_PORT}" \
 		memcached:1.6-alpine
-	echo "✅ Running Memcached at port 11211 in 'memcached' container."
+	echo "✅ Running Memcached at port ${MEMCACHED_PORT} in '${MEMCACHED_CONTAINER}' container."
 }
 
 # Remove Memcached container.
 function docker-memcached-rm() {
-	docker stop memcached
-	docker network rm memcached-network
-	echo "✅ Removed 'memcached' container."
+	docker stop "${MEMCACHED_CONTAINER}"
+	docker network rm "${MEMCACHED_NETWORK}"
+	echo "✅ Removed '${MEMCACHED_CONTAINER}' container."
 }
+
+#
+# Wordpress
+#
+readonly WORKDPRESS_CONTAINER="wordpress"
+readonly WORKDPRESS_PORT=8080
 
 # Run Wordpress & MySQL in Docker.
 function docker-wordpress() {
-	docker run -d --rm --name wordpress \
-		--network mysql-network \
+	docker-mysql
+	docker run -d --rm --name "${WORKDPRESS_CONTAINER}" \
+		--network "${MYSQL_NETWORK}" \
 		-e WORDPRESS_DB_PASSWORD=password \
-		-p 8080:80 \
+		-e WORDPRESS_DB_HOST="localhost" \
+		-p "${WORKDPRESS_PORT}:80" \
 		wordpress
-	echo "✅ Running Wordpress at port 8080 in 'wordpress' container."
+	echo "✅ Running Wordpress at port ${WORKDPRESS_PORT} in '${WORKDPRESS_CONTAINER}' container."
+}
+
+# Run Wordpress & MySQL in Docker.
+function docker-wordpress-rm() {
+	docker stop "${WORKDPRESS_CONTAINER}"
+	echo "✅ Removed '${WORKDPRESS_CONTAINER}' container."
+	docker-mysql-rm
 }
 
 # Remove all untagged images.

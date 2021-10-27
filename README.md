@@ -61,4 +61,20 @@ See [wsl-hello-sudo document for configuration](https://github.com/nullpo-head/W
 
 ```bash
 $ chsh -s "$(which zsh)"
+
+# or
+
+$ chshs zsh  # defined in .bash_aliases
 ```
+
+### Daemonize Docker on WSL
+
+```bash
+$ sudo visudo
+```
+
+```diff
++ <Your Username> ALL=(ALL) NOPASSWD:/home/<Your Username>/.nix-profile/bin/daemonize
+```
+
+then, you can run `daemonize` command without sudo privileges on booting WSL.
