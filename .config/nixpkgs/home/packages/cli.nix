@@ -11,6 +11,7 @@ with pkgs; let
     dive # A tool for exploring each layer in a docker image
     expect
     hyperfine # A command-line benchmarking tool
+    gtop
     jq # A lightweight and flexible command-line JSON processor
     lazydocker # The lazier way to manage everything docker
     lazygit # A simple terminal UI for git commands
