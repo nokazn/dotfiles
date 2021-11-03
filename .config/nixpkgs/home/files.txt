@@ -9,6 +9,8 @@
 .config/neofetch/config.conf
 .config/nixpkgs
 .config/sampler/config.yml
+.config/tmux/cpu-usage.sh
+.config/tmux/memory-usage.sh
 .bash_aliases
 .bash_profile
 .bashrc
@@ -21,6 +23,5 @@
 .sh_profile.sh
 .shellcheckrc
 .shrc.sh
-.tmux.conf
 .vimrc
 .zlogin

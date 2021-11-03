@@ -3,6 +3,14 @@
 {
   enable = true;
   package = pkgs.tmux;
+  keyMode = "vi";
+  # 0 にすると謎の文字が出現する (https://github.com/microsoft/WSL/issues/5931)
+  escapeTime = 500;
+  extraConfig =
+    let
+      tmuxConf = builtins.toString ../../../.config/tmux/tmux.conf;
+    in
+    builtins.readFile tmuxConf;
   plugins = with pkgs; [
     {
       # A set of tmux options that should be acceptable to everyone
