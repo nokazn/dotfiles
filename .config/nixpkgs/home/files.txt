@@ -21,6 +21,5 @@
 .sh_profile.sh
 .shellcheckrc
 .shrc.sh
-.tmux.conf
 .vimrc
 .zlogin
