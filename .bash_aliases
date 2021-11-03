@@ -70,8 +70,8 @@ fi
 #
 # Nginx
 #
-readonly NGINX_CONTAINER="nginx"
-readonly NGINX_PORT=8080
+NGINX_CONTAINER="nginx"
+NGINX_PORT=8080
 
 # Run nginx in Docker.
 function docker-nginx() {
@@ -88,8 +88,8 @@ function docker-nginx() {
 #
 # PostgresQL
 #
-readonly POSTGRESQL_CONTAINER="postgresql"
-readonly POSTGRESQL_PORT=5432
+POSTGRESQL_CONTAINER="postgresql"
+POSTGRESQL_PORT=5432
 
 # Run PostgreSQL in Docker.
 function docker-postgresql() {
@@ -111,9 +111,9 @@ function docker-postgresql-rm() {
 #
 # MySQL
 #
-readonly MYSQL_CONTAINER="mysql"
-readonly MYSQL_NETWORK="mysql-network"
-readonly MYSQL_PORT=3306
+MYSQL_CONTAINER="mysql"
+MYSQL_NETWORK="mysql-network"
+MYSQL_PORT=3306
 
 # Run MySQL in Docker/
 function docker-mysql() {
@@ -139,9 +139,9 @@ function docker-mysql-rm() {
 #
 # Redis
 #
-readonly REDIS_CONTAINER="redis"
-readonly REDIS_NETWORK=redis-"network"
-readonly REDIS_PORT=6379
+REDIS_CONTAINER="redis"
+REDIS_NETWORK=redis-"network"
+REDIS_PORT=6379
 
 # Run Redis in Docker.
 function docker-redis() {
@@ -166,9 +166,9 @@ function docker-redis-rm() {
 #
 # Memcached
 #
-readonly MEMCACHED_CONTAINER="memcached"
-readonly MEMCACHED_NETWORK="memcached-network"
-readonly MEMCACHED_PORT=${MEMCACHED_PORT}
+MEMCACHED_CONTAINER="memcached"
+MEMCACHED_NETWORK="memcached-network"
+MEMCACHED_PORT=${MEMCACHED_PORT}
 
 # Run Memcached in Docker.
 function docker-memcached() {
@@ -191,8 +191,8 @@ function docker-memcached-rm() {
 #
 # Wordpress
 #
-readonly WORKDPRESS_CONTAINER="wordpress"
-readonly WORKDPRESS_PORT=8080
+WORKDPRESS_CONTAINER="wordpress"
+WORKDPRESS_PORT=8080
 
 # Run Wordpress & MySQL in Docker.
 function docker-wordpress() {
@@ -310,4 +310,8 @@ function chshs() {
 function zsh-colors() {
 	seq -w 255 \
 		| xargs -I "{}" echo -n -e "\e[38;5;{}m {}"; echo "\e[0m"
+}
+
+function cpu-usage() {
+	echo $((100 - $(mpstat | tail -n 1 | awk '{print $NF}') )) | cut -b 1-4
 }
