@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/nokazn/dotfiles/actions/workflows/static-check.yml/badge.svg?branch=main)](https://github.com/nokazn/dotfiles/actions/workflows/static-check.yml)
 
+[![screenshot](./images/screenshot1.jpg)](./images/screenshot1.jpg)
+
 ## Installation
 
 If `git`, `make`, `gcc`, `curl`, `wget`, `unzip` and `xz-utils` are not available in your environment, you need to install these packages.
