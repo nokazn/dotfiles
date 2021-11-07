@@ -40,7 +40,7 @@ function install_node() {
     nodenv global "${latest_version}"
     source ${PATH_SCRIPT}
     if ! has_command "node" || ! has_command "npm" ; then
-      "❌ Node.js ${latest_version} has failed to be installed."
+      echo "❌ Node.js ${latest_version} has failed to be installed."
     fi
     echo "✅ Node.js ${latest_version} has been installed successfully at '$(which node)'!"
   fi

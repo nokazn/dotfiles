@@ -43,7 +43,7 @@ function install_go() {
   goenv global "${latest_version}"
   source ${PATH_SCRIPT}
   if ! has_command "go" ; then
-    "❌ Go ${latest_version} has failed to be installed."
+    echo "❌ Go ${latest_version} has failed to be installed."
   fi
   echo "✅ Go ${latest_version} has been installed successfully at '$(which go)'!"
   return 0
