@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 with pkgs; [
-  daemonize
   docker
   docker-compose
   podman
