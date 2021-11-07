@@ -111,6 +111,9 @@
 	cp = cherry-pick
 	remote-add-me = !git remote add origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
 	remote-set-url-me = !git remote set-url origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
+	wt = worktree
+	wta = "!f() { git worktree add $(readlink $(git rev-parse --git-dir | sed -E 's/\\.git.*$/./')/.worktree/$1 -f); }; f"
+	wtr = "!f() { git worktree remove $(readlink $(git rev-parse --git-dir | sed -E 's/\\.git.*$/./')/.worktree/$1 -f); }; f"
 
 [delta]
 	line-numbers = true
