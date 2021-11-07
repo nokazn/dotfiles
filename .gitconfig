@@ -51,6 +51,7 @@
 	# 親ブランチの指定がなければ実行させない
 	chb = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git pull origin $2:$2; git checkout -b $1 $2; }; f"
 	sw = switch
+	swt = "!f() { git switch -d refs/tags/$1; }; f"
 	# 親ブランチの指定がなければ実行させない
 	swc = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git switch -c $1 $2; }; f"
 	# untracked のファイルも退避させる
