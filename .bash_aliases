@@ -221,7 +221,7 @@ function docker-rmi-untagged-images() {
 # utilities ----------------------------------------------------------------------------------------------------
 
 # cmd.exe で echo する
-# @path {string}
+# @param {string}
 function echoInCmd() {
 	cd /mnt/c || exit 1;
 	wslpath -u "$(/mnt/c/Windows/system32/cmd.exe /c "echo $1" | tr -d "\r")";
