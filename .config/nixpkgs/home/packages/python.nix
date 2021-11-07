@@ -6,7 +6,7 @@ let
     black
     pipenv
     poetry
-    python39
+    python39Full
   ];
   pythonPackages = with python39Packages; [
     flake8
