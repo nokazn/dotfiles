@@ -140,6 +140,9 @@ coverage
 TODO.md
 memo.md
 
+# git worktree directories
+.worktree
+
 # Node.js --------------------------------------------------
 
 # Logs
