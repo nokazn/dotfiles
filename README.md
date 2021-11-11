@@ -76,7 +76,7 @@ $ sudo visudo
 ```
 
 ```diff
-+ <Your Username> ALL=(ALL) NOPASSWD:daemonize
++ <Your Username> ALL=(ALL) NOPASSWD: ~/.nix-profile/bin/daemonize
 ```
 
 then, you can run `daemonize` command without sudo privileges on booting WSL.
