@@ -109,7 +109,7 @@ install-anyenv: # Install anyenv
 	~/.anyenv/bin/anyenv install goenv
 
 .PHONY: uninstall-anyenv
-uninstall-anyenv: # Install anyenv
+uninstall-anyenv: # Uninstall anyenv
 	$(SCRIPTS_DIR)/anyenv/uninstall_anyenv.sh
 
 .PHONY: install-anyenv-langs
