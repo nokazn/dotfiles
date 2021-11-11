@@ -16,7 +16,7 @@ if type wslsys >/dev/null 2>&1; then
     fi
 
     # TODO: WSL 起動時に実行されないため、ログイン時に実行しているが、 wsl.conf でやりたい
-    if command -v dockerd >/dev/null ; then
-        sudo daemonize -u root "$(command -v dockerd)"
+    if [[ -e ~/.nix-profile/bin/daemonize ]] && command -v dockerd >/dev/null ; then
+        sudo ~/.nix-profile/bin/daemonize -u root "$(command -v dockerd)"
     fi
 fi
