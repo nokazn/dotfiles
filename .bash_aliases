@@ -63,6 +63,7 @@ if type wslsys >/dev/null 2>&1; then
 	alias tasklist.exe='/mnt/c/Windows/system32/tasklist.exe'
 	alias clip.exe='/mnt/c/Windows/system32/clip.exe'
 	alias wsl.exe='/mnt/c/Windows/system32/wsl.exe'
+	alias clip.exe='/mnt/c/Windows/system32/clip.exe'
 	alias powershell.exe='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
 fi
 
