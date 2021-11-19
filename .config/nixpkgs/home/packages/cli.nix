@@ -23,6 +23,7 @@ with pkgs; let
     sampler # Tool for shell commands execution, visualization and alerting. Configured with a simple YAML file.
     shellcheck # A static analysis tool for shell scripts
     sl # SL(1): Cure your bad habit of mistyping
+    sqlite
     starship # ☄🌌️ The minimal, blazing-fast, and infinitely customizable prompt for any shell!
     tldr # A collection of community-maintained help pages for command-line tools
     tokei # compiled with serialization support: json, cbor, yaml
