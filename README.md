@@ -10,7 +10,7 @@ If `git`, `make`, `gcc`, `curl`, `wget`, `unzip` and `xz-utils` are not availabl
 
 ```bash
 # Ubuntu/Debian
-$ sudo apt update;
+$ sudo apt update -y
 $ sudo apt install -y git make gcc curl wget unzip xz-utils
 ```
 
@@ -48,16 +48,6 @@ $ make install-anyenv-langs
 
 ## Configuration
 
-### Set up wsl-hello-sudo
-
-After installing wsl-hello-sudo, you need to modify `/etc/pam.d/sudo`.
-
-```diff
-+ auth  sufficient pam_wsl_hello.so
-```
-
-See [wsl-hello-sudo document for configuration](https://github.com/nullpo-head/WSL-Hello-sudo#configuration) for details.
-
 ### Change default shell
 
 ```bash
@@ -67,6 +57,16 @@ $ chsh -s "$(which zsh)"
 
 $ chshs zsh  # defined in .bash_aliases
 ```
+
+### Set up wsl-hello-sudo
+
+After installing wsl-hello-sudo, you need to modify `/etc/pam.d/sudo`.
+
+```diff
++ auth  sufficient pam_wsl_hello.so
+```
+
+See [wsl-hello-sudo document for configuration](https://github.com/nullpo-head/WSL-Hello-sudo#configuration) for details.
 
 ### Daemonize Docker on WSL
 
