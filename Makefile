@@ -11,7 +11,7 @@ LANGS := deno rust elm nim
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init: update-apt packages-apt add-tools generate-npm-packages-list home-manager-switch install-anyenv install-langs; # Install all languages & their packages.
+init: update-apt add-tools generate-npm-packages-list home-manager-switch install-anyenv install-langs; # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 
@@ -133,17 +133,6 @@ uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Unin
 	$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh;
 
 # ------------------------------ packages ------------------------------
-
-.PHONY: packagegs-apt
-packages-apt: _print-airplane # Install apt packages.
-	sudo apt update -y && sudo apt upgrade -y
-	sudo apt install -y \
-		xsel \
-		zsh \
-		tshark
-# TODO: リポジトリ追加
-# mysql-server
-# postgresql-12
 
 .PHONY: home-manager-switch
 home-manager-switch: # Run 'home-manager switch'

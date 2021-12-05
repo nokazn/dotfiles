@@ -20,7 +20,6 @@ If a existing file conflicts with the symbolic link, this is backed up in `~/dot
 `make init` command executes targets below.
 
 - `update-apt` - Update apt packages
-- `packages-apt` - Install apt packages
 - `add-tools`
   - `add-nix` - Add nix
   - `add-home-manager` - Add home-manager
