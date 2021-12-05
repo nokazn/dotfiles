@@ -11,7 +11,7 @@ LANGS := deno rust elm nim
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init:  update-apt packages-apt add-tools generate-npm-packages-list home-manager-switch install-anyenv install-langs; # Install all languages & their packages.
+init: update-apt packages-apt add-tools generate-npm-packages-list home-manager-switch install-anyenv install-langs; # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 
@@ -70,7 +70,7 @@ remove-bash-it: _print-goodbye # Remove bash-it.
 
 
 .PHONY: add-wsl-hello-sudo
-add-wsl-hello-sudo: # Add WSL-Hello-sudo
+add-wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
 	mkdir -p ~/downloads
 	cd ~/downloads; \
 	if [[ ! -f ~/downloads/wsl-hello-sudo/install.sh ]]; then \
@@ -87,7 +87,7 @@ add-wsl-hello-sudo: # Add WSL-Hello-sudo
 	@echo "👉 You need to add 'auth sufficient pam_wsl_hello.so' to the top line of your '/etc/pam.d/sudo'. See also https://github.com/nullpo-head/WSL-Hello-sudo/#configuration."
 
 .PHONY: remove-wsl-hello-sudo
-remove-wsl-hello-sudo: # Remove WSL-Hello-sudo
+remove-wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
 	if [[ -f ~/downloads/wsl-hello-sudo/uninstall.sh ]]; then \
 		~/downloads/wsl-hello-sudo/uninstall.sh; \
 		rm -rf ~/downloads/wsl-hello-sudo; \
@@ -103,19 +103,19 @@ install: install-anyenv $(addprefix install-,$(ANYENV_LANGS)) $(addprefix instal
 uninstall: uninstall-anyenv $(addprefix uninstall-,$(LANGS)); # Uninstall all languages & tools. (runs scripts starting with 'unintall-' prefix.)
 
 .PHONY: install-anyenv
-install-anyenv: # Install anyenv
+install-anyenv: _print-airplane # Install anyenv
 	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh; \
 	~/.anyenv/bin/anyenv install nodenv; \
 	~/.anyenv/bin/anyenv install goenv
 
 .PHONY: uninstall-anyenv
-uninstall-anyenv: # Uninstall anyenv
+uninstall-anyenv: _print-goodbye # Uninstall anyenv
 	$(SCRIPTS_DIR)/anyenv/uninstall_anyenv.sh
 
 .PHONY: install-anyenv-langs
 install-anyenv-langs: $(addprefix install-,$(ANYENV_LANGS)); # Install languages by anyenv.
 
-.PHONY: install-node install-go install-python
+.PHONY: _print-airplane install-node install-go install-python
 install-node install-go install-python: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
@@ -136,7 +136,7 @@ uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Unin
 # ------------------------------ packages ------------------------------
 
 .PHONY: packagegs-apt
-packages-apt: # Install apt packages.
+packages-apt: _print-airplane # Install apt packages.
 	sudo apt update -y && sudo apt upgrade -y
 	sudo apt install -y \
 		xsel \
@@ -147,7 +147,7 @@ packages-apt: # Install apt packages.
 # postgresql-12
 
 .PHONY: packages-apt-for-pyenv
-packages-apt-for-pyenv: # Install apt packages for building pyenv.
+packages-apt-for-pyenv: _print-airplane # Install apt packages for building pyenv.
 	sudo apt update -y ; \
 	sudo apt install -y \
 		make \
