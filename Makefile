@@ -276,7 +276,7 @@ help: # Show all commands.
 	@echo "Commands:"
 # コマンド一覧 -> ":" で改行 -> ":" を含む行 (前半) の \s を ", " に置換、"#" を含む行 (後半) からコメントを抽出 -> ":" で分けた個所を再連結 -> column で整形
 	@grep -E '^[a-zA-Z]\S+(\s\S+)*:.*' ./Makefile \
-		| sed --regexp-extended -e "s/:/:\n/" \
-		| sed --regexp-extended -e "/:/ s/\s/, /g" -e "s/^.*[#|;]+\s*//" \
-		| sed --regexp-extended -e "N" -e "s/:\n/:/g;" -e "s/^/  /" \
+		| sed -E -e "s/:/:\n/" \
+		| sed -E -e "/:/ s/\s/, /g" -e "s/^.*[#|;]+\s*//" \
+		| sed -E -e "N" -e "s/:\n/:/g;" -e "s/^/  /" \
 		| column -s ":" -t
