@@ -114,8 +114,8 @@ uninstall-anyenv: _print-goodbye # Uninstall anyenv
 .PHONY: install-anyenv-langs
 install-anyenv-langs: $(addprefix install-,$(ANYENV_LANGS)); # Install languages by anyenv.
 
-.PHONY: _print-airplane install-node install-go install-python
-install-node install-go install-python: _print-airplane # Install each language.
+.PHONY: _print-airplane install-node install-go
+install-node install-go: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
 
@@ -144,30 +144,6 @@ packages-apt: _print-airplane # Install apt packages.
 # TODO: リポジトリ追加
 # mysql-server
 # postgresql-12
-
-.PHONY: packages-apt-for-pyenv
-packages-apt-for-pyenv: _print-airplane # Install apt packages for building pyenv.
-	sudo apt update -y ; \
-	sudo apt install -y \
-		make \
-		gcc \
-		build-essential \
-		libssl-dev \
-		zlib1g-dev \
-		libbz2-dev \
-		libreadline-dev \
-		libsqlite3-dev \
-		wget \
-		curl \
-		llvm \
-		libncurses5-dev \
-		xz-utils \
-		tk-dev \
-		libxml2-dev \
-		libxmlsec1-dev \
-		libffi-dev \
-		liblzma-dev
-
 
 .PHONY: home-manager-switch
 home-manager-switch: # Run 'home-manager switch'
