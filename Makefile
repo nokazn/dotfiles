@@ -41,8 +41,7 @@ remove-nix: _print-goodbye # Uninstall nix.
 add-home-manager: _print-airplane # Add home-manager
 	~/.nix-profile/bin/nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager; \
 	~/.nix-profile/bin/nix-channel --update; \
-	source ${PATH_FILE}; \
-	~/.nix-profile/bin/nix-shell '<home-manager>' -A install -I ~/.nix-defexpr/channels
+	NIX_PATH=~/.nix-defexpr/channels ~/.nix-profile/bin/nix-shell '<home-manager>' -A install
 
 
 .PHONY: add-dein-vim
@@ -180,7 +179,7 @@ home-manager-switch: # Run 'home-manager switch'
 .PHONY: generate-npm-packages-list
 generate-npm-packages-list: # Generate Nix packages list for npm packages.
 	cd ./.config/nixpkgs/node; \
-	~/.nix-profile/bin/nix-shell -p nodePackages.node2nix --command "node2nix -i ./packages.json -o ./packages.nix" -I ~/.nix-defexpr/channels
+	NIX_PATH=~/.nix-defexpr/channels ~/.nix-profile/bin/nix-shell -p nodePackages.node2nix --command "node2nix -i ./packages.json -o ./packages.nix"
 
 
 .PHONY: packages-go
