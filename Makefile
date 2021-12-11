@@ -107,9 +107,11 @@ uninstall: uninstall-anyenv $(addprefix uninstall-,$(LANGS)); # Uninstall all la
 
 .PHONY: install-anyenv
 install-anyenv: _print-airplane # Install anyenv
-	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh; \
-	~/.anyenv/bin/anyenv install nodenv; \
+	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh;
+	~/.anyenv/bin/anyenv install nodenv;
+	@echo "✅ nodenv has been installed successfully!"
 	~/.anyenv/bin/anyenv install goenv
+	@echo "✅ goenv has been installed successfully!"
 
 .PHONY: uninstall-anyenv
 uninstall-anyenv: _print-goodbye # Uninstall anyenv
