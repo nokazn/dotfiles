@@ -31,7 +31,7 @@ function install_rust() {
 
   echo "installing Rust ..."
   # TODO: expect コマンドで自動化
-  if ! (curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh); then
+  if ! (curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash); then
     echo "❌ Rust has failed to be installed."
     return 1
   fi

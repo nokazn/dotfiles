@@ -30,7 +30,7 @@ function install_deno() {
   fi
 
   echo "installing Deno ..."
-  if ! (curl -fsSL https://deno.land/x/install/install.sh | sh); then
+  if ! (curl -fsSL https://deno.land/x/install/install.sh | bash); then
     echo "❌ Deno has failed to be installed."
     return 1
   fi
