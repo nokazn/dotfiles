@@ -26,7 +26,7 @@ add-nix: _print-airplane # Install nix.
 	@if type "nix-env" >/dev/null 2>&1; then \
 		echo "✅ nix is already installed."; \
 	else \
-		curl -L https://nixos.org/nix/install | sh; \
+		curl -L https://nixos.org/nix/install | bash; \
 		source ~/.nix-profile/etc/profile.d/nix.sh \
 		echo "✅ nix has been installed successfully!"; \
 	fi
@@ -49,7 +49,7 @@ add-home-manager: _print-airplane # Add home-manager
 
 .PHONY: add-dein-vim
 add-dein-vim: _print-airplane # Add dein.vim.
-	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh -s ~/.vim/dein
+	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | bash -s ~/.vim/dein
 	@echo "✅ dein.vim has been installed successfully!"
 
 .PHONY: remove-dein-vim
