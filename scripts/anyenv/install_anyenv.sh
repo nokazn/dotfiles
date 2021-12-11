@@ -20,11 +20,11 @@ function install_anyenv() {
   fi
 
   echo "installing anyenv ..."
-  git clone  https://github.com/anyenv/anyenv.git ${anyenv_path} 2>/dev/null
-  eval "$(~/.anyenv/bin/anyenv init -)"
+  bash -c "yes | git clone https://github.com/anyenv/anyenv.git ${anyenv_path}"
   if [[ ! -d ~/.config/anyenv/anyenv-install ]]; then
-    ~/.anyenv/bin/anyenv install --init
+    ~/.anyenv/bin/anyenv install --force-init
   fi
+  eval "$(~/.anyenv/bin/anyenv init -)"
   if ! has_command "anyenv"; then
     echo "❌ anyenv has failed to be installed at '${anyenv_path}'."
     exit 1

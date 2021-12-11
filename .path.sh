@@ -35,7 +35,7 @@ if [[ -d "$HOME/.anyenv" ]]; then
             eval "$(anyenv init -)"
         fi
     fi
-    for file in  ~/.anyenv/envs/*; do
+    for file in $(find ~/.anyenv/envs -mindepth 1 -type d); do
         regester_forward_if_not "$HOME/.anyenv/envs/$(basename "${file}")/bin"
         regester_forward_if_not "$HOME/.anyenv/envs/$(basename "${file}")/shims"
     done
