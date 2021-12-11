@@ -11,7 +11,7 @@ LANGS := deno rust elm nim
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init: update-apt add-tools generate-npm-packages-list home-manager-switch install-anyenv install-langs; # Install all languages & their packages.
+init: update-apt add-tools home-manager-switch install-anyenv install-langs; # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 
