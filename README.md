@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/nokazn/dotfiles/actions/workflows/static-check.yml/badge.svg?branch=main)](https://github.com/nokazn/dotfiles/actions/workflows/static-check.yml)
 
-[![screenshot](./images/screenshot1.jpg)](./images/screenshot1.jpg)
+[![screenshot](./images/debian.jpg)](./images/debian.jpg)
 
 ## Installation
 
@@ -10,8 +10,7 @@ If `git`, `make`, `gcc`, `curl`, `wget`, `unzip` and `xz-utils` are not availabl
 
 ```bash
 # Ubuntu/Debian
-$ sudo apt update -y
-$ sudo apt install -y git make gcc curl wget unzip xz-utils
+$ sudo apt update -y && sudo apt install -y git make gcc curl wget unzip xz-utils
 ```
 
 `make deploy` command makes symbolic links to files that starting with a dot and followed 2 or more chars in `~/dotfiles/` directory.  
@@ -27,6 +26,7 @@ If a existing file conflicts with the symbolic link, this is backed up in `~/dot
   - `add-bash-it` - Add bash-it
   - `add-wsl-hello-sudo` - Add wsl-hello-sudo
 - `install-anyenv` - Install anyenv
+- `install-anyenv-langs` - Install languages by anyenv (Node.js, Go)
 - `install-langs`
   - `install-deno` - Install Deno
   - `install-rust` - Install Rust
@@ -39,22 +39,11 @@ $ cd ~/dotfiles
 $ make init
 ```
 
-After `make init` has completed, you can source paths and execute `make install-anyenv-langs`.
-
-```bash
-$ source ~/.path.sh
-$ make install-anyenv-langs
-```
-
 ## Configuration
 
 ### Change default shell
 
 ```bash
-$ chsh -s "$(which zsh)"
-
-# or
-
 $ chshs zsh  # defined in .bash_aliases
 ```
 
