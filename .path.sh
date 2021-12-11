@@ -7,11 +7,17 @@ function is_unregistered_path() {
 }
 
 function regester_forward_if_not() {
-    is_unregistered_path "$1" && PATH="$1:${PATH}"
+    if is_unregistered_path "$1"; then
+        PATH="$1:${PATH}"
+    fi
+    return 0
 }
 
 function regester_backward_if_not() {
-    is_unregistered_path "$1" && PATH="${PATH}:$1"
+    if is_unregistered_path "$1"; then
+        PATH="${PATH}:$1"
+    fi
+    return 0
 }
 
 # ----------------------------------------------------------------------------------------------------
@@ -35,9 +41,9 @@ if [[ -d "$HOME/.anyenv" ]]; then
             eval "$(anyenv init -)"
         fi
     fi
-    for file in $(find ~/.anyenv/envs -mindepth 1 -maxdepth 1 -type d); do
-        regester_forward_if_not "$HOME/.anyenv/envs/$(basename "${file}")/bin"
-        regester_forward_if_not "$HOME/.anyenv/envs/$(basename "${file}")/shims"
+    for dir in $(find ~/.anyenv/envs -mindepth 1 -maxdepth 1 -type d); do
+        regester_forward_if_not "${dir}/bin"
+        regester_forward_if_not "${dir}/shims"
     done
 fi
 
