@@ -28,22 +28,27 @@ function check_command() {
 # @param None
 # @return {void}
 function install_node() {
-  check_command "nodenv"
+  # anyenv install を使えるようにする
+  source ${PATH_SCRIPT}
+  NODENV_PATH=~/.anyenv/envs/nodenv/bin/nodenv
+  check_command ${NODENV_PATH}
 
   if has_command "node"; then
     local -r node_version=$(node --version)
     echo "Node.js ${node_version} is already installed at '$(which node)'"
-  else
-    local -r latest_version=$(nodenv install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
-    echo "installing Node.js ${latest_version} (latest version of the major release) ..."
-    nodenv install "${latest_version}"
-    nodenv global "${latest_version}"
-    source ${PATH_SCRIPT}
-    if ! has_command "node" || ! has_command "npm" ; then
-      echo "❌ Node.js ${latest_version} has failed to be installed."
-    fi
-    echo "✅ Node.js ${latest_version} has been installed successfully at '$(which node)'!"
+    return
   fi
+
+  local -r latest_version=$(${NODENV_PATH} install -l | grep -E "^\s*[0-9]{1,2}(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
+  echo "installing Node.js ${latest_version} (latest version of the major release) ..."
+  ${NODENV_PATH} install "${latest_version}"
+  ${NODENV_PATH} global "${latest_version}"
+  source ${PATH_SCRIPT}
+
+  if ! has_command "node" || ! has_command "npm" ; then
+    echo "❌ Node.js ${latest_version} has failed to be installed."
+  fi
+  echo "✅ Node.js ${latest_version} has been installed successfully at '$(which node)'!"
   return 0
 }
 

@@ -28,7 +28,10 @@ function check_command() {
 # @param None
 # @return {void}
 function install_go() {
-  check_command "goenv"
+  # anyenv install を使えるようにする
+  source ${PATH_SCRIPT}
+  GOENV_PATH=~/.anyenv/envs/goenv/bin/goenv
+  check_command ${GOENV_PATH}
 
   if has_command "go"; then
     local -r go_version=$(go version | sed -e "s/go version go//")
@@ -37,11 +40,12 @@ function install_go() {
   fi
 
   # 1.x.x の最新バージョンをインストールする
-  local -r latest_version=$(goenv install -l | grep -E "^\s*1(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
+  local -r latest_version=$(${GOENV_PATH} install -l | grep -E "^\s*1(\.[0-9]{1,2}){2}" | tail -n 1 | awk '{print $1}')
   echo "installing Go ${latest_version} (latest version of the major release) ..."
-  goenv install "${latest_version}"
-  goenv global "${latest_version}"
+  ${GOENV_PATH} install "${latest_version}"
+  ${GOENV_PATH} global "${latest_version}"
   source ${PATH_SCRIPT}
+  
   if ! has_command "go" ; then
     echo "❌ Go ${latest_version} has failed to be installed."
   fi
