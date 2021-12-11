@@ -2,7 +2,7 @@
 
 SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
-PATH_FILE := ./.path.sh
+PATH_SCRIPT := ./.path.sh
 ANYENV_LANGS := node go
 LANGS := deno rust elm nim
 .DEFAULT_GOAL := help
@@ -39,10 +39,10 @@ remove-nix: _print-goodbye # Uninstall nix.
 
 .PHONY: add-home-manager
 add-home-manager: _print-airplane # Add home-manager
-# source ${PATH_FILE} しないと nix-build のパスが通らない
+# source ${PATH_SCRIPT} しないと nix-build のパスが通らない
 	~/.nix-profile/bin/nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager; \
 	~/.nix-profile/bin/nix-channel --update; \
-	source ${PATH_FILE}; \
+	source ${PATH_SCRIPT}; \
 	NIX_PATH=~/.nix-defexpr/channels ~/.nix-profile/bin/nix-shell '<home-manager>' -A install
 	echo "✅ home-manager has been installed successfully!"; \
 
@@ -141,8 +141,8 @@ uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Unin
 .PHONY: home-manager-switch
 home-manager-switch: # Run 'home-manager switch'
 	$(SCRIPTS_DIR)/backup.sh ./.config/nixpkgs/home/files.txt
-# source ${PATH_FILE} しないと nix-build のパスが通らない
-	source ${PATH_FILE}; \
+# source ${PATH_SCRIPT} しないと nix-build のパスが通らない
+	source ${PATH_SCRIPT}; \
 	export NIXPKGS_ALLOW_UNFREE=1; \
 	~/.nix-profile/bin/home-manager switch -f ./.config/nixpkgs/home.nix
 
