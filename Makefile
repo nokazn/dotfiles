@@ -85,7 +85,7 @@ add-wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
 	fi
 # TODO: write failed 32: Broken pipe のエラーを無視するために標準エラー出力を捨てているため
 	cd ~/downloads/wsl-hello-sudo; \
-	yes | ./install.sh 2>/dev/null
+	bash -c "yes | ./install.sh 2>/dev/null"
 	@echo "✅ WSL-Hello-sudo has been installed successfully!"
 	@echo "👉 You need to add 'auth sufficient pam_wsl_hello.so' to the top line of your '/etc/pam.d/sudo'. See also https://github.com/nullpo-head/WSL-Hello-sudo/#configuration."
 
