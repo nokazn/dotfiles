@@ -11,15 +11,15 @@ LANGS := deno rust elm nim
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init: update-apt add-tools home-manager-switch install-anyenv install-langs; # Install all languages & their packages.
+init: update-apt add-tools home-manager-switch install-anyenv install-anyenv-langs install-langs # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 
 .PHONY: add-tools
-add-tools: add-nix add-home-manager add-dein-vim add-bash-it add-wsl-hello-sudo; # Add developing tools.
+add-tools: add-nix add-home-manager add-dein-vim add-bash-it add-wsl-hello-sudo # Add developing tools.
 
 .PHONY: remove-tools
-remove-tools: remove-nix remove-dein-vim remove-bash-it remove-wsl-hello-sudo; # Remove developing tools.
+remove-tools: remove-nix remove-dein-vim remove-bash-it remove-wsl-hello-sudo # Remove developing tools.
 
 .PHONY: add-nix
 add-nix: _print-airplane # Install nix.
@@ -100,10 +100,10 @@ remove-wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
 # ------------------------------ languages ------------------------------
 
 .PHONY: install
-install: install-anyenv $(addprefix install-,$(ANYENV_LANGS)) $(addprefix install-,$(LANGS)); # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
+install: install-anyenv $(addprefix install-,$(ANYENV_LANGS)) $(addprefix install-,$(LANGS)) # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
 
 .PHONY: uninstall
-uninstall: uninstall-anyenv $(addprefix uninstall-,$(LANGS)); # Uninstall all languages & tools. (runs scripts starting with 'unintall-' prefix.)
+uninstall: uninstall-anyenv $(addprefix uninstall-,$(LANGS)) # Uninstall all languages & tools. (runs scripts starting with 'unintall-' prefix.)
 
 .PHONY: install-anyenv
 install-anyenv: _print-airplane # Install anyenv
@@ -118,7 +118,7 @@ uninstall-anyenv: _print-goodbye # Uninstall anyenv
 	$(SCRIPTS_DIR)/anyenv/uninstall_anyenv.sh
 
 .PHONY: install-anyenv-langs
-install-anyenv-langs: $(addprefix install-,$(ANYENV_LANGS)); # Install languages by anyenv.
+install-anyenv-langs: $(addprefix install-,$(ANYENV_LANGS)) # Install languages by anyenv.
 
 .PHONY: _print-airplane install-node install-go
 install-node install-go: _print-airplane # Install each language.
@@ -126,7 +126,7 @@ install-node install-go: _print-airplane # Install each language.
 	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
 
 .PHONY: install-langs
-install-langs: $(addprefix install-,$(LANGS)); # Install languages except ones installed by anyenv.
+install-langs: $(addprefix install-,$(LANGS)) # Install languages except ones installed by anyenv.
 
 .PHONY: install-deno install-rust install-elm install-nim
 install-deno install-rust install-elm install-nim: _print-airplane # Install each language.
@@ -162,7 +162,7 @@ packages-go: # Install Go packages.
 # ------------------------------ update ------------------------------
 
 .PHONY: update
-update: update-apt update-go; # Update all packages.
+update: update-apt update-go # Update all packages.
 
 .PHONY: update-apt
 update-apt: # Update apt packages.
@@ -172,7 +172,7 @@ update-apt: # Update apt packages.
 	fi;
 
 .PHONY: update-go
-update-go: install-go; # Update Go packages.
+update-go: install-go # Update Go packages.
 
 # ------------------------------ deploy & restore dotfiles ------------------------------
 
