@@ -62,8 +62,9 @@ if type wslsys >/dev/null 2>&1; then
 	alias cmd.exe='/mnt/c/Windows/system32/cmd.exe'
 	alias tasklist.exe='/mnt/c/Windows/system32/tasklist.exe'
 	alias clip.exe='/mnt/c/Windows/system32/clip.exe'
+	alias clip='/mnt/c/Windows/system32/clip.exe'
 	alias wsl.exe='/mnt/c/Windows/system32/wsl.exe'
-	alias clip.exe='/mnt/c/Windows/system32/clip.exe'
+	alias wsl='/mnt/c/Windows/system32/wsl.exe'
 	alias powershell.exe='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
 fi
 
@@ -303,10 +304,10 @@ function aliases() {
 # Change default shell for a current user
 function chshs() {
 	local -r shell_path="$(command -v "$1")"
-	if ! grep "${shell_path}" /etc/shells; then
-		echo "${shell_path}" > /etc/shells
+	if ! sudo grep "${shell_path}" /etc/shells --quiet; then
+		echo "${shell_path}" | sudo tee /etc/shells
 	fi
-	chsh -s "${shell_path}" "${USER}"
+	sudo usermod -s "${shell_path}" "${USER}"
 }
 
 function zsh-colors() {
@@ -316,4 +317,8 @@ function zsh-colors() {
 
 function cpu-usage() {
 	echo $((100 - $(mpstat | tail -n 1 | awk '{print $NF}') )) | cut -b 1-4
+}
+
+function bk-files() {
+	find ./ -name "*$(date +"%Y-%m-%d")*.bk" | xargs rm -r
 }
