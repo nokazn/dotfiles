@@ -304,8 +304,8 @@ function aliases() {
 # Change default shell for a current user
 function chshs() {
 	local -r shell_path="$(command -v "$1")"
-	if ! sudo grep "${shell_path}" /etc/shells --quiet; then
-		echo "${shell_path}" | sudo tee /etc/shells
+	if ! grep "${shell_path}" /etc/shells --quiet; then
+		echo "${shell_path}" | sudo tee -a /etc/shells >/dev/null
 	fi
 	sudo usermod -s "${shell_path}" "${USER}"
 }
