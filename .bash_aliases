@@ -83,7 +83,7 @@ function docker-nginx() {
 }
 
 # Remove nginx in Docker.
-function docker-nginx() {
+function docker-nginx-rm() {
 	docker stop "${NGINX_CONTAINER}"
 	echo "✅ Removed '${NGINX_CONTAINER}' container."
 }
