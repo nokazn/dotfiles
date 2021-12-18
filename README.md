@@ -13,7 +13,7 @@ If `git`, `make`, `gcc`, `curl`, `wget`, `unzip` and `xz-utils` are not availabl
 $ sudo apt update -y && sudo apt install -y git make gcc curl wget unzip xz-utils
 
 # Arch Linux
-$ sudo pacman -Syyu  && sudo pacman -S git make gcc curl wget unzip xz-utils
+$ sudo pacman -Syyu  && sudo pacman -S git make gcc curl wget unzip
 ```
 
 `make deploy` command makes symbolic links to files that starting with a dot and followed 2 or more chars in `~/dotfiles/` directory.  
