@@ -9,6 +9,8 @@ esac
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
 
+# TODO https://github.com/nix-community/home-manager/issues/1929
+autoload -U compinit && compinit
 # 色を使用
 autoload -Uz colors ; colors
 # End of lines added by compinstall
