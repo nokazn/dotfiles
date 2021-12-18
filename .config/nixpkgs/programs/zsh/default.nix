@@ -3,7 +3,8 @@
 {
   enable = true;
   enableAutosuggestions = true;
-  enableCompletion = true;
+  # TODO https://github.com/nix-community/home-manager/issues/1929
+  enableCompletion = false;
   enableSyntaxHighlighting = true;
   autocd = true;
   history = {
