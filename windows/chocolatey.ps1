@@ -20,10 +20,8 @@ choco install -y  `
   vcxsrv `
   postman `
   pgadmin4 `
-  jasper
+  jasper `
   font-hackgen-nerd `
-  # うまくセットアップできない `
-  # docker-desktop `
   thunderbird `
   discord `
   slack `
