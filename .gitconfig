@@ -39,6 +39,7 @@
 
 [alias]
 	alias = config --get-regexp alias.*
+	allclean = clean -df
 	br = branch
 	# マージ済みのブランチを削除
 	br-clean = "!f(){ git branch --merged | grep -v -E '\\*|develop|main|master' | xargs git branch -d; }; f"
