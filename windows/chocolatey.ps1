@@ -11,42 +11,44 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
 }
 
 choco install -y  `
-  googlechrome `
-  firefox `
-  opera `
-  vivaldi `
-  vscode `
-  git `
-  vcxsrv `
-  postman `
-  pgadmin4 `
-  jasper `
-  font-hackgen-nerd `
-  thunderbird `
-  discord `
-  slack `
-  zoom `
-  keybase `
-  typora `
-  todoist `
-  notion `
+  7zip `
+  adobereader `
+  anaconda3 `
+  blender `
   boostnote `
-  keepassxc `
+  cpu-z `
+  crystaldiskinfo `
+  crystaldiskmark `
+  deepl `
+  discord `
   everything `
   fastcopy `
-  crystaldiskmark `
-  crystaldiskinfo `
-  adobereader `
-  googledrive `
-  keycastow `
-  7zip `
-  screentogif `
-  spotify `
-  lastfmscrobbler `
+  firefox `
+  font-hackgen-nerd `
   gimp `
-  vlc `
-  unity `
-  anaconda3 `
+  git `
+  googlechrome `
+  googledrive `
+  jasper `
+  keepassxc `
+  keybase `
+  keycastow `
+  lastfmscrobbler `
+  microsoft-windows-terminal `
   miniconda3 `
-  blender `
-  cpu-z
+  notion `
+  opera `
+  pgadmin4 `
+  postman `
+  screentogif `
+  slack `
+  steam `
+  thunderbird `
+  todoist `
+  typora `
+  unity `
+  vcxsrv `
+  vivaldi `
+  vlc `
+  vscode `
+  zoom
