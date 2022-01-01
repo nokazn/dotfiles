@@ -14,9 +14,4 @@ if type wslsys >/dev/null 2>&1; then
             echo "⚠ file 'start_vcxsrv.sh' doesn't exist at ${START_VCXSRV_PATH}" >&2
         fi
     fi
-
-    # TODO: WSL 起動時に実行されないため、ログイン時に実行しているが、 wsl.conf でやりたい
-    if [[ -e ~/.nix-profile/bin/daemonize ]] && command -v dockerd >/dev/null ; then
-        sudo ~/.nix-profile/bin/daemonize -u root "$(command -v dockerd)"
-    fi
 fi
