@@ -19,7 +19,7 @@ fi
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
+# some more `ls` aliases
 alias la='ls -A'
 alias ll='ls -alF'
 alias l='ls -F'
@@ -27,7 +27,7 @@ alias exa='exa --icons --git'
 alias exat='exa --tree'
 alias exal='exa -l'
 
-# git aliases
+# Git aliases
 alias g='git'
 alias hg='git config --get-regexp alias.* | sed -E -n -e "/\[alias\]/,/^$$/p" ~/.gitconfig | sed -E -e "/alias/d" -e "/#/d" -e "s/^(.+)\s=\s/\1 | /" | column -s "|" -t | more'
 alias branch='git symbolic-ref --short HEAD'
@@ -55,7 +55,7 @@ alias hm='home-manager'
 alias hmsw='home-manager switch -f ~/dotfiles/.config/nixpkgs/home.nix'
 alias sampler='sampler -c ~/.config/sampler/config.yml'
 
-# WSL
+# WSL aliases
 if type wslsys >/dev/null 2>&1; then
 	alias explorer.exe='/mnt/c/Windows/explorer.exe'
 	alias bash.exe='/mnt/c/Windows/system32/bash.exe'
