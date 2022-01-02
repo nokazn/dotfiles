@@ -1,8 +1,8 @@
 { pkgs, ... }:
 
 with pkgs; [
-  go
   ghq
+  gotools
   gopls
   gore
 ]
