@@ -15,6 +15,8 @@ repos:
       exclude: "\\.txt$"
   -   id: detect-private-key
   -   id: mixed-line-ending
+  -   id: trailing-whitespace
+      args: [--markdown-linebreak-ext=md]
 
 -   repo: https://github.com/nix-community/nixpkgs-fmt
     rev: v1.2.0
