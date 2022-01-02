@@ -56,7 +56,7 @@ alias hmsw='home-manager switch -f ~/dotfiles/.config/nixpkgs/home.nix'
 alias sampler='sampler -c ~/.config/sampler/config.yml'
 
 # WSL aliases
-if type wslsys >/dev/null 2>&1; then
+if [[ "$(uname -r)" == *microsoft* ]]; then
 	alias explorer.exe='/mnt/c/Windows/explorer.exe'
 	alias bash.exe='/mnt/c/Windows/system32/bash.exe'
 	alias cmd.exe='/mnt/c/Windows/system32/cmd.exe'

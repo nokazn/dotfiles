@@ -2,7 +2,7 @@
 
 # ---------------------------------------- WSL  ----------------------------------------
 
-if type wslsys >/dev/null 2>&1; then
+if [[ "$(uname -r)" == *microsoft* ]]; then
     # WSLg 非対応の WSL 内では X Server 経由で GUI を表示
     if [[ ! -e /mnt/c/Windows/system32/wslg.exe ]]; then
         if [[ -f "$HOME/dotfiles/scripts/start_vcxsrv.sh" ]]; then
