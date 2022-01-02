@@ -106,7 +106,9 @@ function make_backup() {
 # @return {void}
 function check_email_attribute() {
   # dotfiles 内の .gitconfig で該当行が email = ${email} の形式になっているかチェック
-  local -r email_line=$(< "$1" grep --extended-regexp --line-number "email\s?=\s?$2$")
+  local -r email_line=$(
+    grep < "$1" --line-number "email\s*=\s*" | grep "$2"
+  )
   if [[ -z ${email_line} ]]; then
     local -r error_line_number=$(echo "${email_line}" | cut -f 1 -d ":")
     # 1行目にエラーの行番号が取得できればを表示し、2行目にエラーのあった行を表示
@@ -158,7 +160,7 @@ function newly_link() {
     # local -r source_win="$(wslpath -w $1)"
     # local -r destination_win="$(wslpath -w $2).lnk"
     # powershell.exe -c "\$wsh = New-Object -ComObject WScript.Shell; \$sc = \$wsh.CreateShortCut(\"${destination_win}\"); \$sc.TargetPath = \"${source_win}\"; \$sc.Save();"
-    cp --verbose "$1" "$2" | prepend_message "✅ newly copied:"
+    cp --verbose -r "$1" "$2" | prepend_message "✅ newly copied:"
   else
     ln --symbolic --verbose --force "$1" "$2" | prepend_message "✅ newly linked:"
   fi
