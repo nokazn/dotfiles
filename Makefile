@@ -174,7 +174,7 @@ update-apt: # Update apt packages.
 _deploy: # Make symbolic links to dotfiles & back up original files if exists.
 	$(SCRIPTS_DIR)/_deploy/unix.sh
 
-.PHONY: _deploy-windows
+.PHONY: deploy-windows
 _deploy-windows: # Make symbolic links to dotfiles & back up original files if exists in Windows.
 	$(SCRIPTS_DIR)/_deploy/windows.sh
 
@@ -182,7 +182,7 @@ _deploy-windows: # Make symbolic links to dotfiles & back up original files if e
 _restore: # Restore backed-up files of dotfiles.
 	$(SCRIPTS_DIR)/_restore/unix.sh
 
-.PHONY: _restore-windows
+.PHONY: restore-windows
 _restore-windows: # Restore backed-up files of dotfiles in Windows.
 	$(SCRIPTS_DIR)/_restore/windows.sh
 
