@@ -320,5 +320,5 @@ function cpu-usage() {
 }
 
 function bk-files() {
-	find ./ -name "*$(date +"%Y-%m-%d")*.bk" | xargs rm -r
+	find ./ -name "*$(date +"%Y-%m-%d")*.bk" -exec rm -r {} +
 }

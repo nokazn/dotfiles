@@ -3,7 +3,7 @@
 SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
 PATH_SCRIPT := ./.path.sh
-ANYENV_LANGS := node go
+ANYENV_LANGS := node
 LANGS := deno rust elm nim
 .DEFAULT_GOAL := help
 
@@ -110,8 +110,6 @@ install-anyenv: _print-airplane # Install anyenv
 	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh;
 	~/.anyenv/bin/anyenv install nodenv;
 	@echo "✅ nodenv has been installed successfully!"
-	~/.anyenv/bin/anyenv install goenv
-	@echo "✅ goenv has been installed successfully!"
 
 .PHONY: uninstall-anyenv
 uninstall-anyenv: _print-goodbye # Uninstall anyenv
@@ -120,8 +118,8 @@ uninstall-anyenv: _print-goodbye # Uninstall anyenv
 .PHONY: install-anyenv-langs
 install-anyenv-langs: $(addprefix install-,$(ANYENV_LANGS)) # Install languages by anyenv.
 
-.PHONY: _print-airplane install-node install-go
-install-node install-go: _print-airplane # Install each language.
+.PHONY: _print-airplane install-node
+install-node: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
 
@@ -157,12 +155,11 @@ generate-npm-packages-list: # Generate Nix packages list for npm packages.
 .PHONY: packages-go
 packages-go: # Install Go packages.
 	go get -u -v golang.org/x/tools/cmd/goimports;
-	goenv rehash
 
 # ------------------------------ update ------------------------------
 
 .PHONY: update
-update: update-apt update-go # Update all packages.
+update: update-apt # Update all packages.
 
 .PHONY: update-apt
 update-apt: # Update apt packages.
@@ -170,9 +167,6 @@ update-apt: # Update apt packages.
 	if [[ $$(apt list --upgradable 2>/dev/null | grep upgradable | wc -l) -gt 0 ]]; then \
 		sudo apt upgrade -y; \
 	fi;
-
-.PHONY: update-go
-update-go: install-go # Update Go packages.
 
 # ------------------------------ deploy & restore dotfiles ------------------------------
 
