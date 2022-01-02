@@ -17,7 +17,7 @@ $ sudo pacman -Syyu  && sudo pacman -S git make gcc curl wget unzip
 ```
 
 `make deploy` command makes symbolic links to files that starting with a dot and followed 2 or more chars in `~/dotfiles/` directory.  
-If a existing file conflicts with the symbolic link, this is backed up in `~/dotfiles_backup/` directory.
+If a existing file conflicts with the symbolic link, this is backed up.
 
 `make init` command executes targets below.
 
