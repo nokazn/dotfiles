@@ -26,6 +26,8 @@ with pkgs; let
     spotify-tui
     sqlite
     starship # ☄🌌️ The minimal, blazing-fast, and infinitely customizable prompt for any shell!
+    terraformer
+    tflint
     tldr # A collection of community-maintained help pages for command-line tools
     tokei # compiled with serialization support: json, cbor, yaml
     tree # Recursive directory listing command
