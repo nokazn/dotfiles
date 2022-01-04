@@ -71,7 +71,7 @@ function increment_file_counter() {
 # @return {void}
 function check_absolute_path() {
   # "/" からはじまるか
-  if [[ -z $(echo "$1" | sed -E -n -e "/^\//p") ]]; then
+  if [[ -z $(sed -E -n -e "/^\//p" <<< "$1") ]]; then
     echo "❌ invalid absolute path: $1"
     exit 1
   fi
@@ -110,7 +110,7 @@ function check_email_attribute() {
     grep < "$1" --line-number "email\s*=\s*" | grep "$2"
   )
   if [[ -z ${email_line} ]]; then
-    local -r error_line_number=$(echo "${email_line}" | cut -f 1 -d ":")
+    local -r error_line_number=$(cut -f 1 -d ":" <<< "${email_line}")
     # 1行目にエラーの行番号が取得できればを表示し、2行目にエラーのあった行を表示
     echo -n "❌ An error occured when inserting email to $1"
     if [[ ${error_line_number} ]]; then
