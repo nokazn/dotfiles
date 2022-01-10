@@ -11,7 +11,8 @@ LANGS := deno rust elm nim
 # ------------------------------ init ------------------------------
 
 .PHONY: init
-init: update-apt add-tools home-manager-switch install-anyenv install-anyenv-langs install-langs # Install all languages & their packages.
+init: add-tools home-manager-switch install-anyenv install-anyenv-langs install-langs # Install all languages & their packages.
+# init: update-apt add-tools home-manager-switch install-anyenv install-anyenv-langs install-langs # Install all languages & their packages.
 
 # ------------------------------ tools ------------------------------
 
@@ -74,20 +75,7 @@ remove-bash-it: _print-goodbye # Remove bash-it.
 
 .PHONY: add-wsl-hello-sudo
 add-wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
-	mkdir -p ~/downloads
-	cd ~/downloads; \
-	if [[ ! -f ~/downloads/wsl-hello-sudo/install.sh ]]; then \
-		if [[ ! -e ~/downloads/wsl-hello-sudo.tar.gz ]]; then \
-			wget http://github.com/nullpo-head/WSL-Hello-sudo/releases/latest/download/release.tar.gz -O wsl-hello-sudo.tar.gz; \
-		fi; \
-		mkdir -p ~/downloads/wsl-hello-sudo; \
-		tar -xvf ~/downloads/wsl-hello-sudo.tar.gz -C ~/downloads/wsl-hello-sudo --strip-components 1; \
-	fi
-# TODO: write failed 32: Broken pipe のエラーを無視するために標準エラー出力を捨てているため
-	cd ~/downloads/wsl-hello-sudo; \
-	bash -c "yes | ./install.sh 2>/dev/null"
-	@echo "✅ WSL-Hello-sudo has been installed successfully!"
-	@echo "👉 You need to add 'auth sufficient pam_wsl_hello.so' to the top line of your '/etc/pam.d/sudo'. See also https://github.com/nullpo-head/WSL-Hello-sudo/#configuration."
+	$(SCRIPTS_DIR)/wsl-sudo-hello/install-wsl-sudo-hello.sh
 
 .PHONY: remove-wsl-hello-sudo
 remove-wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
