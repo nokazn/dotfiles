@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+export LANG=ja_JP.UTF-8
+
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export DefaultIMModule=fcitx
+fcitx-autostart &> /dev/null
+
 # aliases ----------------------------------------------------------------------------------------------------
 # Alias definitions.
 # You may want to put all your additions into a separate file like
