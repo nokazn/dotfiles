@@ -6,7 +6,7 @@ DEBUG=$([[ $# -gt 0 ]] && test "$1" = --debug; echo $?)
 readonly DEBUG
 file_counter=0
 
-# ---------------------------------------- utils ----------------------------------------
+# utils ----------------------------------------------------------------------------------------------------
 
 # standard error output
 # @param {string}
@@ -77,7 +77,7 @@ function check_absolute_path() {
   fi
 }
 
-# ---------------------------------------- core ----------------------------------------
+# core ----------------------------------------------------------------------------------------------------
 
 # @param {stirng} - source for back-up file path
 # @param {stirng} - destination for back-up file path
@@ -235,7 +235,7 @@ function deploy() {
   return 0
 }
 
-# ---------------------------------------- main ----------------------------------------
+# main ----------------------------------------------------------------------------------------------------
 
 # @param {string} - source directory path for dotfiles
 # @param {string} - destination directory path

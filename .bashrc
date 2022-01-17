@@ -32,7 +32,7 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# ---------------------------------------- common settings  ----------------------------------------
+# common settings ----------------------------------------------------------------------------------------------------
 
 if [ -f ~/.shrc.sh ]; then
     source ~/.shrc.sh
@@ -40,7 +40,7 @@ else
     echo "⚠ ~/.shrc.sh doesn't exist"
 fi
 
-# ---------------------------------------- prompt ----------------------------------------
+# prompt ----------------------------------------------------------------------------------------------------
 
 function ps1_date() {
     date +'%Y-%m-%d %-H:%M:%S'
@@ -118,7 +118,7 @@ xterm*|rxvt*)
     ;;
 esac
 
-# ---------------------------------------- completion ----------------------------------------
+# completion ----------------------------------------------------------------------------------------------------
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -131,7 +131,7 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# ---------------------------------------- bash-it  ----------------------------------------
+# bash-it ----------------------------------------------------------------------------------------------------
 
 # Path to the bash it configuration
 BASH_IT=~/.bash-it

@@ -8,13 +8,13 @@ LANGS := deno rust elm nim
 .DEFAULT_GOAL := help
 
 
-# ------------------------------ init ------------------------------
+# init ----------------------------------------------------------------------------------------------------
 
 .PHONY: init
 init: add-tools home-manager-switch install-anyenv install-anyenv-langs install-langs # Install all languages & their packages.
 # init: update-apt add-tools home-manager-switch install-anyenv install-anyenv-langs install-langs # Install all languages & their packages.
 
-# ------------------------------ tools ------------------------------
+# tools ----------------------------------------------------------------------------------------------------
 
 .PHONY: add-tools
 add-tools: add-nix add-home-manager add-dein-vim add-bash-it add-wsl-hello-sudo # Add developing tools.
@@ -85,7 +85,7 @@ remove-wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
 	fi
 	@echo "✅ WSL-Hello-sudo has been uninstalled successfully!"
 
-# ------------------------------ languages ------------------------------
+# languages ----------------------------------------------------------------------------------------------------
 
 .PHONY: install
 install: install-anyenv $(addprefix install-,$(ANYENV_LANGS)) $(addprefix install-,$(LANGS)) # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
@@ -124,7 +124,7 @@ uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Unin
 	$(eval lang=$(subst uninstall-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh;
 
-# ------------------------------ packages ------------------------------
+# packages ----------------------------------------------------------------------------------------------------
 
 .PHONY: home-manager-switch
 home-manager-switch: # Run 'home-manager switch'
@@ -144,7 +144,7 @@ generate-npm-packages-list: # Generate Nix packages list for npm packages.
 packages-go: # Install Go packages.
 	go get -u -v golang.org/x/tools/cmd/goimports;
 
-# ------------------------------ update ------------------------------
+# update ----------------------------------------------------------------------------------------------------
 
 .PHONY: update
 update: update-apt # Update all packages.
@@ -156,7 +156,7 @@ update-apt: # Update apt packages.
 		sudo apt upgrade -y; \
 	fi;
 
-# ------------------------------ deploy & restore dotfiles ------------------------------
+# deploy & restore dotfiles ----------------------------------------------------------------------------------------------------
 
 .PHONY: _deploy
 _deploy: # Make symbolic links to dotfiles & back up original files if exists.
@@ -174,7 +174,7 @@ _restore: # Restore backed-up files of dotfiles.
 _restore-windows: # Restore backed-up files of dotfiles in Windows.
 	$(SCRIPTS_DIR)/_restore/windows.sh
 
-# ------------------------------ utilities ------------------------------
+# utilities ----------------------------------------------------------------------------------------------------
 
 .PHONY: shellcheck
 shellcheck: # Check schell scripts.
