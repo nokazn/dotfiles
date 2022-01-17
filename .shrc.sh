@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# ------------------------------ aliases ------------------------------
+# aliases ----------------------------------------------------------------------------------------------------
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -10,7 +10,7 @@ if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
 fi
 
-# ---------------------------------------- path  ----------------------------------------
+# path ----------------------------------------------------------------------------------------------------
 
 if [[ -f "$HOME/.path.sh" ]]; then
     source "$HOME/.path.sh"

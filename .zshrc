@@ -15,7 +15,7 @@ autoload -U compinit && compinit
 autoload -Uz colors ; colors
 # End of lines added by compinstall
 
-# ---------------------------------------- common settings  ----------------------------------------
+# common settings ----------------------------------------------------------------------------------------------------
 
 if [ -f ~/.shrc.sh ]; then
     source ~/.shrc.sh
@@ -23,7 +23,7 @@ else
     echo "⚠ ~/.shrc.sh doesn't exist"
 fi
 
-# ------------------------------ Prezto ------------------------------
+# Prezto ----------------------------------------------------------------------------------------------------
 
 if [[ -e ~/.nix-profile/share/zsh-prezto/init.zsh ]]; then
     source ~/.nix-profile/share/zsh-prezto/init.zsh
