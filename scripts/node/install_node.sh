@@ -31,7 +31,7 @@ function install_node() {
   # anyenv install を使えるようにする
   source ${PATH_SCRIPT}
   NODENV_PATH=~/.anyenv/envs/nodenv/bin/nodenv
-  check_command ${NODENV_PATH}
+  check_command "${NODENV_PATH}"
 
   if has_command "node"; then
     local -r node_version=$(node --version)
