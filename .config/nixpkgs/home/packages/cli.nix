@@ -9,6 +9,7 @@ with pkgs; let
     act # Run your GitHub Actions locally 噫
     direnv
     dive # A tool for exploring each layer in a docker image
+    dstat
     expect
     hyperfine # A command-line benchmarking tool
     gtop
@@ -26,11 +27,14 @@ with pkgs; let
     spotify-tui
     sqlite
     starship # ☄🌌️ The minimal, blazing-fast, and infinitely customizable prompt for any shell!
+    sysstat
     terraformer
     tflint
     tldr # A collection of community-maintained help pages for command-line tools
     tokei # compiled with serialization support: json, cbor, yaml
     tree # Recursive directory listing command
+    wslu # A collection of utilities for Windows 10 Linux Subsystems
+    wireshark
     yq # Command-line YAML processor - jq wrapper for YAML documents
     # TODO: ビルドできない
     # powershell
