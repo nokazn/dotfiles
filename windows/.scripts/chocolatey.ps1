@@ -43,6 +43,7 @@ choco install -y  `
   screentogif `
   slack `
   steam `
+  tabby `
   thunderbird `
   todoist `
   typora `

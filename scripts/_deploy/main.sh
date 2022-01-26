@@ -27,7 +27,7 @@ function ls_all() {
 # @return {void}
 function ls_dotfiles() {
   # dot で始まる2文字以上のファイル
-  ls_all "$1" | grep --extended-regexp "^\.[[:alnum:]]{2,}"
+  ls_all "$1" | grep --extended-regexp -e "^\.[[:alnum:]]{2,}" -e "AppData"
   return 0
 }
 
