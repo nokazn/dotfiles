@@ -10,7 +10,6 @@ function install_terraform() {
   # anyenv install を使えるようにする
   source ${PATH_SCRIPT}
   TFENV_PATH=~/.anyenv/envs/tfenv/bin/tfenv
-  check_command "${TFENV_PATH}"
 
   if terraform --version >/dev/null 2>&1; then
     echo "Terraform is already installed at '$(which terraform)'"
