@@ -82,8 +82,10 @@
 	ps = !git push origin $(git symbolic-ref --short HEAD)
 	pl = !git pull origin $(git symbolic-ref --short HEAD)
 	plst = "!git stash; git pull origin $(git symbolic-ref --short HEAD); git stash pop;"
+	# リモートブランチを同じ名前でローカルに pull する
+	plbr = "!f(){ if [[ -z $1 ]]; then echo "❌ No branch names specified."; exit 1; fi; git pull origin $1:$1; }; f"
 	# 引数に渡した番号の PR を pr/#<番号> というブランチに pull する
-	plpr="!f(){ git pull origin \"pull/$1/head:pr/#$1\";};f"
+	plpr= "!f(){ git pull origin \"pull/$1/head:pr/#$1\";};f"
 	amend = !git commit -m \"$(git log --format="%s" -n 1)\" --amend
 	amend-author = !git commit -m \"$(git log --format="%s" -n 1)\" --author=\"$(git config --get user.name) <$(git config --get user.email)>\" --amend
 	exact-amend = !git commit -m \"$(git log --format="%s" -n 1)\" --date="$(git log --format="%cd" -n 1)" --amend
