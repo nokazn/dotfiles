@@ -13,26 +13,6 @@ scoop bucket add games
 scoop bucket add nirsoft
 scoop bucket add nonportable
 
-# scoop install `
-#   googlechrome `
-#   firefox `
-#   opera `
-#   vivaldi `
-#   vscode `
-#   git `
-#   postman `
-#   jasper
-#   gimp `
-#   vlc `
-#   thunderbird `
-#   slack `
-#   zoom `
-#   typora `
-#   notion `
-#   boostnote `
-#   keepassxc `
-#   everything `
-#   fastcopy `
-#   crystaldiskmark `
-#   crystaldiskinfo `
-#   screentogif
+scoop install `
+  gitify `
+  tokei
