@@ -38,6 +38,7 @@
 	clean = sed -e "/registry.npmjs.org/d"
 
 [alias]
+	user ="!f(){ git config user.name $1; git config user.email $2; }; f"
 	alias = config --get-regexp alias.*
 	allclean = clean -df
 	br = branch
