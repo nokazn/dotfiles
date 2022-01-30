@@ -74,6 +74,7 @@
 	d5 = diff HEAD~5 HEAD
 	s = status --show-stash
 	ss = status --show-stash -s
+	sh = show
 	a = add
 	aa = !git add -u && git add . && git status --show-stash
 	c = commit

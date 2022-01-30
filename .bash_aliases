@@ -221,6 +221,49 @@ function docker-rmi-untagged-images() {
 	docker rmi "$(docker images -f "dangling=true" -q --no-trunc)"
 }
 
+# fzf ----------------------------------------------------------------------------------------------------
+
+function fgsw() {
+	local -r branche="$(git branch -vv | grep -v '^\s*\*' | fzf)"
+	git switch "$(awk '{print $1}' <<< "${branche}")"
+}
+
+function fgswa() {
+	local -r branche="$(git branch -vva | grep -v '^\s*\*' | fzf)"
+	git switch "$(awk '{print $1}' <<< "${branche}")"
+}
+
+function fgshow() {
+	git log --graph --branches --pretty=default --color=always \
+		| fzf --ansi \
+			--no-sort \
+			--reverse \
+			--tiebreak=index \
+			--bind=ctrl-s:toggle-sort \
+			--bind "ctrl-m:execute:
+				(grep -o '[a-f0-9]\{7\}' \
+					| head -1 \
+					| xargs -I % sh -c 'git show --color=always % \
+					| less -R'
+				) << EOF
+					{}
+				EOF"
+}
+
+function fcode() {
+	local -r dir="$(cd ~ || exit 1; fd -t d --hidden . | rg '\.git$' | sed -E -e 's/^\.\//~\//' -e 's/\/\.git$//' | fzf | sed -E 's/^~\///')"
+	if [[ -n "${dir}" ]] && [[ -d ~/"${dir}" ]]; then
+		code ~/"${dir}"
+	fi
+}
+
+function fvim() {
+	local -r file="$(fd --hidden . | fzf)"
+	if [[ -e "${file}" ]]; then
+		vim "${file}"
+	fi
+}
+
 # utilities ----------------------------------------------------------------------------------------------------
 
 # cmd.exe で echo する
