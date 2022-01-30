@@ -13,6 +13,7 @@ fi
 #
 
 export EDITOR='vim'
+export SUDO_EDITOR0'vim'
 export VISUAL='vim'
 export PAGER='less'
 

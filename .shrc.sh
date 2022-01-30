@@ -20,7 +20,6 @@ fi
 
 if [[ -f "$HOME/.path.sh" ]]; then
     source "$HOME/.path.sh"
-    export PATH_SET_CORRECTLY=true
 else
     echo "⚠ .path.sh doesn't exist"
 fi
