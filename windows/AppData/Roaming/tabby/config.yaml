@@ -1,7 +1,7 @@
 version: 3
 profiles:
   - type: local
-    name: WSL / Default distro
+    name: WSL / Ubuntu
     icon: >-
       <svg xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid"
@@ -52,13 +52,60 @@ profiles:
       Z"></path></g></svg>
     options:
       command: C:\WINDOWS\system32\wsl.exe
-      args: []
+      args:
+        - '-d'
+        - Ubuntu
       env:
         TERM: xterm-color
         COLORTERM: truecolor
     isBuiltin: false
     isTemplate: false
-    id: local:custom:WSL-Default-distro:07edaa6a-2509-4472-8622-2b8c73153edc
+    id: local:custom:WSL-Ubuntu:c256dfb5-8975-4338-a68f-f5dca1f231a1
+  - type: local
+    name: PowerShell
+    icon: >-
+      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+      class="svg-inline--fa fa-terminal fa-w-20 fa-2x" data-icon="terminal"
+      data-prefix="fas" focusable="false" role="img" viewBox="0 0 640 512"><path
+      fill="#0ff" stroke="none" stroke-width="1" d="M257.981 272.971L63.638
+      467.314c-9.373 9.373-24.569 9.373-33.941 0L7.029
+      444.647c-9.357-9.357-9.375-24.522-.04-33.901L161.011 256 6.99
+      101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373
+      24.569-9.373 33.941 0L257.981 239.03c9.373 9.372 9.373 24.568 0
+      33.941zM640 456v-32c0-13.255-10.745-24-24-24H312c-13.255 0-24 10.745-24
+      24v32c0 13.255 10.745 24 24 24h304c13.255 0 24-10.745
+      24-24z"></path></svg>
+    options:
+      command: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe
+      args:
+        - '-nologo'
+      env:
+        TERM: cygwin
+    isBuiltin: false
+    isTemplate: false
+    id: local:custom:PowerShell:6ca1542c-a8f1-4933-bd16-fa9e3a28d019
+  - type: local
+    name: OS default (WSL / Distrod)
+    options:
+      command: C:\WINDOWS\system32\wsl.exe
+      args:
+        - '-d'
+        - Distrod
+      env: {}
+      cwd: \\wsl.localhost\Distrod\home\nokazn
+    id: local:custom:OS-default-(WSL-Distrod):671f5d9d-6a03-4d1c-ba21-fd6197e515a4
+  - type: local
+    name: WSL / Arch Linux
+    options:
+      command: C:\WINDOWS\system32\wsl.exe
+      args:
+        - '-d'
+        - Distrod
+      env:
+        TERM: xterm-color
+        COLORTERM: truecolor
+      cwd: \\wsl.localhost\Distrod\home\nokazn
+    id: local:custom:WSL-Distrod:bcae09d7-c818-4cff-ac9a-98cada4a422d
 hotkeys:
   toggle-window:
     - - Alt-B
@@ -182,7 +229,8 @@ hotkeys:
     - - Ctrl-Shift-X
   switch-profile: []
   profile-selector:
-    - - Ctrl-K
+    - - Ctrl-P
+    - - Ctrl-Shift-P
 terminal:
   searchOptions: {}
   colorScheme:
@@ -212,6 +260,9 @@ terminal:
   customColorSchemes: []
   rightClick: menu
   fallbackFont: Consolas
+  fontSize: 15
+  background: colorScheme
+  frontend: xterm-webgl
 ssh: {}
 configSync:
   parts: {}
@@ -223,7 +274,11 @@ appearance:
         margin: 0 !important;
     }
   opacity: 0.95
-hacks: {}
-pluginBlacklist: []
 enableAnalytics: false
 profileDefaults: {}
+hacks: {}
+enableWelcomeTab: false
+pluginBlacklist: []
+electronFlags:
+  - - force_discrete_gpu
+    - '0'
