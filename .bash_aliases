@@ -171,7 +171,7 @@ function docker-redis-rm() {
 #
 MEMCACHED_CONTAINER="memcached"
 MEMCACHED_NETWORK="memcached-network"
-MEMCACHED_PORT=${MEMCACHED_PORT}
+MEMCACHED_PORT=11121
 
 # Run Memcached in Docker.
 function docker-memcached() {
@@ -250,10 +250,17 @@ function fgshow() {
 				EOF"
 }
 
+function fcd() {
+	local -r dir="$(cd ~ || return 1; fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf)"
+	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
+		cd "${dir}" || return 1
+	fi
+}
+
 function fcode() {
-	local -r dir="$(cd ~ || exit 1; fd -t d --hidden . | rg '\.git$' | sed -E -e 's/^\.\//~\//' -e 's/\/\.git$//' | fzf | sed -E 's/^~\///')"
-	if [[ -n "${dir}" ]] && [[ -d ~/"${dir}" ]]; then
-		code ~/"${dir}"
+	local -r dir="$(cd ~ || return 1; fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf)"
+	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
+		code "${dir}"
 	fi
 }
 
