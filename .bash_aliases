@@ -224,18 +224,36 @@ function docker-rmi-untagged-images() {
 # fzf ----------------------------------------------------------------------------------------------------
 
 function fgsw() {
-	local -r branche="$(git branch -vv | grep -v '^\s*\*' | fzf)"
-	git switch "$(awk '{print $1}' <<< "${branche}")"
+	local -r branch="$(git branch -vv | grep -v '^\s*\*' | fzf -q "$1")"
+	git switch "$(awk '{print $1}' <<< "${branch}")"
 }
 
 function fgswa() {
-	local -r branche="$(git branch -vva | grep -v '^\s*\*' | fzf)"
-	git switch "$(awk '{print $1}' <<< "${branche}")"
+	local -r branch="$(git branch -vva | grep -v '^\s*\*' | fzf -q "$1")"
+	git switch "$(awk '{print $1}' <<< "${branch}")"
+}
+
+function fgbrr() {
+	git fetch
+	local -r branch="$(git branch -vva --remotes  --color=always --color=always | grep -v HEAD | fzf -q "$1" --ansi)"
+	if [[ -n "${branch}" ]]; then
+		local -r remote_branch="$(awk '{print $1}' <<< "${branch}")"
+		git branch "$(sed -E 's/^[^\/]+\/(.+)$/\1/' <<< "${remote_branch}")" "${remote_branch}"
+	fi
+}
+
+function fgswr() {
+	git fetch
+	local -r branch="$(git branch -vva --remotes  --color=always --color=always | grep -v HEAD | fzf -q "$1" --ansi)"
+	if [[ -n "${branch}" ]]; then
+		git switch "$(awk '{print $1}' <<< "${branch}" | sed -E 's/^[^\/]+\/(.+)$/\1/')"
+	fi
 }
 
 function fgshow() {
 	git log --graph --branches --pretty=default --color=always \
-		| fzf --ansi \
+		| fzf -q "$1" \
+			--ansi \
 			--no-sort \
 			--reverse \
 			--tiebreak=index \
@@ -251,23 +269,30 @@ function fgshow() {
 }
 
 function fcd() {
-	local -r dir="$(cd ~ || return 1; fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf)"
+	local -r dir="$(cd ~ || return 1; fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1")"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		cd "${dir}" || return 1
 	fi
 }
 
 function fcode() {
-	local -r dir="$(cd ~ || return 1; fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf)"
+	local -r dir="$(cd ~ || return 1; fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1")"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		code "${dir}"
 	fi
 }
 
 function fvim() {
-	local -r file="$(fd --hidden . | fzf)"
+	local -r file="$(fd --hidden . | fzf "$1")"
 	if [[ -e "${file}" ]]; then
 		vim "${file}"
+	fi
+}
+
+function fbroot() {
+	local -r dir="$(cd ~ || return 1; fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1")"
+	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
+		broot "${dir}"
 	fi
 }
 
