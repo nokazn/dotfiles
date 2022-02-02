@@ -42,6 +42,8 @@
 	alias = config --get-regexp alias.*
 	allclean = clean -df
 	br = branch
+	# リモートブランチを同じ名前でローカルに作成する
+	brr = "!f() { git fetch origin $1; git branch $1 origin/$1; }; f"
 	# マージ済みのブランチを削除
 	br-clean = "!f(){ git branch --merged | grep -v -E '\\*|develop|main|master' | xargs git branch -d; }; f"
 	br-clean-remote = fetch --prune
@@ -51,16 +53,19 @@
 	clgh-me = "!f() { git clone git@github.com:$(git config --get user.name)/$1; }; f"
 	ch = checkout
 	# 親ブランチの指定がなければ実行させない
-	chb = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git pull origin $2:$2; git checkout -b $1 $2; }; f"
+	chb = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git checkout -b $1 $2; }; f"
+	# リモートブランチを同じ名前でチェックアウトする
+	chr = "!f(){ git fetch origin $1; git checkout $1; }; f"
 	sw = switch
 	swt = "!f() { git switch -d refs/tags/$1; }; f"
 	# 親ブランチの指定がなければ実行させない
 	swc = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git switch -c $1 $2; }; f"
-	# untracked のファイルも退避させる
+	# リモートブランチを同じ名前でチェックアウトする
+	swr = "!f() { git fetch origin $1; git switch $1; }; f"
 	st = stash
-	stu = stash -u
 	stp = stash -p
-	stpsm = stash push -m
+	stm = stash -m
+	# untracked のファイルも退避させる
 	stu = stash -u --keep-index
 	d = diff
 	dc = diff --cached
@@ -81,13 +86,10 @@
 	cm = commit -m
 	# ローカルの ref が最新でなければ失敗させる
 	push-f = !git push --force-with-lease origin $(git symbolic-ref --short HEAD)
+	# 現在のブランチの内容を同名のリモートブランチに push する
 	ps = !git push origin $(git symbolic-ref --short HEAD)
+	# 同名のリモートブランチの内容を現在のブランチに取り込む
 	pl = !git pull origin $(git symbolic-ref --short HEAD)
-	plst = "!git stash; git pull origin $(git symbolic-ref --short HEAD); git stash pop;"
-	# リモートブランチを同じ名前でローカルに pull する
-	plbr = "!f(){ if [[ -z $1 ]]; then echo "❌ No branch names specified."; exit 1; fi; git pull origin $1:$1; }; f"
-	# 引数に渡した番号の PR を pr/#<番号> というブランチに pull する
-	plpr= "!f(){ git pull origin \"pull/$1/head:pr/#$1\";};f"
 	amend = !git commit -m \"$(git log --format="%s" -n 1)\" --amend
 	amend-author = !git commit -m \"$(git log --format="%s" -n 1)\" --author=\"$(git config --get user.name) <$(git config --get user.email)>\" --amend
 	exact-amend = !git commit -m \"$(git log --format="%s" -n 1)\" --date="$(git log --format="%cd" -n 1)" --amend
