@@ -1,6 +1,5 @@
 [user]
-	email = 41154684+nokazn@users.noreply.github.com
-	name = nokazn
+	useConfigOnly = true
 
 [core]
 	editor = vim
