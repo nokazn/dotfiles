@@ -301,9 +301,9 @@ function fbroot() {
 # cmd.exe で echo する
 # @param {string}
 function echoInCmd() {
-	cd /mnt/c || exit 1;
+	cd /mnt/c || return 1;
 	wslpath -u "$(/mnt/c/Windows/system32/cmd.exe /c "echo $1" | tr -d "\r")";
-	cd "${OLDPWD}" || exit 1;
+	cd "${OLDPWD}" || return 1;
 }
 
 # VSCode を開く
@@ -391,7 +391,7 @@ function zsh-colors() {
 }
 
 function cpu-usage() {
-	echo $((100 - $(mpstat | tail -n 1 | awk '{print $NF}') )) | cut -b 1-4
+	cut -b 1-4 <<< $((100 - $(mpstat | tail -n 1 | awk '{print $NF}') ))
 }
 
 function bk-files() {
