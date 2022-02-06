@@ -283,7 +283,7 @@ function fcode() {
 }
 
 function fvim() {
-	local -r file="$(fd --hidden . | fzf "$1")"
+	local -r file="$(fd --hidden . | fzf -q "$1")"
 	if [[ -e "${file}" ]]; then
 		vim "${file}"
 	fi
