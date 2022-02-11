@@ -48,7 +48,7 @@ in
     time = {
       disabled = false;
       style = pastel.yellow;
-      format = "🕙[$time]($style) ";
+      format = "🕙 [$time]($style) ";
     };
 
     git_branch = {

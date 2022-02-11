@@ -13,6 +13,7 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
 choco install -y  `
   7zip `
   adobereader `
+  alacritty `
   anaconda3 `
   blender `
   boostnote `
