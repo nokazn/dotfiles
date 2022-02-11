@@ -126,6 +126,9 @@ uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Unin
 
 # packages ----------------------------------------------------------------------------------------------------
 
+.PHONY: hms
+hms: home-manager-switch # Run 'home-manager switch'
+
 .PHONY: home-manager-switch
 home-manager-switch: # Run 'home-manager switch'
 	$(SCRIPTS_DIR)/backup.sh ./.config/nixpkgs/home/files.txt
