@@ -6,14 +6,14 @@ function is_unregistered_path() {
     ! (echo "$PATH" | grep -q "$1")
 }
 
-function regester_forward_if_not() {
+function register_forward_if_not() {
     if is_unregistered_path "$1"; then
         PATH="$1:${PATH}"
     fi
     return 0
 }
 
-function regester_backward_if_not() {
+function register_backward_if_not() {
     if is_unregistered_path "$1"; then
         PATH="${PATH}:$1"
     fi
@@ -24,12 +24,12 @@ function regester_backward_if_not() {
 
 # set PATH so it includes user's private bin if it exists
 if [[ -d "$HOME/bin" ]]; then
-    regester_forward_if_not "$HOME/bin"
+    register_forward_if_not "$HOME/bin"
 fi
 
 # set PATH so it includes user's private bin if it exists
 if [[ -d "$HOME/.local/bin" ]]; then
-    regester_forward_if_not "$HOME/.local/bin"
+    register_forward_if_not "$HOME/.local/bin"
 fi
 
 # anyenv
@@ -42,14 +42,19 @@ if [[ -d "$HOME/.anyenv" ]]; then
         fi
     fi
     for dir in $(find ~/.anyenv/envs -mindepth 1 -maxdepth 1 -type d); do
-        regester_forward_if_not "${dir}/bin"
-        regester_forward_if_not "${dir}/shims"
+        register_forward_if_not "${dir}/bin"
+        register_forward_if_not "${dir}/shims"
     done
+fi
+
+# Ruby
+if command -v ruby >/dev/null; then
+    register_forward_if_not "$(ruby -e 'print Gem.user_dir')/bin"
 fi
 
 # Deno
 if [[ -d "$HOME/.deno" ]]; then
-    regester_forward_if_not "$HOME/.deno/bin"
+    register_forward_if_not "$HOME/.deno/bin"
     export DENO_INSTALL="$HOME/.deno"
 fi
 
@@ -60,7 +65,7 @@ fi
 
 # Nim (choosenim)
 if [[ -d "$HOME/.nimble/bin" ]]; then
-    regester_forward_if_not "$HOME/.nimble/bin"
+    register_forward_if_not "$HOME/.nimble/bin"
 fi
 
 # TODO
