@@ -12,7 +12,6 @@ LANGS := deno rust elm nim
 
 .PHONY: init
 init: add-tools home-manager-switch install-anyenv install-anyenv-langs install-langs # Install all languages & their packages.
-# init: update-apt add-tools home-manager-switch install-anyenv install-anyenv-langs install-langs # Install all languages & their packages.
 
 # tools ----------------------------------------------------------------------------------------------------
 
@@ -148,9 +147,6 @@ packages-go: # Install Go packages.
 	go get -u -v golang.org/x/tools/cmd/goimports;
 
 # update ----------------------------------------------------------------------------------------------------
-
-.PHONY: update
-update: update-apt # Update all packages.
 
 .PHONY: update-apt
 update-apt: # Update apt packages.
