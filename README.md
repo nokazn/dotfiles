@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/nokazn/dotfiles/actions/workflows/static-check.yml/badge.svg?branch=main)](https://github.com/nokazn/dotfiles/actions/workflows/static-check.yml)
 
-[![screenshot](./images/debian.jpg)](./images/debian.jpg)
+[![screenshot](./docs/img/arch-linux.jpg)](./docs/img/arch-linux.jpg)
 
 ## Installation
 
