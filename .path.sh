@@ -47,6 +47,11 @@ if [[ -d "$HOME/.anyenv" ]]; then
     done
 fi
 
+# Ruby
+if command -v ruby >/dev/null; then
+    register_forward_if_not "$(ruby -e 'print Gem.user_dir')/bin"
+fi
+
 # Deno
 if [[ -d "$HOME/.deno" ]]; then
     register_forward_if_not "$HOME/.deno/bin"
