@@ -268,6 +268,10 @@ function fgshow() {
 				EOF"
 }
 
+function falias() {
+	aliases | fzf -q "$1"
+}
+
 function fcd() {
 	local -r dir="$(cd ~ || return 1; fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1")"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
