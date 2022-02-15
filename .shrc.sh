@@ -6,6 +6,8 @@ export XMODIFIERS=@im=fcitx
 export DefaultIMModule=fcitx
 fcitx-autostart &> /dev/null
 
+export EDITOR=vim
+
 # aliases ----------------------------------------------------------------------------------------------------
 # Alias definitions.
 # You may want to put all your additions into a separate file like
