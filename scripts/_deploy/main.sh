@@ -122,28 +122,6 @@ function check_email_attribute() {
   return 0
 }
 
-# シンボリックリンクを貼る前に実行させる
-# @param {stirng} - source file path
-# @return {void}
-function insert_email_to_gitconfig() {
-  # .gitconfig 用の email の入力を tty から受け付ける
-  read -rp "Please enter your email for .gitconfig file: " email </dev/tty
-
-  if [[ ${DEBUG} -eq 0 ]]; then
-    echo "[debug] 📧 '${email}' has been inserted to email attribute in '$1'."
-    return 0;
-  fi
-
-  # .gitconfig の email の箇所を置換
-  sed --in-place -e "2 s/email.*/email = ${email}/" "$1"
-
-  # dotfiles 内の .gitconfig で該当行が email = ${email} の形式になっているかチェック
-  check_email_attribute "$1" "${email}"
-
-  echo "📧 '${email}' has been inserted to email attribute in '$1'."
-  return 0
-}
-
 # @param {string} - source file path (always exists)
 # @param {string} - destination file path
 # @return {void}
@@ -156,10 +134,6 @@ function newly_link() {
 
   local -r WINDOWS_PATH="/mnt/c"
   if [[ $2 =~ ${WINDOWS_PATH} ]]; then
-    # TODO: ショートカット作成事態はできるが、.lnk ファイルとして扱われ別物になる
-    # local -r source_win="$(wslpath -w $1)"
-    # local -r destination_win="$(wslpath -w $2).lnk"
-    # powershell.exe -c "\$wsh = New-Object -ComObject WScript.Shell; \$sc = \$wsh.CreateShortCut(\"${destination_win}\"); \$sc.TargetPath = \"${source_win}\"; \$sc.Save();"
     cp --verbose -r "$1" "$2" | prepend_message "✅ newly copied:"
   else
     ln --symbolic --verbose --force "$1" "$2" | prepend_message "✅ newly linked:"
@@ -219,11 +193,6 @@ function deploy() {
     case ${file} in
       ".git" | ".gitignore" | ".github")
         continue
-        ;;
-
-      ".gitconfig" )
-        [[ ! -L "$2/${file}" ]] && insert_email_to_gitconfig "$1/${file}"
-        make_symbolic_link "$1/${file}" "$2/${file}" "$3"
         ;;
 
       *)
