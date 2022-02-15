@@ -300,7 +300,7 @@ function fbroot() {
 
 # cmd.exe で echo する
 # @param {string}
-function echoInCmd() {
+function echo-in-cmd() {
 	cd /mnt/c || return 1;
 	wslpath -u "$(/mnt/c/Windows/system32/cmd.exe /c "echo $1" | tr -d "\r")";
 	cd "${OLDPWD}" || return 1;
@@ -308,7 +308,7 @@ function echoInCmd() {
 
 # VSCode を開く
 function code() {
-	local -r codeForUser="$(echoInCmd %USERPROFILE%)/AppData/Local/Programs/Microsoft VS Code/bin/code"
+	local -r codeForUser="$(echo-in-cmd %USERPROFILE%)/AppData/Local/Programs/Microsoft VS Code/bin/code"
 	local -r codeForSystem="/mnt/c/Program Files/Microsoft VS Code/bin/code"
 	if [[ -e ${codeForUser} ]]; then
 		${codeForUser} "$@"
