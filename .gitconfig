@@ -88,6 +88,7 @@
 	rebi3 = rebase -i HEAD~3
 	rebi4 = rebase -i HEAD~4
 	rebi5 = rebase -i HEAD~5
+	rebonto = "!f(){ git rebase --onto $1 $2 $(git symbolic-ref --short HEAD); }; f"
 	remote-add-me = !git remote add origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
 	remote-set-url-me = !git remote set-url origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
 	s = status --show-stash
