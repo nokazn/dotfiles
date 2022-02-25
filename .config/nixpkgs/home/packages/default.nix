@@ -8,6 +8,7 @@ let
     "git"
     "go"
     "gui"
+    "java"
     "nix"
     "node"
     "php"
