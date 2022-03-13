@@ -88,7 +88,7 @@ if [[ -d "$HOME/.sdkman" ]]; then
 fi
 
 # Nix installer
-if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
+if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
     if is_unregistered_path "$HOME/.nix-profile"; then
         # shellcheck source=~/.nix-profile/etc/profile.d/nix.sh
         source "$HOME/.nix-profile/etc/profile.d/nix.sh"
