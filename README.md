@@ -48,7 +48,7 @@ $ make init
 ### Change default shell
 
 ```bash
-#  `chshs` alias is defined in .bash_aliases
+# `chshs` alias is defined in .bash_aliases
 $ chshs zsh
 ```
 
