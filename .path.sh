@@ -41,6 +41,7 @@ if [[ -d "$HOME/.anyenv" ]]; then
             eval "$(anyenv init -)"
         fi
     fi
+    # TODO: 直す
     for dir in $(find ~/.anyenv/envs -mindepth 1 -maxdepth 1 -type d); do
         register_forward_if_not "${dir}/bin"
         register_forward_if_not "${dir}/shims"
@@ -67,6 +68,7 @@ fi
 
 # Rust
 if [[ -f "$HOME/.cargo/env" ]]; then
+    # shellcheck source=~/.cargo/env
     source "$HOME/.cargo/env"
 fi
 
@@ -80,6 +82,7 @@ fi
 if [[ -d "$HOME/.sdkman" ]]; then
     export SDKMAN_DIR="$HOME/.sdkman"
     if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
+        # shellcheck source=~/.sdkman/bin/sdkman-init.sh
         source "$HOME/.sdkman/bin/sdkman-init.sh"
     fi
 fi
@@ -87,6 +90,7 @@ fi
 # Nix installer
 if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
     if is_unregistered_path "$HOME/.nix-profile"; then
+        # shellcheck source=~/.nix-profile/etc/profile.d/nix.sh
         source "$HOME/.nix-profile/etc/profile.d/nix.sh"
     fi
     # asdf-vm installed by Nix

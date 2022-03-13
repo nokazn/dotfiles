@@ -170,15 +170,16 @@ _restore-windows: # Restore backed-up files of dotfiles in Windows
 
 .PHONY: shellcheck
 shellcheck: # Check schell scripts
-	find ./scripts/ -type f \
-		| grep -e "\.sh$$" \
+	find . -type f \
+		| grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)" \
 		| xargs shellcheck
 
 .PHONY: shellcheck-fix
 shellcheck-fix: # Check & fix schell scripts
-	find ./scripts/ -type f \
+	find . -type f \
 		| grep -e "\.sh$$" \
-		| xargs shellcheck --format diff | patch -p1
+		| xargs shellcheck --format diff \
+		| patch -p1
 
 .PHONY: nixpkgs-fmt
 nixpkgs-fmt: # Check `.nix` files
