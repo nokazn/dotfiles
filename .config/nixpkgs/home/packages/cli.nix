@@ -7,6 +7,7 @@ with pkgs; let
   ];
   modern = [
     act # Run your GitHub Actions locally 噫
+    asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
     direnv
     dive # A tool for exploring each layer in a docker image
     dstat
