@@ -87,24 +87,19 @@ remove-wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
 # languages ----------------------------------------------------------------------------------------------------
 
 .PHONY: install
-install: install-asdf-langs $(addprefix install-,$(LANGS)) # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
+install: install-asdf-langs install-langs # Install all languages. (runs scripts starting with 'intall-' prefix.)
 
 .PHONY: uninstall
-uninstall:  $(addprefix uninstall-,$(LANGS)) # Uninstall all languages & tools. (runs scripts starting with 'unintall-' prefix.)
+uninstall: $(addprefix uninstall-,$(LANGS)) # Uninstall all languages & tools. (runs scripts starting with 'unintall-' prefix.)
 
 .PHONY: install-asdf-langs
 install-asdf-langs: $(addprefix install-,$(ASDF_LANGS)) # Install languages by asdf.
 
-.PHONY: install-nodev install-terraform
-install-node install-terraform: _print-airplane # Install each language.
-	$(eval lang=$(subst install-,,$@))
-	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
-
 .PHONY: install-langs
 install-langs: $(addprefix install-,$(LANGS)) # Install languages except ones installed by anyenv.
 
-.PHONY: install-deno install-elm install-nim install-rust
-install-deno install-elm install-nim install-rust: _print-airplane # Install each language.
+.PHONY: install-node install-terraform install-deno install-elm install-nim install-rust
+install-node install-terraform install-deno install-elm install-nim install-rust: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/$(@).sh;
 
