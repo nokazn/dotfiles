@@ -4,7 +4,7 @@ SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
 PATH_SCRIPT := ./.path.sh
 ASDF_LANGS := node terraform
-LANGS := deno rust elm nim
+LANGS := deno elm nim rust
 .DEFAULT_GOAL := help
 
 
@@ -103,15 +103,15 @@ install-node install-terraform: _print-airplane # Install each language.
 .PHONY: install-langs
 install-langs: $(addprefix install-,$(LANGS)) # Install languages except ones installed by anyenv.
 
-.PHONY: install-deno install-rust install-elm install-nim
-install-deno install-rust install-elm install-nim: _print-airplane # Install each language.
+.PHONY: install-deno install-elm install-nim install-rust
+install-deno install-elm install-nim install-rust: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
-	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
+	$(SCRIPTS_DIR)/$(lang)/$(@).sh;
 
-.PHONY: uninstall-deno uninstall-rust uninstall-elm uninstall-nim
-uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Uninstall each language.
+.PHONY: uninstall-deno uninstall-elm uninstall-nim uninstall-rust
+uninstall-deno uninstall-elm uninstall-nim uninstall-rust: _print-goodbye # Uninstall each language.
 	$(eval lang=$(subst uninstall-,,$@))
-	$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh;
+	$(SCRIPTS_DIR)/$(lang)/$(@).sh;
 
 .PHONY: _install-anyenv
 _install-anyenv: _print-airplane # Install anyenv
