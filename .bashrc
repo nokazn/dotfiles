@@ -125,8 +125,10 @@ esac
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
+        # shellcheck disable=SC1091
         . /usr/share/bash-completion/bash_completion
     elif [ -f /etc/bash_completion ]; then
+        # shellcheck disable=SC1091
         . /etc/bash_completion
     fi
 fi
@@ -210,6 +212,7 @@ if [[ -d ${BASH_IT} ]]; then
 
     # Load Bash It
     if [[ -f  ${BASH_IT}/bash_it.sh ]]; then
+        # shellcheck source=~/.bash-it/bash_it.sh
         source "${BASH_IT}/bash_it.sh"
     else
         echo "⚠ the entry file of bash-it doesn't exist at '${BASH_IT}/bash_it.sh'" >&2
