@@ -13,7 +13,7 @@ If `git`, `make`, `gcc`, `curl`, `wget`, `unzip` and `xz-utils` are not availabl
 $ sudo apt update -y && sudo apt install -y git make gcc curl wget unzip xz-utils
 
 # Arch Linux
-$ sudo pacman -Syyu  && sudo pacman -S git make gcc curl wget unzip
+$ sudo pacman -Syyu && sudo pacman -S git make gcc curl wget unzip
 ```
 
 `make deploy` command makes symbolic links to files that starting with a dot and followed 2 or more chars in `~/dotfiles/` directory.  
@@ -39,6 +39,7 @@ If a existing file conflicts with the symbolic link, this is backed up.
 ```bash
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
 $ cd ~/dotfiles
+# Install all languages & packages
 $ make init
 ```
 
@@ -47,7 +48,8 @@ $ make init
 ### Change default shell
 
 ```bash
-$ chshs zsh  # defined in .bash_aliases
+#  `chshs` alias is defined in .bash_aliases
+$ chshs zsh
 ```
 
 ### Set up wsl-hello-sudo
@@ -59,15 +61,3 @@ After installing wsl-hello-sudo, you need to modify `/etc/pam.d/sudo`.
 ```
 
 See [wsl-hello-sudo document for configuration](https://github.com/nullpo-head/WSL-Hello-sudo#configuration) for details.
-
-### Daemonize Docker on WSL
-
-```bash
-$ sudo visudo
-```
-
-```diff
-+ <Your Username> ALL=(ALL) NOPASSWD: /home/<Your Username>/.nix-profile/bin/daemonize
-```
-
-then, you can run `daemonize` command without sudo privileges on booting WSL.
