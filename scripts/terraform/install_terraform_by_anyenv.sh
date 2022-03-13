@@ -9,23 +9,23 @@ readonly PATH_SCRIPT=~/.path.sh
 function install_terraform() {
   # anyenv install を使えるようにする
   source ${PATH_SCRIPT}
+  TFENV_PATH=~/.anyenv/envs/tfenv/bin/tfenv
 
   if terraform --version >/dev/null 2>&1; then
-    echo "Terraform is already installed at '$(command -v terraform)'"
+    echo "Terraform is already installed at '$(which terraform)'"
     return 0
   fi
 
-  if ! asdf plugin list | grep terraform -q; then
-    asdf plugin add terraform
-  fi
-  asdf install terraform latest
-  asdf global terraform latest
+  # Terraform 最新版をインストール
+  ${TFENV_PATH} install
+  # Terraform 最新版を使う
+  ${TFENV_PATH} use
+  source ${PATH_SCRIPT}
 
   if ! has_command "terraform" ; then
     echo "❌ Terraform has failed to be installed."
-    return 1
   fi
-  echo "✅ Terraform has been installed successfully at '$(command -v terraform)'!"
+  echo "✅ Terraform has been installed successfully at '$(which terraform)'!"
   return 0
 }
 
