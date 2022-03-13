@@ -47,6 +47,13 @@ if [[ -d "$HOME/.anyenv" ]]; then
     done
 fi
 
+# asdf-vm
+if [[ -f "$HOME/.asdf/asdf.sh" ]]; then
+    # shellcheck source=~/.asdf/asdf.sh
+    source "$HOME/.asdf/asdf.sh"
+    fpath=("${ASDF_DIR}/completions" "${fpath}")
+fi
+
 # Ruby
 if command -v ruby >/dev/null; then
     register_forward_if_not "$(ruby -e 'print Gem.user_dir')/bin"
@@ -81,6 +88,12 @@ fi
 if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
     if is_unregistered_path "$HOME/.nix-profile"; then
         source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+    fi
+    # asdf-vm installed by Nix
+    # See https://github.com/NixOS/nixpkgs/blob/bacbfd713b4781a4a82c1f390f8fe21ae3b8b95b/pkgs/tools/misc/asdf-vm/default.nix#L60-L76
+    if [[ -f "$HOME/.nix-profile/share/asdf-vm/asdf.sh" ]]; then
+        # shellcheck source=~/.nix-profile/share/asdf-vm/asdf.sh
+        source "$HOME/.nix-profile/share/asdf-vm/asdf.sh"
     fi
 fi
 

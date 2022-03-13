@@ -3,7 +3,7 @@
 SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
 PATH_SCRIPT := ./.path.sh
-ANYENV_LANGS := node
+ASDF_LANGS := node terraform
 LANGS := deno rust elm nim
 .DEFAULT_GOAL := help
 
@@ -11,7 +11,7 @@ LANGS := deno rust elm nim
 # init ----------------------------------------------------------------------------------------------------
 
 .PHONY: init
-init: add-tools home-manager-switch install-anyenv install-anyenv-langs install-langs # Install all languages & their packages.
+init: add-tools home-manager-switch install # Install all languages & their packages.
 
 # tools ----------------------------------------------------------------------------------------------------
 
@@ -87,26 +87,16 @@ remove-wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
 # languages ----------------------------------------------------------------------------------------------------
 
 .PHONY: install
-install: install-anyenv $(addprefix install-,$(ANYENV_LANGS)) $(addprefix install-,$(LANGS)) # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
+install: install-asdf-langs $(addprefix install-,$(LANGS)) # Install all languages & tools. (runs scripts starting with 'intall-' prefix.)
 
 .PHONY: uninstall
-uninstall: uninstall-anyenv $(addprefix uninstall-,$(LANGS)) # Uninstall all languages & tools. (runs scripts starting with 'unintall-' prefix.)
+uninstall:  $(addprefix uninstall-,$(LANGS)) # Uninstall all languages & tools. (runs scripts starting with 'unintall-' prefix.)
 
-.PHONY: install-anyenv
-install-anyenv: _print-airplane # Install anyenv
-	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh;
-	~/.anyenv/bin/anyenv install nodenv;
-	@echo "✅ nodenv has been installed successfully!"
+.PHONY: install-asdf-langs
+install-asdf-langs: $(addprefix install-,$(ASDF_LANGS)) # Install languages by asdf.
 
-.PHONY: uninstall-anyenv
-uninstall-anyenv: _print-goodbye # Uninstall anyenv
-	$(SCRIPTS_DIR)/anyenv/uninstall_anyenv.sh
-
-.PHONY: install-anyenv-langs
-install-anyenv-langs: $(addprefix install-,$(ANYENV_LANGS)) # Install languages by anyenv.
-
-.PHONY: _print-airplane install-node
-install-node: _print-airplane # Install each language.
+.PHONY: install-nodev install-terraform
+install-node install-terraform: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
 
@@ -122,6 +112,16 @@ install-deno install-rust install-elm install-nim: _print-airplane # Install eac
 uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Uninstall each language.
 	$(eval lang=$(subst uninstall-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/uninstall_$(lang).sh;
+
+.PHONY: _install-anyenv
+_install-anyenv: _print-airplane # Install anyenv
+	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh;
+	~/.anyenv/bin/anyenv install nodenv;
+	@echo "✅ nodenv has been installed successfully!"
+
+.PHONY: _uninstall-anyenv
+_uninstall-anyenv: _print-goodbye # Uninstall anyenv
+	$(SCRIPTS_DIR)/anyenv/uninstall_anyenv.sh
 
 # packages ----------------------------------------------------------------------------------------------------
 

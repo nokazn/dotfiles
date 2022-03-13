@@ -11,6 +11,7 @@
 .config/sampler/config.yml
 .config/tmux/cpu-usage.sh
 .config/tmux/memory-usage.sh
+.asdfrc
 .bash_aliases
 .bash_profile
 .bashrc
