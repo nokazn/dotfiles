@@ -95,8 +95,8 @@ uninstall:  $(addprefix uninstall-,$(LANGS)) # Uninstall all languages & tools. 
 .PHONY: install-asdf-langs
 install-asdf-langs: $(addprefix install-,$(ASDF_LANGS)) # Install languages by asdf.
 
-.PHONY: install-node
-install-node: _print-airplane # Install each language.
+.PHONY: install-nodev install-terraform
+install-node install-terraform: _print-airplane # Install each language.
 	$(eval lang=$(subst install-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/install_$(lang).sh;
 
