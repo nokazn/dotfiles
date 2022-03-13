@@ -115,13 +115,13 @@ uninstall-deno uninstall-rust uninstall-elm uninstall-nim: _print-goodbye # Unin
 
 .PHONY: _install-anyenv
 _install-anyenv: _print-airplane # Install anyenv
-	$(SCRIPTS_DIR)/anyenv/install_anyenv.sh;
+	$(SCRIPTS_DIR)/anyenv/install-anyenv.sh;
 	~/.anyenv/bin/anyenv install nodenv;
 	@echo "✅ nodenv has been installed successfully!"
 
 .PHONY: _uninstall-anyenv
 _uninstall-anyenv: _print-goodbye # Uninstall anyenv
-	$(SCRIPTS_DIR)/anyenv/uninstall_anyenv.sh
+	$(SCRIPTS_DIR)/anyenv/uninstall-anyenv.sh
 
 # packages ----------------------------------------------------------------------------------------------------
 
