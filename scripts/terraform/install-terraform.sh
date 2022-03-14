@@ -21,7 +21,7 @@ function install_terraform() {
   asdf install terraform latest
   asdf global terraform latest
 
-  if ! has_command "terraform" ; then
+  if ! type "terraform" >/dev/null 2>&1 ; then
     echo "❌ Terraform has failed to be installed."
     return 1
   fi

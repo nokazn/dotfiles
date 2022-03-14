@@ -4,13 +4,6 @@ set -eu -o pipefail
 
 readonly PATH_SCRIPT=~/.path.sh
 
-# @param {string} - command
-# @return {0|1}
-function has_command() {
-  type "$1" >/dev/null 2>&1
-  return $?
-}
-
 # @param None
 # @return {void}
 function install_node() {
@@ -28,11 +21,11 @@ function install_node() {
   asdf install nodejs latest
   asdf global nodejs latest
 
-  if ! has_command "node" ; then
-    echo "❌ Terraform has failed to be installed."
+  if ! type "node" >/dev/null 2>&1 ; then
+    echo "❌ Node.js has failed to be installed."
     return 1
   fi
-  echo "✅ Terraform has been installed successfully at '$(command -v terraform)'!"
+  echo "✅ Node.js has been installed successfully at '$(command -v node)'!"
   return 0
 }
 
