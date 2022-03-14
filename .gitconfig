@@ -44,14 +44,14 @@
 	amend = !git commit -m \"$(git log --format="%s" -n 1)\" --amend
 	amend-author = !git commit -m \"$(git log --format="%s" -n 1)\" --author=\"$(git config --get user.name) <$(git config --get user.email)>\" --amend
 	br = branch
-	br-clean = "!f(){ git branch --merged | grep -v -E '\\*|develop|main|master' | xargs git branch -d; }; f"  # マージ済みのブランチを削除
-	br-clean-all = "!f(){ git branch --merged | grep -v -E '\\*|develop|main|master' | xargs git branch -d; git fetch --prune; }; f"
+	br-clean = "!f() { git branch --merged | grep -v -E '\\*|develop|main|master' | xargs git branch -d; }; f"  # マージ済みのブランチを削除
+	br-clean-all = "!f() { git branch --merged | grep -v -E '\\*|develop|main|master' | xargs git branch -d; git fetch --prune; }; f"
 	br-clean-remote = fetch --prune
 	brr = "!f() { git fetch origin $1; git branch $1 origin/$1; }; f"  # リモートブランチを同じ名前でローカルに作成する
 	c = commit
 	ch = checkout
-	chb = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git checkout -b $1 $2; }; f"  # 親ブランチの指定がなければ実行させない
-	chr = "!f(){ git fetch origin $1; git checkout $1; }; f"  # リモートブランチを同じ名前でチェックアウトする
+	chb = "!f() { if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git checkout -b $1 $2; }; f"  # 親ブランチの指定がなければ実行させない
+	chr = "!f() { git fetch origin $1; git checkout $1; }; f"  # リモートブランチを同じ名前でチェックアウトする
 	cl = clone
 	clgh = "!f() { git clone git@github.com:$1/$2; }; f"
 	clgh-me = "!f() { git clone git@github.com:$(git config --get user.name)/$1; }; f"
@@ -89,7 +89,7 @@
 	rebi3 = rebase -i HEAD~3
 	rebi4 = rebase -i HEAD~4
 	rebi5 = rebase -i HEAD~5
-	rebonto = "!f(){ git rebase --onto $1 $2 $(git symbolic-ref --short HEAD); }; f"
+	rebonto = "!f() { git rebase --onto $1 $2 $(git symbolic-ref --short HEAD); }; f"
 	remote-add-me = !git remote add origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
 	remote-set-url-me = !git remote set-url origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
 	s = status --show-stash
@@ -100,10 +100,10 @@
 	stp = stash -p
 	stu = stash -u --keep-index  # untracked のファイルも退避させる
 	sw = switch
-	swc = "!f(){ if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git switch -c $1 $2; }; f"  # 親ブランチの指定がなければ実行させない
+	swc = "!f() { if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git switch -c $1 $2; }; f"  # 親ブランチの指定がなければ実行させない
 	swr = "!f() { git fetch origin $1; git switch $1; }; f"  # リモートブランチを同じ名前でチェックアウトする
 	swt = "!f() { git switch -d refs/tags/$1; }; f"
-	user ="!f(){ git config user.name $1; git config user.email $2; }; f"
+	user ="!f() { git config user.name $1; git config user.email $2; }; f"
 	wt = worktree
 	wta = "!f() { git worktree add $(readlink $(git rev-parse --git-dir | sed -E 's/\\.git.*$/./')/.worktree/$1 -f); }; f"
 	wtr = "!f() { git worktree remove $(readlink $(git rev-parse --git-dir | sed -E 's/\\.git.*$/./')/.worktree/$1 -f); }; f"
