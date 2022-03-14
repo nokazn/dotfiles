@@ -69,6 +69,7 @@
 	dlc = diff --stat --cached
 	exact-amend = !git commit -m \"$(git log --format="%s" -n 1)\" --date="$(git log --format="%cd" -n 1)" --amend
 	l = log --stat --pretty=bold
+	ld = "!f() { git log --oneline --no-merges $1..$2; }; f"  # commit diff from $1 to $2
 	lg = log --graph --branches --pretty=default  # graph
 	ll = log --numstat --decorate --pretty=bold  # line number status
 	ln = log --name-status --pretty=bold  # name status
