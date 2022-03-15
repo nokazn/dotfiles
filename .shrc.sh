@@ -21,6 +21,7 @@ fi
 # path ----------------------------------------------------------------------------------------------------
 
 if [[ -f "$HOME/.path.sh" ]]; then
+    # shellcheck source=~/.path.sh
     source "$HOME/.path.sh"
 else
     echo "⚠ .path.sh doesn't exist"
