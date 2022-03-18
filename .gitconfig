@@ -53,6 +53,7 @@
 	chb = "!f() { if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git checkout -b $1 $2; }; f"  # 親ブランチの指定がなければ実行させない
 	chr = "!f() { git fetch origin $1; git checkout $1; }; f"  # リモートブランチを同じ名前でチェックアウトする
 	cl = clone
+	cleanf = clean -f
 	clgh = "!f() { git clone git@github.com:$1/$2; }; f"
 	clgh-me = "!f() { git clone git@github.com:$(git config --get user.name)/$1; }; f"
 	cm = commit -m
@@ -92,6 +93,7 @@
 	rebonto = "!f() { git rebase --onto $1 $2 $(git symbolic-ref --short HEAD); }; f"
 	remote-add-me = !git remote add origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
 	remote-set-url-me = !git remote set-url origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
+	res = restore
 	s = status --show-stash
 	sh = show
 	ss = status --show-stash -s
