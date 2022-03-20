@@ -100,6 +100,7 @@ install-langs: $(addprefix install-,$(LANGS)) # Install languages except ones in
 .PHONY: install-node install-terraform install-deno install-elm install-nim install-rust
 install-node install-terraform install-deno install-elm install-nim install-rust: _print-airplane # Install each language
 	$(eval lang=$(subst install-,,$@))
+	source ${PATH_SCRIPT}; \
 	$(SCRIPTS_DIR)/$(lang)/$(@).sh;
 
 .PHONY: uninstall-deno uninstall-elm uninstall-nim uninstall-rust
