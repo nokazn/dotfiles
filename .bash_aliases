@@ -83,8 +83,8 @@ function _echo-in-cmd() {
 
 # VSCode を開く
 function code() {
-	unfunction "$0"
 	if ! _is-wsl; then
+		unfunction "$0"
 		$0 "$@"
 		return 0
 	fi
@@ -95,6 +95,7 @@ function code() {
 	elif [[ -e ${codeForSystem} ]]; then
 		${codeForSystem} "$@"
 	else
+		unfunction "$0"
 		$0 "$@"
 	fi
 }
