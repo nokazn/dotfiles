@@ -33,8 +33,14 @@ alias exal='exa -l'
 
 # Git aliases
 alias g='git'
-alias hg='git config --get-regexp alias.* | sed -E -n -e "/\[alias\]/,/^$$/p" ~/.gitconfig | sed -E -e "/alias/d" -e "/#/d" -e "s/^(.+)\s=\s/\1 | /" | column -s "|" -t | more'
 alias branch='git symbolic-ref --short HEAD'
+
+function hg() {
+	git config --get-regexp "alias.*" \
+		| sed -E -e "s/alias\.//" -e "s/\s/#/" \
+		| column -s "#" -t \
+		| more
+}
 
 # Add an "alert" alias for long running commands.  Use like so:
 # sleep 10; alert
@@ -59,8 +65,45 @@ alias hm='home-manager'
 alias hmsw='home-manager switch -f ~/dotfiles/.config/nixpkgs/home.nix'
 alias sampler='sampler -c ~/.config/sampler/config.yml'
 
-# WSL aliases
-if [[ "$(uname -r)" == *microsoft* ]]; then
+# WSL aliases ----------------------------------------------------------------------------------------------------
+
+# @param None
+# @param {0|1}
+function _is-wsl() {
+  test "\"$(uname -r)\" == *microsoft*"
+}
+
+# cmd.exe で echo する
+# @param {string}
+function _echo-in-cmd() {
+	if [[ ! -e /ment/c ]]; then
+		return 0
+	fi
+	cd /mnt/c || return 1;
+	wslpath -u "$(/mnt/c/Windows/system32/cmd.exe /c "echo $1" | tr -d "\r")";
+	cd "${OLDPWD}" || return 1;
+}
+
+# VSCode を開く
+function code() {
+	if ! _is-wsl; then
+		unfunction "$0"
+		$0 "$@"
+		return 0
+	fi
+	local -r codeForUser="$(_echo-in-cmd %USERPROFILE%)/AppData/Local/Programs/Microsoft VS Code/bin/code"
+	local -r codeForSystem="/mnt/c/Program Files/Microsoft VS Code/bin/code"
+	if [[ -e ${codeForUser} ]]; then
+		${codeForUser} "$@"
+	elif [[ -e ${codeForSystem} ]]; then
+		${codeForSystem} "$@"
+	else
+		unfunction "$0"
+		$0 "$@"
+	fi
+}
+
+if _is-wsl; then
 	alias explorer.exe='/mnt/c/Windows/explorer.exe'
 	alias bash.exe='/mnt/c/Windows/system32/bash.exe'
 	alias cmd.exe='/mnt/c/Windows/system32/cmd.exe'
@@ -305,27 +348,6 @@ function fbroot() {
 }
 
 # utilities ----------------------------------------------------------------------------------------------------
-
-# cmd.exe で echo する
-# @param {string}
-function echo-in-cmd() {
-	cd /mnt/c || return 1;
-	wslpath -u "$(/mnt/c/Windows/system32/cmd.exe /c "echo $1" | tr -d "\r")";
-	cd "${OLDPWD}" || return 1;
-}
-
-# VSCode を開く
-function code() {
-	local -r codeForUser="$(echo-in-cmd %USERPROFILE%)/AppData/Local/Programs/Microsoft VS Code/bin/code"
-	local -r codeForSystem="/mnt/c/Program Files/Microsoft VS Code/bin/code"
-	if [[ -e ${codeForUser} ]]; then
-		${codeForUser} "$@"
-	elif [[ -e ${codeForSystem} ]]; then
-		${codeForSystem} "$@"
-	else
-		code "$@"
-	fi
-}
 
 # Show a list of installed apt packages.
 function apt-list() {
