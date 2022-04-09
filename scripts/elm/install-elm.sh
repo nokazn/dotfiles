@@ -37,12 +37,12 @@ function install_elm() {
   fi
 
   echo "installing Elm ..."
-  mkdir -p ~/downloads
+  mkdir -p ~/Downloads
   mkdir -p ~/.local/bin
-  curl --location --output ~/downloads/elm.gz https://github.com/elm/compiler/releases/download/0.19.1/binary-for-linux-64-bit.gz
-  gunzip ~/downloads/elm.gz
-  chmod +x ~/downloads/elm
-  mv ~/downloads/elm ~/.local/bin/
+  curl --location --output ~/Downloads/elm.gz https://github.com/elm/compiler/releases/download/0.19.1/binary-for-linux-64-bit.gz
+  gunzip ~/Downloads/elm.gz
+  chmod +x ~/Downloads/elm
+  mv ~/Downloads/elm ~/.local/bin/
   source ${PATH_SCRIPT}
   if ! has_command "elm"; then
     echo "❌ Elm has failed to be installed at '${ELM_PATH}'!"
