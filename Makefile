@@ -73,7 +73,7 @@ remove-bash-it: _print-goodbye # Remove bash-it
 
 .PHONY: add-wsl-hello-sudo
 add-wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
-	$(SCRIPTS_DIR)/wsl-sudo-hello/install-wsl-sudo-hello.sh
+	$(SCRIPTS_DIR)/install-wsl-sudo-hello.sh
 
 .PHONY: remove-wsl-hello-sudo
 remove-wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
