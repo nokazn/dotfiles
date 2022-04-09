@@ -77,9 +77,9 @@ add-wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
 
 .PHONY: remove-wsl-hello-sudo
 remove-wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
-	if [[ -f ~/downloads/wsl-hello-sudo/uninstall.sh ]]; then \
-		~/downloads/wsl-hello-sudo/uninstall.sh; \
-		rm -rf ~/downloads/wsl-hello-sudo; \
+	if [[ -f ~/Downloads/wsl-hello-sudo/uninstall.sh ]]; then \
+		~/Downloads/wsl-hello-sudo/uninstall.sh; \
+		rm -rf ~/Downloads/wsl-hello-sudo; \
 	fi
 	@echo "✅ WSL-Hello-sudo has been uninstalled successfully!"
 
