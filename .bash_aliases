@@ -76,6 +76,9 @@ function _is-wsl() {
 # cmd.exe で echo する
 # @param {string}
 function _echo-in-cmd() {
+	if [[ ! -e /ment/c ]]; then
+		return 0
+	fi
 	cd /mnt/c || return 1;
 	wslpath -u "$(/mnt/c/Windows/system32/cmd.exe /c "echo $1" | tr -d "\r")";
 	cd "${OLDPWD}" || return 1;
