@@ -140,6 +140,11 @@ coverage
 TODO.md
 memo.md
 
+# temporary files
+
+.tmp
+tmp
+
 # git worktree directories
 .worktree
 
