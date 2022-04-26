@@ -15,10 +15,10 @@ init: add-tools home-manager-switch install # Install all languages & their pack
 # tools ----------------------------------------------------------------------------------------------------
 
 .PHONY: add-tools
-add-tools: add-nix add-home-manager add-dein-vim add-bash-it add-wsl-hello-sudo # Add developing tools
+add-tools: add-nix add-home-manager add-dein-vim add-bash-it # Add developing tools
 
 .PHONY: remove-tools
-remove-tools: remove-nix remove-dein-vim remove-bash-it remove-wsl-hello-sudo # Remove developing tools
+remove-tools: remove-nix remove-dein-vim remove-bash-it # Remove developing tools
 
 .PHONY: add-nix
 add-nix: _print-airplane # Install nix
