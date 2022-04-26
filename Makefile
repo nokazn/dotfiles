@@ -92,19 +92,22 @@ install: install-asdf-langs install-langs # Install all languages (runs scripts 
 uninstall: $(addprefix uninstall-,$(LANGS)) # Uninstall all languages (runs scripts starting with `unintall-` prefix.)
 
 .PHONY: install-asdf-langs
-install-asdf-langs: $(addprefix install-,$(ASDF_LANGS)) # Install languages by asdf
+install-asdf-langs: # Install languages by asdf
+	$(SCRIPTS_DIR)/asdf-install.sh nodejs node
+	$(SCRIPTS_DIR)/asdf-install.sh yarn
+	$(SCRIPTS_DIR)/asdf-install.sh terraform
 
 .PHONY: install-langs
 install-langs: $(addprefix install-,$(LANGS)) # Install languages except ones installed by anyenv
 
-.PHONY: install-node install-terraform install-deno install-elm install-nim install-rust
-install-node install-terraform install-deno install-elm install-nim install-rust: _print-airplane # Install each language
+.PHONY: $(addprefix install-,$(LANGS))
+$(addprefix install-,$(LANGS)): _print-airplane # Install each language
 	$(eval lang=$(subst install-,,$@))
 	source ${PATH_SCRIPT}; \
 	$(SCRIPTS_DIR)/$(lang)/$(@).sh;
 
-.PHONY: uninstall-deno uninstall-elm uninstall-nim uninstall-rust
-uninstall-deno uninstall-elm uninstall-nim uninstall-rust: _print-goodbye # Uninstall each language
+.PHONY: $(addprefix uninstall-,$(LANGS))
+$(addprefix uninstall-,$(LANGS)): _print-goodbye # Uninstall each language
 	$(eval lang=$(subst uninstall-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/$(@).sh;
 
