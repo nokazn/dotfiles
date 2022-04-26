@@ -21,25 +21,23 @@ If a existing file conflicts with the symbolic link, this is backed up.
 
 `make init` command executes targets below.
 
-- `update-apt` - Update apt packages
 - `add-tools`
-  - `add-nix` - Add nix
-  - `add-home-manager` - Add home-manager
-  - `add-dein-vim` - Add dein-vim
-  - `add-bash-it` - Add bash-it
-  - `add-wsl-hello-sudo` - Add wsl-hello-sudo
-- `install-anyenv` - Install anyenv
-- `install-anyenv-langs` - Install languages by anyenv (Node.js, Go)
-- `install-langs`
-  - `install-deno` - Install Deno
-  - `install-rust` - Install Rust
-  - `install-elm` - Install Elm
-  - `install-nim` - Install Nim
+  - `add-nix` - add Nix
+  - `add-home-manager` - add home-manager
+  - `add-dein-vim` - add dein.vim
+  - `add-bash-it` - Add Bash-it
+- `home-manger-switch` - run `home-manager switch` command
+- `install`
+  - `install-asdf-langs` - install asdf-vm (Node.js, yarn, Terraform)
+  - `install-deno` - install Deno
+  - `install-rust` - install Rust
+  - `install-elm` - install Elm
+  - `install-nim` - install Nim
 
 ```bash
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
 $ cd ~/dotfiles
-# Install all languages & packages
+# Install all development tools & language runtime
 $ make init
 ```
 

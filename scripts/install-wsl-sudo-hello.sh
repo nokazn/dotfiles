@@ -13,8 +13,7 @@ function install_wsl_sudo_hello() {
     mkdir -p ~/Downloads/wsl-hello-sudo
     tar -xvf ~/Downloads/wsl-hello-sudo.tar.gz -C ~/Downloads/wsl-hello-sudo --strip-components 1
     cd ~/Downloads/wsl-hello-sudo || return 1
-    # TODO: write failed 32: Broken pipe のエラーを無視するために標準エラー出力を捨てているため
-    bash -c "yes | ./install.sh 2>/dev/null"
+    ./install.sh 2>/dev/null
     echo "✅ WSL-Hello-sudo has been installed successfully!"
     echo "👉 You need to add 'auth sufficient pam_wsl_hello.so' to the top line of your '/etc/pam.d/sudo'. See also https://github.com/nullpo-head/WSL-Hello-sudo/#configuration."
     return 0
