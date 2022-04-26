@@ -86,10 +86,10 @@ remove-wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
 # languages ----------------------------------------------------------------------------------------------------
 
 .PHONY: install
-install: install-asdf-langs install-langs # Install all languages (runs scripts starting with `intall-` prefix.)
+install: install-asdf-langs install-langs # Install all languages (runs scripts starting with `intall-` prefix)
 
 .PHONY: uninstall
-uninstall: $(addprefix uninstall-,$(LANGS)) # Uninstall all languages (runs scripts starting with `unintall-` prefix.)
+uninstall: $(addprefix uninstall-,$(LANGS)) # Uninstall all languages (runs scripts starting with `unintall-` prefix)
 
 .PHONY: install-asdf-langs
 install-asdf-langs: # Install languages by asdf
