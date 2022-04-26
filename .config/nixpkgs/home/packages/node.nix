@@ -9,5 +9,6 @@ with pkgs.nodePackages; [
   pyright
   serverless
   typescript
+  vercel
   webpack-cli
 ]
