@@ -10,5 +10,4 @@ with pkgs.nodePackages; [
   serverless
   typescript
   webpack-cli
-  yarn
 ]
