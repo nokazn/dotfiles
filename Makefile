@@ -111,16 +111,6 @@ $(addprefix uninstall-,$(LANGS)): _print-goodbye # Uninstall each language
 	$(eval lang=$(subst uninstall-,,$@))
 	$(SCRIPTS_DIR)/$(lang)/$(@).sh;
 
-.PHONY: _install-anyenv
-_install-anyenv: _print-airplane # Install anyenv
-	$(SCRIPTS_DIR)/_anyenv/install-anyenv.sh;
-	~/.anyenv/bin/anyenv install nodenv;
-	@echo "✅ nodenv has been installed successfully!"
-
-.PHONY: _uninstall-anyenv
-_uninstall-anyenv: _print-goodbye # Uninstall anyenv
-	$(SCRIPTS_DIR)/_anyenv/uninstall-anyenv.sh
-
 # packages ----------------------------------------------------------------------------------------------------
 
 .PHONY: hms
