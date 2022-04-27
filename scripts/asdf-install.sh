@@ -17,7 +17,7 @@ function install() {
   fi
 
   if ! asdf plugin list | grep "$1" -q; then
-    asdf plugin add terraform
+    asdf plugin add "$1"
   fi
   asdf install "$1" latest
   asdf global "$1" latest
