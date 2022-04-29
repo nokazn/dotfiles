@@ -52,6 +52,11 @@ $ chshs zsh
 
 ### Set up wsl-hello-sudo
 
+```bash
+# Add wsl-hello-sudo
+$ make add-wsl-hello-sudo
+```
+
 After installing wsl-hello-sudo, you need to modify `/etc/pam.d/sudo`.
 
 ```diff
