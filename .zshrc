@@ -29,6 +29,6 @@ if [[ -e ~/.nix-profile/share/zsh-prezto/init.zsh ]]; then
 fi
 
 # デバッグ用
-# if (which zprof > /dev/null 2>&1); then
+# if (command -v zprof > /dev/null 2>&1); then
 #     zprof
 # fi
