@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export DefaultIMModule=fcitx
+# TODO: 実行に時間がかかるので、起動時に実行させるとその分起動も遅くなる
+# fcitx-autostart &> /dev/null
+
+export EDITOR=vim
+
 # WSL ----------------------------------------------------------------------------------------------------
 
 if [[ "$(uname -r)" == *microsoft* ]]; then
