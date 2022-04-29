@@ -3,7 +3,7 @@
 {
   enable = true;
   color = true;
-  # Prezto modules to load (browse modules)
+  # Prezto modules to load (https://github.com/sorin-ionescu/prezto/tree/master/modules)
   pmodules = [
     "environment"
     "terminal"
@@ -13,14 +13,10 @@
     "spectrum"
     "utility"
     "completion"
-    "prompt"
     "git"
-    "node"
-    "tmux"
   ];
   editor.keymap = "vi";
   git.submoduleIgnore = "all";
-  prompt.theme = "steeef";
   ssh.identities = [
     "id_rsa"
     "id_rsa2"
