@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-export DefaultIMModule=fcitx
-fcitx-autostart &> /dev/null
-
-export EDITOR=vim
-
 # aliases ----------------------------------------------------------------------------------------------------
 # Alias definitions.
 # You may want to put all your additions into a separate file like
