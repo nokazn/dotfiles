@@ -25,4 +25,5 @@
 .shellcheckrc
 .shrc.sh
 .vimrc
+.yarnrc
 .zlogin
