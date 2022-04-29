@@ -98,7 +98,7 @@ install-asdf-langs: # Install languages by asdf
 	$(SCRIPTS_DIR)/asdf-install.sh terraform
 
 .PHONY: install-langs
-install-langs: $(addprefix install-,$(LANGS)) # Install languages except ones installed by anyenv
+install-langs: $(addprefix install-,$(LANGS)) # Install languages
 
 .PHONY: $(addprefix install-,$(LANGS))
 $(addprefix install-,$(LANGS)): _print-airplane # Install each language
