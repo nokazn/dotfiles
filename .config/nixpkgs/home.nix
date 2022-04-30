@@ -27,6 +27,7 @@ in
   };
 
   programs = {
+    bash = import ./programs/bash.nix { };
     zsh = import ./programs/zsh { } // {
       prezto = import ./programs/zsh/prezto.nix { };
     };

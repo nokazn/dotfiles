@@ -1,5 +1,8 @@
 { ... }:
 
+let
+  commonShellConfig = (import ../../shell.nix { });
+in
 {
   enable = true;
   enableAutosuggestions = true;
@@ -16,7 +19,7 @@
     size = 10000;
   };
   envExtra = builtins.readFile ../../../../.zshenv;
-  initExtra = builtins.readFile ../../../../.zshrc;
-  loginExtra = builtins.readFile ../../../../.zlogin;
+  initExtra = builtins.readFile ../../../../.zshrc + commonShellConfig.init;
+  loginExtra = builtins.readFile ../../../../.zlogin + commonShellConfig.profile;
   logoutExtra = builtins.readFile ../../../../.zlogout;
 }

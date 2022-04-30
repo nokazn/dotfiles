@@ -8,16 +8,7 @@ esac
 
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
-
 # End of lines added by compinstall
-
-# common settings ----------------------------------------------------------------------------------------------------
-
-if [ -f ~/.shrc.sh ]; then
-    source ~/.shrc.sh
-else
-    echo "⚠ ~/.shrc.sh doesn't exist"
-fi
 
 # Prezto ----------------------------------------------------------------------------------------------------
 
