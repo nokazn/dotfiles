@@ -38,6 +38,7 @@ choco install -y  `
   microsoft-windows-terminal `
   miniconda3 `
   notion `
+  nushell `
   opera `
   pgadmin4 `
   postman `
