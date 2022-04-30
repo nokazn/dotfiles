@@ -32,14 +32,6 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# common settings ----------------------------------------------------------------------------------------------------
-
-if [ -f ~/.shrc.sh ]; then
-    source ~/.shrc.sh
-else
-    echo "⚠ ~/.shrc.sh doesn't exist"
-fi
-
 # prompt ----------------------------------------------------------------------------------------------------
 
 function ps1_date() {
