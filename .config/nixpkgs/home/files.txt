@@ -8,6 +8,7 @@
 .config/lazygit/config.yml
 .config/neofetch/config.conf
 .config/nixpkgs
+.config/nushell/aliases.nu
 .config/nushell/config.nu
 .config/nushell/env.nu
 .config/sampler/config.yml
