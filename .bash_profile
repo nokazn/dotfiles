@@ -8,11 +8,3 @@ if [[ -n $BASH_VERSION ]]; then
         source "$HOME/.bashrc"
     fi
 fi
-
-# ----------------------------------------------------------------------------------------------------
-
-if [ -f ~/.sh_profile.sh ]; then
-    source ~/.sh_profile.sh
-else
-    echo "⚠ ~/.sh_profile.sh doesn't exist"
-fi
