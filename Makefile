@@ -140,6 +140,11 @@ packages-go: # Install Go packages
 
 # update ----------------------------------------------------------------------------------------------------
 
+.PHONY: update-nix
+update-nix: # Update Nix package manager
+	nix-channel --update; \
+	nix-env -iA nixpkgs.nix nixpkgs.cacert
+
 .PHONY: update-apt
 update-apt: # Update apt packages
 	sudo apt update -y; \
