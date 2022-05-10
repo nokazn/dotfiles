@@ -131,13 +131,19 @@ home-manager-switch: # Run `home-manager switch`
 .PHONY: generate-npm-packages-list
 generate-npm-packages-list: # Generate Nix packages list for npm packages
 	cd ./.config/nixpkgs/node; \
-	NIX_PATH=~/.nix-defexpr/channels ~/.nix-profile/bin/nix-shell -p nodePackages.node2nix --command "node2nix -i ./packages.json -o ./packages.nix"
+	NIX_PATH=~/.nix-defexpr/channels ~/.nix-profile/bin/nix-shell -p nodePackages.node2nix --command "node2nix -i ./packages.json -o ./packages.nix --nodejs-14"
+	find . -type f | grep -e "\.nix$$" | xargs nixpkgs-fmt
 
 .PHONY: packages-go
 packages-go: # Install Go packages
 	go get -u -v golang.org/x/tools/cmd/goimports;
 
 # update ----------------------------------------------------------------------------------------------------
+
+.PHONY: update-nix
+update-nix: # Update Nix package manager
+	nix-channel --update; \
+	nix-env -iA nixpkgs.nix nixpkgs.cacert
 
 .PHONY: update-apt
 update-apt: # Update apt packages
@@ -183,14 +189,12 @@ shellcheck-fix: # Check & fix schell scripts
 nixpkgs-fmt: # Check `.nix` files
 	find ./.config/nixpkgs/ -type f \
 		| grep -e "\.nix$$" \
-		| grep -v -e "/home/packages\.nix" \
 		| xargs nixpkgs-fmt
 
 .PHONY: nixpkgs-fmt-check
 nixpkgs-fmt-check: # Format `.nix` files
 	find ./.config/nixpkgs/ -type f \
 		| grep -e "\.nix$$" \
-		| grep -v -e "/home/packages\.nix" \
 		| xargs nixpkgs-fmt --check
 
 .PHONY: _print-airplane
