@@ -47,6 +47,7 @@
 	br-clean = "!f() { git branch --merged | grep -v -E '\\*|develop|main|master' | xargs git branch -d; }; f"  # マージ済みのブランチを削除
 	br-clean-all = "!f() { git branch --merged | grep -v -E '\\*|develop|main|master' | xargs git branch -d; git fetch --prune; }; f"
 	br-clean-remote = fetch --prune
+	br-clean-tmp = "!f() { git branch | grep -E 'tmp' | xargs git branch -D; }; f"
 	brr = "!f() { git fetch origin $1; git branch $1 origin/$1; }; f"  # リモートブランチを同じ名前でローカルに作成する
 	c = commit
 	ch = checkout
@@ -55,7 +56,6 @@
 	cl = clone
 	cleanf = clean -f
 	clgh = "!f() { git clone git@github.com:$1/$2; }; f"
-	clgh-me = "!f() { git clone git@github.com:$(git config --get user.name)/$1; }; f"
 	cm = commit -m
 	cp = cherry-pick
 	d = diff
@@ -103,6 +103,7 @@
 	stu = stash -u --keep-index  # untracked のファイルも退避させる
 	sw = switch
 	swc = "!f() { if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git switch -c $1 $2; }; f"  # 親ブランチの指定がなければ実行させない
+	swc-tmp = "!f() { git switch -c $1 $(git symbolic-ref --short HEAD)-tmp; }; f"  # 親ブランチの指定がなければ実行させない
 	swr = "!f() { git fetch origin $1; git switch $1; }; f"  # リモートブランチを同じ名前でチェックアウトする
 	swt = "!f() { git switch -d refs/tags/$1; }; f"
 	user ="!f() { git config user.name $1; git config user.email $2; }; f"
