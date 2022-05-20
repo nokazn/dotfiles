@@ -12,7 +12,6 @@ repos:
   - id: check-yaml
   - id: check-xml
   - id: end-of-file-fixer
-    exclude: "\\.txt$"
   - id: check-ast
   - id: check-byte-order-marker
   - id: check-case-conflict
