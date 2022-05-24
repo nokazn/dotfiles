@@ -13,9 +13,8 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
 choco install -y  `
   7zip `
   adobereader `
-  alacritty `
-  anaconda3 `
-  blender `
+  # anaconda3 `
+  # blender `
   boostnote `
   cpu-z `
   crystaldiskinfo `
@@ -30,7 +29,7 @@ choco install -y  `
   git `
   googlechrome `
   googledrive `
-  jasper `
+  gsudo `
   keepassxc `
   keybase `
   keycastow `
@@ -45,11 +44,11 @@ choco install -y  `
   screentogif `
   slack `
   steam `
-  tabby `
+  starship `
   thunderbird `
   todoist `
   typora `
-  unity `
+  # unity `
   vcxsrv `
   vivaldi `
   vlc `
