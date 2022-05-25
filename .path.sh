@@ -60,12 +60,6 @@ if command -v ruby >/dev/null; then
     register_forward_if_not "$(ruby -e 'print Gem.user_dir')/bin"
 fi
 
-# Deno
-if [[ -d "$HOME/.deno" ]]; then
-    register_forward_if_not "$HOME/.deno/bin"
-    export DENO_INSTALL="$HOME/.deno"
-fi
-
 # Rust
 if [[ -f "$HOME/.cargo/env" ]]; then
     # shellcheck source=~/.cargo/env
