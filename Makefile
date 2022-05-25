@@ -4,7 +4,7 @@ SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
 PATH_SCRIPT := ./.path.sh
 ASDF_LANGS := node terraform
-LANGS := deno elm nim rust
+LANGS := elm nim rust
 .DEFAULT_GOAL := help
 
 # init ----------------------------------------------------------------------------------------------------

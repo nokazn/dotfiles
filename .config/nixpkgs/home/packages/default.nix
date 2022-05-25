@@ -5,6 +5,7 @@ let
     "cli"
     "cloud"
     "container"
+    "deno"
     "git"
     "go"
     "gui"
