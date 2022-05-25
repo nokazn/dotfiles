@@ -29,9 +29,7 @@ If a existing file conflicts with the symbolic link, this is backed up.
 - `home-manger-switch` - run `home-manager switch` command
 - `install`
   - `install-asdf-langs` - install asdf-vm (Node.js, yarn, Terraform)
-  - `install-deno` - install Deno
   - `install-rust` - install Rust
-  - `install-elm` - install Elm
   - `install-nim` - install Nim
 
 ```bash
