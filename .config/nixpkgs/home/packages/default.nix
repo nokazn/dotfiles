@@ -6,6 +6,7 @@ let
     "cloud"
     "container"
     "deno"
+    "elm"
     "git"
     "go"
     "gui"

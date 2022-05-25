@@ -30,7 +30,6 @@ If a existing file conflicts with the symbolic link, this is backed up.
 - `install`
   - `install-asdf-langs` - install asdf-vm (Node.js, yarn, Terraform)
   - `install-rust` - install Rust
-  - `install-elm` - install Elm
   - `install-nim` - install Nim
 
 ```bash
