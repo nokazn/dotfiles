@@ -16,13 +16,17 @@
 .config/tmux/memory-usage.sh
 .asdfrc
 .bash_aliases
+.bash_profile
+.bashrc
 .curlrc
 .gitconfig
 .npmrc
 .path.sh
 .prettierrc.json
+.profile
 .sh_profile.sh
 .shellcheckrc
 .shrc.sh
 .vimrc
 .yarnrc
+.zlogin

@@ -1,20 +1,48 @@
 { lib, ... }:
 
 let
-  files = builtins.readFile ./files.txt;
-  fileList = builtins.filter (file: file != "") (lib.splitString "\n" files);
-  fileSourceList = builtins.map
-    (file: {
-      name = file;
-      value = {
-        # https://discourse.nixos.org/t/how-to-refer-to-current-directory-in-shell-nix/9526
-        source = builtins.toString ../../.. + ("/" + file);
-        target = file;
-        onChange = ''
-          chmod +w ${file}
-        '';
-      };
-    })
-    fileList;
+  fileSourceList =
+    let
+      toSourcePath = file: builtins.toString ../../.. + ("/" + file);
+      files =
+        let
+          files = builtins.readFile ./files.txt;
+        in
+        builtins.filter
+          (file:
+            let
+              # プロジェクトルート基準でファイルが存在するか
+              exists = builtins.pathExists (toSourcePath file);
+              # 無視するパターンに合致するか
+              ignored = builtins.any
+                (
+                  v:
+                  let
+                    matched = builtins.match v file;
+                  in
+                  matched != null
+                ) [
+                ".bash_profile"
+                ".bashrc"
+                ".profile"
+              ];
+            in
+            file != "" && exists && !ignored
+          )
+          (lib.splitString "\n" files);
+    in
+    builtins.map
+      (file: {
+        name = file;
+        value = {
+          # https://discourse.nixos.org/t/how-to-refer-to-current-directory-in-shell-nix/9526
+          source = toSourcePath file;
+          target = file;
+          onChange = ''
+            chmod +w ${file}
+          '';
+        };
+      })
+      files;
 in
 builtins.listToAttrs fileSourceList
