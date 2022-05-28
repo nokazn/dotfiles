@@ -10,47 +10,4 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
   }
 }
 
-choco install -y  `
-  7zip `
-  adobereader `
-  # anaconda3 `
-  # blender `
-  boostnote `
-  cpu-z `
-  crystaldiskinfo `
-  crystaldiskmark `
-  deepl `
-  discord `
-  everything `
-  fastcopy `
-  firefox `
-  font-hackgen-nerd `
-  gimp `
-  git `
-  googlechrome `
-  googledrive `
-  gsudo `
-  keepassxc `
-  keybase `
-  keycastow `
-  lastfmscrobbler `
-  microsoft-windows-terminal `
-  miniconda3 `
-  notion `
-  nushell `
-  opera `
-  pgadmin4 `
-  postman `
-  screentogif `
-  slack `
-  steam `
-  starship `
-  thunderbird `
-  todoist `
-  typora `
-  # unity `
-  vcxsrv `
-  vivaldi `
-  vlc `
-  vscode `
-  zoom
+choco install ~\.scripts\chocolatey\packages.config
