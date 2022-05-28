@@ -160,7 +160,7 @@ _deploy: # Make symbolic links to dotfiles & back up original files if exists
 	$(SCRIPTS_DIR)/_deploy/unix.sh
 
 .PHONY: deploy-windows
-_deploy-windows: # Make symbolic links to dotfiles & back up original files if exists in Windows
+deploy-windows: # Make symbolic links to dotfiles & back up original files if exists in Windows
 	$(SCRIPTS_DIR)/_deploy/windows.sh
 
 .PHONY: _restore
