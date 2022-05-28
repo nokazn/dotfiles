@@ -9,7 +9,9 @@ function main() {
   local -r DESTINATION_BASE_DIR=~
   local -r BACKUP_DIR_NAME='backup_dotfiles'
 
-  "${RESTORE_BASE_DIR}/main.sh" "${DESTINATION_BASE_DIR}/${BACKUP_DIR_NAME}" "${DESTINATION_BASE_DIR}" --debug
+  "${RESTORE_BASE_DIR}/main.sh" \
+    "${DESTINATION_BASE_DIR}/${BACKUP_DIR_NAME}" \
+    "${DESTINATION_BASE_DIR}"
 }
 
 main
