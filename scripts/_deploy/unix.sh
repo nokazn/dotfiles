@@ -9,7 +9,7 @@ function main() {
   local -r DESTINATION_BASE_DIR=~
   local -r BACKUP_DIR_NAME='backup_dotfiles'
 
-  "$s{ROOT_DIR}/scripts/_deploy/main.sh" \
+  "${ROOT_DIR}/scripts/_deploy/main.sh" \
     "${ROOT_DIR}" \
     "${DESTINATION_BASE_DIR}" \
     "${DESTINATION_BASE_DIR}/${BACKUP_DIR_NAME}"
