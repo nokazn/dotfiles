@@ -43,11 +43,7 @@ end
 
 function utils.merge_mods_with_commands(...)
   local args = { ... }
-  local mods = "CTRL"
-  if MAC_OS then
-    mods = "CMD"
-  end
-
+  local mods = COMMAND_MODS_KEY
   if args == nil then
     return mods
   end
