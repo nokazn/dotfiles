@@ -52,7 +52,7 @@ function show_prompt_for_overwrite() {
   if [[ ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
     echo "y"
   else
-    decho "🙈 ignored: $1"
+    decho "⏩ skipped: $1"
     echo "n"
   fi
   return 0

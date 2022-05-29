@@ -1,0 +1,58 @@
+{
+	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
+	"CreationDate" : "2022-05-28T19:30:47.334-00:00",
+	"Sources" :
+	[
+		{
+			"Packages" :
+			[
+				{ "PackageIdentifier" : "7zip.7zip" },
+				{ "PackageIdentifier" : "Adobe.Acrobat.Reader.32-bit" },
+				{ "PackageIdentifier" : "CPUID.CPU-Z" },
+				{ "PackageIdentifier" : "CrystalDewWorld.CrystalDiskInfo" },
+				{ "PackageIdentifier" : "CrystalDewWorld.CrystalDiskMark" },
+				{ "PackageIdentifier" : "DeepL.DeepL" },
+				{ "PackageIdentifier" : "Dell.DisplayManager" },
+				{ "PackageIdentifier" : "Discord.Discord" },
+				{ "PackageIdentifier" : "Doist.Todoist" },
+				{ "PackageIdentifier" : "EpicGames.EpicGamesLauncher" },
+				{ "PackageIdentifier" : "FastCopy.FastCopy" },
+				{ "PackageIdentifier" : "Google.Chrome" },
+				{ "PackageIdentifier" : "Google.Drive" },
+				{ "PackageIdentifier" : "KeePassXCTeam.KeePassXC" },
+				{ "PackageIdentifier" : "Keybase.Keybase" },
+				{ "PackageIdentifier" : "LastFM.LastFMDesktopScrobbler" },
+				{ "PackageIdentifier" : "Logitech.Options" },
+				{ "PackageIdentifier" : "marha.VcXsrv" },
+				{ "PackageIdentifier" : "Microsoft.OneDrive" },
+				{ "PackageIdentifier" : "Microsoft.VisualStudioCode" },
+				{ "PackageIdentifier" : "Microsoft.WindowsTerminal" },
+				{ "PackageIdentifier" : "Mojang.MinecraftLauncher" },
+				{ "PackageIdentifier" : "Mozilla.Firefox" },
+				{ "PackageIdentifier" : "Mozilla.Thunderbird" },
+				{ "PackageIdentifier" : "Notion.Notion" },
+				{ "PackageIdentifier" : "Nushell.Nushell" },
+				{ "PackageIdentifier" : "Opera.Opera" },
+				{ "PackageIdentifier" : "PostgreSQL.pgAdmin" },
+				{ "PackageIdentifier" : "Postman.Postman" },
+				{ "PackageIdentifier" : "REALiX.HWiNFO" },
+				{ "PackageIdentifier" : "RUFUS.RUFUS" },
+				{ "PackageIdentifier" : "SlackTechnologies.Slack" },
+				{ "PackageIdentifier" : "Typora.Typora" },
+				{ "PackageIdentifier" : "Valve.Steam" },
+				{ "PackageIdentifier" : "VideoLAN.VLC" },
+				{ "PackageIdentifier" : "VivaldiTechnologies.Vivaldi" },
+				{ "PackageIdentifier" : "voidtools.Everything" },
+				{ "PackageIdentifier" : "Zoom.Zoom" }
+			],
+			"SourceDetails" :
+			{
+				"Argument" : "https://winget.azureedge.net/cache",
+				"Identifier" : "Microsoft.Winget.Source_8wekyb3d8bbwe",
+				"Name" : "winget",
+				"Type" : "Microsoft.PreIndexed.Package"
+			}
+		}
+	],
+	"WinGetVersion" : "1.2.10941"
+}

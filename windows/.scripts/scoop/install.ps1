@@ -14,5 +14,15 @@ scoop bucket add nirsoft
 scoop bucket add nonportable
 
 scoop install `
-  gitify `
-  tokei
+  git `
+  gsudo `
+  ripgrep `
+  fd `
+  tokei `
+  nu `
+  starship `
+  neovim `
+  wezterm `
+  neovide `
+  volta `
+  yarn

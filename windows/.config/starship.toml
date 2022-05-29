@@ -1,0 +1,140 @@
+add_newline = true
+
+[aws]
+disabled = true
+
+[crystal]
+disabled = true
+
+[dart]
+disabled = true
+
+[deno]
+disabled = true
+
+[directory]
+disabled = false
+format = "in [$path]($style)[$read_only]() "
+style = "bold fg:156"
+truncate_to_repo = false
+truncation_length = 5
+
+[dotnet]
+disabled = false
+format = "via [$symbol($version)]($style) "
+heuristic = true
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = false
+format = "via [$symbol($version)]($style) "
+symbol = "🌳Elm "
+
+[erlang]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[git_branch]
+disabled = false
+style = "bold fg:159"
+symbol = ""
+
+[git_metrics]
+added_style = "green"
+deleted_style = "red"
+disabled = false
+format = "\\([+$added]($added_style) [-$deleted]($deleted_style)\\) "
+
+[git_state]
+disabled = false
+
+[git_status]
+ahead = "⇡$count"
+behind = "⇣$count"
+conflicted = "💥"
+deleted = "🗑️"
+disabled = false
+diverged = "⇕⇡$ahead_count⇣$behind_count"
+format = "\\[[$all_status$ahead_behind]($style)\\] "
+modified = "📝"
+renamed = "🔄"
+stashed = "📦"
+style = "fg:159"
+untracked = "🔍"
+up_to_date = "✨"
+
+[golang]
+disabled = true
+
+[hostname]
+disabled = false
+format = "@ [$hostname]($style) "
+ssh_only = true
+style = "bold fg:212"
+
+[java]
+disabled = true
+
+[julia]
+disabled = true
+
+[kotlin]
+disabled = true
+
+[memory_usage]
+disabled = false
+
+[nim]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[package]
+disabled = true
+
+[perl]
+disabled = true
+
+[php]
+disabled = true
+
+[purescript]
+disabled = true
+
+[python]
+disabled = true
+
+[rlang]
+disabled = true
+
+[ruby]
+disabled = true
+
+[rust]
+disabled = true
+
+[scala]
+disabled = true
+
+[shlvl]
+disabled = false
+format = "\\([$symbol$shlvl]($style)\\) "
+style = "fg:212"
+symbol = "↑"
+threshold = 3
+
+[time]
+disabled = false
+format = "🕙 [$time]($style) "
+style = "fg:229"
+
+[username]
+disabled = false
+format = "[$user]($style) "
+show_always = true
+style_user = "bold fg:217"
