@@ -8,7 +8,7 @@ readonly BASE_DIR
 # @param - none
 # @return {void}
 function start_vcxsrv() {
-  local -r CONFIG_PATH="${BASE_DIR}/windows/.scripts/config.xlaunch"
+  local -r CONFIG_PATH="${BASE_DIR}/wsl/config.xlaunch"
   local -r WIN32_PATH=/mnt/c/Windows/system32/
 
   # 実行中のプロセス一覧から vcxsrv を抽出した結果が0件で、config_path が存在する場合

@@ -41,8 +41,8 @@ if [[ -d "$HOME/.anyenv" ]]; then
             eval "$(anyenv init -)"
         fi
     fi
-    # TODO: 直す
-    for dir in $(find ~/.anyenv/envs -mindepth 1 -maxdepth 1 -type d); do
+    # `~/.anyenv/envs` 配下の `bin` と `shims` ディレクトリをパスとして登録
+    find ~/.anyenv/envs -mindepth 1 -maxdepth 1 -type d | while read -r dir; do
         register_forward_if_not "${dir}/bin"
         register_forward_if_not "${dir}/shims"
     done
