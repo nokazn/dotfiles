@@ -1,83 +1,168 @@
 local wezterm = require 'wezterm';
 
+local TARGET_TRIPLE = wezterm.target_triple
+local MAC_OS = TARGET_TRIPLE:find("darwin")
+local WINDOWS = TARGET_TRIPLE:find("windows")
+local LINUX = TARGET_TRIPLE:find("linux")
+
+-- use CTRL or CMD key
+local COMMAND_MODS_KEY = "CTRL"
+if MAC_OS then
+  COMMAND_MODS_KEY = "CMD"
+end
+
+-- domains for WSL environments
+local WSL_DOMAINS = {
+  {
+    name = "WSL:Distrod",
+    distribution = "Distrod",
+    default_cwd = "~"
+  },
+  {
+    name = "WSL:Ubuntu",
+    distribution = "Ubuntu",
+    default_cwd = "~"
+  },
+}
+
+----------------------------------------------------------------------------------------------------
+-- utility functions
+
 local utils = {}
 
 function utils.merge_lists(t1, t2)
   local lists = {}
-  for _, v in pairs(t1) do
+  for _, v in ipairs(t1) do
     table.insert(lists, v)
   end
-  for _, v in pairs(t2) do
+  for _, v in ipairs(t2) do
     table.insert(lists, v)
   end
   return lists
 end
 
-----------------------------------------------------------------------------------------------------
-
-wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-  local user_title = tab.active_pane.user_vars.panetitle
-  if user_title ~= nil and #user_title > 0 then
-    return {
-      { Text = tab.tab_index + 1 .. ":" .. user_title },
-    }
+function utils.merge_mods_with_commands(...)
+  local args = { ... }
+  local mods = "CTRL"
+  if MAC_OS then
+    mods = "CMD"
   end
 
-  local title = wezterm.truncate_right(utils.basename(tab.active_pane.foreground_process_name), max_width)
-  if title == "" then
-    -- local uri = utils.convert_home_dir(tab.active_pane.current_working_dir)
-    -- local basename = utils.basename(uri)
-    -- if basename == "" then
-    -- 	basename = uri
-    -- end
-    -- title = wezterm.truncate_right(basename, max_width)
-    local dir = string.gsub(tab.active_pane.title, "(.*[: ])(.*)", "%2")
-    title = wezterm.truncate_right(dir, max_width)
+  if args == nil then
+    return mods
   end
-  return {
-    { Text = tab.tab_index + 1 .. ":" .. title },
-  }
-end)
+  for _, v in ipairs(args) do
+    mods = mods .. "|" .. v
+  end
+  return mods
+end
 
 ----------------------------------------------------------------------------------------------------
 
-local function generate_tab_key_bindings()
+-- move active tab by CTRL/CMD + 1 ~ 9
+local function generate_active_tab_key_bindings()
   local keys = {}
   for i = 1, 9 do
+    -- use 1 ~ 9 keys
     table.insert(keys, {
       key = tostring(i),
-      mods = "CTRL",
-      action = wezterm.action { ActivateTab = i - 1 },
+      mods = COMMAND_MODS_KEY,
+      action = wezterm.action({ ActivateTab = i - 1 }),
     })
+    -- use F1 ~ F9 keys
     table.insert(keys, {
       key = "F" .. tostring(i),
-      mods = "CTRL",
-      action = wezterm.action { ActivateTab = i - 1 },
+      mods = COMMAND_MODS_KEY,
+      action = wezterm.action({ ActivateTab = i - 1 }),
     })
   end
   return keys
 end
 
+-- spawn commands for Windows or macOS/Linux environments
+local function generate_spawn_commands()
+  local spawn_commands = {}
+  if WINDOWS then
+    local wsl_spawn_commands = {}
+    for _, v in ipairs(WSL_DOMAINS) do
+      table.insert(wsl_spawn_commands, {
+        label = v.distribution,
+        args = { "wsl.exe", v.default_cwd, "-d", v.distribution },
+      })
+    end
+    -- WSL spawn commands & Windows spawn commands
+    spawn_commands = utils.merge_lists(wsl_spawn_commands, {
+      {
+        label = "NuShell",
+        args = { "nu.exe" },
+        cwd = "~"
+      },
+      {
+        label = "PowerShell",
+        args = { "powershell.exe", "-NoLogo" },
+        cwd = "~"
+      },
+      {
+        label = "Command Prompt",
+        args = { "cmd.exe" },
+        cwd = "~"
+      }
+    })
+  elseif MAC_OS or LINUX then
+    spawn_commands = {
+      {
+        label = "Zsh",
+        args = { "zsh", "-l" },
+        cwd = "~"
+      },
+      {
+        label = "Bash",
+        args = { "bash", "-l" },
+        cwd = "~"
+      }
+    }
+  end
+  return spawn_commands
+end
+
+-- spawn a new tab by CTRL/CMD + ALT + 1 ~ 9
+local function generate_spawn_tab_key_bindings(spawn_commands)
+  local keys = {}
+  for i, v in ipairs(spawn_commands) do
+    if (v.args ~= nil) then
+      table.insert(keys, {
+        key = tostring(i),
+        mods = utils.merge_mods_with_commands("ALT"),
+        action = wezterm.action({ SpawnCommandInNewTab = { args = v.args } })
+      })
+    end
+  end
+  return keys
+end
+
+----------------------------------------------------------------------------------------------------
+
+-- common key bindings
 local defaukt_key_bindings = {
   {
     key = "r",
-    mods = "CTRL|SHIFT",
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = "ReloadConfiguration"
   },
   {
     key = "P",
-    mods = "CTRL|SHIFT",
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = "ShowLauncher"
   },
   -- Select & Copy & Paste
   {
     key = "c",
-    mods = "CTRL|SHIFT",
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ CopyTo = "Clipboard" })
   },
   {
     key = "v",
-    mods = "CTRL|SHIFT",
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ PasteFrom = "Clipboard" })
   },
   {
@@ -87,12 +172,12 @@ local defaukt_key_bindings = {
   },
   {
     key = "c",
-    mods = "CTRL|ALT",
+    mods = utils.merge_mods_with_commands("ALT"),
     action = "ActivateCopyMode"
   },
   {
     key = "Space",
-    mods = "CTRL|SHIFT",
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = "QuickSelect"
   },
   -- Font Size
@@ -130,68 +215,44 @@ local defaukt_key_bindings = {
   },
   {
     key = "T",
-    mods = "CTRL|SHIFT",
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ SpawnTab = "CurrentPaneDomain" })
   },
   {
     key = "W",
-    mods = "CTRL|SHIFT",
-    action = wezterm.action({ CloseCurrentTab = { confirm = false } })
+    mods = utils.merge_mods_with_commands("SHIFT"),
+    action = wezterm.action({ CloseCurrentTab = { confirm = true } })
   },
   -- Pane
   {
     key = "=",
-    mods = "CTRL|SHIFT",
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } })
   },
   {
     key = "|",
-    mods = "CTRL|SHIFT",
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } })
   },
   {
     key = "x",
-    mods = "CTRL|SHIFT|ALT",
+    mods = utils.merge_mods_with_commands("SHIFT", "ALT"),
     action = wezterm.action({ CloseCurrentPane = { confirm = false } })
   },
   -- TODO: 操作が安定板で有効になったら設定する
   -- {
   --   key = "N",
-  --   mods = "CTRL|SHIFT",
+  --   mods = utils.merge_mods_with_commands("SHIFT"),
   --   action = wezterm.action({ RotatePanes = "Clockwise" })
   -- },
   -- {
   --   key = "P",
-  --   mods = "CTRL|SHIFT",
+  --   mods = utils.merge_mods_with_commands("SHIFT"),
   --   action = wezterm.action({ RotatePanes = "CounterClockwise" })
   -- },
 }
 
-local launch_menu = {
-  {
-    label = "Distrod",
-  },
-  {
-    label = "Ubuntu",
-    args = { "wsl.exe", "~", "-d", "Ubuntu" },
-    cwd = "~"
-  },
-  {
-    label = "NuShell",
-    args = { "nu.exe" },
-    cwd = "~"
-  },
-  {
-    label = "PowerShell",
-    args = { "powershell.exe" },
-    cwd = "~"
-  },
-  {
-    label = "Command Prompt",
-    args = { "cmd.exe" },
-    cwd = "~"
-  }
-}
+local spawn_commands = generate_spawn_commands()
 
 return {
   -- font
@@ -203,7 +264,7 @@ return {
       italic = false
     }
   ),
-  font_size = 12,
+  font_size = 12.5,
   use_ime = true,
 
   -- window
@@ -219,15 +280,14 @@ return {
   color_scheme = "Sublette",
 
   -- Key Bindings
-  keys = utils.merge_lists(defaukt_key_bindings, generate_tab_key_bindings()),
+  keys = utils.merge_lists(
+    defaukt_key_bindings,
+    utils.merge_lists(generate_active_tab_key_bindings(), generate_spawn_tab_key_bindings(spawn_commands))
+  ),
   disable_default_key_bindings = true,
 
-  -- Menu
-  launch_menu = launch_menu,
-  default_prog = {
-    "wsl.exe",
-    "~",
-    "-d",
-    "Distrod",
-  },
+  -- Multiplexing
+  launch_menu = spawn_commands,
+  wsl_domains = WSL_DOMAINS,
+  default_prog = spawn_commands[1].args
 }
