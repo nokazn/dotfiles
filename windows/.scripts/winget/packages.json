@@ -6,102 +6,44 @@
 		{
 			"Packages" :
 			[
-				{
-					"PackageIdentifier" : "Doist.Todoist"
-				},
-				{
-					"PackageIdentifier" : "7zip.7zip"
-				},
-				{
-					"PackageIdentifier" : "CPUID.CPU-Z"
-				},
-				{
-					"PackageIdentifier" : "CrystalDewWorld.CrystalDiskMark"
-				},
-				{
-					"PackageIdentifier" : "DeepL.DeepL"
-				},
-				{
-					"PackageIdentifier" : "Discord.Discord"
-				},
-				{
-					"PackageIdentifier" : "REALiX.HWiNFO"
-				},
-				{
-					"PackageIdentifier" : "Logitech.Options"
-				},
-				{
-					"PackageIdentifier" : "Microsoft.WindowsTerminal"
-				},
-				{
-					"PackageIdentifier" : "Microsoft.OneDrive"
-				},
-				{
-					"PackageIdentifier" : "Mozilla.Thunderbird"
-				},
-				{
-					"PackageIdentifier" : "Opera.Opera"
-				},
-				{
-					"PackageIdentifier" : "Postman.Postman"
-				},
-				{
-					"PackageIdentifier" : "Valve.Steam"
-				},
-				{
-					"PackageIdentifier" : "VideoLAN.VLC"
-				},
-				{
-					"PackageIdentifier" : "marha.VcXsrv"
-				},
-				{
-					"PackageIdentifier" : "VivaldiTechnologies.Vivaldi"
-				},
-				{
-					"PackageIdentifier" : "Notion.Notion"
-				},
-				{
-					"PackageIdentifier" : "PostgreSQL.pgAdmin"
-				},
-				{
-					"PackageIdentifier" : "Google.Chrome"
-				},
-				{
-					"PackageIdentifier" : "Mojang.MinecraftLauncher"
-				},
-				{
-					"PackageIdentifier" : "Keybase.Keybase"
-				},
-				{
-					"PackageIdentifier" : "EpicGames.EpicGamesLauncher"
-				},
-				{
-					"PackageIdentifier" : "Google.Drive"
-				},
-				{
-					"PackageIdentifier" : "Zoom.Zoom"
-				},
-				{
-					"PackageIdentifier" : "KeePassXCTeam.KeePassXC"
-				},
-				{
-					"PackageIdentifier" : "SlackTechnologies.Slack"
-				},
-				{
-					"PackageIdentifier" : "Dell.DisplayManager"
-				},
-				{
-					"PackageIdentifier" : "Adobe.Acrobat.Reader.32-bit"
-				},
-				{
-					"PackageIdentifier" : "LastFM.LastFMDesktopScrobbler"
-				},
-				{
-					"PackageIdentifier" : "Microsoft.VisualStudioCode"
-				},
-				{
-					"PackageIdentifier" : "Nushell.Nushell"
-				}
+				{ "PackageIdentifier" : "7zip.7zip" },
+				{ "PackageIdentifier" : "Adobe.Acrobat.Reader.32-bit" },
+				{ "PackageIdentifier" : "CPUID.CPU-Z" },
+				{ "PackageIdentifier" : "CrystalDewWorld.CrystalDiskInfo" },
+				{ "PackageIdentifier" : "CrystalDewWorld.CrystalDiskMark" },
+				{ "PackageIdentifier" : "DeepL.DeepL" },
+				{ "PackageIdentifier" : "Dell.DisplayManager" },
+				{ "PackageIdentifier" : "Discord.Discord" },
+				{ "PackageIdentifier" : "Doist.Todoist" },
+				{ "PackageIdentifier" : "EpicGames.EpicGamesLauncher" },
+				{ "PackageIdentifier" : "FastCopy.FastCopy" },
+				{ "PackageIdentifier" : "Google.Chrome" },
+				{ "PackageIdentifier" : "Google.Drive" },
+				{ "PackageIdentifier" : "KeePassXCTeam.KeePassXC" },
+				{ "PackageIdentifier" : "Keybase.Keybase" },
+				{ "PackageIdentifier" : "LastFM.LastFMDesktopScrobbler" },
+				{ "PackageIdentifier" : "Logitech.Options" },
+				{ "PackageIdentifier" : "marha.VcXsrv" },
+				{ "PackageIdentifier" : "Microsoft.OneDrive" },
+				{ "PackageIdentifier" : "Microsoft.VisualStudioCode" },
+				{ "PackageIdentifier" : "Microsoft.WindowsTerminal" },
+				{ "PackageIdentifier" : "Mojang.MinecraftLauncher" },
+				{ "PackageIdentifier" : "Mozilla.Firefox" },
+				{ "PackageIdentifier" : "Mozilla.Thunderbird" },
+				{ "PackageIdentifier" : "Notion.Notion" },
+				{ "PackageIdentifier" : "Nushell.Nushell" },
+				{ "PackageIdentifier" : "Opera.Opera" },
+				{ "PackageIdentifier" : "PostgreSQL.pgAdmin" },
+				{ "PackageIdentifier" : "Postman.Postman" },
+				{ "PackageIdentifier" : "REALiX.HWiNFO" },
+				{ "PackageIdentifier" : "RUFUS.RUFUS" },
+				{ "PackageIdentifier" : "SlackTechnologies.Slack" },
+				{ "PackageIdentifier" : "Typora.Typora" },
+				{ "PackageIdentifier" : "Valve.Steam" },
+				{ "PackageIdentifier" : "VideoLAN.VLC" },
+				{ "PackageIdentifier" : "VivaldiTechnologies.Vivaldi" },
+				{ "PackageIdentifier" : "voidtools.Everything" },
+				{ "PackageIdentifier" : "Zoom.Zoom" }
 			],
 			"SourceDetails" :
 			{
