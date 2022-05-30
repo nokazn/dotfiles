@@ -22,7 +22,6 @@ scoop install `
   nu `
   starship `
   neovim `
-  wezterm `
   neovide `
   volta `
   yarn
