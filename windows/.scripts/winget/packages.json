@@ -16,6 +16,7 @@
 				{ "PackageIdentifier" : "Discord.Discord" },
 				{ "PackageIdentifier" : "Doist.Todoist" },
 				{ "PackageIdentifier" : "EpicGames.EpicGamesLauncher" },
+				{ "PackageIdentifier" : "Eugeny.Tabby" },
 				{ "PackageIdentifier" : "FastCopy.FastCopy" },
 				{ "PackageIdentifier" : "Google.Chrome" },
 				{ "PackageIdentifier" : "Google.Drive" },
@@ -43,6 +44,7 @@
 				{ "PackageIdentifier" : "VideoLAN.VLC" },
 				{ "PackageIdentifier" : "VivaldiTechnologies.Vivaldi" },
 				{ "PackageIdentifier" : "voidtools.Everything" },
+				{ "PackageIdentifier" : "wez.wezterm" },
 				{ "PackageIdentifier" : "Zoom.Zoom" }
 			],
 			"SourceDetails" :
