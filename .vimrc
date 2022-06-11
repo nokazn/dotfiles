@@ -16,6 +16,7 @@ if dein#load_state('~/.vim/dein')
   call dein#add('preservim/nerdtree')
   call dein#add('itchyny/lightline.vim')
   call dein#add('joshdick/onedark.vim')
+  call dein#add('pineapplegiant/spaceduck')
   call dein#add('airblade/vim-gitgutter')
 
   " Required:
@@ -67,8 +68,8 @@ set t_Co=256
 " シンタックスハイライトを有効にする
 syntax enable
 
-" テーマを onedark にする
-colorscheme onedark
+" テーマを spaceduck にする
+colorscheme spaceduck
 
 " クリップボードと連携 (tmux-yunk 用)
 set clipboard=unnamedplus
