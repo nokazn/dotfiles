@@ -25,7 +25,6 @@ If a existing file conflicts with the symbolic link, this is backed up.
   - `add-nix` - add Nix
   - `add-home-manager` - add home-manager
   - `add-dein-vim` - add dein.vim
-  - `add-bash-it` - Add Bash-it
 - `home-manger-switch` - run `home-manager switch` command
 - `install`
   - `install-asdf-langs` - install asdf-vm (Node.js, yarn, Terraform)
