@@ -3,14 +3,15 @@
 let
   nixPackages = import ./home/packages { pkgs = pkgs; lib = lib; };
   extraNodePackages = builtins.attrValues (import ./node { });
+  username = "nokazn";
 in
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   home = {
-    username = "nokazn";
-    homeDirectory = "/home/nokazn";
+    username = username;
+    homeDirectory = "/home/${username}";
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
     # when a new Home Manager release introduces backwards
@@ -19,7 +20,7 @@ in
     # You can update Home Manager without changing this value. See
     # the Home Manager release notes for a list of state version
     # changes in each release.
-    stateVersion = "21.11";
+    stateVersion = "22.05";
     # nix packages
     packages = nixPackages ++ extraNodePackages;
     # dotfiles in home directory

@@ -15,26 +15,27 @@ init: add-tools home-manager-switch install # Install all languages & their pack
 # tools ----------------------------------------------------------------------------------------------------
 
 .PHONY: add-tools
-add-tools: add-nix add-home-manager add-dein-vim add-bash-it # Add developing tools
+add-tools: add-nix add-home-manager add-dein-vim # Add developing tools
 
 .PHONY: remove-tools
-remove-tools: remove-nix remove-dein-vim remove-bash-it # Remove developing tools
+remove-tools: remove-nix remove-dein-vim # Remove developing tools
 
 .PHONY: add-nix
 add-nix: _print-airplane # Install nix
 	@if type "nix-env" >/dev/null 2>&1; then \
-		echo "✅ nix is already installed."; \
+		echo "✅ Nix is already installed."; \
 	else \
 		curl -L https://nixos.org/nix/install | bash; \
 		source ~/.nix-profile/etc/profile.d/nix.sh \
-		echo "✅ nix has been installed successfully!"; \
+		echo "✅ Nix has been installed successfully!"; \
 	fi
 
 .PHONY: remove-nix
 remove-nix: _print-goodbye # Uninstall nix
+	home-manager uninstall
 	rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
 	sudo rm -rf /nix
-	@echo "✅ nix has been uninstalled successfully!"
+	@echo "✅ Nix has been uninstalled successfully!"
 
 .PHONY: add-home-manager
 add-home-manager: _print-airplane # Add home-manager
