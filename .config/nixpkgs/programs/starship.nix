@@ -37,7 +37,7 @@ in
     };
     directory = {
       disabled = false;
-      truncation_length = 5;
+      truncation_length = 3;
       truncate_to_repo = false;
       style = "bold ${pastel.green}";
       format = "in [$path]($style)[$read_only]() ";

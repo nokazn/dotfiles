@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 with pkgs; [
+  ghq # Remote repository management made easy
   git
   gist # Gist lets you upload to https://gist.github.com/
   gitAndTools.delta # viewer for git and diff output

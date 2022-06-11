@@ -8,6 +8,7 @@ with pkgs; let
   modern = [
     act # Run your GitHub Actions locally 噫
     asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
+    aws-vault # A vault for securely storing and accessing AWS credentials in development environments
     direnv
     dive # A tool for exploring each layer in a docker image
     dstat
@@ -18,6 +19,7 @@ with pkgs; let
     lazydocker # The lazier way to manage everything docker
     lazygit # A simple terminal UI for git commands
     mkcert # A simple zero-config tool to make locally trusted development certificates with any names you'd like.
+    navi # An interactive cheatsheet tool for the command-line and application launchers
     netlify-cli
     ncdu # A disk usage analyzer with an ncurses interface
     neofetch # CLI system information tool written in BASH that displays information about your system next to an image, your OS logo, or any ASCII file of your choice
