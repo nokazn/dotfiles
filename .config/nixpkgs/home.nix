@@ -27,6 +27,13 @@ in
     file = import ./home/files.nix { lib = lib; };
   };
 
+  news = {
+    # See https://github.com/nix-community/home-manager/blob/888eac32bd657bfe0d024c8770130d80d1c02cd3/home-manager/home-manager#L222-L253
+    # See https://github.com/microsoft/WSL/issues/2466
+    # prevent errors on executing notify-send in WSLg environment
+    display = "show";
+  };
+
   programs = {
     bash = import ./programs/bash.nix { };
     zsh = import ./programs/zsh { } // {
