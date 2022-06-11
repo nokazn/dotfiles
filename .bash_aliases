@@ -59,7 +59,6 @@ alias dc='docker'
 alias dcc='docker-compose'
 alias lg='lazygit'
 alias tf='terraform'
-alias chrome='google-chrome-stable'
 alias nix-shell='nix-shell --run $SHELL'
 alias hm='home-manager'
 alias hmsw='home-manager switch -f ~/dotfiles/.config/nixpkgs/home.nix'
@@ -121,7 +120,9 @@ fi
 # Nginx
 #
 NGINX_CONTAINER="nginx"
+unset NGINX_CONTAINER
 NGINX_PORT=8080
+unset NGINX_PORT
 
 # Run nginx in Docker.
 function docker-nginx() {
@@ -139,7 +140,9 @@ function docker-nginx-rm() {
 # PostgresQL
 #
 POSTGRESQL_CONTAINER="postgresql"
+unset POSTGRESQL_CONTAINER
 POSTGRESQL_PORT=5432
+unset POSTGRESQL_PORT
 
 # Run PostgreSQL in Docker.
 function docker-postgresql() {
@@ -162,8 +165,11 @@ function docker-postgresql-rm() {
 # MySQL
 #
 MYSQL_CONTAINER="mysql"
+unset MYSQL_CONTAINER
 MYSQL_NETWORK="mysql-network"
+unset MYSQL_NETWORK
 MYSQL_PORT=3306
+unset MYSQL_PORT
 
 # Run MySQL in Docker/
 function docker-mysql() {
@@ -190,8 +196,11 @@ function docker-mysql-rm() {
 # Redis
 #
 REDIS_CONTAINER="redis"
+unset REDIS_CONTAINER
 REDIS_NETWORK=redis-"network"
+unset REDIS_NETWORK
 REDIS_PORT=6379
+unset REDIS_PORT
 
 # Run Redis in Docker.
 function docker-redis() {
@@ -217,8 +226,11 @@ function docker-redis-rm() {
 # Memcached
 #
 MEMCACHED_CONTAINER="memcached"
+unset MEMCACHED_CONTAINER
 MEMCACHED_NETWORK="memcached-network"
+unset MEMCACHED_NETWORK
 MEMCACHED_PORT=11121
+unset MEMCACHED_PORT
 
 # Run Memcached in Docker.
 function docker-memcached() {
@@ -242,7 +254,9 @@ function docker-memcached-rm() {
 # Wordpress
 #
 WORKDPRESS_CONTAINER="wordpress"
+unset WORKDPRESS_CONTAINER
 WORKDPRESS_PORT=8080
+unset WORKDPRESS_PORT
 
 # Run Wordpress & MySQL in Docker.
 function docker-wordpress() {
