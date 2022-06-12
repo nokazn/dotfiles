@@ -47,5 +47,6 @@ in
     starship = import ./programs/starship.nix { };
     tmux = import ./programs/tmux.nix { pkgs = pkgs; };
     vim = import ./programs/vim.nix { };
+    zoxide = import ./programs/zoxide.nix { };
   };
 }
