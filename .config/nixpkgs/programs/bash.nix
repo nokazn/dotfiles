@@ -7,6 +7,10 @@ in
   enable = true;
   historySize = 10000;
   historyFileSize = 100000;
+  historyControl = [
+    "ignorespace"
+    "ignoredups"
+  ];
   historyIgnore = [
     "ls"
     "cd"

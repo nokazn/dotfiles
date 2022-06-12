@@ -10,8 +10,9 @@ esac
 zstyle :compinstall filename '~/.zshrc'
 # End of lines added by compinstall
 
-# Prezto ----------------------------------------------------------------------------------------------------
-
+#
+# Prezto
+#
 if [[ -e ~/.nix-profile/share/zsh-prezto/init.zsh ]]; then
     # source ~/.nix-profile/share/zsh-prezto/init.zsh
     # コマンドの補完が激遅になる

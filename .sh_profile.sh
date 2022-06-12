@@ -1,5 +1,10 @@
-#!/usr/bin/env bash
+# shellcheck disable=2148
 
+# ----------------------------------------------------------------------------------------------------
+# Profile
+# ----------------------------------------------------------------------------------------------------
+
+# fcitx
 if command -v fcitx >/dev/null; then
     export GTK_IM_MODULE=fcitx
     export QT_IM_MODULE=fcitx
@@ -9,8 +14,7 @@ if command -v fcitx >/dev/null; then
     # fcitx-autostart &> /dev/null
 fi
 
-# WSL ----------------------------------------------------------------------------------------------------
-
+# WSL
 if [[ "$(uname -r)" == *microsoft* ]]; then
     # WSLg 非対応の WSL 内では X Server 経由で GUI を表示
     if [[ ! -x /mnt/c/Windows/system32/wslg.exe ]]; then

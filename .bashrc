@@ -10,16 +10,8 @@ case $- in
       *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
-
 # append to the history file, don't overwrite it
 shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -32,7 +24,9 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# prompt ----------------------------------------------------------------------------------------------------
+#
+# Prompt
+#
 
 function ps1_date() {
     date +'%Y-%m-%d %-H:%M:%S'
@@ -110,7 +104,9 @@ xterm*|rxvt*)
     ;;
 esac
 
-# completion ----------------------------------------------------------------------------------------------------
+#
+# Completion
+#
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -125,7 +121,9 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# bash-it ----------------------------------------------------------------------------------------------------
+#
+# bash-it
+#
 
 # Path to the bash it configuration
 BASH_IT=~/.bash-it

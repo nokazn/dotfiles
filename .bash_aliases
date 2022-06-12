@@ -1,6 +1,12 @@
-#!/usr/bin/env bash
+# shellcheck disable=2148
 
-# WSL aliases ----------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------
+# Shell aliases
+# ----------------------------------------------------------------------------------------------------
+
+#
+# WSL aliases
+#
 
 # @param None
 # @param {0|1}
@@ -38,11 +44,11 @@ function code() {
 	fi
 }
 
-# docker ----------------------------------------------------------------------------------------------------
+#
+# Docker
+#
 
-#
 # Nginx
-#
 NGINX_CONTAINER="nginx"
 unset NGINX_CONTAINER
 NGINX_PORT=8080
@@ -60,9 +66,7 @@ function docker-nginx-rm() {
 	echo "✅ Removed '${NGINX_CONTAINER}' container."
 }
 
-#
 # PostgresQL
-#
 POSTGRESQL_CONTAINER="postgresql"
 unset POSTGRESQL_CONTAINER
 POSTGRESQL_PORT=5432
@@ -85,9 +89,7 @@ function docker-postgresql-rm() {
 	echo "✅ Removed '${POSTGRESQL_CONTAINER}' container."
 }
 
-#
 # MySQL
-#
 MYSQL_CONTAINER="mysql"
 unset MYSQL_CONTAINER
 MYSQL_NETWORK="mysql-network"
@@ -116,9 +118,7 @@ function docker-mysql-rm() {
 	echo "✅ Removed '${MYSQL_CONTAINER}' container."
 }
 
-#
 # Redis
-#
 REDIS_CONTAINER="redis"
 unset REDIS_CONTAINER
 REDIS_NETWORK=redis-"network"
@@ -146,9 +146,7 @@ function docker-redis-rm() {
 	echo "✅ Removed '${REDIS_CONTAINER}' container."
 }
 
-#
 # Memcached
-#
 MEMCACHED_CONTAINER="memcached"
 unset MEMCACHED_CONTAINER
 MEMCACHED_NETWORK="memcached-network"
@@ -174,9 +172,7 @@ function docker-memcached-rm() {
 	echo "✅ Removed '${MEMCACHED_CONTAINER}' container."
 }
 
-#
 # Wordpress
-#
 WORKDPRESS_CONTAINER="wordpress"
 unset WORKDPRESS_CONTAINER
 WORKDPRESS_PORT=8080
@@ -206,7 +202,9 @@ function docker-rmi-untagged-images() {
 	docker rmi "$(docker images -f "dangling=true" -q --no-trunc)"
 }
 
-# fzf ----------------------------------------------------------------------------------------------------
+#
+# fzf
+#
 
 function fgsw() {
 	local -r branch="$(git branch -vv | grep -v '^\s*\*' | fzf -q "$1")"
@@ -285,7 +283,9 @@ function fbroot() {
 	fi
 }
 
-# utilities ----------------------------------------------------------------------------------------------------
+#
+# utilities
+#
 
 # Show a list of installed apt packages.
 function apt-list() {
