@@ -11,6 +11,33 @@ in
     "ls"
     "cd"
   ];
-  bashrcExtra = builtins.readFile ../../../.bashrc + commonShellConfig.init;
+  shellAliases =
+    let
+      hasDircolors = builtins.pathExists /usr/bin/dircolors;
+    in
+    if hasDircolors then
+      {
+        ls = "ls --color=auto";
+        dir = "dir --color=auto";
+        vdir = "vdir --color=auto";
+        grep = "grep --color=auto";
+        fgrep = "fgrep --color=auto";
+        egrep = "egrep --color=auto";
+      }
+    else
+      { };
+  bashrcExtra =
+    builtins.readFile ../../../.bashrc
+    + commonShellConfig.init
+    + ''
+      # enable color support of ls and also add handy aliases
+      if [[ -x /usr/bin/dircolors ]]; then
+        if [[ -r ~/.dircolors ]]; then
+          eval "$(dircolors -b ~/.dircolors)"
+        else
+          eval "$(dircolors -b)"
+        fi
+      fi
+    '';
   profileExtra = builtins.readFile ../../../.bash_profile + commonShellConfig.profile;
 }
