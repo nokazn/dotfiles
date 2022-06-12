@@ -21,6 +21,12 @@ in
     # the Home Manager release notes for a list of state version
     # changes in each release.
     stateVersion = "22.05";
+
+    enableNixpkgsReleaseCheck = true;
+
+    sessionVariables = import ./home/sessionVariables.nix { };
+    shellAliases = import ./home/shellAliases.nix { };
+
     # nix packages
     packages = nixPackages ++ extraNodePackages;
     # dotfiles in home directory
@@ -47,5 +53,6 @@ in
     starship = import ./programs/starship.nix { };
     tmux = import ./programs/tmux.nix { pkgs = pkgs; };
     vim = import ./programs/vim.nix { };
+    zoxide = import ./programs/zoxide.nix { };
   };
 }

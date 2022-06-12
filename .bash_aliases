@@ -1,69 +1,5 @@
 #!/usr/bin/env bash
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-	if [[ -r ~/.dircolors ]]; then
-		eval "$(dircolors -b ~/.dircolors)"
-	else
-		eval "$(dircolors -b)"
-	fi
-	alias ls='ls --color=auto'
-	alias dir='dir --color=auto'
-	alias vdir='vdir --color=auto'
-
-	alias grep='grep --color=auto'
-	alias fgrep='fgrep --color=auto'
-	alias egrep='egrep --color=auto'
-fi
-
-if type colordiff >/dev/null 2>&1; then
-	alias diff='colordiff'
-fi
-
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more `ls` aliases
-alias la='ls -A'
-alias ll='ls -alF'
-alias l='ls -F'
-alias exa='exa --icons --git'
-alias exat='exa --tree'
-alias exal='exa -l'
-
-# Git aliases
-alias g='git'
-alias branch='git symbolic-ref --short HEAD'
-
-function hg() {
-	git config --get-regexp "alias.*" \
-		| sed -E -e "s/alias\.//" -e "s/\s/#/" \
-		| column -s "#" -t \
-		| more
-}
-
-# Add an "alert" alias for long running commands.  Use like so:
-# sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# custom aliases
-alias dotfiles='cd ~/dotfiles'
-alias relogin='exec $SHELL -l'
-alias repath='source ~/.path.sh'
-alias realias='source ~/.bash_aliases'
-alias relaod-tmux='tmux source-file ~/.config/tmux/tmux.conf'
-alias ssh-keygen-rsa="ssh-keygen -t rsa -b 4096 -C"
-alias apt-install='apt install --no-install-recommends'
-alias apt-purge='apt --purge remove'
-alias dc='docker'
-alias dcc='docker-compose'
-alias lg='lazygit'
-alias tf='terraform'
-alias nix-shell='nix-shell --run $SHELL'
-alias hm='home-manager'
-alias hmsw='home-manager switch -f ~/dotfiles/.config/nixpkgs/home.nix'
-alias sampler='sampler -c ~/.config/sampler/config.yml'
-
 # WSL aliases ----------------------------------------------------------------------------------------------------
 
 # @param None
@@ -101,18 +37,6 @@ function code() {
 		$0 "$@"
 	fi
 }
-
-if _is-wsl; then
-	alias explorer.exe='/mnt/c/Windows/explorer.exe'
-	alias bash.exe='/mnt/c/Windows/system32/bash.exe'
-	alias cmd.exe='/mnt/c/Windows/system32/cmd.exe'
-	alias tasklist.exe='/mnt/c/Windows/system32/tasklist.exe'
-	alias clip.exe='/mnt/c/Windows/system32/clip.exe'
-	alias clip='/mnt/c/Windows/system32/clip.exe'
-	alias wsl.exe='/mnt/c/Windows/system32/wsl.exe'
-	alias wsl='/mnt/c/Windows/system32/wsl.exe'
-	alias powershell.exe='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
-fi
 
 # docker ----------------------------------------------------------------------------------------------------
 
@@ -418,6 +342,14 @@ function aliases() {
 		| sed -E -e "s/Γ'/Γ/" \
 		| sed -E -e "s/'$//" \
 		| column -s "Γ" -t
+}
+
+# Show Git aliases
+function hg() {
+	git config --get-regexp "alias.*" \
+		| sed -E -e "s/alias\.//" -e "s/\s/#/" \
+		| column -s "#" -t \
+		| more
 }
 
 # Change default shell for a current user
