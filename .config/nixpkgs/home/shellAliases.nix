@@ -59,5 +59,4 @@ in
   ssh-keygen-rsa = "ssh-keygen -t rsa -b 4096 -C";
   tf = "terraform";
   z = "zoxide";
-  bbb = "pwd";
 } // wslAliases
