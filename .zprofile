@@ -9,23 +9,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
 fi
 
 #
-# Editors
-#
-
-export EDITOR='vim'
-export SUDO_EDITOR0'vim'
-export VISUAL='vim'
-export PAGER='less'
-
-#
-# Language
-#
-
-if [[ -z "$LANG" ]]; then
-  export LANG='en_US.UTF-8'
-fi
-
-#
 # Paths
 #
 
@@ -42,15 +25,6 @@ path=(
   /usr/local/{bin,sbin}
   $path
 )
-
-#
-# Less
-#
-
-# Set the default Less options.
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-# Remove -X and -F (exit if the content fits on one screen) to enable it.
-export LESS='-F -g -i -M -R -S -w -X -z-4'
 
 # Set the Less input preprocessor.
 # Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.

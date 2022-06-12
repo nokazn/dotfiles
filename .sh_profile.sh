@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-export EDITOR=vim
-
 if command -v fcitx >/dev/null; then
     export GTK_IM_MODULE=fcitx
     export QT_IM_MODULE=fcitx
