@@ -51,7 +51,6 @@ in
   hmsw = "home-manager switch -f ${DOTFILES}/.config/nixpkgs/home.nix";
   lg = "lazygit";
   nix-shell = "nix-shell --run $SHELL";
-  realias = "source ~/.bash_aliases";
   relaod-tmux = "tmux source-file ~/.config/tmux/tmux.conf";
   relogin = "exec $SHELL -l";
   repath = "source ~/.path.sh";

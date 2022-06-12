@@ -1,4 +1,8 @@
-#!/usr/bin/env bash
+# shellcheck disable=2148
+
+# ----------------------------------------------------------------------------------------------------
+# PATH environment variables
+# ----------------------------------------------------------------------------------------------------
 
 # @param {string}
 # @return {string}
@@ -19,8 +23,6 @@ function register_backward_if_not() {
     fi
     return 0
 }
-
-# ----------------------------------------------------------------------------------------------------
 
 # set PATH so it includes user's private bin if it exists
 if [[ -d "$HOME/bin" ]]; then
@@ -96,5 +98,3 @@ if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 fi
 
 export PATH=$PATH
-
-# exit 0 とするとプロセスが終了し、source コマンドが反映されない
