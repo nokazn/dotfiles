@@ -21,6 +21,12 @@ in
     # the Home Manager release notes for a list of state version
     # changes in each release.
     stateVersion = "22.05";
+
+    enableNixpkgsReleaseCheck = true;
+
+    sessionVariables = import ./home/sessionVariables.nix { };
+    shellAliases = import ./home/shellAliases.nix { };
+
     # nix packages
     packages = nixPackages ++ extraNodePackages;
     # dotfiles in home directory
