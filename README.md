@@ -16,9 +16,6 @@ $ sudo apt update -y && sudo apt install -y git make gcc curl wget unzip xz-util
 $ sudo pacman -Syyu && sudo pacman -S git make gcc curl wget unzip
 ```
 
-`make deploy` command makes symbolic links to files that starting with a dot and followed 2 or more chars in `~/dotfiles/` directory.  
-If a existing file conflicts with the symbolic link, this is backed up.
-
 `make init` command executes targets below.
 
 - `add-tools`
@@ -43,7 +40,7 @@ $ make init
 ### Change default shell
 
 ```bash
-# `chshs` is an  alias for `chsh -s`
+# `chshs` is an alias for `chsh -s`
 $ chshs zsh
 ```
 
