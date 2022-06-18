@@ -2,5 +2,5 @@
 
 with  pkgs; [
   php
-  php74Packages.composer
+  php81Packages.composer
 ]
