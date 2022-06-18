@@ -10,15 +10,9 @@ esac
 zstyle :compinstall filename '~/.zshrc'
 # End of lines added by compinstall
 
-#
-# Prezto
-#
-if [[ -e ~/.nix-profile/share/zsh-prezto/init.zsh ]]; then
-    # source ~/.nix-profile/share/zsh-prezto/init.zsh
-    # コマンドの補完が激遅になる
-    unsetopt PATH_DIRS
-    unsetopt AUTO_PARAM_SLASH
-fi
+# TODO: https://github.com/NixOS/nix/issues/5445
+# 補完を有効化
+autoload -Uz compinit && compinit
 
 # デバッグ用
 # if (command -v zprof > /dev/null 2>&1); then

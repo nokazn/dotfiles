@@ -5,18 +5,18 @@
   color = true;
   # Prezto modules to load (https://github.com/sorin-ionescu/prezto/tree/master/modules)
   pmodules = [
-    "environment"
-    "terminal"
-    "editor"
-    "history"
+    "completion"
     "directory"
+    "editor"
+    "environment"
+    "git"
+    "history"
     "spectrum"
     "utility"
-    "completion"
-    "git"
   ];
   editor.keymap = "vi";
   git.submoduleIgnore = "all";
+  prompt.theme = "off";
   ssh.identities = [
     "id_rsa"
     "id_rsa2"
@@ -31,4 +31,11 @@
     "cursor"
     "root"
   ];
+  extraConfig = ''
+    zstyle ':prezto:module:git:alias' skip 'yes'
+
+    # コマンドの補完が激遅になるため
+    unsetopt PATH_DIRS
+    unsetopt AUTO_PARAM_SLASH
+  '';
 }
