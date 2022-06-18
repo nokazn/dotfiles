@@ -12,6 +12,7 @@ function get-path-in-cmd() {
   )"
 }
 
+# @param {string[]} - target files to deploy
 function main() {
   # プロセス置換して、一度 Windows 内のディレクトリに移動して %USERPROFILE% を出力する
   local -r destination_base_dir="$(
@@ -21,9 +22,13 @@ function main() {
   "${ROOT_DIR}/scripts/_deploy/main.sh" \
     "${ROOT_DIR}/windows" \
     "${destination_base_dir}" \
-    "${destination_base_dir}/${BACKUP_DIR_NAME}"
+    "${destination_base_dir}/${BACKUP_DIR_NAME}" \
+    "$@"
 
-  sudo cp --verbose "${ROOT_DIR}/wsl/etc/wsl.conf" /etc/wsl.conf
+  # コピーするファイル名が指定されなかった場合にのみ実行
+  if [[ $# -eq 0 ]]; then
+    sudo cp --verbose "${ROOT_DIR}/wsl/etc/wsl.conf" /etc/wsl.conf
+  fi
 }
 
-main
+main "$@"

@@ -2,7 +2,7 @@
 
 set -eu -o pipefail
 
-DEBUG=$([[ $# -gt 0 ]] && test "$1" = --debug; echo $?)
+DEBUG=$([[ $# -gt 0 ]] && [[ "${*:4}" =~ --debug ]] && echo 0 || echo 1)
 readonly DEBUG
 file_counter=0
 
@@ -26,7 +26,7 @@ function ls_all() {
 # @param {string} - directory path
 # @return {void}
 function ls_dotfiles() {
-  # dot で始まる2文字以上のファイル
+  # dot で始まる2文字以上のファイル or AppData 内のファイル
   ls_all "$1" | grep --extended-regexp -e "^\.[[:alnum:]]{2,}" -e "AppData"
   return 0
 }
@@ -100,28 +100,6 @@ function make_backup() {
   return 0
 }
 
-# email のフィールドが所定の形式になっているかチェックする
-# @param {string} - file path
-# @param {string} - email
-# @return {void}
-function check_email_attribute() {
-  # dotfiles 内の .gitconfig で該当行が email = ${email} の形式になっているかチェック
-  local -r email_line=$(
-    grep < "$1" --line-number "email\s*=\s*" | grep "$2"
-  )
-  if [[ -z ${email_line} ]]; then
-    local -r error_line_number=$(cut -f 1 -d ":" <<< "${email_line}")
-    # 1行目にエラーの行番号が取得できればを表示し、2行目にエラーのあった行を表示
-    echo -n "❌ An error occured when inserting email to $1"
-    if [[ ${error_line_number} ]]; then
-      echo -n "at line ${error_line_number}"
-    fi
-    echo -e ": \n  ${email_line}"
-    return 1
-  fi
-  return 0
-}
-
 # @param {string} - source file path (always exists)
 # @param {string} - destination file path
 # @return {void}
@@ -154,7 +132,7 @@ function make_symbolic_link() {
     return 0
   elif [[ ! -e $1 ]]; then
     echo "❌ invalid source file path: " "$1"
-    exit 1
+    return 0
   fi
 
   if [[ ! -e $2 ]]; then
@@ -182,6 +160,7 @@ function make_symbolic_link() {
 # @param {string} - source directory path for dotfiles
 # @param {string} - destination directory path
 # @param {stirng} - destination directory for back-up path
+# @param {stirng[]} - target files to deploy
 # @return {void}
 function deploy() {
   if [[ ! -d $1 ]]; then
@@ -189,7 +168,16 @@ function deploy() {
     return 0;
   fi
 
-  for file in $(ls_dotfiles "$1"); do
+  local -r rest_params="${*:4}"
+  if [[ -n "${rest_params}" ]]; then
+    # ファイル名が指定された場合は、それらをコピーする
+    files="${rest_params}"
+  else
+    # ファイル名が指定されなかった場合は、該当ディレクトリ内のすべてのファイルをコピーする
+    files=$(ls_dotfiles "$1")
+  fi
+
+  for file in ${files}; do
     case ${file} in
       ".git" | ".gitignore" | ".github")
         continue
@@ -211,18 +199,22 @@ function deploy() {
 # @param {stirng} - destination directory for back-up path
 # @return {void}
 function main() {
-  if [[ ! ${DEBUG} -eq 0 ]]; then
+  if [[ ${DEBUG} -eq 0 ]]; then
+    local -r rest_params="${*:4}"
+    deploy "$1" "$2" "$3" "${rest_params/--debug/}"
+  else
     read -rp "Do you really want to deploy dotfiles? (Y/n) " response
     if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
       return 0;
     fi
+    deploy "$@"
   fi
 
-  deploy "$1" "$2" "$3"
+
   if [[ $file_counter -gt 0 ]]; then
     echo "Successfully ${file_counter} dotfiles are initialized!"
   fi
 }
 
-main "$1" "$2" "$3"
+main "$@"
 exit 0
