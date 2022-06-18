@@ -231,9 +231,33 @@ local defaukt_key_bindings = {
     action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } })
   },
   {
+    key = "Z",
+    mods = utils.merge_mods_with_commands("SHIFT"),
+    action = "TogglePaneZoomState"
+  },
+  {
+    key = "LeftArrow",
+    mods = utils.merge_mods_with_commands("ALT"),
+    action = wezterm.action { ActivatePaneDirection = "Left" } },
+  {
+    key = "RightArrow",
+    mods = utils.merge_mods_with_commands("ALT"),
+    action = wezterm.action({ ActivatePaneDirection = "Right" })
+  },
+  {
+    key = "UpArrow",
+    mods = utils.merge_mods_with_commands("ALT"),
+    action = wezterm.action({ ActivatePaneDirection = "Up" })
+  },
+  {
+    key = "DownArrow",
+    mods = utils.merge_mods_with_commands("ALT"),
+    action = wezterm.action({ ActivatePaneDirection = "Down" })
+  },
+  {
     key = "x",
-    mods = utils.merge_mods_with_commands("SHIFT", "ALT"),
-    action = wezterm.action({ CloseCurrentPane = { confirm = false } })
+    mods = utils.merge_mods_with_commands("SHIFT"),
+    action = wezterm.action({ CloseCurrentPane = { confirm = true } })
   },
   -- TODO: 操作が安定板で有効になったら設定する
   -- {
