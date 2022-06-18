@@ -179,34 +179,34 @@ local defaukt_key_bindings = {
   -- Font Size
   {
     key = "0",
-    mods = "CTRL",
+    mods = utils.merge_mods_with_commands(),
     action = "ResetFontSize"
   },
   {
     key = ";",
-    mods = "CTRL",
+    mods = utils.merge_mods_with_commands(),
     action = "IncreaseFontSize"
   },
   {
     key = "-",
-    mods = "CTRL",
+    mods = utils.merge_mods_with_commands(),
     action = "DecreaseFontSize"
   },
   -- Window
   {
     key = "n",
-    mods = "CTRL",
+    mods = utils.merge_mods_with_commands(),
     action = "SpawnWindow"
   },
   -- Tab
   {
     key = "PageUp",
-    mods = "CTRL",
+    mods = utils.merge_mods_with_commands(),
     action = wezterm.action({ ActivateTabRelative = -1 })
   },
   {
     key = "PageDown",
-    mods = "CTRL",
+    mods = utils.merge_mods_with_commands(),
     action = wezterm.action({ ActivateTabRelative = 1 })
   },
   {
