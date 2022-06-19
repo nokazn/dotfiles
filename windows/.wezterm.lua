@@ -237,21 +237,21 @@ local defaukt_key_bindings = {
   },
   {
     key = "LeftArrow",
-    mods = utils.merge_mods_with_commands("ALT"),
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action { ActivatePaneDirection = "Left" } },
   {
     key = "RightArrow",
-    mods = utils.merge_mods_with_commands("ALT"),
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ ActivatePaneDirection = "Right" })
   },
   {
     key = "UpArrow",
-    mods = utils.merge_mods_with_commands("ALT"),
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ ActivatePaneDirection = "Up" })
   },
   {
     key = "DownArrow",
-    mods = utils.merge_mods_with_commands("ALT"),
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ ActivatePaneDirection = "Down" })
   },
   {

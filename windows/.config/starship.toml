@@ -1,39 +1,34 @@
 add_newline = true
+format = "[┌](bold fg:240) $username$hostanem$shlvl$directory$git_branch$git_metrics$git_status$git_state$hg_branch$container$docker_context$shell$nix_shell\n[└](bold fg:240)$jobs$battery$character\n"
+right_format = "$time"
 
 [aws]
 disabled = true
 
-[crystal]
+[azure]
 disabled = true
 
-[dart]
-disabled = true
+[battery]
+format = " [$symbol$percentage]($style) "
+[[battery.display]]
+threshold = 20
 
-[deno]
-disabled = true
+[character]
+error_symbol = "[❯](bold fg:212)"
+success_symbol = "[❯](bold fg:121)"
+vicmd_symbol = "[❮](bold fg:121)"
+vimcmd_replace_symbol = "[❮](bold fg:105)"
+vimcmd_visual_symbol = "[❮](bold fg:229)"
 
 [directory]
 disabled = false
-format = "in [$path]($style)[$read_only]() "
-style = "bold fg:156"
+format = "[$path]($style)$read_only "
+style = "bold fg:121"
 truncate_to_repo = false
-truncation_length = 5
+truncation_length = 3
 
-[dotnet]
+[docker_context]
 disabled = false
-format = "via [$symbol($version)]($style) "
-heuristic = true
-
-[elixir]
-disabled = true
-
-[elm]
-disabled = false
-format = "via [$symbol($version)]($style) "
-symbol = "🌳Elm "
-
-[erlang]
-disabled = true
 
 [gcloud]
 disabled = true
@@ -61,14 +56,11 @@ disabled = false
 diverged = "⇕⇡$ahead_count⇣$behind_count"
 format = "\\[[$all_status$ahead_behind]($style)\\] "
 modified = "📝"
-renamed = "🔄"
+renamed = "🔃"
 stashed = "📦"
 style = "fg:159"
 untracked = "🔍"
 up_to_date = "✨"
-
-[golang]
-disabled = true
 
 [hostname]
 disabled = false
@@ -76,50 +68,23 @@ format = "@ [$hostname]($style) "
 ssh_only = true
 style = "bold fg:212"
 
-[java]
-disabled = true
-
-[julia]
-disabled = true
-
-[kotlin]
-disabled = true
+[jobs]
+disabled = false
+format = " [$symbol$number]($style)"
 
 [memory_usage]
 disabled = false
 
-[nim]
+[nix_shell]
+disabled = false
+
+[openstack]
 disabled = true
 
-[nodejs]
-disabled = true
-
-[package]
-disabled = true
-
-[perl]
-disabled = true
-
-[php]
-disabled = true
-
-[purescript]
-disabled = true
-
-[python]
-disabled = true
-
-[rlang]
-disabled = true
-
-[ruby]
-disabled = true
-
-[rust]
-disabled = true
-
-[scala]
-disabled = true
+[shell]
+disabled = false
+format = "[\\($indicator\\)]($style) "
+style = "fg:240"
 
 [shlvl]
 disabled = false
@@ -130,11 +95,12 @@ threshold = 3
 
 [time]
 disabled = false
-format = "🕙 [$time]($style) "
+format = "[$time]($style)"
 style = "fg:229"
+time_format = "%k:%M:%S"
 
 [username]
 disabled = false
 format = "[$user]($style) "
-show_always = true
-style_user = "bold fg:217"
+show_always = false
+style_user = "bold fg:218"

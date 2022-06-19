@@ -2,32 +2,49 @@
 
 let
   pastel = {
-    orange = "fg:217";
+    orange = "fg:218";
     pink = "fg:212";
-    green = "fg:156";
+    green = "fg:121";
     yellow = "fg:229";
     cyan = "fg:159";
+    purple = "fg:105";
+    grey = "fg:240";
   };
+  toBold = color: "bold ${color}";
+  toBoldStyle = str: color: "[${str}](${toBold color})";
 in
 {
   enable = true;
+  enableBashIntegration = true;
   enableZshIntegration = true;
+  enableFishIntegration = true;
 
   settings = {
     add_newline = true;
+    format =
+      let
+        toDimmedStyle = str: toBoldStyle str pastel.grey;
+      in
+      ''
+        ${toDimmedStyle "┌"} $username$hostanem$shlvl$directory$git_branch$git_metrics$git_status$git_state$hg_branch$container$docker_context$shell$nix_shell
+        ${toDimmedStyle "└"}$jobs$battery$character
+      '';
+    right_format = "$time";
 
     username = {
       disabled = false;
-      show_always = true;
-      style_user = "bold ${pastel.orange}";
+      show_always = false;
+      style_user = toBold pastel.orange;
       format = "[$user]($style) ";
     };
+
     hostname = {
       disabled = false;
       ssh_only = true;
-      style = "bold ${pastel.pink}";
+      style = toBold pastel.pink;
       format = "@ [$hostname]($style) ";
     };
+
     shlvl = {
       disabled = false;
       threshold = 3;
@@ -35,26 +52,28 @@ in
       style = pastel.pink;
       format = "\\([$symbol$shlvl]($style)\\) ";
     };
+
     directory = {
       disabled = false;
       truncation_length = 3;
       truncate_to_repo = false;
-      style = "bold ${pastel.green}";
-      format = "in [$path]($style)[$read_only]() ";
+      style = toBold pastel.green;
+      format = "[$path]($style)$read_only ";
     };
+
     memory_usage = {
       disabled = false;
     };
-    time = {
+
+    nix_shell = {
       disabled = false;
-      style = pastel.yellow;
-      format = "🕙 [$time]($style) ";
     };
 
+    # Git
     git_branch = {
       symbol = "";
       disabled = false;
-      style = "bold ${pastel.cyan}";
+      style = toBold pastel.cyan;
     };
     git_metrics = {
       disabled = false;
@@ -69,10 +88,10 @@ in
       untracked = "🔍";
       stashed = "📦";
       modified = "📝";
-      renamed = "🔄";
+      renamed = "🔃";
       deleted = "🗑️";
       ahead = "⇡$count";
-      diverged = "⇕⇡$ahead_count⇣$behind_count";
+      diverged = "⇡$ahead_count⇣$behind_count";
       behind = "⇣$count";
       style = pastel.cyan;
       format = "\\[[$all_status$ahead_behind]($style)\\] ";
@@ -81,41 +100,59 @@ in
       disabled = false;
     };
 
-    # 言語
-    dotnet = {
+    # Shell
+    shell = {
       disabled = false;
-      heuristic = true;
-      format = "via [$symbol($version)]($style) ";
+      style = pastel.grey;
+      format = "[\\($indicator\\)]($style) ";
     };
-    elm = {
-      disabled = false;
-      symbol = "🌳Elm ";
-      format = "via [$symbol($version)]($style) ";
-    };
-    # 以下は有効にすると遅くなるので無効にする
-    crystal.disabled = true;
-    dart.disabled = true;
-    deno.disabled = true;
-    elixir.disabled = true;
-    erlang.disabled = true;
-    golang.disabled = true;
-    java.disabled = true;
-    julia.disabled = true;
-    kotlin.disabled = true;
-    nim.disabled = true;
-    nodejs.disabled = true;
-    perl.disabled = true;
-    php.disabled = true;
-    purescript.disabled = true;
-    python.disabled = true;
-    rlang.disabled = true;
-    ruby.disabled = true;
-    rust.disabled = true;
-    scala.disabled = true;
 
-    gcloud.disabled = true;
+    docker_context = {
+      disabled = false;
+    };
+
+    time = {
+      disabled = false;
+      style = pastel.yellow;
+      time_format = "%k:%M:%S";
+      format = "[$time]($style)";
+    };
+
+    #
+    # 2行目
+    #
+
+    jobs = {
+      disabled = false;
+      format = " [$symbol$number]($style)";
+    };
+
+    battery = {
+      format = " [$symbol$percentage]($style) ";
+      display = [
+        {
+          threshold = 20;
+        }
+      ];
+    };
+
+    character =
+      let
+        rightWith = toBoldStyle "❯";
+        leftWith = toBoldStyle "❮";
+      in
+      {
+        success_symbol = rightWith pastel.green;
+        error_symbol = rightWith pastel.pink;
+        vicmd_symbol = leftWith pastel.green;
+        vimcmd_replace_symbol = leftWith pastel.purple;
+        vimcmd_visual_symbol = leftWith pastel.yellow;
+      };
+
+    # Cloud
     aws.disabled = true;
-
-    package.disabled = true;
+    azure.disabled = true;
+    gcloud.disabled = true;
+    openstack.disabled = true;
   };
 }
