@@ -46,6 +46,7 @@ in
       prezto = import ./programs/zsh/prezto.nix { };
     };
     direnv = import ./programs/direnv.nix { };
+    fish = import ./programs/fish.nix { };
     fzf = import ./programs/fzf.nix { };
     go = import ./programs/go.nix { };
     neovim = import ./programs/neovim.nix { pkgs = pkgs; };
