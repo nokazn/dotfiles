@@ -145,8 +145,6 @@ in
         success_symbol = rightWith pastel.green;
         error_symbol = rightWith pastel.pink;
         vicmd_symbol = leftWith pastel.green;
-        vimcmd_replace_symbol = leftWith pastel.purple;
-        vimcmd_visual_symbol = leftWith pastel.yellow;
       };
 
     # Cloud

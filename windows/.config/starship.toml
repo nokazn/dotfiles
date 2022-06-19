@@ -17,8 +17,6 @@ threshold = 20
 error_symbol = "[❯](bold fg:212)"
 success_symbol = "[❯](bold fg:121)"
 vicmd_symbol = "[❮](bold fg:121)"
-vimcmd_replace_symbol = "[❮](bold fg:105)"
-vimcmd_visual_symbol = "[❮](bold fg:229)"
 
 [directory]
 disabled = false
