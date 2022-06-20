@@ -18,11 +18,14 @@ in
     share = true;
     size = 10000;
   };
-  plugins = [
+  shellAliases = {
+    zsh-login-benchmark = "time ( zsh -i -c exit )";
+  };
+  plugins = with pkgs; [
     {
       # zsh completion for docker
       name = "docker-zsh-completion";
-      src = pkgs.fetchFromGitHub {
+      src = fetchFromGitHub {
         owner = "greymd";
         repo = "docker-zsh-completion";
         rev = "master";

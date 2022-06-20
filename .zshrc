@@ -14,6 +14,11 @@ zstyle :compinstall filename '~/.zshrc'
 # 補完を有効化
 autoload -Uz compinit && compinit
 
+# .zshrc が変更されたとき、自動でコンパイルする
+if [ $DOTFILES/.zshrc -nt ~/.zshrc.zwc ]; then
+    zcompile ~/.zshrc
+fi
+
 # デバッグ用
 # if (command -v zprof > /dev/null 2>&1); then
 #     zprof
