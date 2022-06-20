@@ -298,6 +298,8 @@ return {
   },
   enable_scroll_bar = false,
   color_scheme = "Sublette",
+  -- https://wezfurlong.org/wezterm/config/lua/config/skip_close_confirmation_for_processes_named.html
+  skip_close_confirmation_for_processes_named = { "" },
 
   -- Key Bindings
   keys = utils.merge_lists(
