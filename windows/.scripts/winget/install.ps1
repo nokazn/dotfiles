@@ -1,1 +1,1 @@
-winet import ~/.scripts/winget/packages.json
+winget import "$env:USERPROFILE\.scripts\winget\packages.json"

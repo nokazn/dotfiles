@@ -10,4 +10,4 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
   }
 }
 
-choco install ~\.scripts\chocolatey\packages.config
+choco install "$env:USERPROFILE\.scripts\chocolatey\packages.config"
