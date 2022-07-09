@@ -20,7 +20,6 @@ with pkgs; let
     lazygit # A simple terminal UI for git commands
     mkcert # A simple zero-config tool to make locally trusted development certificates with any names you'd like.
     navi # An interactive cheatsheet tool for the command-line and application launchers
-    netlify-cli
     ncdu # A disk usage analyzer with an ncurses interface
     neofetch # CLI system information tool written in BASH that displays information about your system next to an image, your OS logo, or any ASCII file of your choice
     nkf # A Kanji code converter among networks
