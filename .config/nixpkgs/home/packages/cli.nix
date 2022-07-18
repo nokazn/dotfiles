@@ -13,8 +13,9 @@ with pkgs; let
     dive # A tool for exploring each layer in a docker image
     dstat
     expect
-    hyperfine # A command-line benchmarking tool
     gtop
+    hyperfine # A command-line benchmarking tool
+    keybase # The Keybase official command-line utility and service
     jq # A lightweight and flexible command-line JSON processor
     lazydocker # The lazier way to manage everything docker
     lazygit # A simple terminal UI for git commands
@@ -37,8 +38,8 @@ with pkgs; let
     tldr # A collection of community-maintained help pages for command-line tools
     tokei # compiled with serialization support: json, cbor, yaml
     tree # Recursive directory listing command
-    wslu # A collection of utilities for Windows 10 Linux Subsystems
     wireshark
+    wslu # A collection of utilities for Windows 10 Linux Subsystems
     yq # Command-line YAML processor - jq wrapper for YAML documents
   ];
   alternative = [
