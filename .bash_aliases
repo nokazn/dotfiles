@@ -17,7 +17,7 @@ function _is-wsl() {
 # cmd.exe で echo する
 # @param {string}
 function _echo-in-cmd() {
-	if [[ ! -e /ment/c ]]; then
+	if [[ ! -e /mnt/c ]]; then
 		return 0
 	fi
 	cd /mnt/c || return 1;
