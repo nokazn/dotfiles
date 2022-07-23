@@ -36,6 +36,10 @@ in
   g = "git";
   branch = "git symbolic-ref --short HEAD";
 
+  # GPG aliases
+  gpg-list-secret-key-ids = "gpg --list-secret-keys --keyid-format LONG | grep -E '^sec' | awk '{ print $2 }' | sed -E 's/^.+\\///'";
+  gpg-agent-reload = "gpgconf --kill gpg-agent";
+
   # custom aliases
   apt-install = "apt install --no-install-recommends";
   apt-purge = "apt --purge remove";
