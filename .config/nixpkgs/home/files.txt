@@ -3,6 +3,7 @@
 .config/broot/conf.hjson
 .config/gh/config.yml
 .config/git/attributes
+.config/git/config.work
 .config/git/ignore
 .config/htop/htoprc
 .config/lazygit/config.yml
