@@ -47,6 +47,13 @@
 	smudge = cat
 	clean = sed -E -e 's/signingkey\\s*=\\s+.+/signingkey =/'
 
+[filter "ignore-gitconfig-properties"]
+	smudge = cat
+	clean = sed -E -e 's/=\\s*.+/=/'
+
+[includeIf "gitdir:~/work/"]
+  path = ~/.config/.git/config.work
+
 [alias]
 	a = add
 	aa = !git add -u && git add . && git status --show-stash
