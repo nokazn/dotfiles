@@ -9,6 +9,6 @@ let
   profile = builtins.readFile ../../.sh_profile.sh;
 in
 {
-  init = "\n" + aliases + "\n" + paths;
+  init = "\n" + aliases + "\n" + paths + init;
   profile = "\n" + profile;
 }
