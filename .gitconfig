@@ -1,6 +1,5 @@
 [user]
 	useConfigOnly = true
-	# TODO: ここの変更をコミットに含めない
 	signingkey =
 
 [core]
@@ -43,6 +42,17 @@
 [filter "ignore-npm-registry-token"]
 	smudge = cat
 	clean = sed -e "/registry.npmjs.org/d"
+
+[filter "ignore-signingkey"]
+	smudge = cat
+	clean = sed -E -e 's/signingkey\\s*=\\s+.+/signingkey =/'
+
+[filter "ignore-gitconfig-properties"]
+	smudge = cat
+	clean = sed -E -e 's/=\\s*.+/=/'
+
+[includeIf "gitdir:~/work/"]
+  path = ~/.config/.git/config.work
 
 [alias]
 	a = add

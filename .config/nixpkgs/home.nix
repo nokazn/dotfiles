@@ -49,10 +49,15 @@ in
     fish = import ./programs/fish.nix { };
     fzf = import ./programs/fzf.nix { };
     go = import ./programs/go.nix { };
+    gpg = import ./programs/gpg.nix { };
     neovim = import ./programs/neovim.nix { pkgs = pkgs; };
     nushell = import ./programs/nushell.nix { };
     starship = import ./programs/starship.nix { };
     tmux = import ./programs/tmux.nix { pkgs = pkgs; };
     vim = import ./programs/vim.nix { };
+  };
+
+  services = {
+    gpg-agent = import ./services/gpg-agent.nix { };
   };
 }
