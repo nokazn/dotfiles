@@ -1,7 +1,7 @@
 [user]
-  name =
-  email =
-  signingkey =
+	name =
+	email =
+	signingkey =
 
 [github]
-  user =
+	user =
