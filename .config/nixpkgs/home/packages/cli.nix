@@ -8,6 +8,7 @@ with pkgs; let
   modern = [
     act # Run your GitHub Actions locally 噫
     asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
+    aws-mfa # Manage AWS MFA Security Credentials
     aws-vault # A vault for securely storing and accessing AWS credentials in development environments
     direnv
     dive # A tool for exploring each layer in a docker image
