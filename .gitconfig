@@ -1,5 +1,7 @@
 [user]
 	useConfigOnly = true
+	# TODO: ここの変更をコミットに含めない
+	signingkey =
 
 [core]
 	editor = vim
@@ -18,6 +20,9 @@
 
 [github]
 	user = nokazn
+
+[commit]
+	gpgsign = true
 
 [merge]
 	ff = false
