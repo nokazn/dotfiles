@@ -1,5 +1,4 @@
 [user]
-	useConfigOnly = true
 	signingkey =
 
 [core]
@@ -52,7 +51,7 @@
 	clean = sed -E -e 's/=\\s*.+/=/'
 
 [includeIf "gitdir:~/work/"]
-  path = ~/.config/.git/config.work
+  path = ~/.config/git/config.work
 
 [alias]
 	a = add
