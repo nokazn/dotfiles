@@ -21,6 +21,7 @@
 .curlrc
 .gitconfig
 .npmrc
+.path.sh
 .prettierrc.json
 .profile
 .shellcheckrc
