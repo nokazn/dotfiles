@@ -14,14 +14,14 @@ function _is-wsl() {
   test "\"$(uname -r)\" == *microsoft*"
 }
 
-# cmd.exe で echo する
+# cmd.exe で実行する
 # @param {string}
-function _echo-in-cmd() {
+function run-cmd() {
 	if [[ ! -e /mnt/c ]]; then
 		return 0
 	fi
 	cd /mnt/c || return 1;
-	wslpath -u "$(/mnt/c/Windows/system32/cmd.exe /c "echo $1" | tr -d "\r")";
+	/mnt/c/Windows/system32/cmd.exe /c "$1 ${*:2}" | tr -d "\r"
 	cd "${OLDPWD}" || return 1;
 }
 
@@ -32,12 +32,15 @@ function code() {
 		$0 "$@"
 		return 0
 	fi
-	local -r codeForUser="$(_echo-in-cmd %USERPROFILE%)/AppData/Local/Programs/Microsoft VS Code/bin/code"
-	local -r codeForSystem="/mnt/c/Program Files/Microsoft VS Code/bin/code"
-	if [[ -e ${codeForUser} ]]; then
-		${codeForUser} "$@"
-	elif [[ -e ${codeForSystem} ]]; then
-		${codeForSystem} "$@"
+
+	local codePath=${CODE_PATH}
+	if [[ -z ${codePath} ]]; then
+		codePath="$(wslpath -u "$(run-cmd where code | head -1)")"
+	fi
+
+	if [[ -x ${codePath} ]]; then
+		${codePath} "$@"
+		export CODE_PATH=${codePath}
 	else
 		unfunction "$0"
 		$0 "$@"
