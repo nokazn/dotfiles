@@ -24,7 +24,7 @@ $ sudo pacman -Syyu && sudo pacman -S git make gcc curl wget unzip
   - `add-dein-vim` - add dein.vim
 - `home-manger-switch` - run `home-manager switch` command
 - `install`
-  - `install-asdf-langs` - install asdf-vm (Node.js, yarn, Terraform)
+  - `install-asdf-langs` - install asdf-vm (Node.js, yarn, Terraform & etc.)
   - `install-rust` - install Rust
   - `install-nim` - install Nim
 
