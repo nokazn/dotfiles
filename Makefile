@@ -138,7 +138,8 @@ generate-npm-packages-list: # Generate Nix packages list for npm packages
 
 .PHONY: packages-go
 packages-go: # Install Go packages
-	go get -u -v golang.org/x/tools/cmd/goimports;
+	go install golang.org/x/tools/cmd/goimports@latest; \
+	go install github.com/ktr0731/salias@latest;
 
 # update ----------------------------------------------------------------------------------------------------
 
