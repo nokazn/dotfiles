@@ -3,7 +3,6 @@
 SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
 PATH_SCRIPT := ./.path.sh
-ASDF_LANGS := node terraform
 LANGS := nim rust
 .DEFAULT_GOAL := help
 
@@ -94,10 +93,7 @@ uninstall: $(addprefix uninstall-,$(LANGS)) # Uninstall all languages (runs scri
 
 .PHONY: install-asdf-langs
 install-asdf-langs: # Install languages by asdf
-	$(SCRIPTS_DIR)/asdf-install.sh nodejs node
-	$(SCRIPTS_DIR)/asdf-install.sh yarn
-	$(SCRIPTS_DIR)/asdf-install.sh pnpm
-	$(SCRIPTS_DIR)/asdf-install.sh terraform
+	asdf install
 
 .PHONY: install-langs
 install-langs: $(addprefix install-,$(LANGS)) # Install languages
