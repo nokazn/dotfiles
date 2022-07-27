@@ -28,3 +28,4 @@
 .vimrc
 .yarnrc
 .zlogin
+salias.toml
