@@ -50,6 +50,14 @@ if [[ -d "$HOME/.anyenv" ]]; then
     done
 fi
 
+# Go
+if command -v go >/dev/null; then
+    _goBinDir="$(go env GOBIN)"
+    [[ -z ${_goBinDir} ]] && _goBinDir="$(go env GOPATH)/bin"
+    [[ -z ${_goBinDir} ]] && _goBinDir="${HOME}/go/bin"
+    register_forward_if_not "${_goBinDir}"
+fi
+
 # Ruby
 if command -v ruby >/dev/null; then
     register_forward_if_not "$(ruby -e 'print Gem.user_dir')/bin"
@@ -89,6 +97,10 @@ if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
         source "$HOME/.nix-profile/share/asdf-vm/asdf.sh"
         fpath=("${ASDF_DIR}/completions" "${fpath[@]}")
     fi
+fi
+
+if command -v salias >/dev/null; then
+    source <(salias --init)
 fi
 
 export PATH=$PATH
