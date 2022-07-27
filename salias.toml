@@ -1,0 +1,13 @@
+[go]
+i = "install"
+b = "build"
+
+[docker]
+l = "logs"
+i = "image"
+il = "image ls"
+c = "container"
+cl = "container ls"
+
+[kubectl]
+c = "create"
