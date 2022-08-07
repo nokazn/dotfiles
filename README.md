@@ -13,7 +13,7 @@ If `git`, `make`, `gcc`, `curl`, `wget`, `unzip` and `xz-utils` are not availabl
 $ sudo apt update -y && sudo apt install -y git make gcc curl wget unzip xz-utils
 
 # Arch Linux
-$ sudo pacman -Syyu && sudo pacman -S git make gcc curl wget unzip
+$ sudo pacman -Syu && sudo pacman -S git make gcc curl wget unzip openssh
 ```
 
 `make init` command executes targets below.
