@@ -28,7 +28,7 @@ in
       src = fetchFromGitHub {
         owner = "greymd";
         repo = "docker-zsh-completion";
-        rev = "master";
+        rev = "6e080c179a611644a944d3e5981eb65aef6e0dd5";
         # TODO: https://github.com/NixOS/nix/issues/1880
         sha256 = "ElLHKoISABbVKQmeRmg0KXHm5/2PGTa9OmZs+73xLbs=";
       };
