@@ -26,6 +26,7 @@
 				{ "PackageIdentifier" : "Microsoft.WindowsTerminal" },
 				{ "PackageIdentifier" : "Mozilla.Firefox" },
 				{ "PackageIdentifier" : "Mozilla.Thunderbird" },
+				{ "PackageIdentifier" : "NickeManarin.ScreenToGif" },
 				{ "PackageIdentifier" : "Notion.Notion" },
 				{ "PackageIdentifier" : "Nushell.Nushell" },
 				{ "PackageIdentifier" : "PostgreSQL.pgAdmin" },
