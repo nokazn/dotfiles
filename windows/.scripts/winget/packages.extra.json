@@ -1,0 +1,26 @@
+{
+	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
+	"CreationDate" : "2022-05-28T19:30:47.334-00:00",
+	"Sources" :
+	[
+		{
+			"Packages" :
+			[
+				{ "PackageIdentifier" : "EpicGames.EpicGamesLauncher" },
+				{ "PackageIdentifier" : "Keybase.Keybase" },
+				{ "PackageIdentifier" : "LastFM.LastFMDesktopScrobbler" },
+				{ "PackageIdentifier" : "Mojang.MinecraftLauncher" },
+				{ "PackageIdentifier" : "Valve.Steam" },
+				{ "PackageIdentifier" : "VideoLAN.VLC" }
+			],
+			"SourceDetails" :
+			{
+				"Argument" : "https://winget.azureedge.net/cache",
+				"Identifier" : "Microsoft.Winget.Source_8wekyb3d8bbwe",
+				"Name" : "winget",
+				"Type" : "Microsoft.PreIndexed.Package"
+			}
+		}
+	],
+	"WinGetVersion" : "1.2.10941"
+}
