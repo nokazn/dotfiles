@@ -93,6 +93,10 @@ uninstall: $(addprefix uninstall-,$(LANGS)) # Uninstall all languages (runs scri
 
 .PHONY: install-asdf-langs
 install-asdf-langs: # Install languages by asdf
+	$(SCRIPTS_DIR)/asdf-install.sh nodejs node
+	$(SCRIPTS_DIR)/asdf-install.sh yarn
+	$(SCRIPTS_DIR)/asdf-install.sh pnpm
+	$(SCRIPTS_DIR)/asdf-install.sh terraform
 	asdf install
 
 .PHONY: install-langs
