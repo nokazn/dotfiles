@@ -5,7 +5,6 @@ with pkgs.nodePackages; [
   firebase-tools
   gulp
   jake
-  lerna
   node-gyp
   prettier
   pyright
