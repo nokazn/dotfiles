@@ -25,6 +25,7 @@
 .prettierrc.json
 .profile
 .shellcheckrc
+.tool-versions
 .vimrc
 .yarnrc
 .zlogin
