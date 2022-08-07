@@ -6,9 +6,6 @@ let
   username = "nokazn";
 in
 {
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
   home = {
     username = username;
     homeDirectory = "/home/${username}";
@@ -50,6 +47,7 @@ in
     fzf = import ./programs/fzf.nix { };
     go = import ./programs/go.nix { };
     gpg = import ./programs/gpg.nix { };
+    home-manager = import ./programs/home-manager.nix { };
     neovim = import ./programs/neovim.nix { pkgs = pkgs; };
     nushell = import ./programs/nushell.nix { };
     starship = import ./programs/starship.nix { };
