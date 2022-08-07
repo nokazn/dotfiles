@@ -29,7 +29,8 @@ in
         owner = "greymd";
         repo = "docker-zsh-completion";
         rev = "master";
-        sha256 = "0p639lqv9hryni02r9ra0zh8wwj78grnv68gy2jij5v3vmkfrjjs";
+        # TODO: https://github.com/NixOS/nix/issues/1880
+        sha256 = "ElLHKoISABbVKQmeRmg0KXHm5/2PGTa9OmZs+73xLbs=";
       };
     }
   ];
