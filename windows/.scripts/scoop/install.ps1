@@ -8,13 +8,14 @@ if (!(Get-Command "scoop" -ErrorAction SilentlyContinue)) {
   Write-Host "✅ Scoop is successfully installed."
 }
 
+scoop install git
+
 scoop bucket add extras
 scoop bucket add games
 scoop bucket add nirsoft
 scoop bucket add nonportable
 
 scoop install `
-  git `
   gsudo `
   ripgrep `
   fd `
