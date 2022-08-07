@@ -118,7 +118,8 @@ hms: home-manager-switch # Run `home-manager switch`
 home-manager-switch: # Run `home-manager switch`
 	$(SCRIPTS_DIR)/backup.sh ./.config/nixpkgs/home/files.txt
 	if command -v starship >/dev/null 2>&1; then \
-		test -f ~/.cache/starship/init.nu  && rm -f ~/.cache/starship/init.nu; \
+		test -f ~/.cache/starship/init.nu && rm -f ~/.cache/starship/init.nu; \
+		mkdir -p ~/.cache/starship/; \
 		starship init nu > ~/.cache/starship/init.nu; \
 	fi
 # source ${PATH_SCRIPT} しないと nix-build のパスが通らない
