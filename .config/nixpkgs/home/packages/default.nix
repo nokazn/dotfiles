@@ -1,24 +1,11 @@
 { lib, pkgs, ... }:
 
 let
-  sources = [
-    "cli"
-    "cloud"
-    "container"
-    "deno"
-    "elm"
-    "git"
-    "go"
-    "gui"
-    "java"
-    "nix"
-    "node"
-    "php"
-    "python"
-    "unix"
-  ];
+  sources = builtins.filter
+    (name: name != "default.nix")
+    (lib.mapAttrsToList (name: value: name) (builtins.readDir ./.));
   packages = builtins.map
-    (source: import (./. + "/${source}.nix") { pkgs = pkgs; })
+    (source: import (./. + "/${source}") { pkgs = pkgs; })
     sources;
 in
 lib.flatten packages
