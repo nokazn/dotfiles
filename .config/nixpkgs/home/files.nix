@@ -15,13 +15,7 @@ let
               exists = builtins.pathExists (toSourcePath file);
               # 無視するパターンに合致するか
               ignored = builtins.any
-                (
-                  v:
-                  let
-                    matched = builtins.match v file;
-                  in
-                  matched != null
-                ) [
+                (v: builtins.match v file != null) [
                 ".bash_profile"
                 ".bashrc"
                 ".profile"
