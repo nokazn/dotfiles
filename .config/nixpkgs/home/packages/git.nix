@@ -3,7 +3,6 @@
 with pkgs; [
   act # Run your GitHub Actions locally
   ghq # Remote repository management made easy
-  git
   gist # Gist lets you upload to https://gist.github.com/
   gitAndTools.delta # viewer for git and diff output
   gitAndTools.gh # Work seamlessly with GitHub from the command line
