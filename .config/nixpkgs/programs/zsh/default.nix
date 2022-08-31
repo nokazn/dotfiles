@@ -1,7 +1,8 @@
 { pkgs, ... }:
 
 let
-  commonShellConfig = (import ../../shell.nix { });
+  commonShellConfig = import ../../shell.nix { };
+  preztoConfig = import ./prezto.nix { };
 in
 {
   enable = true;
@@ -38,4 +39,6 @@ in
   initExtra = builtins.readFile ../../../../.zshrc + commonShellConfig.init;
   loginExtra = builtins.readFile ../../../../.zlogin + commonShellConfig.profile;
   logoutExtra = builtins.readFile ../../../../.zlogout;
+
+  prezto = preztoConfig;
 }
