@@ -2,24 +2,18 @@
 
 with pkgs; let
   db = [
-    redis
     memcached
+    redis
+    sqlite
   ];
   modern = [
-    act # Run your GitHub Actions locally 噫
     asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
-    aws-mfa # Manage AWS MFA Security Credentials
-    aws-vault # A vault for securely storing and accessing AWS credentials in development environments
     direnv
-    dive # A tool for exploring each layer in a docker image
     dstat
     expect
     gtop
     hyperfine # A command-line benchmarking tool
-    keybase # The Keybase official command-line utility and service
     jq # A lightweight and flexible command-line JSON processor
-    lazydocker # The lazier way to manage everything docker
-    lazygit # A simple terminal UI for git commands
     mkcert # A simple zero-config tool to make locally trusted development certificates with any names you'd like.
     navi # An interactive cheatsheet tool for the command-line and application launchers
     ncdu # A disk usage analyzer with an ncurses interface
@@ -31,10 +25,8 @@ with pkgs; let
     shellcheck # A static analysis tool for shell scripts
     sl # SL(1): Cure your bad habit of mistyping
     spotify-tui
-    sqlite
     starship # ☄🌌️ The minimal, blazing-fast, and infinitely customizable prompt for any shell!
     sysstat
-    terraformer
     tflint
     tldr # A collection of community-maintained help pages for command-line tools
     tokei # compiled with serialization support: json, cbor, yaml
