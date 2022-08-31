@@ -37,23 +37,7 @@ in
     display = "silent";
   };
 
-  programs = {
-    bash = import ./programs/bash.nix { };
-    zsh = import ./programs/zsh { pkgs = pkgs; } // {
-      prezto = import ./programs/zsh/prezto.nix { };
-    };
-    direnv = import ./programs/direnv.nix { };
-    fish = import ./programs/fish.nix { };
-    fzf = import ./programs/fzf.nix { };
-    go = import ./programs/go.nix { };
-    gpg = import ./programs/gpg.nix { };
-    home-manager = import ./programs/home-manager.nix { };
-    neovim = import ./programs/neovim.nix { pkgs = pkgs; };
-    nushell = import ./programs/nushell.nix { };
-    starship = import ./programs/starship.nix { };
-    tmux = import ./programs/tmux.nix { pkgs = pkgs; };
-    vim = import ./programs/vim.nix { };
-  };
+  programs = import ./programs { lib = lib; pkgs = pkgs; };
 
   services = {
     gpg-agent = import ./services/gpg-agent.nix { };
