@@ -48,13 +48,15 @@ in
   diff = "colordiff";
   dotfiles = "cd ${DOTFILES}";
   hm = "home-manager";
-  hmsw = "home-manager switch -f ${DOTFILES}/.config/nixpkgs/home.nix";
+  hms = "home-manager switch -f ${DOTFILES}/.config/nixpkgs/home.nix";
   lg = "lazygit";
   nix-shell = "nix-shell --run $SHELL";
+  nix-cg = "nix-collect-garbage";
   relaod-tmux = "tmux source-file ~/.config/tmux/tmux.conf";
   relogin = "exec $SHELL -l";
   repath = "source ~/.path.sh";
   sampler = "sampler -c ~/.config/sampler/config.yml";
   ssh-keygen-rsa = "ssh-keygen -t rsa -b 4096 -C";
   tf = "terraform";
+  y = "yarn";
 } // wslAliases

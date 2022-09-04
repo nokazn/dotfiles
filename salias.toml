@@ -11,3 +11,7 @@ cl = "container ls"
 
 [kubectl]
 c = "create"
+
+[yarn]
+w = "workspace"
+ui = "upgrade-interactive"
