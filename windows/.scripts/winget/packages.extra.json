@@ -10,8 +10,10 @@
 				{ "PackageIdentifier" : "Keybase.Keybase" },
 				{ "PackageIdentifier" : "LastFM.LastFMDesktopScrobbler" },
 				{ "PackageIdentifier" : "Mojang.MinecraftLauncher" },
+				{ "PackageIdentifier" : "Rufus.Rufus" },
 				{ "PackageIdentifier" : "Valve.Steam" },
-				{ "PackageIdentifier" : "VideoLAN.VLC" }
+				{ "PackageIdentifier" : "VideoLAN.VLC" },
+				{ "PackageIdentifier" : "VivaldiTechnologies.Vivaldi" }
 			],
 			"SourceDetails" :
 			{
