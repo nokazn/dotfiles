@@ -9,6 +9,7 @@ with pkgs; let
   modern = [
     asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
     direnv
+    dprint
     dstat
     expect
     gtop
@@ -31,6 +32,7 @@ with pkgs; let
     tldr # A collection of community-maintained help pages for command-line tools
     tokei # compiled with serialization support: json, cbor, yaml
     tree # Recursive directory listing command
+    treefmt
     wireshark
     wslu # A collection of utilities for Windows 10 Linux Subsystems
     yq # Command-line YAML processor - jq wrapper for YAML documents
