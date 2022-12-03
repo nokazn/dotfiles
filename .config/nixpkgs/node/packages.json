@@ -3,5 +3,6 @@
   "http-server",
   "minimum-node-version",
   "sort-package-json",
-  "ts-node"
+  "ts-node",
+  "yo"
 ]
