@@ -9,6 +9,7 @@
 				{ "PackageIdentifier" : "EpicGames.EpicGamesLauncher" },
 				{ "PackageIdentifier" : "Keybase.Keybase" },
 				{ "PackageIdentifier" : "LastFM.LastFMDesktopScrobbler" },
+				{ "PackageIdentifier" : "marha.VcXsrv" },
 				{ "PackageIdentifier" : "Mojang.MinecraftLauncher" },
 				{ "PackageIdentifier" : "Rufus.Rufus" },
 				{ "PackageIdentifier" : "Valve.Steam" },
