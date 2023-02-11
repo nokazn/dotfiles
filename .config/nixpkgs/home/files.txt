@@ -8,10 +8,9 @@
 .config/htop/htoprc
 .config/lazygit/config.yml
 .config/neofetch/config.conf
+.config/nix
 .config/nixpkgs
 .config/nushell/aliases.nu
-.config/nushell/config.nu
-.config/nushell/env.nu
 .config/sampler/config.yml
 .config/tmux/cpu-usage.sh
 .config/tmux/memory-usage.sh
