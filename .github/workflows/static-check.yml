@@ -4,25 +4,22 @@ on:
   push:
     branches:
       - "main"
-    paths:
-      - "scripts/**/*.sh"
-      - "./.shellcheckrc"
   pull_request:
     branches:
       - "main"
 
 jobs:
   check-by-pre-commit:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: actions/setup-python@v2
 
       - uses: pre-commit/action@v2.0.3
 
   check-shell-scripts:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
 
