@@ -27,4 +27,6 @@ if [[ "$(uname -r)" == *microsoft* ]]; then
             echo "⚠ file '${HOME}/dotfiles/scripts/start-vcxsrv.sh' doesn't exist." >&2
         fi
     fi
+
+    export BROWSER=wslview
 fi
