@@ -25,5 +25,4 @@
 .tool-versions
 .vimrc
 .yarnrc
-.zlogin
 salias.toml
