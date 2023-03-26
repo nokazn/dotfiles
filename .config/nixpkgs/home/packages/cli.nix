@@ -11,6 +11,7 @@ with pkgs; let
     direnv
     dprint
     dstat
+    du-dust # du + rust = dust. Like du but more intuitive
     expect
     gtop
     hyperfine # A command-line benchmarking tool
