@@ -35,10 +35,7 @@ in
       };
     }
   ];
-  envExtra = builtins.readFile ../../../../.zshenv;
-  initExtra = builtins.readFile ../../../../.zshrc + commonShellConfig.init;
-  loginExtra = builtins.readFile ../../../../.zlogin + commonShellConfig.profile;
-  logoutExtra = builtins.readFile ../../../../.zlogout;
-
+  initExtra = commonShellConfig.init;
+  loginExtra = commonShellConfig.profile;
   prezto = preztoConfig;
 }
