@@ -8,6 +8,7 @@
 			[
 				{ "PackageIdentifier" : "7zip.7zip" },
 				{ "PackageIdentifier" : "Adobe.Acrobat.Reader.32-bit" },
+				{ "PackageIdentifier" : "AntibodySoftware.WizTree" },
 				{ "PackageIdentifier" : "Amazon.Kindle" },
 				{ "PackageIdentifier" : "CPUID.CPU-Z" },
 				{ "PackageIdentifier" : "CrystalDewWorld.CrystalDiskInfo" },
