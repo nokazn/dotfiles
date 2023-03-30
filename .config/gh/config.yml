@@ -10,3 +10,4 @@ pager:
 aliases:
     co: pr checkout
     prv: pr view --web
+    prlme: pr list --author "@me"
