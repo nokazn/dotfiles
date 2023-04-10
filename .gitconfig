@@ -67,6 +67,7 @@
 	br-clean-all = "!f() { git branch --merged | grep -v -E '\\*|develop|main|master' | xargs git branch -d; git fetch --prune; }; f"
 	br-clean-remote = fetch --prune
 	br-clean-tmp = "!f() { git branch | grep -E 'tmp' | xargs git branch -D; }; f"
+	brcontains = "branch --contain"
 	brr = "!f() { git fetch origin $1; git branch $1 origin/$1; }; f"  # リモートブランチを同じ名前でローカルに作成する
 	c = commit
 	ch = checkout
