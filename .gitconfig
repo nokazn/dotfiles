@@ -44,6 +44,7 @@
 	smudge = cat
 	clean = sed -e "/registry.npmjs.org/d"
 
+# signingkeyを含めない (削除してよいかも)
 [filter "ignore-signingkey"]
 	smudge = cat
 	clean = sed -E -e 's/signingkey\\s*=\\s+.+/signingkey =/'

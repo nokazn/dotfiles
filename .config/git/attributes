@@ -1,3 +1,2 @@
 .npmrc filter=ignore-npm-registry-token
-.gitconfig filter=ignore-signingkey
 .config/git/config.* filter=ignore-gitconfig-properties
