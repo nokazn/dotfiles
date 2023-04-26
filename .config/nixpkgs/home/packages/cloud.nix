@@ -6,7 +6,6 @@ with pkgs ; [
   awscli2
   google-cloud-sdk
   heroku
-  keybase # The Keybase official command-line utility and service
   netlify-cli
   terraformer
   wrangler # A CLI tool designed for folks who are interested in using Cloudflare Workers

@@ -41,5 +41,6 @@ in
 
   services = {
     gpg-agent = import ./services/gpg-agent.nix { };
+    keybase = import ./services/keybase.nix { };
   };
 }
