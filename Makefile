@@ -135,7 +135,8 @@ home-manager-switch: # Run `home-manager switch`
 generate-npm-packages-list: # Generate Nix packages list for npm packages
 	cd ./.config/nixpkgs/node; \
 	NIX_PATH=~/.nix-defexpr/channels ~/.nix-profile/bin/nix-shell -p nodePackages.node2nix --command "node2nix -i ./packages.json -o ./packages.nix --nodejs-18"
-	find . -type f | grep -e "\.nix$$" | xargs nixpkgs-fmt
+	find . -type f | grep -e "\.nix$$" | xargs -I {} echo '"{}"' | xargs nixpkgs-fmt
+
 
 .PHONY: packages-go
 packages-go: # Install Go packages
@@ -193,12 +194,14 @@ shellcheck-fix: # Check & fix schell scripts
 nixpkgs-fmt: # Check `.nix` files
 	find ./.config/nixpkgs/ -type f \
 		| grep -e "\.nix$$" \
+		| xargs -I {} echo '"{}"' \
 		| xargs nixpkgs-fmt
 
 .PHONY: nixpkgs-fmt-check
 nixpkgs-fmt-check: # Format `.nix` files
 	find ./.config/nixpkgs/ -type f \
 		| grep -e "\.nix$$" \
+		| xargs -I {} echo '"{}"' \
 		| xargs nixpkgs-fmt --check
 
 .PHONY: _print-airplane
