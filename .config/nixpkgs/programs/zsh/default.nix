@@ -9,7 +9,9 @@ in
   enableAutosuggestions = true;
   # TODO: https://github.com/NixOS/nix/issues/5445
   enableCompletion = false;
-  enableSyntaxHighlighting = true;
+  syntaxHighlighting = {
+    enable = true;
+  };
   autocd = true;
   history = {
     extended = true;

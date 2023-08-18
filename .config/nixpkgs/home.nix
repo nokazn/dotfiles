@@ -17,7 +17,7 @@ in
     # You can update Home Manager without changing this value. See
     # the Home Manager release notes for a list of state version
     # changes in each release.
-    stateVersion = "22.05";
+    stateVersion = "23.11";
 
     enableNixpkgsReleaseCheck = true;
 
