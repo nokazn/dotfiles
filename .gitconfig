@@ -1,7 +1,7 @@
 [user]
 	name = nokazn
 	email = 41154684+nokazn@users.noreply.github.com
-	signingkey =
+	signingkey = 4c7eaef00b54683f
 
 [core]
 	editor = vim
@@ -76,7 +76,7 @@
 	chr = "!f() { git fetch origin $1; git checkout $1; }; f"  # リモートブランチを同じ名前でチェックアウトする
 	cl = clone
 	cleanf = clean -f
-	clgh = "!f() { git clone git@github.com:$1/$2; }; f"
+	clgh = "!f() { echo $1; echo $2; if [[ -z $2 ]]; then git clone git@github.com:$1; else git clone git@github.com:$1/$2; fi; }; f"
 	cm = commit -m
 	cp = cherry-pick
 	d = diff
@@ -128,6 +128,8 @@
 	swc-tmp = "!f() { git switch -c $1 $(git symbolic-ref --short HEAD)-tmp; }; f"  # 親ブランチの指定がなければ実行させない
 	swr = "!f() { git fetch origin $1; git switch $1; }; f"  # リモートブランチを同じ名前でチェックアウトする
 	swt = "!f() { git switch -d refs/tags/$1; }; f"
+	tagl = "tag -l"
+	tagd = "describe --tags"
 	user ="!f() { git config user.name $1; git config user.email $2; }; f"
 	wt = worktree
 	wta = "!f() { git worktree add $(readlink $(git rev-parse --git-dir | sed -E 's/\\.git.*$/./')/.worktree/$1 -f); }; f"
