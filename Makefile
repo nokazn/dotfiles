@@ -134,8 +134,11 @@ home-manager-switch: # Run `home-manager switch`
 generate-npm-packages-list: # Generate Nix packages list for npm packages
 	cd ./.config/home-manager/node; \
 	NIX_PATH=~/.nix-defexpr/channels ~/.nix-profile/bin/nix-shell -p nodePackages.node2nix --command "node2nix -i ./packages.json -o ./packages.nix --nodejs-18"
-	find . -type f | grep -e "\.nix$$" | xargs -I {} echo '"{}"' | xargs nixpkgs-fmt
-
+	@if command -v nixpkgs-fmt >/dev/null 2>&1; then \
+		find . -type f | grep -e "\.nix$$" | xargs nixpkgs-fmt; \
+	else \
+		echo "⚠️ nixpkgs-fmt is not found, so generated files have not been formatted."; \
+	fi
 
 .PHONY: packages-go
 packages-go: # Install Go packages
