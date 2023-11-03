@@ -43,7 +43,7 @@ with pkgs; let
     bat # A cat(1) clone with syntax highlighting and Git integration
     broot # A new way to see and navigate directory trees
     colordiff # Compare FILES line by line.hto
-    exa # A modern replacement for the venerable file-listing command-line program
+    eza # A modern replacement for the venerable file-listing command-line program
     fd # A simple, fast and user-friendly alternative to 'find'
     gping # Ping, but with a graph
     htop # A cross-platform interactive process viewer

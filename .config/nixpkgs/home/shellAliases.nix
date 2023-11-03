@@ -27,10 +27,10 @@ in
   la = "ls -A";
   ll = "ls -alF";
 
-  # `exa` aliases
-  exa = "exa --icons --git";
-  exat = "exa --tree";
-  exal = "exa -l";
+  # `eza` aliases
+  eza = "eza --icons --git";
+  exat = "eza --tree";
+  exal = "eza -l";
 
   # Git aliases
   g = "git";
