@@ -2,7 +2,7 @@
 
 let
   nixPackages = import ./home/packages { pkgs = pkgs; lib = lib; };
-  extraNodePackages = builtins.attrValues (import ./node { });
+  extraNodePackages = builtins.attrValues (import ./node { pkgs = pkgs; });
   username = "nokazn";
 in
 {
@@ -20,6 +20,7 @@ in
     stateVersion = "23.11";
 
     enableNixpkgsReleaseCheck = true;
+    extraOutputsToInstall = [ "dev" ];
 
     sessionVariables = import ./home/sessionVariables.nix { };
     shellAliases = import ./home/shellAliases.nix { };

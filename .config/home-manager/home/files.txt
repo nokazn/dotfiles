@@ -9,7 +9,7 @@
 .config/lazygit/config.yml
 .config/neofetch/config.conf
 .config/nix
-.config/nixpkgs
+.config/home-manager
 .config/nushell/aliases.nu
 .config/sampler/config.yml
 .config/tmux/cpu-usage.sh
