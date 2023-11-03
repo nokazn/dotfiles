@@ -1,7 +1,5 @@
 [
-  "envinfo",
   "http-server",
-  "minimum-node-version",
   "sort-package-json",
   "ts-node",
   "yo"
