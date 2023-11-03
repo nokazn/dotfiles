@@ -22,7 +22,6 @@ $ sudo pacman -Syu && sudo pacman -S git make gcc curl wget unzip openssh
   - `add-nix` - add Nix
   - `add-home-manager` - add home-manager
   - `add-dein-vim` - add dein.vim
-- `home-manger-switch` - run `home-manager switch` command
 - `install`
   - `install-asdf-langs` - install asdf-vm (Node.js, yarn, Terraform & etc.)
   - `install-rust` - install Rust
@@ -31,8 +30,6 @@ $ sudo pacman -Syu && sudo pacman -S git make gcc curl wget unzip openssh
 ```bash
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
 $ cd ~/dotfiles
-# Update Nix subscribed channels and create a new generation (optional)
-$ nix-channel --update
 # Install all development tools & language runtime
 $ make init
 ```
