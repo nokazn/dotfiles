@@ -31,6 +31,8 @@ $ sudo pacman -Syu && sudo pacman -S git make gcc curl wget unzip openssh
 ```bash
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
 $ cd ~/dotfiles
+# Update Nix subscribed channels and create a new generation (optional)
+$ nix-channel --update
 # Install all development tools & language runtime
 $ make init
 ```
