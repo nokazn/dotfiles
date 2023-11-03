@@ -9,7 +9,7 @@ LANGS := nim rust
 # init ----------------------------------------------------------------------------------------------------
 
 .PHONY: init
-init: add-tools home-manager-switch install # Install all languages & their packages
+init: add-tools install # Install all languages & their packages
 
 # tools ----------------------------------------------------------------------------------------------------
 
@@ -32,18 +32,17 @@ add-nix: _print-airplane # Install nix
 .PHONY: remove-nix
 remove-nix: _print-goodbye # Uninstall nix
 	home-manager uninstall
-	rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
+	rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs,.config/nix,.config/home-manager}
 	sudo rm -rf /nix
 	@echo "✅ Nix has been uninstalled successfully!"
 
 .PHONY: add-home-manager
 add-home-manager: _print-airplane # Add home-manager
 # source ${PATH_SCRIPT} しないと nix-build のパスが通らない
-	~/.nix-profile/bin/nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager; \
-	~/.nix-profile/bin/nix-channel --update; \
 	source ${PATH_SCRIPT}; \
-	NIX_PATH=~/.nix-defexpr/channels ~/.nix-profile/bin/nix-shell '<home-manager>' -A install
-	echo "✅ home-manager has been installed successfully!"; \
+	$(SCRIPTS_DIR)/backup.sh ./.config/home-manager/home/files.txt; \
+	nix --extra-experimental-features "nix-command flakes" run home-manager/master -- init --switch ./.config/home-manager --inpure
+	echo "✅ home-manager has been installed successfully!";
 
 
 .PHONY: add-dein-vim
@@ -120,7 +119,7 @@ hms: home-manager-switch # Run `home-manager switch`
 
 .PHONY: home-manager-switch
 home-manager-switch: # Run `home-manager switch`
-	$(SCRIPTS_DIR)/backup.sh ./.config/nixpkgs/home/files.txt
+	$(SCRIPTS_DIR)/backup.sh ./.config/home-manager/home/files.txt
 	if command -v starship >/dev/null 2>&1; then \
 		test -f ~/.cache/starship/init.nu && rm -f ~/.cache/starship/init.nu; \
 		mkdir -p ~/.cache/starship/; \
@@ -129,14 +128,17 @@ home-manager-switch: # Run `home-manager switch`
 # source ${PATH_SCRIPT} しないと nix-build のパスが通らない
 	source ${PATH_SCRIPT}; \
 	export NIXPKGS_ALLOW_UNFREE=1; \
-	~/.nix-profile/bin/home-manager switch -f ./.config/nixpkgs/home.nix
+	~/.nix-profile/bin/home-manager switch --flake ./.config/home-manager/
 
 .PHONY: generate-npm-packages-list
 generate-npm-packages-list: # Generate Nix packages list for npm packages
-	cd ./.config/nixpkgs/node; \
+	cd ./.config/home-manager/node; \
 	NIX_PATH=~/.nix-defexpr/channels ~/.nix-profile/bin/nix-shell -p nodePackages.node2nix --command "node2nix -i ./packages.json -o ./packages.nix --nodejs-18"
-	find . -type f | grep -e "\.nix$$" | xargs -I {} echo '"{}"' | xargs nixpkgs-fmt
-
+	@if command -v nixpkgs-fmt >/dev/null 2>&1; then \
+		find . -type f | grep -e "\.nix$$" | xargs nixpkgs-fmt; \
+	else \
+		echo "⚠️ nixpkgs-fmt is not found, so generated files have not been formatted."; \
+	fi
 
 .PHONY: packages-go
 packages-go: # Install Go packages
@@ -147,8 +149,7 @@ packages-go: # Install Go packages
 
 .PHONY: update-nix
 update-nix: # Update Nix package manager
-	nix-channel --update; \
-	nix-env -iA nixpkgs.nix nixpkgs.cacert
+	nix flake update ./.config/home-manager
 
 .PHONY: update-apt
 update-apt: # Update apt packages
@@ -192,14 +193,14 @@ shellcheck-fix: # Check & fix schell scripts
 
 .PHONY: nixpkgs-fmt
 nixpkgs-fmt: # Check `.nix` files
-	find ./.config/nixpkgs/ -type f \
+	find ./.config/home-manager/ -type f \
 		| grep -e "\.nix$$" \
 		| xargs -I {} echo '"{}"' \
 		| xargs nixpkgs-fmt
 
 .PHONY: nixpkgs-fmt-check
 nixpkgs-fmt-check: # Format `.nix` files
-	find ./.config/nixpkgs/ -type f \
+	find ./.config/home-manager/ -type f \
 		| grep -e "\.nix$$" \
 		| xargs -I {} echo '"{}"' \
 		| xargs nixpkgs-fmt --check
