@@ -37,11 +37,10 @@ remove-nix: _print-goodbye # Uninstall nix
 	@echo "✅ Nix has been uninstalled successfully!"
 
 .PHONY: add-home-manager
-add-home-manager: _print-airplane # Add home-manager
+add-home-manager: _print-airplane _prepare-home-manager # Add home-manager
 # source ${PATH_SCRIPT} しないと nix-build のパスが通らない
 	source ${PATH_SCRIPT}; \
-	$(SCRIPTS_DIR)/backup.sh ./.config/home-manager/home/files.txt; \
-	nix --extra-experimental-features "nix-command flakes" run home-manager/master -- init --switch ./.config/home-manager --inpure
+	nix --extra-experimental-features "nix-command flakes" run home-manager/master -- init --switch ./.config/home-manager
 	echo "✅ home-manager has been installed successfully!";
 
 
@@ -118,13 +117,7 @@ $(addprefix uninstall-,$(LANGS)): _print-goodbye # Uninstall each language
 hms: home-manager-switch # Run `home-manager switch`
 
 .PHONY: home-manager-switch
-home-manager-switch: # Run `home-manager switch`
-	$(SCRIPTS_DIR)/backup.sh ./.config/home-manager/home/files.txt
-	if command -v starship >/dev/null 2>&1; then \
-		test -f ~/.cache/starship/init.nu && rm -f ~/.cache/starship/init.nu; \
-		mkdir -p ~/.cache/starship/; \
-		starship init nu > ~/.cache/starship/init.nu; \
-	fi
+home-manager-switch: _prepare-home-manager # Run `home-manager switch`
 # source ${PATH_SCRIPT} しないと nix-build のパスが通らない
 	source ${PATH_SCRIPT}; \
 	export NIXPKGS_ALLOW_UNFREE=1; \
@@ -204,6 +197,15 @@ nixpkgs-fmt-check: # Format `.nix` files
 		| grep -e "\.nix$$" \
 		| xargs -I {} echo '"{}"' \
 		| xargs nixpkgs-fmt --check
+
+.PHONY: _prepare-home-manager
+_prepare-home-manager:
+	$(SCRIPTS_DIR)/backup.sh ./.config/home-manager/home/files.txt
+	if command -v starship >/dev/null 2>&1; then \
+		test -f ~/.cache/starship/init.nu && rm -f ~/.cache/starship/init.nu; \
+		mkdir -p ~/.cache/starship/; \
+		starship init nu > ~/.cache/starship/init.nu; \
+	fi
 
 .PHONY: _print-airplane
 _print-airplane:
