@@ -7,8 +7,7 @@ in
 {
   enable = true;
   enableAutosuggestions = true;
-  # TODO: https://github.com/NixOS/nix/issues/5445
-  enableCompletion = false;
+  enableCompletion = true;
   syntaxHighlighting = {
     enable = true;
   };
