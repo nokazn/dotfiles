@@ -6,4 +6,5 @@ with pkgs; [
   elmPackages.elm
   erlang
   lua
+  rustup
 ]
