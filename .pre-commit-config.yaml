@@ -25,4 +25,4 @@ repos:
   rev: v1.3.0
   hooks:
   - id: nixpkgs-fmt
-    exclude: "\\.config/nixpkgs/home/packages\\.nix$"
+    exclude: "\\.config/home-manager/home/packages\\.nix$"
