@@ -48,7 +48,7 @@ in
   diff = "colordiff";
   dotfiles = "cd ${DOTFILES}";
   hm = "home-manager";
-  hms = "home-manager switch -f ${DOTFILES}/.config/nixpkgs/home.nix";
+  hms = "home-manager switch --flake ${DOTFILES}/.config/home-manager/";
   lg = "lazygit";
   nix-shell = "nix-shell --run $SHELL";
   nix-cg = "nix-collect-garbage";
