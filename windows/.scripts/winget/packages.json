@@ -45,20 +45,6 @@
 				"Name" : "winget",
 				"Type" : "Microsoft.PreIndexed.Package"
 			}
-		},
-		{
-			"Packages" :
-			[
-				{ "PackageIdentifier" : "9NGHP3DX8HDX" },
-				{ "PackageIdentifier" : "9P4CLT2RJ1RS "}
-			],
-			"SourceDetails" :
-			{
-				"Argument" : "https://storeedgefd.dsx.mp.microsoft.com/v9.0",
-				"Identifier" : "StoreEdgeFD",
-				"Name" : "msstore",
-				"Type" : "Microsoft.Rest"
-			}
 		}
 	],
 	"WinGetVersion" : "1.3.2691"

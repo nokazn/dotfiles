@@ -16,14 +16,16 @@ scoop bucket add nirsoft
 scoop bucket add nonportable
 
 scoop install `
-  fd `
-  gsudo `
-  neovide `
-  neovim `
-  nu `
-  ripgrep `
-  runcat `
-  starship `
-  tokei `
-  volta `
-  yarn
+  main/fd `
+  main/gsudo `
+  extras/neovide `
+  main/neovim `
+  main/nu `
+  main/ripgrep `
+  extras/runcat `
+  main/rustup `
+  main/rustup-gnu main/mingw `
+  main/starship `
+  main/tokei `
+  main/volta `
+  main/yarn
