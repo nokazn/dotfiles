@@ -42,6 +42,10 @@ function deploy_user_files() {
 }
 
 function deploy_wsl_files() {
+  read -rp "Do you really want to deploy WSL conig files? (Y/n) " response
+  if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    return 0;
+  fi
   sudo cp --verbose "${ROOT_DIR}/wsl/etc/wsl.conf" /etc/wsl.conf
 }
 
@@ -57,7 +61,7 @@ function main() {
       deploy_user_files "$@"
     ;;
 
-    wsl)
+    --wsl)
       deploy_wsl_files
     ;;
 
