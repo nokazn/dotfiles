@@ -38,21 +38,35 @@ function prepend_message() {
   return 0
 }
 
+# @param {string} - sorce file path
+function _diff() {
+  if command -v delta > /dev/null; then
+    delta "$@"
+  elif command -v colordiff > /dev/null; then
+    colordiff "$@"
+  else
+    diff "$@"
+  fi
+}
+
+# @param {string} - source file path
 # @param {string} - destination file path
 # @return {"y"|"n"}
 function show_prompt_for_overwrite() {
-  if [[ ! -e $1 ]]; then
-    decho "❌ invalid destination file path: " "$1"
+  if [[ ! -e $2 ]]; then
+    decho "❌ invalid destination file path: " "$2"
     echo "n"
     return 1
   fi
 
+  # 置換前と置換後のファイルの差分を出力
+  _diff $2 $1 1>&2
   # TODO
-  read -rp "warning: $1 already exists. Do you really want to backup and overwrite? (Y/n) " response  </dev/tty
+  read -rp "warning: $2 already exists. Do you really want to backup and overwrite? (Y/n) " response  </dev/tty
   if [[ ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
     echo "y"
   else
-    decho "⏩ skipped: $1"
+    decho "⏩ skipped: $2"
     echo "n"
   fi
   return 0
@@ -133,13 +147,16 @@ function make_symbolic_link() {
   elif [[ ! -e $1 ]]; then
     echo "❌ invalid source file path: " "$1"
     return 0
+  # 置換するファイルと差分がない場合はスキップ
+  elif [[ -f $1 ]] && [[ -f $2 ]] && diff -q $1 $2 > /dev/null; then
+    return 0
   fi
 
   if [[ ! -e $2 ]]; then
     newly_link "$1" "$2"
   elif [[ -f $2 ]] && [[ -f $1 ]]; then
     # ファイルでバックアップがある場合
-    local -r response=$(show_prompt_for_overwrite "$2")
+    local -r response=$(show_prompt_for_overwrite "$1" "$2")
     if [[ ${response} == "y" ]]; then
       make_backup "$2" "$3"
       newly_link "$1" "$2"
