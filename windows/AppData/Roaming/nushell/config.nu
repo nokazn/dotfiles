@@ -757,5 +757,9 @@ $env.config = {
 }
 
 source ~/AppData/Roaming/nushell/aliases.nu
-# starship init nu | save ~/.cache/starship/init.nu を実行する必要がある
+
+# 新規で作成し直すには rm -f ~/.cache/starship/init.nu; starship init nu | save ~/.cache/starship/init.nu を実行する必要がある
+if not ("~/.cache/starship/init.nu" | path exists) {
+    starship init nu | save ~/.cache/starship/init.nu
+}
 source ~/.cache/starship/init.nu
