@@ -52,7 +52,7 @@ in
   lg = "lazygit";
   nix-shell = "nix-shell --run $SHELL";
   nix-cg = "nix-collect-garbage";
-  relaod-tmux = "tmux source-file ~/.config/tmux/tmux.conf";
+  reload-tmux = "tmux source-file ~/.config/tmux/tmux.conf";
   relogin = "exec $SHELL -l";
   repath = "source ~/.path.sh";
   sampler = "sampler -c ~/.config/sampler/config.yml";
