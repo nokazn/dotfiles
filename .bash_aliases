@@ -366,7 +366,7 @@ function chshs() {
 
 function zsh-colors() {
 	seq -w 255 \
-		| xargs -I "{}" echo -n -e "\e[38;5;{}m {}"; echo "\e[0m"
+		| xargs -I "{}" echo -n -e "\e[38;5;{}m {}"; printf "\e[0m\n"
 }
 
 function cpu-usage() {
