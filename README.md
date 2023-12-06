@@ -24,7 +24,6 @@ $ sudo pacman -Syu && sudo pacman -S git make gcc curl wget unzip openssh
   - `add-dein-vim` - add dein.vim
 - `install`
   - `install-asdf-langs` - install asdf-vm (Node.js, yarn, Terraform & etc.)
-  - `install-rust` - install Rust
   - `install-nim` - install Nim
 
 ```bash
@@ -43,7 +42,7 @@ $ make init
 $ chshs zsh
 ```
 
-### Set up wsl-hello-sudo
+### Set up wsl-hello-sudo (optional)
 
 ```bash
 # Add wsl-hello-sudo
