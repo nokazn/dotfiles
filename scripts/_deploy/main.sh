@@ -60,7 +60,7 @@ function show_prompt_for_overwrite() {
   fi
 
   # 置換前と置換後のファイルの差分を出力
-  _diff $2 $1 1>&2
+  _diff "$2" "$1" 1>&2
   # TODO
   read -rp "warning: $2 already exists. Do you really want to backup and overwrite? (Y/n) " response  </dev/tty
   if [[ ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
@@ -148,7 +148,7 @@ function make_symbolic_link() {
     echo "❌ invalid source file path: " "$1"
     return 0
   # 置換するファイルと差分がない場合はスキップ
-  elif [[ -f $1 ]] && [[ -f $2 ]] && diff -q $1 $2 > /dev/null; then
+  elif [[ -f $1 ]] && [[ -f $2 ]] && diff -q "$1" "$2" > /dev/null; then
     return 0
   fi
 
