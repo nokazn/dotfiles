@@ -3,7 +3,7 @@
 SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
 PATH_SCRIPT := ./.path.sh
-LANGS := nim rust
+LANGS := nim
 .DEFAULT_GOAL := help
 
 # init ----------------------------------------------------------------------------------------------------
