@@ -36,7 +36,16 @@ in
       };
     }
   ];
-  initExtra = commonShellConfig.init;
+  initExtra = commonShellConfig.init + ''
+    # FIXME: デバッグ用
+    # if (which zprof > /dev/null) ;then
+    #   zprof | less
+    # fi
+  '';
   loginExtra = commonShellConfig.profile;
+  envExtra = ''
+    # FIXME: デバッグ用
+    # zmodload zsh/zprof && zprof
+  '';
   prezto = preztoConfig;
 }
