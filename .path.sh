@@ -74,6 +74,11 @@ if [[ -d "$HOME/.nimble/bin" ]]; then
     register_forward_if_not "$HOME/.nimble/bin"
 fi
 
+# Deno
+if [[ -d "$HOME/.deno/bin" ]]; then
+    register_forward_if_not "$HOME/.deno/bin"
+fi
+
 # TODO
 # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 if [[ -d "$HOME/.sdkman" ]]; then
@@ -99,8 +104,8 @@ if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
     fi
 fi
 
-if command -v salias >/dev/null; then
-    source <(salias --init)
-fi
+# if command -v salias >/dev/null; then
+#     source <(salias --init)
+# fi
 
 export PATH=$PATH
