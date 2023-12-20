@@ -1,4 +1,4 @@
-name: CI
+name: static-check
 
 on:
   push:
