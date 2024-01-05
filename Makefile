@@ -14,10 +14,10 @@ init: add-tools install # Install all languages & their packages
 # tools ----------------------------------------------------------------------------------------------------
 
 .PHONY: add-tools
-add-tools: add-nix add-home-manager add-dein-vim # Add developing tools
+add-tools: add-nix add-home-manager # Add developing tools
 
 .PHONY: remove-tools
-remove-tools: remove-nix remove-dein-vim # Remove developing tools
+remove-tools: remove-nix # Remove developing tools
 
 .PHONY: add-nix
 add-nix: _print-airplane # Install nix
@@ -42,17 +42,6 @@ add-home-manager: _print-airplane _prepare-home-manager # Add home-manager
 	source ${PATH_SCRIPT}; \
 	nix --extra-experimental-features "nix-command flakes" run home-manager/master -- init --switch ./.config/home-manager
 	echo "✅ home-manager has been installed successfully!";
-
-
-.PHONY: add-dein-vim
-add-dein-vim: _print-airplane # Add dein.vim
-	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | bash -s ~/.vim/dein
-	@echo "✅ dein.vim has been installed successfully!"
-
-.PHONY: remove-dein-vim
-remove-dein-vim: _print-goodbye # Remove dein.vim
-	sudo rm -rf ~/.vim/dein
-	@echo "✅ dein.vim has been uninstalled successfully!"
 
 
 .PHONY: add-bash-it

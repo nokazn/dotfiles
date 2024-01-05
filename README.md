@@ -21,7 +21,6 @@ $ sudo pacman -Syu && sudo pacman -S git make gcc curl wget unzip openssh
 - `add-tools`
   - `add-nix` - add Nix
   - `add-home-manager` - add home-manager
-  - `add-dein-vim` - add dein.vim
 - `install`
   - `install-asdf-langs` - install asdf-vm (Node.js, yarn, Terraform & etc.)
   - `install-nim` - install Nim
