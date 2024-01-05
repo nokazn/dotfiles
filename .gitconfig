@@ -76,7 +76,7 @@
 	chr = "!f() { git fetch origin $1; git checkout $1; }; f"  # リモートブランチを同じ名前でチェックアウトする
 	cl = clone
 	cleanf = clean -f
-	clgh = "!f() { echo $1; echo $2; if [[ -z $2 ]]; then git clone git@github.com:$1; else git clone git@github.com:$1/$2; fi; }; f"
+	clgh = "!f() { if [[ -z $2 ]]; then git clone git@github.com:$1; else git clone git@github.com:$1/$2; fi; }; f"
 	cm = commit -m
 	cp = cherry-pick
 	d = diff
