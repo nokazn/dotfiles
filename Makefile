@@ -131,6 +131,7 @@ packages-go: # Install Go packages
 
 .PHONY: update-nix
 update-nix: # Update Nix package manager
+	nix-channel --update && nix upgrade-nix
 	nix flake update ./.config/home-manager
 
 .PHONY: update-apt
