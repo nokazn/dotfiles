@@ -1,42 +1,9 @@
 if &compatible
-  " Be improved
+  " Disable compatibility mode for `vi`
   set nocompatible
 endif
 
-" Required:
-set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
-
-" Required:
-if dein#load_state('~/.vim/dein')
-  call dein#begin('~/.vim/dein')
-  " Required:
-  call dein#add('~/.vim/dein/repos/github.com/Shougo/dein.vim')
-
-  " Add or remove your plugins here like this:
-  call dein#add('preservim/nerdtree')
-  call dein#add('itchyny/lightline.vim')
-  call dein#add('joshdick/onedark.vim')
-  call dein#add('pineapplegiant/spaceduck')
-  call dein#add('airblade/vim-gitgutter')
-
-  " Required:
-  call dein#end()
-  call dein#save_state()
-  let g:dein#auto_recache = 1
-endif
-
-" Required:
 filetype plugin indent on
-
-" install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
-
-call map(dein#check_clean(), "delete(v:val, 'rf')")
-call dein#recache_runtimepath()
-
-" -------------------- End dein Scripts -------------------------
 
 " -------------------- NerdTree --------------------
 
@@ -51,8 +18,6 @@ autocmd VimEnter * wincmd p
 map <silent><C-e> :NERDTreeFocus<CR>
 " map <silent><C-e> :NERDTreeToggle<CR>
 map <silent><C-f> :NERDTreeFind<CR>
-
-" -------------------- vim-gitgutter --------------------
 
 " .swp ファイルを作成するまでの時間 (ms)
 set updatetime=500
