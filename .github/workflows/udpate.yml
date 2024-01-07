@@ -1,0 +1,57 @@
+name: update
+
+on:
+  schedule:
+    # 毎月25日の00:00に実行
+    - cron: '0 0 25 * *'
+  workflow_dispatch:
+
+jobs:
+  update-flake-lock:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Generate branch date
+        run: |
+          echo "CURRENT_DATE=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@main
+        with:
+          pr-title: "Update flake.lock"
+          pr-labels: |
+            dependencies
+          pr-reviewers: ${{ github.actor }}
+          branch: "deps/update-flake-lock-${{ env.CURRENT_DATE }}"
+          commit-msg: "dpes: Update flake.lock"
+          path-to-flake-dir: .config/home-manager
+  update-npm-packages-list:
+    timeout-minutes: 15
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Update npm packages list
+        run: |
+          cd ./.config/home-manager/node;
+          nix-shell -p nodePackages.node2nix \
+            -p nixpkgs-fmt \
+            --command "node2nix -i ./packages.json -o ./packages.nix --nodejs-18 && find . -type f | grep -e "\.nix$" | xargs nixpkgs-fmt"
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: deps/update-npm-packages-list
+          branch-suffix: timestamp
+          delete-branch: true
+          commit-message: "dpes: Update npm packages list"
+          title: "Update npm packages list"
+          body: |
+            Automated changes by the GitHub Actions.
+          labels: |
+            dependencies
+          reviewers: ${{ github.actor }}
