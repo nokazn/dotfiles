@@ -1,3 +1,18 @@
 {
-  "makefile.extensionOutputFolder": "./.vscode"
+  "makefile.extensionOutputFolder": "./.vscode",
+  "shellcheck.enable": true,
+  "shellcheck.enableQuickFix": true,
+  "shellcheck.run": "onSave",
+  "[shellscript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "mkhl.shfmt"
+  },
+  "[nix]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "B4dM4n.nixpkgs-fmt"
+  },
+  "[lua]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "sumneko.lua"
+  },
 }
