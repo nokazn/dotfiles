@@ -11,7 +11,7 @@
 # @param None
 # @param {0|1}
 function _is-wsl() {
-  test "\"$(uname -r)\" == *microsoft*"
+	test "\"$(uname -r)\" == *microsoft*"
 }
 
 # cmd.exe で実行する
@@ -20,9 +20,9 @@ function run-cmd() {
 	if [[ ! -e /mnt/c ]]; then
 		return 0
 	fi
-	cd /mnt/c || return 1;
+	cd /mnt/c || return 1
 	/mnt/c/Windows/system32/cmd.exe /c "$1 ${*:2}" | tr -d "\r"
-	cd "${OLDPWD}" || return 1;
+	cd "${OLDPWD}" || return 1
 }
 
 # VSCode を開く
@@ -211,34 +211,34 @@ function docker-rmi-untagged-images() {
 
 function fgsw() {
 	local -r branch="$(git branch -vv | grep -v '^\s*\*' | fzf -q "$1")"
-	git switch "$(awk '{print $1}' <<< "${branch}")"
+	git switch "$(awk '{print $1}' <<<"${branch}")"
 }
 
 function fgswa() {
 	local -r branch="$(git branch -vva | grep -v '^\s*\*' | fzf -q "$1")"
-	git switch "$(awk '{print $1}' <<< "${branch}")"
+	git switch "$(awk '{print $1}' <<<"${branch}")"
 }
 
 function fgbrr() {
 	git fetch
-	local -r branch="$(git branch -vva --remotes  --color=always --color=always | grep -v HEAD | fzf -q "$1" --ansi)"
+	local -r branch="$(git branch -vva --remotes --color=always --color=always | grep -v HEAD | fzf -q "$1" --ansi)"
 	if [[ -n "${branch}" ]]; then
-		local -r remote_branch="$(awk '{print $1}' <<< "${branch}")"
-		git branch "$(sed -E 's/^[^\/]+\/(.+)$/\1/' <<< "${remote_branch}")" "${remote_branch}"
+		local -r remote_branch="$(awk '{print $1}' <<<"${branch}")"
+		git branch "$(sed -E 's/^[^\/]+\/(.+)$/\1/' <<<"${remote_branch}")" "${remote_branch}"
 	fi
 }
 
 function fgswr() {
 	git fetch
-	local -r branch="$(git branch -vva --remotes  --color=always --color=always | grep -v HEAD | fzf -q "$1" --ansi)"
+	local -r branch="$(git branch -vva --remotes --color=always --color=always | grep -v HEAD | fzf -q "$1" --ansi)"
 	if [[ -n "${branch}" ]]; then
-		git switch "$(awk '{print $1}' <<< "${branch}" | sed -E 's/^[^\/]+\/(.+)$/\1/')"
+		git switch "$(awk '{print $1}' <<<"${branch}" | sed -E 's/^[^\/]+\/(.+)$/\1/')"
 	fi
 }
 
 function fgshow() {
-	git log --graph --branches --pretty=default --color=always \
-		| fzf -q "$1" \
+	git log --graph --branches --pretty=default --color=always |
+		fzf -q "$1" \
 			--ansi \
 			--no-sort \
 			--reverse \
@@ -259,14 +259,20 @@ function falias() {
 }
 
 function fcd() {
-	local -r dir="$(cd ~ || return 1; fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1")"
+	local -r dir="$(
+		cd ~ || return 1
+		fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1"
+	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		cd "${dir}" || return 1
 	fi
 }
 
 function fcode() {
-	local -r dir="$(cd ~ || return 1; fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1")"
+	local -r dir="$(
+		cd ~ || return 1
+		fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1"
+	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		code "${dir}"
 	fi
@@ -280,7 +286,10 @@ function fvim() {
 }
 
 function fbroot() {
-	local -r dir="$(cd ~ || return 1; fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1")"
+	local -r dir="$(
+		cd ~ || return 1
+		fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1"
+	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		broot "${dir}"
 	fi
@@ -298,10 +307,10 @@ function apt-list() {
 # Show apt packages installed/uninstalled history.
 function apt-history() {
 	# tee でプロセス置換して、+ (緑) の場合と - (赤) の場合で色を分け、標準出力を捨てる
-	grep -e "install" -e "remove" < /var/log/apt/history.log \
-		| sed -E -e "s/^.*apt(-get)?(\s--?\S+)*\s(install|remove)(\s--?\S+)*\s/\3:/" \
-		| sed -E -e "s/(^|\s)--?\S+//g" -e "s/install:/+ /" -e "s/remove:/- /" \
-			| xargs -I "{}" bash -c "if [[ \"{}\" =~ ^\+ ]]; then printf \"\033[32m{}\033[0m\n\"; elif [[ \"{}\" =~ ^- ]]; then printf \"\033[31m{}\033[0m\n\"; fi"
+	grep -e "install" -e "remove" </var/log/apt/history.log |
+		sed -E -e "s/^.*apt(-get)?(\s--?\S+)*\s(install|remove)(\s--?\S+)*\s/\3:/" |
+		sed -E -e "s/(^|\s)--?\S+//g" -e "s/install:/+ /" -e "s/remove:/- /" |
+		xargs -I "{}" bash -c "if [[ \"{}\" =~ ^\+ ]]; then printf \"\033[32m{}\033[0m\n\"; elif [[ \"{}\" =~ ^- ]]; then printf \"\033[31m{}\033[0m\n\"; fi"
 }
 
 # Show a list of apt packages a user manually installed.
@@ -309,14 +318,14 @@ function apt-history-installed() {
 	echo "List of apt packages you have ever installed. (from '/var/log/apt/history.log')"
 	# ...apt|apt-get [options] install [options] を削除 -> 行中の options を削除 -> パッケージごとに改行
 	local -r apt_list=$(apt list --installed)
-	grep "install" < /var/log/apt/history.log \
-		| sed -E -e "s/^.*apt(-get)?(\s--?\S+)*\sinstall(\s--?\S+)*\s//" \
-		| sed -E -e "s/(^|\s)--?\S+//g" -e "s/(\S)\s+(\S)/\1\n\2/g" \
-		| sort \
-		| uniq \
-		| xargs -I {} sh -c "echo \"${apt_list}\" | grep -e '{}/'" \
-		| column -t -s " " \
-		| sed -E -e "s/^/  /g"
+	grep "install" </var/log/apt/history.log |
+		sed -E -e "s/^.*apt(-get)?(\s--?\S+)*\sinstall(\s--?\S+)*\s//" |
+		sed -E -e "s/(^|\s)--?\S+//g" -e "s/(\S)\s+(\S)/\1\n\2/g" |
+		sort |
+		uniq |
+		xargs -I {} sh -c "echo \"${apt_list}\" | grep -e '{}/'" |
+		column -t -s " " |
+		sed -E -e "s/^/  /g"
 }
 
 # List of installed nix packages.
@@ -333,26 +342,25 @@ function npm-list() {
 }
 
 function path() {
-	echo "${PATH}" \
-		| sed -E -e "s/:/\n/g" \
-		| sed -e "s/^/  /"
+	sed -E -e "s/:/\n/g" <<<"${PATH}" |
+		sed -e "s/^/  /"
 }
 
 function aliases() {
-	alias \
-		| sed -E -e "s/^alias\s//" \
-		| sed -E -e "s/([a-zA-Z]+)=/\1Γ/" \
-		| sed -E -e "s/Γ'/Γ/" \
-		| sed -E -e "s/'$//" \
-		| column -s "Γ" -t
+	alias |
+		sed -E -e "s/^alias\s//" |
+		sed -E -e "s/([a-zA-Z]+)=/\1Γ/" |
+		sed -E -e "s/Γ'/Γ/" |
+		sed -E -e "s/'$//" |
+		column -s "Γ" -t
 }
 
 # Show Git aliases
 function hg() {
-	git config --get-regexp "alias.*" \
-		| sed -E -e "s/alias\.//" -e "s/\s/#/" \
-		| column -s "#" -t \
-		| more
+	git config --get-regexp "alias.*" |
+		sed -E -e "s/alias\.//" -e "s/\s/#/" |
+		column -s "#" -t |
+		more
 }
 
 # Change default shell for a current user
@@ -365,12 +373,13 @@ function chshs() {
 }
 
 function zsh-colors() {
-	seq -w 255 \
-		| xargs -I "{}" echo -n -e "\e[38;5;{}m {}"; printf "\e[0m\n"
+	seq -w 255 |
+		xargs -I "{}" echo -n -e "\e[38;5;{}m {}"
+	printf "\e[0m\n"
 }
 
 function cpu-usage() {
-	cut -b 1-4 <<< $((100 - $(mpstat | tail -n 1 | awk '{print $NF}') ))
+	cut -b 1-4 <<<$((100 - $(mpstat | tail -n 1 | awk '{print $NF}')))
 }
 
 function bk-files() {

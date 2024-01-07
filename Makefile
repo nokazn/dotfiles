@@ -174,6 +174,18 @@ shellcheck-fix: # Check & fix schell scripts
 		| xargs shellcheck --format diff \
 		| patch -p1
 
+.PHONY: check/shfmt
+check/shfmt: # Check wheter schell scripts are formatted
+	find . -type f \
+		| grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)" \
+		| xargs shfmt --diff
+
+.PHONY: fix/shfmt
+fix/shfmt: # Check & format schell scripts
+	find . -type f \
+		| grep -e "\.sh$$" \
+		| xargs shellcheck shfmt --write
+
 .PHONY: nixpkgs-fmt
 nixpkgs-fmt: # Check `.nix` files
 	find ./.config/home-manager/ -type f \
