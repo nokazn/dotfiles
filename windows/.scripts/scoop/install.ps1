@@ -15,17 +15,4 @@ scoop bucket add games
 scoop bucket add nirsoft
 scoop bucket add nonportable
 
-scoop install `
-  main/fd `
-  main/gsudo `
-  extras/neovide `
-  main/neovim `
-  main/nu `
-  main/ripgrep `
-  extras/runcat `
-  main/rustup `
-  main/rustup-gnu main/mingw `
-  main/starship `
-  main/tokei `
-  main/volta `
-  main/yarn
+scoop import "$env:USERPROFILE\.scripts\scoop\packages.json"

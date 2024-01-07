@@ -238,7 +238,8 @@ local defaukt_key_bindings = {
   {
     key = "LeftArrow",
     mods = utils.merge_mods_with_commands("SHIFT"),
-    action = wezterm.action { ActivatePaneDirection = "Left" } },
+    action = wezterm.action { ActivatePaneDirection = "Left" }
+  },
   {
     key = "RightArrow",
     mods = utils.merge_mods_with_commands("SHIFT"),
