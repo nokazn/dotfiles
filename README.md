@@ -8,7 +8,7 @@
 
 If `git`, `make`, `gcc`, `curl`, `wget`, `unzip` and `xz-utils` are not available in your environment, you need to install these packages.
 
-```bash
+```sh
 # Ubuntu/Debian
 $ sudo apt update -y && sudo apt install -y git make gcc curl wget unzip xz-utils
 
@@ -19,13 +19,12 @@ $ sudo pacman -Syu && sudo pacman -S git make gcc curl wget unzip openssh
 `make init` command executes targets below.
 
 - `add-tools`
-  - `add-nix` - add Nix
-  - `add-home-manager` - add home-manager
+  - `add-tools/nix` - add Nix
+  - `add-tools/home-manager` - add home-manager
 - `install`
-  - `install-asdf-langs` - install asdf-vm (Node.js, yarn, Terraform & etc.)
-  - `install-nim` - install Nim
+  - `install/asdf-langs` - install asdf-vm (Node.js, yarn, Terraform & etc.)
 
-```bash
+```sh
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
 $ cd ~/dotfiles
 # Install all development tools & language runtime
@@ -45,7 +44,7 @@ $ chshs zsh
 
 ```bash
 # Add wsl-hello-sudo
-$ make add-wsl-hello-sudo
+$ make add/wsl-hello-sudo
 ```
 
 After installing wsl-hello-sudo, you need to modify `/etc/pam.d/sudo`.

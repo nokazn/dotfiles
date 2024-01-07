@@ -4,6 +4,8 @@ SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
 PATH_SCRIPT := ./.path.sh
 LANGS := nim
+SHELL_FILES := $(shell find . -type f | grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)")
+NIX_FILES := $(shell find ./.config/home-manager/ -type f | grep -e "\.nix$$")
 .DEFAULT_GOAL := help
 
 # init ----------------------------------------------------------------------------------------------------
@@ -14,13 +16,13 @@ init: add-tools install # Install all languages & their packages
 # tools ----------------------------------------------------------------------------------------------------
 
 .PHONY: add-tools
-add-tools: add-nix add-home-manager # Add developing tools
+add-tools: add-tools/nix add-tools/home-manager # Add developing tools
 
 .PHONY: remove-tools
-remove-tools: remove-nix # Remove developing tools
+remove-tools: remove-tools/nix # Remove developing tools
 
-.PHONY: add-nix
-add-nix: _print-airplane # Install nix
+.PHONY: add-tools/nix
+add-tools/nix: _print-airplane # Install nix
 	@if type "nix-env" >/dev/null 2>&1; then \
 		echo "✅ Nix is already installed."; \
 	else \
@@ -29,41 +31,42 @@ add-nix: _print-airplane # Install nix
 		echo "✅ Nix has been installed successfully!"; \
 	fi
 
-.PHONY: remove-nix
-remove-nix: _print-goodbye # Uninstall nix
+.PHONY: remove-tools/nix
+remove-tools/nix: _print-goodbye # Uninstall nix
 	home-manager uninstall
 	rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs,.config/nix,.config/home-manager}
 	sudo rm -rf /nix
 	@echo "✅ Nix has been uninstalled successfully!"
 
-.PHONY: add-home-manager
-add-home-manager: _print-airplane _prepare-home-manager # Add home-manager
+
+.PHONY: add-tools/home-manager
+add-tools/home-manager: _print-airplane _prepare-home-manager # Add home-manager
 # source ${PATH_SCRIPT} しないと nix-build のパスが通らない
 	source ${PATH_SCRIPT}; \
 	nix --extra-experimental-features "nix-command flakes" run home-manager/master -- init --switch ./.config/home-manager
 	echo "✅ home-manager has been installed successfully!";
 
 
-.PHONY: add-bash-it
-add-bash-it: _print-airplane # Add bash-it
+.PHONY: add-tools/bash-it
+add-tools/bash-it: _print-airplane # Add bash-it
 	rm -rf ~/.bash-it
 	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
 # keep your .bashrc and append bash-it templates at the end
 	yes | ~/.bash-it/install.sh
 	@echo "✅ bash-it has been installed successfully!"
 
-.PHONY: remove-bash-it
-remove-bash-it: _print-goodbye # Remove bash-it
+.PHONY: remove-tools/bash-it
+remove-tools/bash-it: _print-goodbye # Remove bash-it
 	rm -rf ~/.bash-it
 	@echo "✅ bash-it has been uninstalled successfully!"
 
 
-.PHONY: add-wsl-hello-sudo
-add-wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
+.PHONY: add-tools/wsl-hello-sudo
+add-tools/wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
 	$(SCRIPTS_DIR)/install-wsl-sudo-hello.sh
 
-.PHONY: remove-wsl-hello-sudo
-remove-wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
+.PHONY: remove-tools/wsl-hello-sudo
+remove-tools/wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
 	if [[ -f ~/Downloads/wsl-hello-sudo/uninstall.sh ]]; then \
 		~/Downloads/wsl-hello-sudo/uninstall.sh; \
 		rm -rf ~/Downloads/wsl-hello-sudo; \
@@ -73,31 +76,28 @@ remove-wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
 # languages ----------------------------------------------------------------------------------------------------
 
 .PHONY: install
-install: install-asdf-langs install-langs # Install all languages (runs scripts starting with `intall-` prefix)
+install: install/asdf-langs $(addprefix install/,$(LANGS)) # Install all languages (runs scripts starting with `intall-` prefix)
 
 .PHONY: uninstall
-uninstall: $(addprefix uninstall-,$(LANGS)) # Uninstall all languages (runs scripts starting with `unintall-` prefix)
+uninstall: $(addprefix uninstall/,$(LANGS)) # Uninstall all languages (runs scripts starting with `unintall-` prefix)
 
-.PHONY: install-asdf-langs
-install-asdf-langs: # Install languages by asdf
+.PHONY: install/asdf-langs
+install/asdf-langs: # Install languages by asdf
 	$(SCRIPTS_DIR)/asdf-install.sh nodejs node
 	$(SCRIPTS_DIR)/asdf-install.sh yarn
 	$(SCRIPTS_DIR)/asdf-install.sh pnpm
 	$(SCRIPTS_DIR)/asdf-install.sh terraform
 	asdf install
 
-.PHONY: install-langs
-install-langs: $(addprefix install-,$(LANGS)) # Install languages
-
-.PHONY: $(addprefix install-,$(LANGS))
-$(addprefix install-,$(LANGS)): _print-airplane # Install each language
-	$(eval lang=$(subst install-,,$@))
+.PHONY: $(addprefix install/,$(LANGS))
+$(addprefix install/,$(LANGS)): _print-airplane # Install each language
+	$(eval lang=$(subst install/,,$@))
 	source ${PATH_SCRIPT}; \
 	$(SCRIPTS_DIR)/$(lang)/$(@).sh;
 
-.PHONY: $(addprefix uninstall-,$(LANGS))
-$(addprefix uninstall-,$(LANGS)): _print-goodbye # Uninstall each language
-	$(eval lang=$(subst uninstall-,,$@))
+.PHONY: $(addprefix uninstall/,$(LANGS))
+$(addprefix uninstall/,$(LANGS)): _print-goodbye # Uninstall each language
+	$(eval lang=$(subst uninstall/,,$@))
 	$(SCRIPTS_DIR)/$(lang)/$(@).sh;
 
 # packages ----------------------------------------------------------------------------------------------------
@@ -161,44 +161,35 @@ _restore-windows: # Restore backed-up files of dotfiles in Windows
 
 # utilities ----------------------------------------------------------------------------------------------------
 
-.PHONY: shellcheck
-shellcheck: # Check schell scripts
-	find . -type f \
-		| grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)" \
-		| xargs shellcheck
+.PHONY: check
+check: check/shellcheck check/shfmt check/nixpkgs-fmt # Check by all `check/*` tasks
 
-.PHONY: shellcheck-fix
-shellcheck-fix: # Check & fix schell scripts
-	find . -type f \
-		| grep -e "\.sh$$" \
-		| xargs shellcheck --format diff \
+.PHONY: fix
+fix: fix/shellcheck fix/shfmt fix/nixpkgs-fmt # Fix by all `fix/*` tasks
+
+check/shellcheck: # Check schell scripts
+	shellcheck $(SHELL_FILES)
+
+.PHONY: fix/shellcheck
+fix/shellcheck: # Fix schell scripts if possible
+	shellcheck --format diff $(SHELL_FILES) \
 		| patch -p1
 
 .PHONY: check/shfmt
 check/shfmt: # Check wheter schell scripts are formatted
-	find . -type f \
-		| grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)" \
-		| xargs shfmt --diff
+	shfmt --diff $(SHELL_FILES)
 
 .PHONY: fix/shfmt
-fix/shfmt: # Check & format schell scripts
-	find . -type f \
-		| grep -e "\.sh$$" \
-		| xargs shellcheck shfmt --write
+fix/shfmt: # Format schell scripts
+	shfmt --write $(SHELL_FILES)
 
-.PHONY: nixpkgs-fmt
-nixpkgs-fmt: # Check `.nix` files
-	find ./.config/home-manager/ -type f \
-		| grep -e "\.nix$$" \
-		| xargs -I {} echo '"{}"' \
-		| xargs nixpkgs-fmt
+.PHONY: check/nixpkgs-fmt
+check/nixpkgs-fmt: # Check `.nix` files
+	nixpkgs-fmt $(NIX_FILES) --check
 
-.PHONY: nixpkgs-fmt-check
-nixpkgs-fmt-check: # Format `.nix` files
-	find ./.config/home-manager/ -type f \
-		| grep -e "\.nix$$" \
-		| xargs -I {} echo '"{}"' \
-		| xargs nixpkgs-fmt --check
+.PHONY: fix/nixpkgs-fmt
+fix/nixpkgs-fmt: # Format `.nix` files
+	nixpkgs-fmt $(NIX_FILES)
 
 .PHONY: _prepare-home-manager
 _prepare-home-manager:
