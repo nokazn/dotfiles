@@ -16,6 +16,7 @@ with pkgs; let
     gtop
     hyperfine # A command-line benchmarking tool
     jq # A lightweight and flexible command-line JSON processor
+    just # A handy way to save and run project-specific commands
     mkcert # A simple zero-config tool to make locally trusted development certificates with any names you'd like.
     navi # An interactive cheatsheet tool for the command-line and application launchers
     ncdu # A disk usage analyzer with an ncurses interface
@@ -27,6 +28,7 @@ with pkgs; let
     sampler # Tool for shell commands execution, visualization and alerting. Configured with a simple YAML file.
     shellcheck # A static analysis tool for shell scripts
     sl # SL(1): Cure your bad habit of mistyping
+    shfmt # A shell parser and formatter
     spotify-tui
     starship # ☄🌌️ The minimal, blazing-fast, and infinitely customizable prompt for any shell!
     sysstat
