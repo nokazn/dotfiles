@@ -14,6 +14,7 @@
 .config/sampler/config.yml
 .config/tmux/cpu-usage.sh
 .config/tmux/memory-usage.sh
+.ssh/config
 .asdfrc
 .curlrc
 .gitconfig
