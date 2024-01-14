@@ -4,7 +4,7 @@ set -eu -o pipefail
 
 # @param ユーザーディレクトリからの相対パス
 function backup_non_symlink_file() {
-	if [[ ! -e ~/"$1" ]]; then
+	if [[ -z "$1" ]] || [[ ! -e ~/"$1" ]]; then
 		return 0
 	fi
 	local -r file_path=$(find ~/"$1" -maxdepth 0)
@@ -17,7 +17,8 @@ function backup_non_symlink_file() {
 
 # @param ユーザーディレクトリからの相対パスの一覧
 function backup_files() {
-	xargs -n 1 <"$1" |
+	# `# `で始まるファイルも`# `を削除した上で引数として渡し、バックアップする
+	sed -E -e 's/^#\s+//' <"$1" |
 		xargs -I {} bash -c "backup_non_symlink_file {}"
 }
 
