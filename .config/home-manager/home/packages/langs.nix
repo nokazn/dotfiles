@@ -7,5 +7,6 @@ with pkgs; [
   elmPackages.elm-format
   erlang
   lua
+  nim
   rustup
 ]
