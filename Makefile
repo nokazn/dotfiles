@@ -93,12 +93,12 @@ install/asdf-langs: # Install languages by asdf
 $(addprefix install/,$(LANGS)): _print-airplane # Install each language
 	$(eval lang=$(subst install/,,$@))
 	source ${PATH_SCRIPT}; \
-	$(SCRIPTS_DIR)/$(lang)/$(@).sh;
+	$(SCRIPTS_DIR)/$(lang)/install-$(lang).sh;
 
 .PHONY: $(addprefix uninstall/,$(LANGS))
 $(addprefix uninstall/,$(LANGS)): _print-goodbye # Uninstall each language
 	$(eval lang=$(subst uninstall/,,$@))
-	$(SCRIPTS_DIR)/$(lang)/$(@).sh;
+	$(SCRIPTS_DIR)/$(lang)/uninstall-$(lang).sh;
 
 # packages ----------------------------------------------------------------------------------------------------
 
