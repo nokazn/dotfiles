@@ -16,6 +16,8 @@
 .config/tmux/memory-usage.sh
 .ssh/config
 .asdfrc
+# .bashrc
+# .bash_profile
 .curlrc
 .gitconfig
 .npmrc
@@ -26,4 +28,10 @@
 .tool-versions
 .vimrc
 .yarnrc
+# .zlogin
+# .zlogout
+# .zpreztorc
+# .zprofile
+# .zshenv
+# .zshrc
 salias.toml

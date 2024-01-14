@@ -13,13 +13,8 @@ let
             let
               # プロジェクトルート基準でファイルが存在するか
               exists = builtins.pathExists (toSourcePath file);
-              # 無視するパターンに合致するか
-              ignored = builtins.any
-                (v: builtins.match v file != null) [
-                ".bash_profile"
-                ".bashrc"
-                ".profile"
-              ];
+              # `# `で始まるファイルはhome-managerによって生成されるのでここでは無視する
+              ignored = (builtins.match "^#\s+.+" file) != null;
             in
             file != "" && exists && !ignored
           )
