@@ -14,9 +14,9 @@ function main() {
 		org.chromium.Chromium \
 		org.gimp.GIMP \
 		org.keepassxc.KeePassXC \
-		otg.mozilla.firefox \
-		otg.mozilla.Thunderbird \
-		otg.videolan.VLC \
+		org.mozilla.firefox \
+		org.mozilla.Thunderbird \
+		org.videolan.VLC \
 		us.zoom.Zoom
 }
 
