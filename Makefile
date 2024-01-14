@@ -3,7 +3,7 @@
 SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
 PATH_SCRIPT := ./.path.sh
-LANGS := nim
+LANGS := rust nim
 SHELL_FILES := $(shell find . -type f | grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)")
 NIX_FILES := $(shell find ./.config/home-manager/ -type f | grep -e "\.nix$$")
 .DEFAULT_GOAL := help
@@ -76,7 +76,7 @@ remove-tools/wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
 # languages ----------------------------------------------------------------------------------------------------
 
 .PHONY: install
-install: install/asdf-langs $(addprefix install/,$(LANGS)) # Install all languages (runs scripts starting with `intall-` prefix)
+install: install/asdf-langs # Install all languages (runs scripts starting with `intall-` prefix)
 
 .PHONY: uninstall
 uninstall: $(addprefix uninstall/,$(LANGS)) # Uninstall all languages (runs scripts starting with `unintall-` prefix)
