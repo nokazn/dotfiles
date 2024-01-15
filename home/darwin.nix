@@ -1,7 +1,23 @@
 { pkgs, lib, ... }:
 
 let
-  nixPackages = import ../.config/home-manager/home/packages { pkgs = pkgs; lib = lib; };
+  nixPackages = lib.flatten (builtins.map
+    (source: import source { pkgs = pkgs; lib = lib; })
+    [
+      ./packages/cli.nix
+      ./packages/cloud.nix
+      ./packages/container.nix
+      ./packages/git.nix
+      ./packages/go.nix
+      ./packages/gui.nix
+      ./packages/java.nix
+      ./packages/langs.nix
+      ./packages/nix.nix
+      ./packages/node.nix
+      ./packages/php.nix
+      ./packages/python.nix
+      ./packages/unix.nix
+    ]);
   extraNodePackages = builtins.attrValues (import ../.config/home-manager/node { pkgs = pkgs; });
   username = "nokazn";
 in
@@ -24,9 +40,9 @@ in
     sessionVariables = import ../.config/home-manager/home/sessionVariables.nix { };
     shellAliases = import ../.config/home-manager/home/shellAliases.nix { };
 
-    # # nix packages
-    # packages = nixPackages ++ extraNodePackages;
-    # # dotfiles in home directory
+    # nix packages
+    packages = nixPackages ++ extraNodePackages;
+    # dotfiles in home directory
     file = import ../.config/home-manager/home/files.nix { lib = lib; };
   };
 
