@@ -1,14 +1,13 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 let
-  nixPackages = import ./home/packages { pkgs = pkgs; lib = lib; };
-  extraNodePackages = builtins.attrValues (import ./node { pkgs = pkgs; });
+  nixPackages = import ../.config/home-manager/home/packages { pkgs = pkgs; lib = lib; };
+  extraNodePackages = builtins.attrValues (import ../.config/home-manager/node { pkgs = pkgs; });
   username = "nokazn";
 in
 {
   home = {
-    username = username;
-    homeDirectory = "/Users/${username}";
+    inherit username;
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
     # when a new Home Manager release introduces backwards
@@ -22,27 +21,14 @@ in
     enableNixpkgsReleaseCheck = true;
     extraOutputsToInstall = [ "dev" ];
 
-    # sessionVariables = import ./home/sessionVariables.nix { };
-    # shellAliases = import ./home/shellAliases.nix { };
+    sessionVariables = import ../.config/home-manager/home/sessionVariables.nix { };
+    shellAliases = import ../.config/home-manager/home/shellAliases.nix { };
 
     # # nix packages
-    packages = {};
     # packages = nixPackages ++ extraNodePackages;
     # # dotfiles in home directory
-    # file = import ./home/files.nix { lib = lib; };
+    file = import ../.config/home-manager/home/files.nix { lib = lib; };
   };
 
-  # news = {
-  #   # See https://github.com/nix-community/home-manager/blob/888eac32bd657bfe0d024c8770130d80d1c02cd3/home-manager/home-manager#L222-L253
-  #   # See https://github.com/microsoft/WSL/issues/2466
-  #   # prevent errors on executing notify-send in WSLg environment
-  #   display = "silent";
-  # };
-
-  # programs = import ./programs { lib = lib; pkgs = pkgs; };
-
-  # services = {
-  #   gpg-agent = import ./services/gpg-agent.nix { };
-  #   keybase = import ./services/keybase.nix { };
-  # };
+  programs = import ../.config/home-manager/programs { lib = lib; pkgs = pkgs; };
 }
