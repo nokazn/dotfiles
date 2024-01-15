@@ -6,6 +6,8 @@
 
 ## Installation
 
+### For Linux (user environment)
+
 If `git`, `make`, `gcc`, `curl`, `wget`, `unzip` and `xz-utils` are not available in your environment, you need to install these packages.
 
 ```sh
@@ -16,19 +18,36 @@ $ sudo apt update -y && sudo apt install -y git make gcc curl wget unzip xz-util
 $ sudo pacman -Syu && sudo pacman -S git make gcc curl wget unzip openssh
 ```
 
-`make init` command executes targets below.
+`make init/linux-user` command executes targets below.
 
-- `add-tools`
+- `add-tools/linux-user`
   - `add-tools/nix` - add Nix
-  - `add-tools/home-manager` - add home-manager
+  - `apply/linux-user` - apply `home-manager switch`
 - `install`
-  - `install/asdf-langs` - install asdf-vm (Node.js, yarn, Terraform & etc.)
+  - `install/asdf-langs` - install asdf-vm and some languages by it
 
 ```sh
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
 $ cd ~/dotfiles
 # Install all development tools & language runtime
-$ make init
+$ make init/linux-user
+```
+
+### For darwin
+
+`make init/darwin` command executes targets below.
+
+- `add-tools/darwin`
+  - `add-tools/nix` - add Nix
+  - `apply/darwin` - apply `nix-darwin switch`
+- `install`
+  - `install/asdf-langs` - install asdf-vm and some languages by it
+
+```sh
+$ git clone git@github.com:nokazn/dotfiles ~/dotfiles
+$ cd ~/dotfiles
+# Install all development tools & language runtime
+$ make init/darwin
 ```
 
 ## Configuration
