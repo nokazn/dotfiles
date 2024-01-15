@@ -10,60 +10,68 @@ NIX_FILES := $(shell find ./.config/home-manager/ -type f | grep -e "\.nix$$")
 
 # init ----------------------------------------------------------------------------------------------------
 
-.PHONY: init
-init: add-tools install # Install all languages & their packages
+.PHONY: init/linux-user
+init/linux-user: add-tools/linux-user install # Set up all languages & packages for Linux user environment
+
+.PHONY: init/darwin
+init/darwin: add-tools/darwin install # Set up all languages & packages for dawrin
 
 # tools ----------------------------------------------------------------------------------------------------
 
-.PHONY: add-tools
-add-tools: add-tools/nix add-tools/home-manager # Add developing tools
+.PHONY: add-tools/linux-user
+add-tools/linux-user: add-tools/nix apply/linux-user # Add developing tools
 
-.PHONY: remove-tools
-remove-tools: remove-tools/nix # Remove developing tools
+.PHONY: add-tools/darwin
+add-tools/darwin: add-tools/nix apply/darwin # Add developing tools
 
 .PHONY: add-tools/nix
 add-tools/nix: _print-airplane # Install nix
-	@if type "nix-env" >/dev/null 2>&1; then \
+	@if type "nix" >/dev/null 2>&1; then \
 		echo "✅ Nix is already installed."; \
 	else \
 		curl -L https://nixos.org/nix/install | bash; \
-		source ~/.nix-profile/etc/profile.d/nix.sh \
 		echo "✅ Nix has been installed successfully!"; \
 	fi
-
-.PHONY: remove-tools/nix
-remove-tools/nix: _print-goodbye # Uninstall nix
-	home-manager uninstall
-	rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs,.config/nix,.config/home-manager}
-	sudo rm -rf /nix
-	@echo "✅ Nix has been uninstalled successfully!"
-
-
-.PHONY: add-tools/home-manager
-add-tools/home-manager: _print-airplane _prepare-home-manager # Add home-manager
-# source ${PATH_SCRIPT} しないと nix-build のパスが通らない
-	source ${PATH_SCRIPT}; \
-	nix --extra-experimental-features "nix-command flakes" run home-manager/master -- init --switch ./.config/home-manager
-	echo "✅ home-manager has been installed successfully!";
-
-
-.PHONY: add-tools/bash-it
-add-tools/bash-it: _print-airplane # Add bash-it
-	rm -rf ~/.bash-it
-	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
-# keep your .bashrc and append bash-it templates at the end
-	yes | ~/.bash-it/install.sh
-	@echo "✅ bash-it has been installed successfully!"
-
-.PHONY: remove-tools/bash-it
-remove-tools/bash-it: _print-goodbye # Remove bash-it
-	rm -rf ~/.bash-it
-	@echo "✅ bash-it has been uninstalled successfully!"
-
 
 .PHONY: add-tools/wsl-hello-sudo
 add-tools/wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
 	$(SCRIPTS_DIR)/install-wsl-sudo-hello.sh
+
+.PHONY: remove-tools
+remove-tools: remove-tools/nix # Remove developing tools
+
+.PHONY: remove-tools/nix/linux-user
+remove-tools/nix/linux-user: _print-goodbye # Uninstall nix for Linux user environment (See https://nixos.org/manual/nix/stable/installation/uninstall.html#uninstalling-nix)
+	nix --extra-experimental-features "nix-command flakes" \
+		shell github:nix-community/home-manager/release-23.11 \
+		--command sh -c "home-manager uninstall"
+	rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs,.config/nix,.config/home-manager}
+	sudo rm -rf /nix /etc/profiles/per-users
+	@echo "✅ Nix has been uninstalled successfully!"
+
+.PHONY: ls
+remove-tools/nix/darwin: _print-goodbye # Uninstall nix for darwin (See https://nixos.org/manual/nix/stable/installation/uninstall.html#macos)
+	nix --extra-experimental-features "nix-command flakes" \
+		shell github:LnL7/nix-darwin#darwin-uninstaller \
+		--command darwin-uninstaller
+	nix --extra-experimental-features "nix-command flakes" \
+		shell github:nix-community/home-manager/release-23.11 \
+		--command sh -c "yes | sudo home-manager uninstall"
+	sudo launchctl unload /Library/LaunchDaemons/org.nixos.nix-daemon.plist;
+	sudo rm /Library/LaunchDaemons/org.nixos.nix-daemon.plist;
+	sudo launchctl unload /Library/LaunchDaemons/org.nixos.darwin-store.plist;
+	sudo rm /Library/LaunchDaemons/org.nixos.darwin-store.plist;
+	sudo dscl . -delete /Groups/nixbld;
+	for u in $(sudo dscl . -list /Users | grep _nixbld); do sudo dscl . -delete /Users/$u; done;
+	sudo vifs;
+	sudo sed -E -i -e '/^nix/d' /etc/synthetic.conf;
+	sudo rm -rf /etc/{nix,profiles} /var/root/.nix-profile /var/root/.nix-defexpr /var/root/.nix-channels ~/{.nix-profile,.nix-defexpr,.nix-channels}
+	sudo diskutil apfs deleteVolume /nix;
+	find /etc/ -maxdepth 1 -type f | \
+		grep .backup-before-nix | \
+		sed -E -e 'p;s/\.backup-before-nix//' | \
+    xargs -n 2 sudo mv -v;
+	@echo "✅ Nix has been uninstalled successfully!"
 
 .PHONY: remove-tools/wsl-hello-sudo
 remove-tools/wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
@@ -73,13 +81,23 @@ remove-tools/wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
 	fi
 	@echo "✅ WSL-Hello-sudo has been uninstalled successfully!"
 
+.PHONY: _add-tools/bash-it
+_add-tools/bash-it: _print-airplane # (Deprecated) Add bash-it
+	rm -rf ~/.bash-it
+	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
+# keep your .bashrc and append bash-it templates at the end
+	yes | ~/.bash-it/install.sh
+	@echo "✅ bash-it has been installed successfully!"
+
+.PHONY: remove-tools/bash-it
+_remove-tools/bash-it: _print-goodbye # (Deprecated) Remove bash-it
+	rm -rf ~/.bash-it
+	@echo "✅ bash-it has been uninstalled successfully!"
+
 # languages ----------------------------------------------------------------------------------------------------
 
 .PHONY: install
 install: install/asdf-langs # Install all languages (runs scripts starting with `intall-` prefix)
-
-.PHONY: uninstall
-uninstall: $(addprefix uninstall/,$(LANGS)) # Uninstall all languages (runs scripts starting with `unintall-` prefix)
 
 .PHONY: install/asdf-langs
 install/asdf-langs: # Install languages by asdf
@@ -95,6 +113,9 @@ $(addprefix install/,$(LANGS)): _print-airplane # Install each language
 	source ${PATH_SCRIPT}; \
 	$(SCRIPTS_DIR)/$(lang)/install-$(lang).sh;
 
+.PHONY: uninstall
+uninstall: $(addprefix uninstall/,$(LANGS)) # Uninstall all languages (runs scripts starting with `unintall-` prefix)
+
 .PHONY: $(addprefix uninstall/,$(LANGS))
 $(addprefix uninstall/,$(LANGS)): _print-goodbye # Uninstall each language
 	$(eval lang=$(subst uninstall/,,$@))
@@ -102,61 +123,59 @@ $(addprefix uninstall/,$(LANGS)): _print-goodbye # Uninstall each language
 
 # packages ----------------------------------------------------------------------------------------------------
 
-.PHONY: hms
-hms: home-manager-switch # Run `home-manager switch`
-
-.PHONY: home-manager-switch
-home-manager-switch: _prepare-home-manager # Run `home-manager switch`
-# source ${PATH_SCRIPT} しないと nix-build のパスが通らない
-	source ${PATH_SCRIPT}; \
+.PHONY: apply/linux-user
+apply/linux-user: _apply/backup-home-files _apply/path # Run `home-manager switch`
 	export NIXPKGS_ALLOW_UNFREE=1; \
-	~/.nix-profile/bin/home-manager switch --flake ./.config/home-manager/
+	nix run \
+		--extra-experimental-features "nix-command flakes" \
+		home-manager -- switch --flake ./.config/home-manager/
+	@echo "✅ home-manager has been applied successfully!"
 
-.PHONY: generate-npm-packages-list
-generate-npm-packages-list: # Generate Nix packages list for npm packages
-	cd ./.config/home-manager/node; \
-	NIX_PATH=~/.nix-defexpr/channels ~/.nix-profile/bin/nix-shell -p nodePackages.node2nix --command "node2nix -i ./packages.json -o ./packages.nix --nodejs-18"
-	@if command -v nixpkgs-fmt >/dev/null 2>&1; then \
-		find . -type f | grep -e "\.nix$$" | xargs nixpkgs-fmt; \
-	else \
-		echo "⚠️ nixpkgs-fmt is not found, so generated files have not been formatted."; \
-	fi
+.PHONY: apply/darwin
+apply/darwin: _apply/backup-home-files _apply/path # Run `nix-darwin switch`
+	nix run \
+		--extra-experimental-features "nix-command flakes" \
+		nix-darwin -- switch --flake .#aarch64-darwin
+	@echo "✅ nix-darwin has been applied successfully!"
 
-.PHONY: packages-go
-packages-go: # Install Go packages
-	go install golang.org/x/tools/cmd/goimports@latest; \
-	go install github.com/ktr0731/salias@latest;
+.PHONY: _apply/backup-home-files
+_apply/backup-home-files:
+	$(SCRIPTS_DIR)/backup.sh ./.config/home-manager/home/files.txt
+
+.PHONY: _apply/path
+_apply/path:
+	source "$(PATH_SCRIPT)"
 
 # update ----------------------------------------------------------------------------------------------------
 
-.PHONY: update-nix
-update-nix: # Update Nix package manager
+.PHONY: update/nix
+update/nix: # Update Nix package manager
 	nix-channel --update && nix upgrade-nix
 	nix flake update ./.config/home-manager
 
-.PHONY: update-apt
-update-apt: # Update apt packages
-	sudo apt update -y; \
-	if [[ $$(apt list --upgradable 2>/dev/null | grep upgradable | wc -l) -gt 0 ]]; then \
-		sudo apt upgrade -y; \
-	fi;
+.PHONY: update/npm-packages-list
+update/npm-packages-list: # Generate Nix packages list for npm packages
+	cd ./.config/home-manager/node; \
+	nix-shell -p nodePackages.node2nix \
+    -p nixpkgs-fmt \
+    --command 'node2nix -i ./packages.json -o ./packages.nix --nodejs-18 && find . -type f | grep -e "\.nix$$" | xargs nixpkgs-fmt' && exit
 
 # deploy & restore dotfiles ----------------------------------------------------------------------------------------------------
 
 .PHONY: _deploy
-_deploy: # Make symbolic links to dotfiles & back up original files if exists
+_deploy: # (Deprecated) Make symbolic links to dotfiles & back up original files if exists
 	$(SCRIPTS_DIR)/_deploy/unix.sh
 
-.PHONY: deploy-windows
-deploy-windows: # Make symbolic links to dotfiles & back up original files if exists in Windows
+.PHONY: deploy/windows
+deploy/windows: # Make symbolic links to dotfiles & back up original files if exists in Windows
 	$(SCRIPTS_DIR)/_deploy/windows.sh
 
 .PHONY: _restore
-_restore: # Restore backed-up files of dotfiles
+_restore: # (Deprecated) Restore backed-up files of dotfiles
 	$(SCRIPTS_DIR)/_restore/unix.sh
 
-.PHONY: restore-windows
-_restore-windows: # Restore backed-up files of dotfiles in Windows
+.PHONY: restore/windows
+restore/windows: # Restore backed-up files of dotfiles in Windows
 	$(SCRIPTS_DIR)/_restore/windows.sh
 
 # utilities ----------------------------------------------------------------------------------------------------
@@ -164,41 +183,33 @@ _restore-windows: # Restore backed-up files of dotfiles in Windows
 .PHONY: check
 check: check/shellcheck check/shfmt check/nixpkgs-fmt # Check by all `check/*` tasks
 
-.PHONY: fix
-fix: fix/shellcheck fix/shfmt fix/nixpkgs-fmt # Fix by all `fix/*` tasks
-
+.PHONY: check/shellcheck
 check/shellcheck: # Check schell scripts
 	shellcheck $(SHELL_FILES)
+
+.PHONY: check/shfmt
+check/shfmt: # Check wheter schell scripts are formatted
+	shfmt --diff $(SHELL_FILES)
+
+.PHONY: check/nixpkgs-fmt
+check/nixpkgs-fmt: # Check `.nix` files
+	nixpkgs-fmt $(NIX_FILES) --check
+
+.PHONY: fix
+fix: fix/shellcheck fix/shfmt fix/nixpkgs-fmt # Fix by all `fix/*` tasks
 
 .PHONY: fix/shellcheck
 fix/shellcheck: # Fix schell scripts if possible
 	shellcheck --format diff $(SHELL_FILES) \
 		| patch -p1
 
-.PHONY: check/shfmt
-check/shfmt: # Check wheter schell scripts are formatted
-	shfmt --diff $(SHELL_FILES)
-
 .PHONY: fix/shfmt
 fix/shfmt: # Format schell scripts
 	shfmt --write $(SHELL_FILES)
 
-.PHONY: check/nixpkgs-fmt
-check/nixpkgs-fmt: # Check `.nix` files
-	nixpkgs-fmt $(NIX_FILES) --check
-
 .PHONY: fix/nixpkgs-fmt
 fix/nixpkgs-fmt: # Format `.nix` files
 	nixpkgs-fmt $(NIX_FILES)
-
-.PHONY: _prepare-home-manager
-_prepare-home-manager:
-	$(SCRIPTS_DIR)/backup.sh ./.config/home-manager/home/files.txt
-	if command -v starship >/dev/null 2>&1; then \
-		test -f ~/.cache/starship/init.nu && rm -f ~/.cache/starship/init.nu; \
-		mkdir -p ~/.cache/starship/; \
-		starship init nu > ~/.cache/starship/init.nu; \
-	fi
 
 .PHONY: _print-airplane
 _print-airplane:
@@ -226,9 +237,7 @@ _print-goodbye:
 help: # Show all commands
 	@echo "📗 Displays help information for make commands."
 	@echo "Commands:"
-# コマンド一覧 -> ":" で改行 -> ":" を含む行 (前半) の \s を ", " に置換、"#" を含む行 (後半) からコメントを抽出 -> ":" で分けた個所を再連結 -> column で整形
+# コマンド一覧 (`_`始まりのコマンドは除く) → `:`から｀＃｀または行末までの文字列を削除する → column で整形
 	@grep -E '^[a-zA-Z]\S+(\s\S+)*:.*' ./Makefile \
-		| sed -E -e "s/:/:\n/" \
-		| sed -E -e "/:/ s/\s/, /g" -e "s/^.*[#|;]+\s*//" \
-		| sed -E -e "N" -e "s/:\n/:/g;" -e "s/^/  /" \
+		| sed -E -e 's/:.*#(.*)$$/:\1/' \
 		| column -s ":" -t
