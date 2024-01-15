@@ -18,6 +18,7 @@ in
   enableBashIntegration = true;
   enableZshIntegration = true;
   enableFishIntegration = true;
+  enableNushellIntegration = true;
 
   settings = {
     add_newline = true;
