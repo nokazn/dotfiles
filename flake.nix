@@ -5,20 +5,20 @@
     nixpkgs.url = "github:nixos/nixpkgs/23.11";
 
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-23.11-darwin";
-    darwin = {
+    nix-darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-darwin, home-manager, darwin, flake-utils, ... }:
+  outputs = { self, nixpkgs, nixpkgs-darwin, home-manager, nix-darwin, flake-utils, ... }:
     let
       homeManagerConfigurations = (home: {
         home-manager = {
@@ -40,20 +40,21 @@
       };
 
       # For darwin
-      darwinConfigurations = nixpkgs.lib.listToAttrs (builtins.map (system: {
-        name = system;
-        value = darwin.lib.darwinSystem rec {
-          inherit system;
-          pkgs = nixpkgs-darwin.legacyPackages.${system};
-          modules = [
-            ./hosts/darwin.nix
-            home-manager.darwinModules.home-manager
-            (homeManagerConfigurations (import ./home/darwin.nix {
-              inherit pkgs;
-              lib = pkgs.lib;
-            }))
-          ];
-        };
-      }) [ "aarch64-darwin" "x86_64-darwin" ]);
+      darwinConfigurations = nixpkgs.lib.listToAttrs (builtins.map
+        (system: {
+          name = system;
+          value = nix-darwin.lib.darwinSystem rec {
+            inherit system;
+            pkgs = nixpkgs-darwin.legacyPackages.${system};
+            modules = [
+              ./hosts/darwin.nix
+              home-manager.darwinModules.home-manager
+              (homeManagerConfigurations (import ./home/darwin.nix {
+                inherit pkgs;
+                lib = pkgs.lib;
+              }))
+            ];
+          };
+        }) [ "aarch64-darwin" "x86_64-darwin" ]);
     };
 }
