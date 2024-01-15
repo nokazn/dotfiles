@@ -117,6 +117,13 @@ if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 	fi
 fi
 
+if [[ -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]]; then
+	if _is_unregistered_path "/etc/profiles/per-user/$USER/bin"; then
+		source "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+		PATH="/etc/profiles/per-user/$USER/bin:$PATH"
+	fi
+fi
+
 # if command -v salias >/dev/null; then
 #     source <(salias --init)
 # fi
