@@ -43,7 +43,7 @@ in
     # nix packages
     packages = nixPackages ++ extraNodePackages;
     # dotfiles in home directory
-    file = import ../.config/home-manager/home/files.nix { lib = lib; };
+    file = import ../.config/home-manager/home/files.nix { pkgs = pkgs; lib = lib; };
   };
 
   programs = import ../.config/home-manager/programs { lib = lib; pkgs = pkgs; };

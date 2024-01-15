@@ -18,7 +18,7 @@ function backup_non_symlink_file() {
 # @param ユーザーディレクトリからの相対パスの一覧
 function backup_files() {
 	# `# `で始まるファイルも`# `を削除した上で引数として渡し、バックアップする
-	sed -E -e 's/^#\s+//' <"$1" |
+	sed -E -e 's/^#[[:space:]]+//' <"$1" |
 		xargs -I {} bash -c "backup_non_symlink_file {}"
 }
 
