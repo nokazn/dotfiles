@@ -29,14 +29,17 @@
       });
     in
     {
-      # homeConfigurations."nokazn" = home-manager.lib.homeManagerConfiguration {
-      #   inherit pkgs;
-      #   # Specify your home configuration modules here, for example,
-      #   # the path to your home.nix.
-      #   modules = [ ./.config/home-manager/home.nix ];
-      #   # Optionally use extraSpecialArgs
-      #   # to pass through arguments to home.nix
-      # };
+      # For Linux user environments
+      homeConfigurations."nokazn" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        # Specify your home configuration modules here, for example,
+        # the path to your home.nix.
+        modules = [ ./.config/home-manager/home.nix ];
+        # Optionally use extraSpecialArgs
+        # to pass through arguments to home.nix
+      };
+
+      # For darwin
       darwinConfigurations = nixpkgs.lib.listToAttrs (builtins.map (system: {
         name = system;
         value = darwin.lib.darwinSystem rec {
