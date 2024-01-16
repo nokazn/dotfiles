@@ -37,7 +37,7 @@ in
   extraConfig =
     let
       # TODO: 同じ階層で管理したい
-      vimrc = builtins.toString ../../.vimrc;
+      vimrc = builtins.toString ../../unix/.vimrc;
     in
     builtins.readFile vimrc;
 }
