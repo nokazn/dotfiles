@@ -1,8 +1,10 @@
 { pkgs, ... }:
 
 with pkgs; [
+  expect
   gcc
   inetutils
+  pinentry
   rename
   rsync
   unzip
