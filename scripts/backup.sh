@@ -10,7 +10,7 @@ function backup_non_symlink_file() {
 	local -r file_path=$(find ~/"$1" -maxdepth 0)
 	# シンボリックリンクでないファイルが存在している場合はバックアップ
 	if [[ ! -L "${file_path}" ]]; then
-		mv --verbose "${file_path}" "${file_path}-$(date +"%Y-%m-%d-%I-%M-%S").bk" | sed "s/^/✅ /"
+		mv -v "${file_path}" "${file_path}-$(date +"%Y-%m-%d-%I-%M-%S").bk" | sed "s/^/✅ /"
 	fi
 	return 0
 }
