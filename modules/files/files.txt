@@ -24,7 +24,6 @@
 .npmrc
 .path.sh
 .prettierrc.json
-.shellcheckrc
 .tool-versions
 .vimrc
 .yarnrc
