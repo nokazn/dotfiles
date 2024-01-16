@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of nokazn";
+  description = "dotfiles of nokazn";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
@@ -24,16 +24,19 @@
     , ...
     }:
     let
+      user = {
+        name = "nokazn";
+      };
+      nix = {
+        version = "23.11";
+      };
       homeManagerConfigurations = (home: {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
-          users.nokazn = home;
+          users.${user.name} = home;
         };
       });
-      user = {
-        name = "nokazn";
-      };
     in
     {
       # For Linux user environments
@@ -42,8 +45,7 @@
         modules = [
           ./home/linux.nix
         ];
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+        extraSpecialArgs = { inherit user nix; };
       };
 
       # For darwin
@@ -63,6 +65,7 @@
             ];
             specialArgs = { inherit user nix; };
           };
+          specialArgs = { inherit user nix; };
         }) [ "aarch64-darwin" "x86_64-darwin" ]);
     };
 }
