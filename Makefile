@@ -3,9 +3,10 @@
 SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
 PATH_SCRIPT := ./.path.sh
+NIX := nix --extra-experimental-features 'nix-command flakes'
 LANGS := rust nim
 SHELL_FILES := $(shell find . -type f | grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)")
-NIX_FILES := $(shell find ./.config/home-manager/ -type f | grep -e "\.nix$$")
+NIX_FILES := $(shell find . -type f | grep -e "\.nix$$")
 .DEFAULT_GOAL := help
 
 # init ----------------------------------------------------------------------------------------------------
@@ -42,8 +43,7 @@ remove-tools: remove-tools/nix # Remove developing tools
 
 .PHONY: remove-tools/nix/linux-user
 remove-tools/nix/linux-user: _print-goodbye # Uninstall nix for Linux user environment (See https://nixos.org/manual/nix/stable/installation/uninstall.html#uninstalling-nix)
-	nix --extra-experimental-features "nix-command flakes" \
-		shell github:nix-community/home-manager/release-23.11 \
+	$(NIX) shell github:nix-community/home-manager/release-23.11 \
 		--command sh -c "home-manager uninstall"
 	rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs,.config/nix,.config/home-manager}
 	sudo rm -rf /nix /etc/profiles/per-users
@@ -51,11 +51,9 @@ remove-tools/nix/linux-user: _print-goodbye # Uninstall nix for Linux user envir
 
 .PHONY: ls
 remove-tools/nix/darwin: _print-goodbye # Uninstall nix for darwin (See https://nixos.org/manual/nix/stable/installation/uninstall.html#macos)
-	nix --extra-experimental-features "nix-command flakes" \
-		shell github:LnL7/nix-darwin#darwin-uninstaller \
+	$(NIX) shell github:LnL7/nix-darwin#darwin-uninstaller \
 		--command darwin-uninstaller
-	nix --extra-experimental-features "nix-command flakes" \
-		shell github:nix-community/home-manager/release-23.11 \
+	$(NIX) shell github:nix-community/home-manager/release-23.11 \
 		--command sh -c "yes | sudo home-manager uninstall"
 	sudo launchctl unload /Library/LaunchDaemons/org.nixos.nix-daemon.plist;
 	sudo rm /Library/LaunchDaemons/org.nixos.nix-daemon.plist;
@@ -126,21 +124,19 @@ $(addprefix uninstall/,$(LANGS)): _print-goodbye # Uninstall each language
 .PHONY: apply/linux-user
 apply/linux-user: _apply/backup-home-files _apply/path # Run `home-manager switch`
 	export NIXPKGS_ALLOW_UNFREE=1; \
-	nix run \
-		--extra-experimental-features "nix-command flakes" \
-		home-manager -- switch --flake ./.config/home-manager/
+	$(NIX) run \
+		home-manager/release-23.11 -- switch --flake .
 	@echo "✅ home-manager has been applied successfully!"
 
 .PHONY: apply/darwin
 apply/darwin: _apply/backup-home-files _apply/path # Run `nix-darwin switch`
-	nix run \
-		--extra-experimental-features "nix-command flakes" \
+	$(NIX) run \
 		nix-darwin -- switch --flake .#aarch64-darwin
 	@echo "✅ nix-darwin has been applied successfully!"
 
 .PHONY: _apply/backup-home-files
 _apply/backup-home-files:
-	$(SCRIPTS_DIR)/backup.sh ./.config/home-manager/home/files.txt
+	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
 
 .PHONY: _apply/path
 _apply/path:
@@ -151,11 +147,11 @@ _apply/path:
 .PHONY: update/nix
 update/nix: # Update Nix package manager
 	nix-channel --update && nix upgrade-nix
-	nix flake update ./.config/home-manager
+	nix flake update
 
 .PHONY: update/npm-packages-list
 update/npm-packages-list: # Generate Nix packages list for npm packages
-	cd ./.config/home-manager/node; \
+	cd ./modules/node; \
 	nix-shell -p nodePackages.node2nix \
     -p nixpkgs-fmt \
     --command 'node2nix -i ./packages.json -o ./packages.nix --nodejs-18 && find . -type f | grep -e "\.nix$$" | xargs nixpkgs-fmt' && exit
