@@ -1,13 +1,13 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, user, nix, ... }:
 
 let
   nixPackages = import ../modules/packages { inherit pkgs lib; };
   extraNodePackages = builtins.attrValues (import ../modules/node { inherit pkgs; });
 in
 {
-  home = rec {
-    username = "nokazn";
-    homeDirectory = "/home/${username}";
+  home = {
+    username = user.name;
+    homeDirectory = "/home/${user.name}";
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
     # when a new Home Manager release introduces backwards
@@ -16,7 +16,7 @@ in
     # You can update Home Manager without changing this value. See
     # the Home Manager release notes for a list of state version
     # changes in each release.
-    stateVersion = "23.11";
+    stateVersion = nix.version;
 
     enableNixpkgsReleaseCheck = true;
     extraOutputsToInstall = [ "dev" ];
