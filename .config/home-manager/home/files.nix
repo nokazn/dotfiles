@@ -19,10 +19,6 @@ let
             file != "" && exists && !ignored
           )
           (lib.splitString "\n" files);
-      onChange = file:
-        if (!pkgs.stdenv.isDarwin) then ''
-          chmod +w ${file}
-        '' else "";
     in
     builtins.map
       (file: {
@@ -31,8 +27,9 @@ let
           # https://discourse.nixos.org/t/how-to-refer-to-current-directory-in-shell-nix/9526
           source = toSourcePath file;
           target = file;
-          # TODO: darwinでも対応できるようにする
-          onChange = onChange file;
+          onChange = ''
+            [[ -f ${file} ]] && chmod +w ${file}
+          '';
         };
       })
       files;
