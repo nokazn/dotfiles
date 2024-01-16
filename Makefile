@@ -2,7 +2,7 @@
 
 SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
-PATH_SCRIPT := ./.path.sh
+PATH_SCRIPT := ./unix/.path.sh
 NIX := nix --extra-experimental-features 'nix-command flakes'
 LANGS := rust nim
 SHELL_FILES := $(shell find . -type f | grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)")
