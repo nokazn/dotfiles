@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  commonShellConfig = import ../../shell.nix { };
+  commonShellConfig = import ../_shell { };
   preztoConfig = import ./prezto.nix { };
 in
 {

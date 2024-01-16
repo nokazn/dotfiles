@@ -13,7 +13,7 @@ let
       hash = "sha256-aoJR1l+N1kyY5HX0jgCIJfYbAmg/H8vb8mwjDqNnrTc=";
     }
     {
-      owner = " joshdick";
+      owner = "joshdick";
       repo = "onedark.vim";
       rev = "57b77747694ea5676c3ca0eeaf9567dc499730c0";
       hash = "sha256-rt/VKABAfxyFBKNerZiswWDaBrusrn7WaI1jHbn3I/s=";
@@ -36,7 +36,8 @@ in
   # ホームディレクトリにあるだけでは読み込まれない
   extraConfig =
     let
-      vimrc = builtins.toString ../../../.vimrc;
+      # TODO: 同じ階層で管理したい
+      vimrc = builtins.toString ../../.vimrc;
     in
     builtins.readFile vimrc;
 }
