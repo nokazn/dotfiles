@@ -11,12 +11,16 @@ let
         builtins.filter
           (file:
             let
+              # `# `で始まるファイルはhome-managerによって生成されるのでここでは無視する
+              ignored = (builtins.match "^#[[:space:]]+(.+)" file) != null;
               # プロジェクトルート基準でファイルが存在するか
               exists = builtins.pathExists (toSourcePath file);
-              # `# `で始まるファイルはhome-managerによって生成されるのでここでは無視する
-              ignored = (builtins.match "^#\s+.+" file) != null;
+              copiable =
+                if !ignored && !exists then
+                  throw "No file: ${file}"
+                else !ignored && exists;
             in
-            file != "" && exists && !ignored
+            file != "" && copiable
           )
           (lib.splitString "\n" files);
     in
