@@ -28,7 +28,7 @@ in
     # nix packages
     packages = nixPackages ++ extraNodePackages;
     # dotfiles in home directory
-    file = import ./home/files.nix { lib = lib; };
+    file = import ./home/files.nix { pkgs = pkgs; lib = lib; };
   };
 
   news = {
