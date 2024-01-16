@@ -26,6 +26,7 @@
 .prettierrc.json
 .tool-versions
 .vimrc
+.wezterm.lua
 .yarnrc
 # .zlogin
 # .zlogout
