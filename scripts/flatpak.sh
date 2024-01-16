@@ -10,7 +10,6 @@ function main() {
 		com.spotify.Client \
 		com.todoist.Todoist \
 		com.visualstudio.code \
-		io.typora.Typora \
 		org.chromium.Chromium \
 		org.gimp.GIMP \
 		org.keepassxc.KeePassXC \
