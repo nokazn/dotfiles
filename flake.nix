@@ -2,7 +2,7 @@
   description = "Home Manager configuration of nokazn";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
 
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-23.11-darwin";
     nix-darwin = {
@@ -14,11 +14,15 @@
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-darwin, home-manager, nix-darwin, flake-utils, ... }:
+  outputs =
+    inputs@{ nixpkgs
+    , nixpkgs-darwin
+    , nix-darwin
+    , home-manager
+    , ...
+    }:
     let
       homeManagerConfigurations = (home: {
         home-manager = {
@@ -27,14 +31,17 @@
           users.nokazn = home;
         };
       });
+      user = {
+        name = "nokazn";
+      };
     in
     {
       # For Linux user environments
-      homeConfigurations."nokazn" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.${user.name} = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./.config/home-manager/home.nix ];
+        modules = [
+          ./home/linux.nix
+        ];
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
       };
@@ -50,10 +57,11 @@
               ./hosts/darwin.nix
               home-manager.darwinModules.home-manager
               (homeManagerConfigurations (import ./home/darwin.nix {
-                inherit pkgs;
+                inherit pkgs user nix;
                 lib = pkgs.lib;
               }))
             ];
+            specialArgs = { inherit user nix; };
           };
         }) [ "aarch64-darwin" "x86_64-darwin" ]);
     };

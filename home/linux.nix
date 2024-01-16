@@ -1,13 +1,12 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 let
-  nixPackages = import ./home/packages { pkgs = pkgs; lib = lib; };
-  extraNodePackages = builtins.attrValues (import ./node { pkgs = pkgs; });
-  username = "nokazn";
+  nixPackages = import ../modules/packages { inherit pkgs lib; };
+  extraNodePackages = builtins.attrValues (import ../modules/node { inherit pkgs; });
 in
 {
-  home = {
-    username = username;
+  home = rec {
+    username = "nokazn";
     homeDirectory = "/home/${username}";
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -22,13 +21,13 @@ in
     enableNixpkgsReleaseCheck = true;
     extraOutputsToInstall = [ "dev" ];
 
-    sessionVariables = import ./home/sessionVariables.nix { };
-    shellAliases = import ./home/shellAliases.nix { };
+    sessionVariables = import ../modules/sessionVariables.nix { };
+    shellAliases = import ../modules/shellAliases.nix { };
 
     # nix packages
     packages = nixPackages ++ extraNodePackages;
     # dotfiles in home directory
-    file = import ./home/files.nix { pkgs = pkgs; lib = lib; };
+    file = import ../modules/files { inherit pkgs lib; };
   };
 
   news = {
@@ -38,10 +37,10 @@ in
     display = "silent";
   };
 
-  programs = import ./programs { lib = lib; pkgs = pkgs; };
+  programs = import ../programs { inherit pkgs lib; };
 
   services = {
-    gpg-agent = import ./services/gpg-agent.nix { };
-    keybase = import ./services/keybase.nix { };
+    gpg-agent = import ../modules/services/gpg-agent.nix { };
+    keybase = import ../modules/services/keybase.nix { };
   };
 }
