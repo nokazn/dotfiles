@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 with pkgs; let
   db = [
@@ -9,8 +9,6 @@ with pkgs; let
   modern = [
     asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
     direnv
-    dprint
-    dstat
     du-dust # du + rust = dust. Like du but more intuitive
     expect
     gtop
@@ -30,15 +28,11 @@ with pkgs; let
     sl # SL(1): Cure your bad habit of mistyping
     shfmt # A shell parser and formatter
     spotify-tui
-    starship # ☄🌌️ The minimal, blazing-fast, and infinitely customizable prompt for any shell!
-    sysstat
-    tflint
     tldr # A collection of community-maintained help pages for command-line tools
     tokei # compiled with serialization support: json, cbor, yaml
     tree # Recursive directory listing command
     treefmt
     wireshark
-    wslu # A collection of utilities for Windows 10 Linux Subsystems
     yq # Command-line YAML processor - jq wrapper for YAML documents
   ];
   alternative = [
@@ -52,5 +46,13 @@ with pkgs; let
     procs # A modern replacement for ps written in Rust
     ripgrep # An interactive replacer for ripgrep that makes it easy to find and replace across files on the command line
   ];
+  linux = [
+    dstat
+    sysstat # A collection of performance monitoring tools for Linux (such as sar, iostat and pidstat)
+    wslu # A collection of utilities for Windows 10 Linux Subsystems
+  ];
+  darwin = [
+    keybase
+  ];
 in
-db ++ modern ++ alternative
+db ++ modern ++ alternative ++ lib.optionals (!stdenv.isDarwin) linux ++ lib.optionals stdenv.isDarwin darwin

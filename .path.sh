@@ -116,6 +116,16 @@ if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 		fpath=("${ASDF_DIR}/completions" "${fpath[@]}")
 	fi
 fi
+# darwinでの初期インストールのために必要
+if [[ -d "/nix/var/nix/profiles/default/bin" ]]; then
+	_register_forward_if_not "/nix/var/nix/profiles/default/bin"
+fi
+if [[ -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]]; then
+	if _is_unregistered_path "/etc/profiles/per-user/$USER/bin"; then
+		source "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+		PATH="/etc/profiles/per-user/$USER/bin:$PATH"
+	fi
+fi
 
 # if command -v salias >/dev/null; then
 #     source <(salias --init)

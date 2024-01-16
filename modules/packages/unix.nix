@@ -5,7 +5,8 @@ with pkgs; [
   inetutils
   rename
   rsync
-  unixtools.column
   unzip
   zip
+] ++ lib.optional (!stdenv.isDarwin) [
+  unixtools.column
 ]
