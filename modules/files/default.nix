@@ -3,7 +3,7 @@
 let
   fileSourceList =
     let
-      toSourcePath = file: builtins.toString ../../.. + ("/" + file);
+      toSourcePath = file: builtins.toString ./../.. + ("/" + file);
       files =
         let
           files = builtins.readFile ./files.txt;

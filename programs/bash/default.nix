@@ -1,7 +1,7 @@
 { ... }:
 
 let
-  commonShellConfig = (import ../shell.nix { });
+  commonShellConfig = (import ../_shell { });
 in
 {
   enable = true;
@@ -31,7 +31,7 @@ in
     else
       { };
   bashrcExtra =
-    builtins.readFile ../../../.bashrc
+    builtins.readFile ./.bashrc
     + commonShellConfig.init
     + ''
       # enable color support of ls and also add handy aliases
