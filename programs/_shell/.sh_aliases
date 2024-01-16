@@ -328,6 +328,13 @@ function apt-history-installed() {
 		sed -E -e "s/^/  /g"
 }
 
+function apt-upgrade() {
+	sudo apt update -y
+	if [[ $(apt list --upgradable 2>/dev/null | grep -c upgradable) -gt 0 ]]; then
+		sudo apt upgrade -y
+	fi
+}
+
 # List of installed nix packages.
 function nix-list() {
 	nix-env -qa --installed

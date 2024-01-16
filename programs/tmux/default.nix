@@ -8,7 +8,7 @@
   escapeTime = 500;
   extraConfig =
     let
-      tmuxConf = builtins.toString ../../../.config/tmux/tmux.conf;
+      tmuxConf = builtins.toString ./tmux.conf;
     in
     builtins.readFile tmuxConf;
   plugins = with pkgs; [

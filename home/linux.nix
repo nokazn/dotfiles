@@ -1,14 +1,13 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, user, nix, ... }:
 
 let
-  nixPackages = import ./home/packages { pkgs = pkgs; lib = lib; };
-  extraNodePackages = builtins.attrValues (import ./node { pkgs = pkgs; });
-  username = "nokazn";
+  nixPackages = import ../modules/packages { inherit pkgs lib; };
+  extraNodePackages = builtins.attrValues (import ../modules/node { inherit pkgs; });
 in
 {
   home = {
-    username = username;
-    homeDirectory = "/home/${username}";
+    username = user.name;
+    homeDirectory = "/home/${user.name}";
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
     # when a new Home Manager release introduces backwards
@@ -17,18 +16,18 @@ in
     # You can update Home Manager without changing this value. See
     # the Home Manager release notes for a list of state version
     # changes in each release.
-    stateVersion = "23.11";
+    stateVersion = nix.version;
 
     enableNixpkgsReleaseCheck = true;
     extraOutputsToInstall = [ "dev" ];
 
-    sessionVariables = import ./home/sessionVariables.nix { };
-    shellAliases = import ./home/shellAliases.nix { };
+    sessionVariables = import ../modules/sessionVariables.nix { };
+    shellAliases = import ../modules/shellAliases.nix { };
 
     # nix packages
     packages = nixPackages ++ extraNodePackages;
     # dotfiles in home directory
-    file = import ./home/files.nix { lib = lib; };
+    file = import ../modules/files { inherit pkgs lib; };
   };
 
   news = {
@@ -38,10 +37,10 @@ in
     display = "silent";
   };
 
-  programs = import ./programs { lib = lib; pkgs = pkgs; };
+  programs = import ../programs { inherit pkgs lib; };
 
   services = {
-    gpg-agent = import ./services/gpg-agent.nix { };
-    keybase = import ./services/keybase.nix { };
+    gpg-agent = import ../modules/services/gpg-agent.nix { };
+    keybase = import ../modules/services/keybase.nix { };
   };
 }

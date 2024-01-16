@@ -1,3 +1,5 @@
+# /etc/bash.bashrc
+# /etc/bashrc
 .bash-it/custom/bobby2/bobby2.theme.bash
 .config/bat/config
 .config/broot/conf.hjson
@@ -10,7 +12,6 @@
 .config/neofetch/config.conf
 .config/nix
 .config/home-manager
-.config/nushell/aliases.nu
 .config/sampler/config.yml
 .config/tmux/cpu-usage.sh
 .config/tmux/memory-usage.sh
@@ -23,7 +24,6 @@
 .npmrc
 .path.sh
 .prettierrc.json
-.profile
 .shellcheckrc
 .tool-versions
 .vimrc

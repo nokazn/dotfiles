@@ -7,14 +7,23 @@ let
     listToAttrs
     map;
   sources = lib.filter
-    (source: !(source.type == "regular" && source.name == "default.nix"))
+    (source:
+      let
+        isEntryPoint = source.type == "regular" && source.name == "default.nix";
+        # `_`で始まるファイル/ディレクトリは除外
+        # isInternal = source.name == "_shell";
+        isInternal = (builtins.match "^_.+" source.name) != null;
+      in
+      !isEntryPoint && !isInternal
+    )
     (lib.mapAttrsToList
       (name: type: {
         name = name;
         type = type;
       })
       # 再帰的に探索しない
-      (readDir ./.));
+      (readDir ./.)
+    );
   programs = map
     (source:
       let
