@@ -1,24 +1,8 @@
 { pkgs, lib, ... }:
 
 let
-  nixPackages = lib.flatten (builtins.map
-    (source: import source { pkgs = pkgs; lib = lib; })
-    [
-      ./packages/cli.nix
-      ./packages/cloud.nix
-      ./packages/container.nix
-      ./packages/git.nix
-      ./packages/go.nix
-      ./packages/gui.nix
-      ./packages/java.nix
-      ./packages/langs.nix
-      ./packages/nix.nix
-      ./packages/node.nix
-      ./packages/php.nix
-      ./packages/python.nix
-      ./packages/unix.nix
-    ]);
-  extraNodePackages = builtins.attrValues (import ../.config/home-manager/node { pkgs = pkgs; });
+  nixPackages = import ../modules/packages { inherit pkgs lib; };
+  extraNodePackages = builtins.attrValues (import ../modules/node { inherit pkgs; });
   username = "nokazn";
 in
 {
@@ -37,14 +21,14 @@ in
     enableNixpkgsReleaseCheck = true;
     extraOutputsToInstall = [ "dev" ];
 
-    sessionVariables = import ../.config/home-manager/home/sessionVariables.nix { };
-    shellAliases = import ../.config/home-manager/home/shellAliases.nix { };
+    sessionVariables = import ../modules/sessionVariables.nix { };
+    shellAliases = import ../modules/shellAliases.nix { };
 
     # nix packages
     packages = nixPackages ++ extraNodePackages;
     # dotfiles in home directory
-    file = import ../.config/home-manager/home/files.nix { pkgs = pkgs; lib = lib; };
+    file = import ../modules/files { inherit pkgs lib; };
   };
 
-  programs = import ../.config/home-manager/programs { lib = lib; pkgs = pkgs; };
+  programs = import ../programs { inherit pkgs lib; };
 }
