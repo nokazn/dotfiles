@@ -1,5 +1,5 @@
 .*.swp
 *.log
-.aws
+.aws/credentials
 .ssh/*
 !.ssh/config
