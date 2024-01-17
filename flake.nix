@@ -56,7 +56,7 @@
             inherit system;
             pkgs = nixpkgs-darwin.legacyPackages.${system};
             modules = [
-              ./hosts/darwin.nix
+              ./hosts/darwin
               home-manager.darwinModules.home-manager
               (homeManagerConfigurations (import ./home/darwin.nix {
                 inherit pkgs user nix;
