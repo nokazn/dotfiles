@@ -25,8 +25,8 @@
 .npmrc
 .path.sh
 .prettierrc.json
+# .profile
 .tool-versions
-.vimrc
 .wezterm.lua
 .yarnrc
 # .zlogin

@@ -28,16 +28,15 @@ let
 in
 {
   enable = true;
+  defaultEditor = true;
   packageConfigurable = pkgs.vim;
   plugins = with pkgs.vimPlugins; [
     nerdtree
     gitgutter
   ] ++ customVimPlugins;
-  # ホームディレクトリにあるだけでは読み込まれない
   extraConfig =
     let
-      # TODO: 同じ階層で管理したい
-      vimrc = builtins.toString ../../unix/.vimrc;
+      vimrc = builtins.toString ./.vimrc;
     in
     builtins.readFile vimrc;
 }
