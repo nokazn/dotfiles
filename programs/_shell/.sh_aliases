@@ -11,7 +11,7 @@
 # @param None
 # @param {0|1}
 function _is-wsl() {
-	test "\"$(uname -r)\" == *microsoft*"
+	[[ "$(uname -r)" == *microsoft* ]]
 }
 
 # cmd.exe で実行する
