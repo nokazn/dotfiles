@@ -10,6 +10,7 @@ function _is_unregistered_path() {
 	! (echo "$PATH" | grep -q "$1")
 }
 
+# パスが追加されていなければ、先頭に追加する
 function _register_forward_if_not() {
 	if _is_unregistered_path "$1"; then
 		PATH="$1:${PATH}"
@@ -17,6 +18,15 @@ function _register_forward_if_not() {
 	return 0
 }
 
+# パスが追加されていても、先頭に移動する
+function _register_forward() {
+	# `/`を`\/`にエスケープ
+	local -r p=$(sed -E -e "s/\//\\\\\//g" <<<"$1")
+	PATH=$(sed -E -e "s/:${p}//" <<<"$PATH" | sed -E -e "s/^/${p}:/")
+	return 0
+}
+
+# パスが追加されていなければ、末尾に追加する
 function _register_backward_if_not() {
 	if _is_unregistered_path "$1"; then
 		PATH="${PATH}:$1"
@@ -63,17 +73,17 @@ if [[ -d "$HOME/.anyenv" ]]; then
 	done
 fi
 
-# Go
+# # Go
 if command -v go >/dev/null; then
 	_goBinDir="$(go env GOBIN)"
 	[[ -z ${_goBinDir} ]] && _goBinDir="$(go env GOPATH)/bin"
 	[[ -z ${_goBinDir} ]] && _goBinDir="${HOME}/go/bin"
-	_register_forward_if_not "${_goBinDir}"
+	_register_forward "${_goBinDir}"
 fi
 
 # Ruby
 if command -v ruby >/dev/null; then
-	_register_forward_if_not "$(ruby -e 'print Gem.user_dir')/bin"
+	_register_forward "$(ruby -e 'print Gem.user_dir')/bin"
 fi
 
 # Rust
@@ -84,12 +94,12 @@ fi
 
 # Nim (choosenim)
 if [[ -d "$HOME/.nimble/bin" ]]; then
-	_register_forward_if_not "$HOME/.nimble/bin"
+	_register_forward "$HOME/.nimble/bin"
 fi
 
 # Deno
 if [[ -d "$HOME/.deno/bin" ]]; then
-	_register_forward_if_not "$HOME/.deno/bin"
+	_register_forward "$HOME/.deno/bin"
 fi
 
 # TODO
@@ -102,7 +112,7 @@ if [[ -d "$HOME/.sdkman" ]]; then
 	fi
 fi
 
-# Nix installer
+# Nix
 if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 	if _is_unregistered_path "$HOME/.nix-profile"; then
 		# shellcheck source=~/.nix-profile/etc/profile.d/nix.sh
@@ -118,13 +128,10 @@ if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 fi
 # darwinでの初期インストールのために必要
 if [[ -d "/nix/var/nix/profiles/default/bin" ]]; then
-	_register_forward_if_not "/nix/var/nix/profiles/default/bin"
+	_register_forward "/nix/var/nix/profiles/default/bin"
 fi
-if [[ -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]]; then
-	if _is_unregistered_path "/etc/profiles/per-user/$USER/bin"; then
-		source "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
-		PATH="/etc/profiles/per-user/$USER/bin:$PATH"
-	fi
+if [[ -d "/etc/profiles/per-user/$USER/bin" ]]; then
+	_register_forward "/etc/profiles/per-user/$USER/bin"
 fi
 
 # if command -v salias >/dev/null; then
