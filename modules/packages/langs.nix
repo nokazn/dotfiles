@@ -9,6 +9,7 @@ with pkgs; lib.attrValues {
     nim
     powershell # Powerful cross-platform (Windows, Linux, and macOS) shell and scripting language based on .NET
     rustup
+    yamlfmt # An extensible command line tool or library to format yaml files.
   ];
   node = with nodePackages;[
     eslint
