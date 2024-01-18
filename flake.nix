@@ -68,4 +68,11 @@
           specialArgs = { inherit user nix; };
         }) [ "aarch64-darwin" "x86_64-darwin" ]);
     };
+
+  nixConfig = {
+    experimental-features = [ "nix-command" "flakes" ];
+    # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
+    auto-optimise-store = true;
+    eval-cache = true;
+  };
 }
