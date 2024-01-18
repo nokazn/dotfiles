@@ -8,7 +8,6 @@ with pkgs; lib.attrValues {
     lua
     nim
     powershell # Powerful cross-platform (Windows, Linux, and macOS) shell and scripting language based on .NET
-    rustup
     yamlfmt # An extensible command line tool or library to format yaml files.
   ];
   node = with nodePackages;[
@@ -30,6 +29,17 @@ with pkgs; lib.attrValues {
     dprint # Code formatting platform written in Rust
     oxlint # A suite of high-performance tools for JavaScript and TypeScript written in Rust
   ];
+  rust =
+    let
+      libiconv =
+        if stdenv.isDarwin then pkgs.darwin.libiconv
+        else pkgs.libiconv;
+    in
+    [
+      cargo-cache
+      rustup
+      libiconv
+    ];
   go = [
     ghq
     gotools
