@@ -32,7 +32,7 @@ let
           source = toSourcePath file;
           target = file;
           onChange = ''
-            [[ -f ${file} ]] && chmod +w ${file}
+            sudo chmod +w ${file}
           '';
         };
       })
