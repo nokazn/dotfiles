@@ -1,0 +1,4 @@
+# See https://wiki.archlinux.org/title/Localization/Japanese
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
