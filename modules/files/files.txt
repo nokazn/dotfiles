@@ -4,12 +4,14 @@
 .bash-it/custom/bobby2/bobby2.theme.bash
 .config/bat/config
 .config/broot/conf.hjson
+.config/fcitx5/profile
 .config/gh/config.yml
 .config/git/attributes
 .config/git/config.work
 .config/git/ignore
 .config/htop/htoprc
 .config/lazygit/config.yml
+.config/latte/custom.layout.latte
 .config/neofetch/config.conf
 .config/nix
 .config/home-manager
@@ -28,6 +30,7 @@
 # .profile
 .tool-versions
 .wezterm.lua
+.xprofile
 .yarnrc
 # .zlogin
 # .zlogout
