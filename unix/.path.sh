@@ -112,7 +112,7 @@ if [[ -d "$HOME/.sdkman" ]]; then
 	fi
 fi
 
-# Nix
+# Nix (single user)
 if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 	if _is_unregistered_path "$HOME/.nix-profile"; then
 		# shellcheck source=~/.nix-profile/etc/profile.d/nix.sh
@@ -126,12 +126,19 @@ if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 		fpath=("${ASDF_DIR}/completions" "${fpath[@]}")
 	fi
 fi
-# darwinでの初期インストールのために必要
+
+# Nix (multi user)
 if [[ -d "/nix/var/nix/profiles/default/bin" ]]; then
+	# darwinでの初期インストールのために必要
 	_register_forward "/nix/var/nix/profiles/default/bin"
 fi
 if [[ -d "/etc/profiles/per-user/$USER/bin" ]]; then
 	_register_forward "/etc/profiles/per-user/$USER/bin"
+
+	# 初期化スクリプトを読み込む
+	find "/etc/profiles/per-user/$USER/etc/profile.d/" -mindepth 1 -maxdepth 1 -type l | while read -r dir; do
+		source "${dir}"
+	done
 fi
 
 # if command -v salias >/dev/null; then
