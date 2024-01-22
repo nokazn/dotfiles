@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, meta, ... }:
 
 with pkgs; lib.attrValues {
   db = [
@@ -57,6 +57,7 @@ with pkgs; lib.attrValues {
     else [
       dstat # Versatile resource statistics tool
       sysstat # A collection of performance monitoring tools for Linux (such as sar, iostat and pidstat)
+    ] ++ lib.optional meta.isWsl [
       wslu # A collection of utilities for Windows 10 Linux Subsystems
     ];
 }

@@ -6,7 +6,7 @@
 
 ## Installation
 
-### For Linux (user environment)
+### For user environment
 
 If `git`, `make`, `gcc`, `curl`, `wget`, `unzip` and `xz-utils` are not available in your environment, you need to install these packages.
 
@@ -18,11 +18,11 @@ $ sudo apt update -y && sudo apt install -y git make gcc curl wget unzip xz-util
 $ sudo pacman -Syu && sudo pacman -S git make gcc curl wget unzip openssh
 ```
 
-`make init/linux-user` command executes targets below.
+`make init/user` command executes targets below.
 
-- `add-tools/linux-user`
+- `add-tools/user`
   - `add-tools/nix` - add Nix
-  - `apply/linux-user` - apply `home-manager switch`
+  - `apply/user` - apply `home-manager switch`
 - `install`
   - `install/asdf-langs` - install asdf-vm and some languages by it
 
@@ -30,7 +30,10 @@ $ sudo pacman -Syu && sudo pacman -S git make gcc curl wget unzip openssh
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
 $ cd ~/dotfiles
 # Install all development tools & language runtime
-$ make init/linux-user
+$ make init/user
+
+# or for WSL environment
+$ make init/user-wsl
 ```
 
 ### For darwin

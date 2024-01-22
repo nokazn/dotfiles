@@ -11,16 +11,16 @@ NIX_FILES := $(shell find . -type f | grep -e "\.nix$$")
 
 # init ----------------------------------------------------------------------------------------------------
 
-.PHONY: init/linux-user
-init/linux-user: add-tools/linux-user install # Set up all languages & packages for Linux user environment
+.PHONY: init/user
+init/user: add-tools/user install # Set up all languages & packages for user environment
 
 .PHONY: init/darwin
 init/darwin: add-tools/darwin install # Set up all languages & packages for dawrin
 
 # tools ----------------------------------------------------------------------------------------------------
 
-.PHONY: add-tools/linux-user
-add-tools/linux-user: add-tools/nix apply/linux-user # Add developing tools
+.PHONY: add-tools/user
+add-tools/user: add-tools/nix apply/user # Add developing tools
 
 .PHONY: add-tools/darwin
 add-tools/darwin: add-tools/nix apply/darwin # Add developing tools
@@ -41,8 +41,8 @@ add-tools/wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
 .PHONY: remove-tools
 remove-tools: remove-tools/nix # Remove developing tools
 
-.PHONY: remove-tools/nix/linux-user
-remove-tools/nix/linux-user: _print-goodbye # Uninstall nix for Linux user environment (See https://nixos.org/manual/nix/stable/installation/uninstall.html#uninstalling-nix)
+.PHONY: remove-tools/nix/user
+remove-tools/nix/user: _print-goodbye # Uninstall nix for user environment (See https://nixos.org/manual/nix/stable/installation/uninstall.html#uninstalling-nix)
 	$(NIX) shell github:nix-community/home-manager/release-23.11 \
 		--command sh -c "home-manager uninstall"
 	rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs,.config/nix,.config/home-manager}
@@ -121,11 +121,16 @@ $(addprefix uninstall/,$(LANGS)): _print-goodbye # Uninstall each language
 
 # packages ----------------------------------------------------------------------------------------------------
 
-.PHONY: apply/linux-user
-apply/linux-user: _apply/backup-home-files _apply/path # Run `home-manager switch`
-	export NIXPKGS_ALLOW_UNFREE=1; \
+.PHONY: apply/user
+apply/user: _apply/backup-home-files _apply/path # Run `home-manager switch` for user environment
 	$(NIX) run \
 		home-manager/release-23.11 -- switch --flake .
+	@echo "✅ home-manager has been applied successfully!"
+
+.PHONY: apply/user-wsl
+apply/user-wsl: _apply/backup-home-files _apply/path # Run `home-manager switch` for WSL user environment
+	$(NIX) run \
+		home-manager/release-23.11 -- switch --flake .#wsl
 	@echo "✅ home-manager has been applied successfully!"
 
 .PHONY: apply/darwin

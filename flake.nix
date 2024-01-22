@@ -44,16 +44,30 @@
       });
     in
     {
-      # For Linux user environments
-      homeConfigurations.${user.name} = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = [
-          ./home/linux.nix
-        ];
-        extraSpecialArgs = { inherit user nix; };
-      };
+      # For user environments
+      # - home-manager switch .#${USER}
+      # - home-manager switch .#wsl
+      homeConfigurations = nixpkgs.lib.listToAttrs (builtins.map
+        (meta: {
+          name = meta.name;
+          value = home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            modules = [
+              ./home/linux.nix
+            ];
+            extraSpecialArgs = {
+              inherit user nix;
+              meta = meta.value;
+            };
+          };
+        })
+        [
+          { name = user.name; value = { isWsl = false; }; }
+          { name = "wsl"; value = { isWsl = true; }; }
+        ]);
 
       # For darwin
+      # - darwin-rebuild switch .#${system}
       darwinConfigurations = nixpkgs.lib.listToAttrs (builtins.map
         (system: {
           name = system;
@@ -66,12 +80,14 @@
               (homeManagerConfigurations (import ./home/darwin.nix {
                 inherit pkgs user nix;
                 lib = pkgs.lib;
+                meta = { isWsl = false; };
               }))
             ];
             specialArgs = { inherit user nix; };
           };
           specialArgs = { inherit user nix; };
         }) [ "aarch64-darwin" "x86_64-darwin" ]);
+
     } // (flake-utils.lib.eachDefaultSystem
       (system:
       let
