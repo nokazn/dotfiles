@@ -37,7 +37,7 @@ in
     display = "silent";
   };
 
-  programs = import ../programs { inherit pkgs lib; };
+  programs = import ../programs { inherit pkgs lib meta; };
 
   services = {
     gpg-agent = import ../modules/services/gpg-agent.nix { };
