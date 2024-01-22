@@ -14,6 +14,9 @@
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    flake-utils.url = "github:numtide/flake-utils";
+    devshell.url = "github:numtide/devshell";
   };
 
   outputs =
@@ -21,6 +24,8 @@
     , nixpkgs-darwin
     , nix-darwin
     , home-manager
+    , devshell
+    , flake-utils
     , ...
     }:
     let
@@ -67,7 +72,24 @@
           };
           specialArgs = { inherit user nix; };
         }) [ "aarch64-darwin" "x86_64-darwin" ]);
-    };
+    } // (flake-utils.lib.eachDefaultSystem
+      (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
+        devShells.default = pkgs.mkShell
+          {
+            buildInputs = with pkgs; [
+              gnumake
+              shellcheck
+              shfmt
+              nixpkgs-fmt
+              pre-commit
+              treefmt
+            ];
+          };
+      }));
 
   nixConfig = {
     experimental-features = [ "nix-command" "flakes" ];
