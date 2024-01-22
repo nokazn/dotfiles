@@ -18,6 +18,7 @@
 .config/sampler/config.yml
 .config/tmux/cpu-usage.sh
 .config/tmux/memory-usage.sh
+.config/wezterm
 .ssh/config
 .asdfrc
 # .bashrc
@@ -29,7 +30,6 @@
 .prettierrc.json
 # .profile
 .tool-versions
-.wezterm.lua
 .xprofile
 .yarnrc
 # .zlogin

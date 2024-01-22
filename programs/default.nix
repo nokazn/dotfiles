@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, meta, ... }:
 
 let
   inherit (builtins)
@@ -35,7 +35,7 @@ let
       in
       {
         name = name;
-        value = (import (./. + "/${source.name}") { pkgs = pkgs; });
+        value = (import (./. + "/${source.name}") { inherit pkgs meta; });
       })
     sources;
 in
