@@ -117,6 +117,7 @@ fabric.properties
 **/.env*
 !.env.sample
 !.env.example
+!.envrc
 
 # Certification files
 *.pem
