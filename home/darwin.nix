@@ -1,7 +1,7 @@
-{ pkgs, lib, user, nix, ... }:
+{ pkgs, lib, user, nix, meta, ... }:
 
 let
-  nixPackages = import ../modules/packages { inherit pkgs lib; };
+  nixPackages = import ../modules/packages { inherit pkgs lib meta; };
   extraNodePackages = builtins.attrValues (import ../modules/node { inherit pkgs; });
 in
 {
@@ -20,14 +20,14 @@ in
     enableNixpkgsReleaseCheck = true;
     extraOutputsToInstall = [ "dev" ];
 
-    sessionVariables = import ../modules/sessionVariables.nix { };
-    shellAliases = import ../modules/shellAliases.nix { };
+    sessionVariables = import ../modules/sessionVariables.nix { inherit meta; };
+    shellAliases = import ../modules/shellAliases.nix { inherit meta; };
 
     # nix packages
     packages = nixPackages ++ extraNodePackages;
     # dotfiles in home directory
-    file = import ../modules/files { inherit pkgs lib; };
+    file = import ../modules/files { inherit pkgs lib meta; };
   };
 
-  programs = import ../programs { inherit pkgs lib; };
+  programs = import ../programs { inherit pkgs lib meta; };
 }

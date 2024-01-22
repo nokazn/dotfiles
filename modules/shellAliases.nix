@@ -1,14 +1,9 @@
-{ ... }:
+{ meta, ... }:
 
 let
   DOTFILES = "~/dotfiles";
   wslAliases =
-    let
-      isWsl = builtins.pathExists /mnt/c;
-    in
-    # if isWsl then
-      # TODO: `--impure`をつけて実行しないと`/mnt/c`にアクセスできないため、WSLかどうかの判定ができないため
-    if isWsl || true then
+    if meta.isWsl then
       {
         "explorer.exe" = "/mnt/c/Windows/explorer.exe";
         "bash.exe" = "/mnt/c/Windows/system32/bash.exe";

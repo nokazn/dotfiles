@@ -5,6 +5,6 @@ with pkgs; [
   lazydocker # The lazier way to manage everything docker
   podman
   podman-compose
-] ++ lib.optionals (!stdenv.isDarwin) [
+] ++ lib.optionals stdenv.isLinux [
   kubernetes
 ]

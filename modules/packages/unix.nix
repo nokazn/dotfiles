@@ -9,6 +9,6 @@ with pkgs; [
   rsync
   unzip
   zip
-] ++ lib.optional (!stdenv.isDarwin) [
+] ++ lib.optional stdenv.isLinux [
   unixtools.column
 ]
