@@ -26,8 +26,8 @@ in
 
   # `eza` aliases
   eza = "eza --icons --git";
-  exat = "eza --tree";
-  exal = "eza -l";
+  ezat = "eza --tree";
+  ezal = "eza -l";
 
   # Git aliases
   g = "git";
