@@ -27,7 +27,7 @@ jobs:
           pr-reviewers: ${{ github.actor }}
           branch: "deps/update-flake-lock-${{ env.CURRENT_DATE }}"
           commit-msg: "dpes: Update flake.lock"
-          path-to-flake-dir: .config/home-manager
+          path-to-flake-dir: ./
   update-npm-packages-list:
     timeout-minutes: 15
     runs-on: ubuntu-22.04
