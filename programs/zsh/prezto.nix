@@ -5,14 +5,13 @@
   color = true;
   # Prezto modules to load (https://github.com/sorin-ionescu/prezto/tree/master/modules)
   pmodules = [
+    "git"
+    "utility"
     "completion"
     "directory"
     "editor"
     "environment"
-    "git"
     "history"
-    "spectrum"
-    "utility"
   ];
   editor.keymap = "vi";
   git.submoduleIgnore = "all";
