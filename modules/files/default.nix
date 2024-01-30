@@ -26,7 +26,7 @@ let
       onChange = file:
         if pkgs.stdenv.isDarwin then
           ''
-            /usr/bin/sudo chmod +w ${file}
+            /usr/bin/sudo chmod a+w ${file}
           ''
         else
           ''
