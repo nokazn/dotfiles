@@ -1,6 +1,15 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, meta, ... }@args:
 
-with pkgs; lib.attrValues {
+let
+  meta = {
+    enableElm = false;
+    enableJava = false;
+    enablePhp = false;
+    enablePython = true;
+  } // args.meta;
+in
+with pkgs;
+lib.attrValues {
   langs = [
     asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
     cue # A data constraint language which aims to simplify tasks involving defining and using data
@@ -46,19 +55,19 @@ with pkgs; lib.attrValues {
     gopls
     gore
   ];
-  elm = with elmPackages;[
+  elm = with elmPackages; lib.optionals meta.enableElm [
     elm
     elm-format
   ];
-  java = [
+  java = lib.optionals meta.enableJava [
     jdk11
     maven
   ];
-  php = [
+  php = lib.optionals meta.enablePhp [
     php
     php81Packages.composer
   ];
-  python = [
+  python = lib.optionals meta.enablePython ([
     black
     isort
     pipenv
@@ -67,7 +76,7 @@ with pkgs; lib.attrValues {
   ] ++ lib.optionals (!stdenv.isDarwin) (with python312Packages; [
     flake8
     setuptools
-  ]);
+  ]));
   shellscript = [
     shellcheck # A static analysis tool for shell scripts
     shfmt # A shell parser and formatter
