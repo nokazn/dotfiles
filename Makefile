@@ -99,11 +99,11 @@ install: install/asdf-langs # Install all languages (runs scripts starting with 
 
 .PHONY: install/asdf-langs
 install/asdf-langs: # Install languages by asdf
-	$(SCRIPTS_DIR)/asdf-install.sh nodejs node
-	$(SCRIPTS_DIR)/asdf-install.sh yarn
-	$(SCRIPTS_DIR)/asdf-install.sh pnpm
-	$(SCRIPTS_DIR)/asdf-install.sh terraform
-	asdf install
+# TODO: 綺麗に書きたい
+	$(SCRIPTS_DIR)/asdf/install.sh nodejs node
+	$(SCRIPTS_DIR)/asdf/install.sh yarn
+	$(SCRIPTS_DIR)/asdf/install.sh pnpm
+	$(SCRIPTS_DIR)/asdf/install.sh terraform
 
 .PHONY: $(addprefix install/,$(LANGS))
 $(addprefix install/,$(LANGS)): _print-airplane # Install each language
@@ -112,7 +112,11 @@ $(addprefix install/,$(LANGS)): _print-airplane # Install each language
 	$(SCRIPTS_DIR)/$(lang)/install-$(lang).sh;
 
 .PHONY: uninstall
-uninstall: $(addprefix uninstall/,$(LANGS)) # Uninstall all languages (runs scripts starting with `unintall-` prefix)
+uninstall: uninstall/asdf-langs $(addprefix uninstall/,$(LANGS)) # Uninstall all languages (runs scripts starting with `unintall-` prefix)
+
+.PHONY: uninstall/asdf-langs
+uninstall/asdf-langs: # Uninstall languages by asdf
+	$(SCRIPTS_DIR)/asdf/uninstall.sh
 
 .PHONY: $(addprefix uninstall/,$(LANGS))
 $(addprefix uninstall/,$(LANGS)): _print-goodbye # Uninstall each language

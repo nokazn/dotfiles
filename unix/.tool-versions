@@ -1,4 +1,4 @@
-nodejs lts
-terraform 1.2.2
+nodejs latest
 yarn 1.22.19
-pnpm 7.2.1
+pnpm latest
+terraform latest
