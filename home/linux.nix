@@ -21,7 +21,7 @@ in
     enableNixpkgsReleaseCheck = true;
     extraOutputsToInstall = [ "dev" ];
 
-    sessionVariables = import ../modules/sessionVariables.nix { inherit meta; };
+    sessionVariables = import ../modules/sessionVariables.nix { inherit pkgs lib meta; };
     shellAliases = import ../modules/shellAliases.nix { inherit meta; };
 
     # nix packages

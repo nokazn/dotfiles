@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, lib, ... }:
 
 {
   LANG = "en_US.UTF-8";
@@ -6,6 +6,12 @@
 
   # colored GCC warnings and errors
   GCC_COLORS = "error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01";
+
+  LIBRARY_PATH = lib.makeLibraryPath [ pkgs.libiconv ];
+  LD_LIBRARY_PATH = with pkgs; lib.makeLibraryPath [
+    libiconv
+    openssl
+  ];
 
   # editors
   EDITOR = "vim";

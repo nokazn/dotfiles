@@ -392,3 +392,14 @@ function cpu-usage() {
 function bk-files() {
 	find ./ -name "*$(date +"%Y-%m-%d")*.bk" -exec rm -r {} +
 }
+
+function re-session-vars() {
+	export __HM_SESS_VARS_SOURCED=""
+	if [[ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]]; then
+		# shellcheck source=~/.nix-profile/etc/profile.d/hm-session-vars.sh
+		source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+	elif [[ -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]]; then
+		# shellcheck disable=SC1091
+		source "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+	fi
+}
