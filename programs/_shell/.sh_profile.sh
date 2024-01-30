@@ -4,16 +4,6 @@
 # Profile
 # ----------------------------------------------------------------------------------------------------
 
-# fcitx
-if command -v fcitx >/dev/null; then
-	export GTK_IM_MODULE=fcitx
-	export QT_IM_MODULE=fcitx
-	export XMODIFIERS=@im=fcitx
-	export DefaultIMModule=fcitx
-	# TODO: 実行に時間がかかるので、起動時に実行させるとその分起動も遅くなる
-	# fcitx-autostart &> /dev/null
-fi
-
 # WSL
 if [[ "$(uname -r)" == *microsoft* ]]; then
 	# WSLg 非対応の WSL 内では X Server 経由で GUI を表示
