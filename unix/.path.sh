@@ -1,4 +1,4 @@
-# shellcheck disable=2148
+#!/usr/bin/env bash
 
 # ----------------------------------------------------------------------------------------------------
 # PATH environment variables
@@ -45,6 +45,26 @@ function _detect_shell() {
 		echo "bash"
 		;;
 	esac
+}
+
+# 初期化スクリプトを読み込む
+function _apply-nix-profiles() {
+	local -r all_profiles=$(find "$1" -mindepth 1 -maxdepth 1 -type f)
+	local pattern
+	case $(_detect_shell) in
+	"bash")
+		pattern=".+\.(ba)?sh$"
+		;;
+	"zsh")
+		pattern=".+\.(ba|z)?sh$"
+		;;
+	*)
+		pattern=".+\.sh$"
+		;;
+	esac
+	grep -E -e "${pattern}" <<<"${all_profiles}" | while read -r dir; do
+		source "${dir}"
+	done
 }
 
 # set PATH so it includes user's private bin if it exists
@@ -118,10 +138,7 @@ if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 		# shellcheck source=~/.nix-profile/etc/profile.d/nix.sh
 		source "$HOME/.nix-profile/etc/profile.d/nix.sh"
 	fi
-	# 初期化スクリプトを読み込む
-	find "$HOME/.nix-profile/etc/profile.d/" -mindepth 1 -maxdepth 1 -type l | while read -r dir; do
-		source "${dir}"
-	done
+	_apply-nix-profiles "$HOME/.nix-profile/etc/profile.d/"
 fi
 
 # Nix (multi user)
@@ -132,10 +149,7 @@ fi
 if [[ -d "/etc/profiles/per-user/$USER/bin" ]]; then
 	_register_forward "/etc/profiles/per-user/$USER/bin"
 
-	# 初期化スクリプトを読み込む
-	find "/etc/profiles/per-user/$USER/etc/profile.d/" -mindepth 1 -maxdepth 1 -type l | while read -r dir; do
-		source "${dir}"
-	done
+	_apply-nix-profiles "/etc/profiles/per-user/$USER/etc/profile.d/"
 fi
 
 # if command -v salias >/dev/null; then
