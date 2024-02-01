@@ -7,10 +7,14 @@
   ];
   casks = [
     "alfred"
+    "clipy"
     "discord"
+    "docker"
     "firefox"
     "google-chrome"
     "google-drive"
+    "homebrew/cask-fonts/font-hackgen-nerd"
+    "homebrew/cask-fonts/font-hackgen"
     "iterm2"
     "keepassxc"
     "rambox"
@@ -20,7 +24,5 @@
     "visual-studio-code"
     "wezterm"
     "zoom"
-    "homebrew/cask-fonts/font-hackgen"
-    "homebrew/cask-fonts/font-hackgen-nerd"
   ];
 }
