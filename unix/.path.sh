@@ -49,7 +49,7 @@ function _detect_shell() {
 
 # 初期化スクリプトを読み込む
 function _apply-nix-profiles() {
-	local -r all_profiles=$(find "$1" -mindepth 1 -maxdepth 1 -type f)
+	local -r all_profiles=$(find "$1" -mindepth 1 -maxdepth 1 -type l)
 	local pattern
 	case $(_detect_shell) in
 	"bash")
@@ -62,7 +62,7 @@ function _apply-nix-profiles() {
 		pattern=".+\.sh$"
 		;;
 	esac
-	grep -E -e "${pattern}" <<<"${all_profiles}" | while read -r dir; do
+	grep -E -e "${pattern}" <<<"${all_profiles}" | while read -r dir && [[ -n "${dir}" ]]; do
 		source "${dir}"
 	done
 }
@@ -131,6 +131,11 @@ if [[ -d "$HOME/.sdkman" ]]; then
 		source "$HOME/.sdkman/bin/sdkman-init.sh"
 	fi
 fi
+
+# if [[ -f "$HOME/.local/bin/mise" ]]; then
+# 	# shellcheck source=~/.local/bin/mise
+# 	eval "$("$HOME/.local/bin/mise" activate zsh)"
+# fi
 
 # Nix (single user)
 if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
