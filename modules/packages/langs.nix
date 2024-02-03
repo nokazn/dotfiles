@@ -6,17 +6,15 @@ let
     enableJava = false;
     enablePhp = false;
     enablePython = true;
+    enableLangs = true;
   } // args.meta;
 in
 with pkgs;
 lib.attrValues {
-  langs = [
+  meta = [
     asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
-    cue # A data constraint language which aims to simplify tasks involving defining and using data
-    erlang
+    # Powerful cross-platform (Windows, Linux, and macOS) shell and scripting language based on .NET
     lua
-    nim
-    powershell # Powerful cross-platform (Windows, Linux, and macOS) shell and scripting language based on .NET
     yamlfmt # An extensible command line tool or library to format yaml files.
   ];
   node = with nodePackages;[
@@ -34,13 +32,16 @@ lib.attrValues {
   ];
   js = [
     biome # Toolchain of the web
+    bun # Incredibly fast JavaScript runtime, bundler, transpiler and package manager – all in one
     deno
     dprint # Code formatting platform written in Rust
     oxlint # A suite of high-performance tools for JavaScript and TypeScript written in Rust
+    # turbo # High-performance build system for JavaScript and TypeScript codebases
   ];
   rust =
     let
       libiconv =
+        # `LD_LIBRARY_PATH`と`LIBRARY_PATH`を設定する必要がある
         if stdenv.isDarwin then pkgs.darwin.libiconv
         else pkgs.libiconv;
     in
@@ -80,5 +81,11 @@ lib.attrValues {
   shellscript = [
     shellcheck # A static analysis tool for shell scripts
     shfmt # A shell parser and formatter
+  ];
+  langs = lib.optionals meta.enableLangs [
+    cue # A data constraint language which aims to simplify tasks involving defining and using data
+    erlang
+    nim
+    powershell
   ];
 }
