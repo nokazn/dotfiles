@@ -16,6 +16,7 @@
     "homebrew/cask-fonts/font-hackgen-nerd"
     "homebrew/cask-fonts/font-hackgen"
     "iterm2"
+    "logi-options-plus"
     "keepassxc"
     "rambox"
     "slack"
