@@ -1,10 +1,13 @@
-{ ... }: {
+{ ... }:
+
+{
   enable = true;
   taps = [
     "homebrew/cask-fonts"
   ];
   casks = [
     "alfred"
+    "battery"
     "clipy"
     "discord"
     "docker"
