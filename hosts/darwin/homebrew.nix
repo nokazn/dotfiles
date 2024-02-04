@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{ ... }: {
   enable = true;
   taps = [
     "homebrew/cask-fonts"

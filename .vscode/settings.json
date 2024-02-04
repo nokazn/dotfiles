@@ -15,4 +15,5 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "sumneko.lua"
   },
+  "nixEnvSelector.nixFile": "${workspaceFolder}/flake.nix",
 }
