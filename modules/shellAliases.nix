@@ -46,6 +46,7 @@ in
   dotfiles = "cd ${DOTFILES}";
   hm = "home-manager";
   lg = "lazygit";
+  makepkg = "makepkg -sric";
   nix-shell = "nix-shell --run $SHELL";
   nix-cg = "nix-collect-garbage";
   reload-tmux = "tmux source-file ~/.config/tmux/tmux.conf";
