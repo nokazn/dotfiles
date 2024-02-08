@@ -2,8 +2,6 @@ local wezterm = require 'wezterm';
 
 local TARGET_TRIPLE = wezterm.target_triple
 local MAC_OS = TARGET_TRIPLE:find("darwin")
-local WINDOWS = TARGET_TRIPLE:find("windows")
-local LINUX = TARGET_TRIPLE:find("linux")
 
 -- use CTRL or CMD key
 local COMMAND_MODS_KEY = "CTRL"
@@ -11,17 +9,17 @@ if MAC_OS then
   COMMAND_MODS_KEY = "CMD"
 end
 
--- domains for WSL environments
-local WSL_DOMAINS = {
+-- spawn commands for macOS/Linux environments
+local SPAWN_COMMANDS = {
   {
-    name = "WSL:Distrod",
-    distribution = "Distrod",
-    default_cwd = "~"
+    label = "Zsh",
+    args = { "zsh", "-l" },
+    cwd = "~"
   },
   {
-    name = "WSL:Ubuntu",
-    distribution = "Ubuntu",
-    default_cwd = "~"
+    label = "Bash",
+    args = { "bash", "-l" },
+    cwd = "~"
   },
 }
 
@@ -74,52 +72,6 @@ local function generate_active_tab_key_bindings()
     })
   end
   return keys
-end
-
--- spawn commands for Windows or macOS/Linux environments
-local function generate_spawn_commands()
-  local spawn_commands = {}
-  if WINDOWS then
-    local wsl_spawn_commands = {}
-    for _, v in ipairs(WSL_DOMAINS) do
-      table.insert(wsl_spawn_commands, {
-        label = v.distribution,
-        args = { "wsl.exe", v.default_cwd, "-d", v.distribution },
-      })
-    end
-    -- WSL spawn commands & Windows spawn commands
-    spawn_commands = utils.merge_lists(wsl_spawn_commands, {
-      {
-        label = "NuShell",
-        args = { "nu.exe" },
-        cwd = "~"
-      },
-      {
-        label = "PowerShell",
-        args = { "powershell.exe", "-NoLogo" },
-        cwd = "~"
-      },
-      {
-        label = "Command Prompt",
-        args = { "cmd.exe" },
-        cwd = "~"
-      }
-    })
-  elseif MAC_OS or LINUX then
-    spawn_commands = {
-      {
-        label = "Zsh",
-        args = { "zsh", "-l" },
-        cwd = "~"
-      },
-      {
-        label = "Bash",
-        args = { "bash", "-l" },
-        cwd = "~"
-      }
-    }
-  end
-  return spawn_commands
 end
 
 -- spawn a new tab by CTRL/CMD + ALT + 1 ~ 9
@@ -308,8 +260,6 @@ local defaukt_key_bindings = {
   },
 }
 
-local spawn_commands = generate_spawn_commands()
-
 return {
   -- font
   font = generate_font(),
@@ -339,7 +289,6 @@ return {
   disable_default_key_bindings = true,
 
   -- Multiplexing
-  launch_menu = spawn_commands,
-  wsl_domains = WSL_DOMAINS,
-  default_prog = spawn_commands[1].args
+  launch_menu = SPAWN_COMMANDS,
+  default_prog = SPAWN_COMMANDS[1].args
 }
