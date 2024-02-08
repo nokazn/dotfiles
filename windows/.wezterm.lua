@@ -19,8 +19,8 @@ local WSL_DOMAINS = {
     default_cwd = "~"
   },
   {
-    name = "WSL:Ubuntu",
-    distribution = "Ubuntu",
+    name = "WSL:Debian",
+    distribution = "Debian",
     default_cwd = "~"
   },
 }
@@ -30,13 +30,14 @@ local WSL_DOMAINS = {
 
 local utils = {}
 
-function utils.merge_lists(t1, t2)
+function utils.merge_lists(...)
+  local args = { ... };
   local lists = {}
-  for _, v in ipairs(t1) do
-    table.insert(lists, v)
-  end
-  for _, v in ipairs(t2) do
-    table.insert(lists, v)
+
+  for _, t in ipairs(args) do
+    for _, v in ipairs(t) do
+      table.insert(lists, v)
+    end
   end
   return lists
 end
@@ -143,12 +144,12 @@ local defaukt_key_bindings = {
   {
     key = "r",
     mods = utils.merge_mods_with_commands("SHIFT"),
-    action = "ReloadConfiguration"
+    action = wezterm.action.ReloadConfiguration
   },
   {
-    key = "P",
+    key = "p",
     mods = utils.merge_mods_with_commands("SHIFT"),
-    action = "ShowLauncher"
+    action = wezterm.action.ShowLauncher
   },
   -- Select & Copy & Paste
   {
@@ -169,34 +170,34 @@ local defaukt_key_bindings = {
   {
     key = "c",
     mods = utils.merge_mods_with_commands("ALT"),
-    action = "ActivateCopyMode"
+    action = wezterm.action.ActivateCopyMode
   },
   {
     key = "Space",
     mods = utils.merge_mods_with_commands("SHIFT"),
-    action = "QuickSelect"
+    action = wezterm.action.QuickSelect
   },
   -- Font Size
   {
     key = "0",
     mods = utils.merge_mods_with_commands(),
-    action = "ResetFontSize"
+    action = wezterm.action.ResetFontSize
   },
   {
     key = ";",
     mods = utils.merge_mods_with_commands(),
-    action = "IncreaseFontSize"
+    action = wezterm.action.IncreaseFontSize
   },
   {
     key = "-",
     mods = utils.merge_mods_with_commands(),
-    action = "DecreaseFontSize"
+    action = wezterm.action.DecreaseFontSize
   },
   -- Window
   {
     key = "n",
     mods = utils.merge_mods_with_commands(),
-    action = "SpawnWindow"
+    action = wezterm.action.SpawnWindow
   },
   -- Tab
   {
@@ -210,19 +211,25 @@ local defaukt_key_bindings = {
     action = wezterm.action({ ActivateTabRelative = 1 })
   },
   {
-    key = "T",
+    key = "t",
     mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ SpawnTab = "CurrentPaneDomain" })
   },
   {
-    key = "W",
+    key = "w",
     mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ CloseCurrentTab = { confirm = true } })
   },
   -- Pane
   {
-    key = "=",
+    key = "-",
     mods = utils.merge_mods_with_commands("SHIFT"),
+    action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } })
+  },
+  {
+    key = "-",
+    -- CTRL + SHIFT + "-" does not work on Windows
+    mods = utils.merge_mods_with_commands("ALT"),
     action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } })
   },
   {
@@ -231,9 +238,9 @@ local defaukt_key_bindings = {
     action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } })
   },
   {
-    key = "Z",
+    key = "z",
     mods = utils.merge_mods_with_commands("SHIFT"),
-    action = "TogglePaneZoomState"
+    action = wezterm.action.TogglePaneZoomState
   },
   {
     key = "LeftArrow",
@@ -260,17 +267,22 @@ local defaukt_key_bindings = {
     mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ CloseCurrentPane = { confirm = true } })
   },
-  -- TODO: 操作が安定板で有効になったら設定する
-  -- {
-  --   key = "N",
-  --   mods = utils.merge_mods_with_commands("SHIFT"),
-  --   action = wezterm.action({ RotatePanes = "Clockwise" })
-  -- },
-  -- {
-  --   key = "P",
-  --   mods = utils.merge_mods_with_commands("SHIFT"),
-  --   action = wezterm.action({ RotatePanes = "CounterClockwise" })
-  -- },
+  {
+    key = "}",
+    mods = utils.merge_mods_with_commands("SHIFT"),
+    action = wezterm.action({ RotatePanes = "Clockwise" })
+  },
+  {
+    key = "{",
+    mods = utils.merge_mods_with_commands("SHIFT"),
+    action = wezterm.action({ RotatePanes = "CounterClockwise" })
+  },
+  -- Debug
+  {
+    key = "d",
+    mods = utils.merge_mods_with_commands("SHIFT"),
+    action = wezterm.action.ShowDebugOverlay
+  },
 }
 
 local spawn_commands = generate_spawn_commands()
@@ -298,14 +310,15 @@ return {
 
   },
   enable_scroll_bar = false,
-  color_scheme = "Sublette",
+  color_scheme = "Vaughn",
   -- https://wezfurlong.org/wezterm/config/lua/config/skip_close_confirmation_for_processes_named.html
   skip_close_confirmation_for_processes_named = { "" },
 
   -- Key Bindings
   keys = utils.merge_lists(
     defaukt_key_bindings,
-    utils.merge_lists(generate_active_tab_key_bindings(), generate_spawn_tab_key_bindings(spawn_commands))
+    generate_active_tab_key_bindings(),
+    generate_spawn_tab_key_bindings(spawn_commands)
   ),
   disable_default_key_bindings = true,
 
