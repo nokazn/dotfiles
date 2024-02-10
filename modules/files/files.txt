@@ -4,6 +4,7 @@
 .bash-it/custom/bobby2/bobby2.theme.bash
 .config/bat/config
 .config/broot/conf.hjson
+.config/fcitx5/addon/fcitx-clipboard.conf
 .config/fcitx5/profile
 .config/gh/config.yml
 .config/git/attributes
