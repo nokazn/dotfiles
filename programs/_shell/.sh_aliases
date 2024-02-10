@@ -403,3 +403,13 @@ function re-session-vars() {
 		source "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
 	fi
 }
+
+function pbcopy() {
+	if _is-wsl; then
+		clip.exe "$@"
+	elif type xsel >/dev/null 2>&1; then
+		xsel --input --clipboard "$@"
+	else
+		pbcopy "$@"
+	fi
+}
