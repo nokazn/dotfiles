@@ -47,6 +47,7 @@ lib.attrValues {
     in
     [
       cargo-cache
+      cargo-watch
       rustup
       libiconv
     ];

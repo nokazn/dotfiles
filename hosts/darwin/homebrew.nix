@@ -8,6 +8,7 @@
   casks = [
     "alfred"
     "battery"
+    "bluesnooze"
     "clipy"
     "discord"
     "docker"
