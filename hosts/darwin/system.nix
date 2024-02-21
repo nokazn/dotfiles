@@ -7,6 +7,10 @@
     Clicking = true;
   };
 
+  dock = {
+    orientation = "left";
+  };
+
   finder = {
     ShowPathbar = true;
   };
