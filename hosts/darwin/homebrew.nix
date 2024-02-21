@@ -26,6 +26,7 @@
     "todoist"
     "visual-studio-code"
     "wezterm"
+    "zed"
     "zoom"
   ];
 }
