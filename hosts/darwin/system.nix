@@ -19,5 +19,6 @@
     AppleInterfaceStyle = "Dark";
     "com.apple.swipescrolldirection" = false;
     "com.apple.keyboard.fnState" = true;
+    "system.defaults.dock.orientation" = "left";
   };
 }
