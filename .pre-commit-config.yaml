@@ -8,7 +8,8 @@ repos:
   hooks:
   - id: check-symlinks
   - id: check-json
-    exclude: ".vscode"
+    #  exclude jsonc files
+    exclude: ".vscode|Code/User/.+\\.json"
   - id: check-toml
   - id: check-yaml
   - id: check-xml
