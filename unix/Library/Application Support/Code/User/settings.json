@@ -1,0 +1,302 @@
+{
+  // ----------------------------------------------------------------------------------------------------
+  // Shell
+  "terminal.integrated.profiles.windows": {
+    "NuShell": {
+      "path": "C:\\Program Files\\nu\\bin\\nu.exe",
+    },
+    "PowerShell": {
+      "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "NuShell",
+  "terminal.integrated.fontSize": 14,
+
+  // ----------------------------------------------------------------------------------------------------
+  // Editor
+
+  "breadcrumbs.enabled": true,
+  "diffEditor.ignoreTrimWhitespace": false, // 差分エディタで両端のホワイトスペースの変更を無視
+  "editor.accessibilitySupport": "off",
+  "editor.autoClosingBrackets": "always", // 括弧閉じを自動で入力
+  "editor.bracketPairColorization.enabled": true,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.fontFamily": "HackGen35 Console, HackGenNerd Console",
+  "editor.fontSize": 12.5,
+  "editor.fontWeight": "bold",
+  "editor.guides.bracketPairs": true,
+  "editor.inlayHints.enabled": "off",
+  "editor.inlineSuggest.enabled": true,
+  "editor.suggestSelection": "first",
+  "editor.tabSize": 2, // インデントはスペース2個分
+  "editor.wordWrap": "on",
+  "explorer.autoReveal": true,
+  "extensions.autoUpdate": true, // 拡張機能を自動更新
+  "extensions.webWorker": true,
+  "files.insertFinalNewline": true, // ファイル保存時に最後1行だけ残す
+  "files.trimFinalNewlines": true, // ファイル保存時に最後1行以外を削除する
+  "redhat.telemetry.enabled": true,
+  "security.workspace.trust.untrustedFiles": "open",
+  "terminal.integrated.scrollback": 10000, // ターミナルでスクロールできる行数
+  "vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration",
+  "workbench.colorTheme": "Vaporizer Golgi Dark",
+  "workbench.editor.enablePreview": false, // タブが上書きされるのを防ぐ
+  "workbench.editor.showTabs": "multiple", // エディターのタブを有効
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.startupEditor": "none",
+  "workbench.tree.indent": 12,
+  "customWindowZoom.zoomLevelChangeValue": 0.125,
+  "window.confirmBeforeClose": "keyboardOnly",
+
+  // ----------------------------------------------------------------------------------------------------
+  // Search
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/.history": true
+  },
+
+  // ----------------------------------------------------------------------------------------------------
+  // Languages
+
+  // JSON
+  "[JSON][JSONC]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false,
+    "editor.inlayHints.enabled": "on"
+  },
+  // JavaScript/TypeScript
+  "[javascript][javascriptreact][typescript][typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.inlayHints.enabled": "on",
+  },
+  "typescript.tsserver.log": "off",
+  "debug.javascript.autoAttachFilter": "onlyWithFlag",
+
+  // HTML/CSS/Sass
+  "[html][css][svg]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+
+  // Elm
+  "[elm]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "elmTooling.elm-ls-vscode"
+  },
+
+  // Svelte
+  "svelte.enable-ts-plugin": true,
+
+  // Vue.js
+  // https://github.com/vuejs/vetur/issues/2150
+  // "vetur.languageFeatures.codeActions": false,
+  // "vetur.completion.autoImport": false,
+  // "vetur.experimental.templateInterpolationService": true,
+  // "vetur.validation.interpolation": true,
+  // "vetur.format.enable": false,
+  // "vetur.useWorkspaceDependencies": true,
+  // "vetur.validation.template": true,
+  // "vetur.validation.script": true,
+  // "vetur.validation.style": true,
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+
+  // Go
+  "[go]": {
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "golang.go",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "go.formatTool": "goimports",
+  "go.useLanguageServer": true,
+  "go.toolsManagement.autoUpdate": true,
+  "gopls": {
+    "ui.documentation.hoverKind": "SynopsisDocumentation",
+    "ui.completion.usePlaceholders": true,
+    "linksInHover": true,
+    "ui.documentation.linkTarget": "pkg.go.dev"
+  },
+
+  // Rust
+  "rust-analyzer.cargo.extraArgs": ["--jobs", "2"],
+  // "rust-analyzer.check.extraArgs": ["--target-dir", "/path/to/somewhere"],
+  "rust-analyzer.checkOnSave": true,
+  "rust-analyzer.check.allTargets": true,
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+  },
+
+  // Python
+  "python.languageServer": "Pylance",
+  "[python]": {
+    "editor.formatOnType": true
+  },
+
+  // Terraform
+  "[terraform]": {
+    "editor.formatOnSave": true
+  },
+
+  // C++
+  "[cpp]": {
+    "editor.formatOnSave": true
+  },
+
+  // C
+  "[c]": {
+    "editor.formatOnSave": true
+  },
+
+  // Powershell
+  "powershell.powerShellAdditionalExePaths": {
+    "Powershell installed by nix": "/home/nokazn/.nix-profile/bin/pwsh",
+  },
+  "powershell.startAutomatically": false,
+
+  // Lua
+  "[lua]": {
+    "editor.formatOnSave": true
+  },
+
+  "[nix]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "B4dM4n.nixpkgs-fmt"
+    // "editor.defaultFormatter": "kamadorueda.alejandra"
+  },
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nil",
+
+  // Shell script
+  "[shellscript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "mkhl.shfmt"
+  },
+  "shellcheck.enable": true,
+  "shellcheck.enableQuickFix": true,
+  "shellcheck.run": "onSave",
+
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.insertSpaces": true,
+    "files.trimTrailingWhitespace": true,
+    "editor.rulers": [
+      120
+    ],
+    "editor.semanticHighlighting.enabled": true
+  },
+
+  // ----------------------------------------------------------------------------------------------------
+  // Linters
+
+  // ESLint
+  "eslint.validate": ["vue", "typescript", "javascript"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "never"
+  },
+
+  // Stylelint
+  "stylelint.packageManager": "yarn",
+  "stylelint.validate": [
+    "css",
+    "html",
+    "javascriptreact",
+    "less",
+    "markdown",
+    "sass",
+    "scss",
+    "source.css.styled",
+    "source.markdown.math",
+    "styled-css",
+    "svelte",
+    "typescriptreact",
+    "vue",
+    "vue-html",
+    "vue-postcss",
+    "postcss"
+  ],
+
+  // ----------------------------------------------------------------------------------------------------
+  // Extensions
+
+  // GitHub Pull Request and Issues
+  "githubIssues.queries": [
+    {
+      "label": "Created Issues",
+      "query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
+    },
+    {
+      "label": "Closed Issues",
+      "query": "author:${user} state:closed repo:${owner}/${repository} sort:created-desc"
+    },
+  ],
+
+  // Glassit
+  "glassit.alpha": 250,
+
+  // Remote Development
+  "remote.WSL.debug": false,
+  "remote.WSL.useShellEnvironment": true,
+  "remote.SSH.showLoginTerminal": true,
+  "remote.SSH.configFile": "~/.ssh/config",
+  "remote.SSH.remotePlatform": {
+    "vm": "linux",
+    "sakura": "linux",
+    "ec2-ap-northeast-1": "linux"
+  },
+
+  // Todo Tree
+  "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
+  "todo-tree.general.tags": [
+    "BUG",
+    "HACK",
+    "FIXME",
+    "TODO",
+    "XXX",
+    "[ ]",
+    "[x]"
+  ],
+
+  // Setting Sync
+  "sync.gist": "27c4ab7b0d5b2c7f2a0eb0cb2a140cf0",
+  "sync.forceUpload": false,
+  "sync.autoDownload": false,
+  "sync.autoUpload": false,
+
+  // git-autoconfig
+  "git-autoconfig.configList": [
+    {
+      "user.email": "41154684+nokazn@users.noreply.github.com",
+      "user.name": "nokazn"
+    }
+  ],
+  "vsicons.dontShowNewVersionMessage": true,
+  "githubPullRequests.pullBranch": "never",
+  "git.autofetch": true,
+  "remote.autoForwardPortsSource": "hybrid",
+  "[JSON][JSONC][javascript][javascriptreact][typescript][typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "window.zoomLevel": -0.2,
+  "markdown-table-formatter.markdownGrammarScopes": [
+    "markdown",
+    "rust"
+  ],
+}

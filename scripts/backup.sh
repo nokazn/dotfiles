@@ -32,7 +32,7 @@ function backup_non_symlink_file() {
 function backup_files() {
 	# `# `で始まるファイルも`# `を削除した上で引数として渡し、バックアップする
 	sed -E -e 's/^#[[:space:]]+//' <"$1" |
-		xargs -I {} bash -c "backup_non_symlink_file {}"
+		xargs -I {} bash -c "backup_non_symlink_file '{}'"
 }
 
 # xargs 内で使用できるように export する
