@@ -3,7 +3,7 @@
 set -eu -o pipefail
 
 # @param ユーザーディレクトリからの絶対/相対パス
-function backup_non_symlink_file() {
+function _backup_non_symlink_file() {
 	if [[ -z "$1" ]]; then
 		return 0
 	fi
@@ -29,12 +29,12 @@ function backup_non_symlink_file() {
 }
 
 # @param ユーザーディレクトリからの絶対/相対パスの一覧
-function backup_files() {
+function backup() {
 	# `# `で始まるファイルも`# `を削除した上で引数として渡し、バックアップする
 	sed -E -e 's/^#[[:space:]]+//' <"$1" |
-		xargs -I {} bash -c "backup_non_symlink_file '{}'"
+		xargs -I {} bash -c "_backup_non_symlink_file '{}'"
 }
 
 # xargs 内で使用できるように export する
-export -f backup_non_symlink_file
-backup_files "$*"
+export -f _backup_non_symlink_file
+backup "$*"
