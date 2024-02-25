@@ -36,10 +36,7 @@ add-tools/nix: _print-airplane # Install nix
 
 .PHONY: add-tools/wsl-hello-sudo
 add-tools/wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
-	$(SCRIPTS_DIR)/install-wsl-sudo-hello.sh
-
-.PHONY: remove-tools
-remove-tools: remove-tools/nix # Remove developing tools
+	$(SCRIPTS_DIR)/add-wsl-sudo-hello.sh
 
 .PHONY: remove-tools/nix/user
 remove-tools/nix/user: _print-goodbye # Uninstall nix for user environment (See https://nixos.org/manual/nix/stable/installation/uninstall.html#uninstalling-nix)
@@ -51,25 +48,7 @@ remove-tools/nix/user: _print-goodbye # Uninstall nix for user environment (See 
 
 .PHONY: ls
 remove-tools/nix/darwin: _print-goodbye # Uninstall nix for darwin (See https://nixos.org/manual/nix/stable/installation/uninstall.html#macos)
-	$(NIX) shell github:LnL7/nix-darwin#darwin-uninstaller \
-		--command darwin-uninstaller
-	$(NIX) shell github:nix-community/home-manager/release-23.11 \
-		--command sh -c "yes | sudo home-manager uninstall"
-	sudo launchctl unload /Library/LaunchDaemons/org.nixos.nix-daemon.plist;
-	sudo rm /Library/LaunchDaemons/org.nixos.nix-daemon.plist;
-	sudo launchctl unload /Library/LaunchDaemons/org.nixos.darwin-store.plist;
-	sudo rm /Library/LaunchDaemons/org.nixos.darwin-store.plist;
-	sudo dscl . -delete /Groups/nixbld;
-	for u in $(sudo dscl . -list /Users | grep _nixbld); do sudo dscl . -delete /Users/$u; done;
-	sudo vifs;
-	sudo sed -E -i -e '/^nix/d' /etc/synthetic.conf;
-	sudo rm -rf /etc/{nix,profiles} /var/root/.nix-profile /var/root/.nix-defexpr /var/root/.nix-channels ~/{.nix-profile,.nix-defexpr,.nix-channels}
-	sudo diskutil apfs deleteVolume /nix;
-	find /etc/ -maxdepth 1 -type f | \
-		grep .backup-before-nix | \
-		sed -E -e 'p;s/\.backup-before-nix//' | \
-    xargs -n 2 sudo mv -v;
-	@echo "✅ Nix has been uninstalled successfully!"
+	$(SCRIPTS_DIR)/remove-nix-darwin.sh
 
 .PHONY: remove-tools/wsl-hello-sudo
 remove-tools/wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
