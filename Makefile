@@ -141,6 +141,7 @@ apply/user-wsl: _apply/backup-home-files _apply/path # Run `home-manager switch`
 apply/darwin: _apply/backup-home-files _apply/path # Run `nix-darwin switch`
 	$(NIX) run \
 		nix-darwin -- switch --flake .#aarch64-darwin
+	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully!"
 
 .PHONY: _apply/backup-home-files
