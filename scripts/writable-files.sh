@@ -47,4 +47,4 @@ function main() {
 export -f _chmod
 # xargs内で使用できるように export する
 export -f _add_writable_permission
-main "$*"
+main "$@"

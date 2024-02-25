@@ -30,7 +30,7 @@ let
           ''
         else
           ''
-            chmod +w ${file}
+            chmod +w '${file}'
           '';
     in
     builtins.map
