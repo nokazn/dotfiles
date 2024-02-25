@@ -105,27 +105,26 @@ $(addprefix uninstall/,$(LANGS)): _print-goodbye # Uninstall each language
 # packages ----------------------------------------------------------------------------------------------------
 
 .PHONY: apply/user
-apply/user: _apply/backup-home-files _apply/path # Run `home-manager switch` for user environment
+apply/user: _apply/path # Run `home-manager switch` for user environment
+	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
 	$(NIX) run \
 		home-manager/release-23.11 -- switch --flake .
 	@echo "✅ home-manager has been applied successfully!"
 
 .PHONY: apply/user-wsl
-apply/user-wsl: _apply/backup-home-files _apply/path # Run `home-manager switch` for WSL user environment
+apply/user-wsl: _apply/path # Run `home-manager switch` for WSL user environment
+	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
 	$(NIX) run \
 		home-manager/release-23.11 -- switch --flake .#wsl
 	@echo "✅ home-manager has been applied successfully!"
 
 .PHONY: apply/darwin
-apply/darwin: _apply/backup-home-files _apply/path # Run `nix-darwin switch`
+apply/darwin: _apply/path # Run `nix-darwin switch`
+	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
 	$(NIX) run \
 		nix-darwin -- switch --flake .#aarch64-darwin
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully!"
-
-.PHONY: _apply/backup-home-files
-_apply/backup-home-files:
-	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
 
 .PHONY: _apply/path
 _apply/path:
