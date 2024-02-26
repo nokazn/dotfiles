@@ -294,9 +294,9 @@
       "source.fixAll.eslint": "explicit"
     }
   },
-  "window.zoomLevel": -0.2,
   "markdown-table-formatter.markdownGrammarScopes": [
     "markdown",
     "rust"
   ],
+  "window.zoomLevel": 0.23,
 }
