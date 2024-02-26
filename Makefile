@@ -144,6 +144,14 @@ update/npm-packages-list: # Generate Nix packages list for npm packages
     -p nixpkgs-fmt \
     --command 'node2nix -i ./packages.json -o ./packages.nix --nodejs-18 && find . -type f | grep -e "\.nix$$" | xargs nixpkgs-fmt' && exit
 
+.PHONY: update/vscode-settings/darwin
+update/vscode-settings/darwin: # Update VSCode settings.json & keybindings.json for darwin
+	echo 'Library/Application\ Support/Code/User/'{settings,keybindings}.json | xargs -n 1 | xargs -I {} cp {~,./unix}/{}
+
+.PHONY: update/vscode-settings/linux
+update/vscode-settings/linux: # Update VSCode settings.json & keybindings.json for linux
+	echo '.config/Code/User/'{settings,keybindings}.json | xargs -n 1 | xargs -I {} cp {~,./unix}/{}
+
 # deploy & restore dotfiles ----------------------------------------------------------------------------------------------------
 
 .PHONY: _deploy

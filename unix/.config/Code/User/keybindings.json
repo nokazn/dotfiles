@@ -1,0 +1,78 @@
+[
+  // Editor
+  {
+    "key": "ctrl+alt+up",
+    "command": "editor.action.insertCursorAbove",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+alt+up",
+    "command": "-editor.action.insertCursorAbove",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+alt+up",
+    "command": "editor.action.copyLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+alt+up",
+    "command": "-editor.action.copyLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+alt+down",
+    "command": "editor.action.insertCursorBelow",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+alt+down",
+    "command": "-editor.action.insertCursorBelow",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+alt+down",
+    "command": "editor.action.copyLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+alt+down",
+    "command": "-editor.action.copyLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  // Zoom in/out
+  {
+    "key": "ctrl+[Minus]",
+    "command": "extension.customWindowZoomOut"
+  },
+  {
+    "key": "ctrl+8",
+    "command": "-extension.customWindowZoomOut"
+  },
+  {
+    "key": "ctrl+[Minus]",
+    "command": "-workbench.action.zoomOut"
+  },
+  {
+    "key": "ctrl+shift+[Semicolon]",
+    "command": "extension.customWindowZoomIn"
+  },
+  {
+    "key": "ctrl+9",
+    "command": "-extension.customWindowZoomIn"
+  },
+  {
+    "key": "ctrl+shift+[Minus]",
+    "command": "-workbench.action.zoomIn"
+  },
+  // Copilot
+  {
+    "key": "ctrl+enter",
+    "command": "-github.copilot.generate",
+    "when": "editorTextFocus && github.copilot.activated && !inInteractiveInput && !interactiveEditorFocused"
+  },
+  {
+    "key": "ctrl+shift+c",
+    "command": "workbench.panel.chat.view.copilot.focus"
+  },
+]
