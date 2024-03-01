@@ -32,6 +32,9 @@
 	rebase = false
 	merge = true
 
+[rebase]
+  autostash = true
+
 [log]
 	follow = true
 
