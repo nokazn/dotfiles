@@ -79,10 +79,11 @@ install: install/asdf-langs # Install all languages (runs scripts starting with 
 .PHONY: install/asdf-langs
 install/asdf-langs: # Install languages by asdf
 # TODO: 綺麗に書きたい
-	$(SCRIPTS_DIR)/asdf/install.sh nodejs node
-	$(SCRIPTS_DIR)/asdf/install.sh yarn
-	$(SCRIPTS_DIR)/asdf/install.sh pnpm
-	$(SCRIPTS_DIR)/asdf/install.sh terraform
+	mkdir -p ~/.asdf
+	$(SCRIPTS_DIR)/asdf/install.sh nodejs node || :
+	$(SCRIPTS_DIR)/asdf/install.sh yarn || :
+	$(SCRIPTS_DIR)/asdf/install.sh pnpm || :
+	$(SCRIPTS_DIR)/asdf/install.sh terraform || :
 
 .PHONY: $(addprefix install/,$(LANGS))
 $(addprefix install/,$(LANGS)): _print-airplane # Install each language
@@ -105,30 +106,26 @@ $(addprefix uninstall/,$(LANGS)): _print-goodbye # Uninstall each language
 # packages ----------------------------------------------------------------------------------------------------
 
 .PHONY: apply/user
-apply/user: _apply/path # Run `home-manager switch` for user environment
+apply/user: # Run `home-manager switch` for user environment
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
-	$(NIX) run \
+	source $(PATH_SCRIPT) && $(NIX) run \
 		home-manager/release-23.11 -- switch --flake .
 	@echo "✅ home-manager has been applied successfully!"
 
 .PHONY: apply/user-wsl
-apply/user-wsl: _apply/path # Run `home-manager switch` for WSL user environment
+apply/user-wsl: # Run `home-manager switch` for WSL user environment
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
-	$(NIX) run \
+	source $(PATH_SCRIPT) && $(NIX) run \
 		home-manager/release-23.11 -- switch --flake .#wsl
 	@echo "✅ home-manager has been applied successfully!"
 
 .PHONY: apply/darwin
-apply/darwin: _apply/path # Run `nix-darwin switch`
+apply/darwin: # Run `nix-darwin switch`
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
-	$(NIX) run \
+	source $(PATH_SCRIPT) && $(NIX) run \
 		nix-darwin -- switch --flake .#aarch64-darwin
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully!"
-
-.PHONY: _apply/path
-_apply/path:
-	source "$(PATH_SCRIPT)"
 
 # update ----------------------------------------------------------------------------------------------------
 
