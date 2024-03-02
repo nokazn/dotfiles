@@ -62,12 +62,12 @@ function deploy_wsl_files() {
 	if diff -q "$source" "$destination" >/dev/null; then
 		return 0
 	fi
-	_diff "$source" "$destination" || true
+	_diff "$destination" "$source" || true
 	read -rp "Do you really want to deploy WSL conig files? (Y/n) " response
 	if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
 		return 0
 	fi
-	sudo cp --verbose "$source" "$destination"
+	sudo cp --verbose "$source" "$destination" | sed -E -e "s/^/✅ /"
 }
 
 function main() {
