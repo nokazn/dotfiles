@@ -8,6 +8,17 @@ ROOT_DIR=$(
 )
 readonly ROOT_DIR
 
+# @param {string} - sorce file path
+function _diff() {
+	if command -v delta >/dev/null; then
+		delta "$@"
+	elif command -v colordiff >/dev/null; then
+		colordiff "$@"
+	else
+		diff "$@"
+	fi
+}
+
 function usage() {
 	cat <<EOF
 $(basename "$0") is a tool to deploy files to Windows environment
@@ -46,11 +57,17 @@ function deploy_user_files() {
 }
 
 function deploy_wsl_files() {
+	local -r source="${ROOT_DIR}/wsl/etc/wsl.conf"
+	local -r destination=/etc/wsl.conf
+	if diff -q "$source" "$destination" >/dev/null; then
+		return 0
+	fi
+	_diff "$source" "$destination" || true
 	read -rp "Do you really want to deploy WSL conig files? (Y/n) " response
 	if [[ ! ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
 		return 0
 	fi
-	sudo cp --verbose "${ROOT_DIR}/wsl/etc/wsl.conf" /etc/wsl.conf
+	sudo cp --verbose "$source" "$destination"
 }
 
 function main() {
