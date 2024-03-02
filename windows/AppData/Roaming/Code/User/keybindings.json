@@ -1,0 +1,237 @@
+// 既定値を上書きするには、このファイル内にキー バインドを挿入します
+[
+  // Git --------------------------------------------------
+  // toggle focus on source control management
+  {
+    "key": "ctrl+alt+g",
+    "command": "workbench.view.scm",
+    "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
+  },
+  // focus on source control management
+  {
+    "key": "ctrl+shift+g g",
+    "command": "workbench.scm.focus"
+  },
+  {
+    "key": "ctrl+shift+g g",
+    "command": "-workbench.view.scm",
+    "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
+  },
+  // update git changes information
+  {
+    "key": "ctrl+shift+g r",
+    "command": "git.refresh"
+  },
+  // Zoom in/out --------------------------------------------------
+  {
+    "key": "ctrl+oem_minus",
+    "command": "-workbench.action.zoomOut"
+  },
+  {
+    "key": "ctrl+shift+oem_minus",
+    "command": "-workbench.action.zoomOut"
+  },
+  {
+    "key": "ctrl+numpad_subtract",
+    "command": "-workbench.action.zoomOut"
+  },
+  {
+    "key": "ctrl+8",
+    "command": "-extension.customWindowZoomOut"
+  },
+  {
+    "key": "ctrl+-",
+    "command": "extension.customWindowZoomOut"
+  },
+  {
+    "key": "ctrl+oem_plus",
+    "command": "-workbench.action.zoomIn"
+  },
+  {
+    "key": "ctrl+numpad_add",
+    "command": "-workbench.action.zoomIn"
+  },
+  {
+    "key": "ctrl+9",
+    "command": "-extension.customWindowZoomIn"
+  },
+  {
+    "key": "ctrl+shift+=",
+    "command": "extension.customWindowZoomIn"
+  },
+  {
+    "key": "ctrl+oem_plus",
+    "command": "extension.customWindowZoomIn"
+  },
+  // left & right panes --------------------------------------------------
+  {
+    "key": "ctrl+shift+r",
+    "command": "workbench.view.remote"
+  },
+  {
+    "key": "ctrl+shift+r s",
+    "command": "sshHosts.focus"
+  },
+  {
+    "key": "alt+b",
+    "command": "workbench.action.toggleAuxiliaryBar"
+  },
+  // bottom panel --------------------------------------------------
+  {
+    "key": "ctrl+shift+q",
+    "command": "workbench.action.toggleMaximizedPanel"
+  },
+  // terminal --------------------------------------------------
+  // focus editor when focused on terminal
+  {
+    "key": "ctrl+oem_3",
+    "command": "workbench.action.terminal.focus",
+    "when": "editorTextFocus"
+  },
+  // focus terminal when focused on editor
+  {
+    "key": "ctrl+oem_3",
+    "command": "workbench.action.focusFirstEditorGroup",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+oem_3",
+    "command": "-workbench.action.terminal.toggleTerminal",
+    "when": "terminal.active"
+  },
+  {
+    "key": "ctrl+alt+oem_3",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminal.active"
+  },
+  {
+    "key": "ctrl+shift+alt+oem_3",
+    "command": "workbench.action.terminal.kill"
+  },
+  // Editor --------------------------------------------------
+  // Show documentation popup
+  {
+    "key": "ctrl+shift+space",
+    "command": "editor.action.showHover",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+space",
+    "command": "-issue.suggestRefresh",
+    "when": "suggestWidgetVisible"
+  },
+  {
+    "key": "ctrl+shift+space",
+    "command": "-editor.action.triggerParameterHints",
+  },
+  {
+    "key": "ctrl+shift+alt+z",
+    "command": "workbench.action.toggleEditorWidths"
+  },
+  // Show parameter hints
+  {
+    "key": "ctrl+shift+alt+space",
+    "command": "editor.action.triggerParameterHints",
+    "when": "editorHasSignatureHelpProvider && editorTextFocus"
+  },
+  // Cursor words
+  {
+    "key": "ctrl+right",
+    "command": "cursorWordPartRight",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+right",
+    "command": "cursorWordPartRightSelect",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+left",
+    "command": "cursorWordPartLeft",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+left",
+    "command": "cursorWordPartLeftSelect",
+    "when": "editorTextFocus"
+  },
+  // Center editor window
+  {
+    "key": "ctrl+insert",
+    "command": "center-editor-window.center",
+    "when": "editorTextFocus || findWidgetVisible"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "-center-editor-window.center",
+    "when": "editorTextFocus || findWidgetVisible"
+  },
+  // Member navigation
+  {
+    "key": "ctrl+shift+9",
+    "command": "gotoNextPreviousMember.nextMember"
+  },
+  {
+    "key": "ctrl+down",
+    "command": "-gotoNextPreviousMember.nextMember"
+  },
+  {
+    "key": "ctrl+shift+8",
+    "command": "gotoNextPreviousMember.previousMember"
+  },
+  {
+    "key": "ctrl+up",
+    "command": "-gotoNextPreviousMember.previousMember"
+  },
+  // Tab navigation
+  {
+    "key": "ctrl+pagedown",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    "key": "ctrl+pagedown",
+    "command": "-workbench.action.nextEditor"
+  },
+  // TypeScript --------------------------------------------------
+  {
+    "key": "ctrl+shift+F12",
+    "command": "typescript.goToSourceDefinition",
+    "when": "editorTextFocus"
+  },
+  // Copilot --------------------------------------------------
+  {
+    "key": "ctrl+enter",
+    "command": "-github.copilot.generate",
+    "when": "editorTextFocus && github.copilot.activated"
+  },
+  {
+    "key": "ctrl+enter",
+    "command": "-github.copilot.generate",
+    "when": "editorTextFocus && github.copilot.activated && !inInteractiveInput && !interactiveEditorFocused"
+  },
+  {
+    "key": "ctrl+shift+c",
+    "command": "-workbench.action.terminal.openNativeConsole",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+c",
+    "command": "workbench.panel.chat.view.copilot.focus"
+  },
+  // disabled --------------------------------------------------
+  {
+    "key": "ctrl+shift+w",
+    "command": "-workbench.action.closeWindow"
+  },
+  // Avoid collision with unstage command
+  {
+    "key": "ctrl+k ctrl+n",
+    "command": "-extension.search",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "ctrl+alt+j",
+    "command": "-liveshare.join",
+    "when": "liveshare:state != 'Joined' && liveshare:state != 'Shared'"
+  },
+]
