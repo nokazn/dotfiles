@@ -49,7 +49,7 @@ function deploy_user_files() {
 		tr -d "\r" < <(get-path-in-cmd "echo %USERPROFILE%")
 	)"
 	local -r BACKUP_DIR_NAME='dotfiles.bk'
-	"${ROOT_DIR}/scripts/_deploy/main.sh" \
+	"${ROOT_DIR}/scripts/apply/main.sh" \
 		"${ROOT_DIR}/windows" \
 		"${destination_base_dir}" \
 		"${destination_base_dir}/${BACKUP_DIR_NAME}" \
