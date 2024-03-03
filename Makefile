@@ -4,7 +4,6 @@ SHELL := /bin/bash
 SCRIPTS_DIR := ./scripts
 PATH_SCRIPT := ./unix/.path.sh
 NIX := nix --extra-experimental-features 'nix-command flakes'
-LANGS := rust nim
 SHELL_FILES := $(shell find . -type f | grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)")
 NIX_FILES := $(shell find . -type f | grep -e "\.nix$$")
 .DEFAULT_GOAL := help
@@ -12,18 +11,12 @@ NIX_FILES := $(shell find . -type f | grep -e "\.nix$$")
 # init ----------------------------------------------------------------------------------------------------
 
 .PHONY: init/user
-init/user: add-tools/user install # Set up all languages & packages for user environment
+init/user: add-tools/nix apply/user install/asdf-langs # Set up all languages & packages for user environment
 
 .PHONY: init/darwin
-init/darwin: add-tools/darwin install # Set up all languages & packages for dawrin
+init/darwin: add-tools/nix apply/darwin install/asdf-langs # Set up all languages & packages for dawrin
 
 # tools ----------------------------------------------------------------------------------------------------
-
-.PHONY: add-tools/user
-add-tools/user: add-tools/nix apply/user # Add developing tools
-
-.PHONY: add-tools/darwin
-add-tools/darwin: add-tools/nix apply/darwin # Add developing tools
 
 .PHONY: add-tools/nix
 add-tools/nix: _print-airplane # Install nix
@@ -73,50 +66,33 @@ _remove-tools/bash-it: _print-goodbye # (Deprecated) Remove bash-it
 
 # languages ----------------------------------------------------------------------------------------------------
 
-.PHONY: install
-install: install/asdf-langs # Install all languages (runs scripts starting with `intall-` prefix)
-
 .PHONY: install/asdf-langs
 install/asdf-langs: # Install languages by asdf
-# TODO: 綺麗に書きたい
 	mkdir -p ~/.asdf
 	$(SCRIPTS_DIR)/asdf/install.sh nodejs node || :
 	$(SCRIPTS_DIR)/asdf/install.sh yarn || :
 	$(SCRIPTS_DIR)/asdf/install.sh pnpm || :
 	$(SCRIPTS_DIR)/asdf/install.sh terraform || :
 
-.PHONY: $(addprefix install/,$(LANGS))
-$(addprefix install/,$(LANGS)): _print-airplane # Install each language
-	$(eval lang=$(subst install/,,$@))
-	source ${PATH_SCRIPT}; \
-	$(SCRIPTS_DIR)/$(lang)/install-$(lang).sh;
-
 .PHONY: uninstall
-uninstall: uninstall/asdf-langs $(addprefix uninstall/,$(LANGS)) # Uninstall all languages (runs scripts starting with `unintall-` prefix)
+uninstall: uninstall/asdf-langs # Uninstall all languages
 
 .PHONY: uninstall/asdf-langs
 uninstall/asdf-langs: # Uninstall languages by asdf
 	$(SCRIPTS_DIR)/asdf/uninstall.sh
-
-.PHONY: $(addprefix uninstall/,$(LANGS))
-$(addprefix uninstall/,$(LANGS)): _print-goodbye # Uninstall each language
-	$(eval lang=$(subst uninstall/,,$@))
-	$(SCRIPTS_DIR)/$(lang)/uninstall-$(lang).sh;
 
 # packages ----------------------------------------------------------------------------------------------------
 
 .PHONY: apply/user
 apply/user: # Run `home-manager switch` for user environment
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
-	source $(PATH_SCRIPT) && $(NIX) run \
-		home-manager/release-23.11 -- switch --flake .
-	@echo "✅ home-manager has been applied successfully!"
-
-.PHONY: apply/user-wsl
-apply/user-wsl: # Run `home-manager switch` for WSL user environment
-	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
-	source $(PATH_SCRIPT) && $(NIX) run \
-		home-manager/release-23.11 -- switch --flake .#wsl
+	if [[ $$(uname -r) =~ microsoft ]]; then \
+		source $(PATH_SCRIPT) && $(NIX) run \
+			home-manager/release-23.11 -- switch --flake .#wsl; \
+	else \
+		source $(PATH_SCRIPT) && $(NIX) run \
+			home-manager/release-23.11 -- switch --flake .; \
+	fi
 	@echo "✅ home-manager has been applied successfully!"
 
 .PHONY: apply/darwin
@@ -126,6 +102,22 @@ apply/darwin: # Run `nix-darwin switch`
 		nix-darwin -- switch --flake .#aarch64-darwin
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully!"
+
+.PHONY: apply/windows
+apply/windows: # Make symbolic links to dotfiles & back up original files if exists in Windows
+	$(SCRIPTS_DIR)/apply/windows.sh
+
+.PHONY: _apply/unix
+_apply/unix: # (Deprecated) Make symbolic links to dotfiles & back up original files if exists
+	$(SCRIPTS_DIR)/apply/unix.sh
+
+.PHONY: restore/windows
+restore/windows: # Restore backed-up files of dotfiles in Windows
+	$(SCRIPTS_DIR)/restore/windows.sh
+
+.PHONY: _restore/unix
+_restore/unix: # (Deprecated) Restore backed-up files of dotfiles
+	$(SCRIPTS_DIR)/restore/unix.sh
 
 # update ----------------------------------------------------------------------------------------------------
 
@@ -148,24 +140,6 @@ update/vscode-settings/darwin: # Update VSCode settings.json & keybindings.json 
 .PHONY: update/vscode-settings/linux
 update/vscode-settings/linux: # Update VSCode settings.json & keybindings.json for linux
 	echo '.config/Code/User/'{settings,keybindings}.json | xargs -n 1 | xargs -I {} cp {~,./unix}/{}
-
-# deploy & restore dotfiles ----------------------------------------------------------------------------------------------------
-
-.PHONY: _deploy
-_deploy: # (Deprecated) Make symbolic links to dotfiles & back up original files if exists
-	$(SCRIPTS_DIR)/_deploy/unix.sh
-
-.PHONY: deploy/windows
-deploy/windows: # Make symbolic links to dotfiles & back up original files if exists in Windows
-	$(SCRIPTS_DIR)/_deploy/windows.sh
-
-.PHONY: _restore
-_restore: # (Deprecated) Restore backed-up files of dotfiles
-	$(SCRIPTS_DIR)/_restore/unix.sh
-
-.PHONY: restore/windows
-restore/windows: # Restore backed-up files of dotfiles in Windows
-	$(SCRIPTS_DIR)/_restore/windows.sh
 
 # utilities ----------------------------------------------------------------------------------------------------
 
