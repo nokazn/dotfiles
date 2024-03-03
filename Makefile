@@ -202,5 +202,5 @@ help: # Show all commands
 	@echo "Commands:"
 # コマンド一覧 (`_`始まりのコマンドは除く) → `:`から｀＃｀または行末までの文字列を削除する → column で整形
 	@grep -E '^[a-zA-Z]\S+(\s\S+)*:.*' ./Makefile \
-		| sed -E -e 's/:.*#(.*)$$/:\1/' \
-		| column -s ":" -t
+		| sed -E -e 's/:.*\s+#\s+(.*)$$/;;\1/' \
+		| column -s ";;" -t
