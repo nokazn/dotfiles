@@ -21,7 +21,7 @@
   "editor.autoClosingBrackets": "always", // 括弧閉じを自動で入力
   "editor.bracketPairColorization.enabled": true,
   "editor.cursorSmoothCaretAnimation": "on",
-  "editor.fontFamily": "HackGen35 Console, HackGenNerd Console",
+  "editor.fontFamily": "HackGen35 Console, HackGen Console",
   "editor.fontSize": 12.5,
   "editor.fontWeight": "bold",
   "editor.guides.bracketPairs": true,
@@ -294,9 +294,10 @@
       "source.fixAll.eslint": "explicit"
     }
   },
-  "window.zoomLevel": -0.2,
   "markdown-table-formatter.markdownGrammarScopes": [
     "markdown",
     "rust"
   ],
+  // Ignored by git
+  "window.zoomLevel": 0,
 }

@@ -298,5 +298,6 @@
     "markdown",
     "rust"
   ],
-  "window.zoomLevel": 0.75,
+  // Ignored by git
+  "window.zoomLevel": 0,
 }
