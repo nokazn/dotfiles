@@ -293,10 +293,10 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit"
     }
-},
+  },
   "markdown-table-formatter.markdownGrammarScopes": [
     "markdown",
     "rust"
   ],
-  "window.zoomLevel": -0.04,
+  "window.zoomLevel": 0.75,
 }
