@@ -8,8 +8,8 @@
 			[
 				{ "PackageIdentifier" : "7zip.7zip" },
 				{ "PackageIdentifier" : "Adobe.Acrobat.Reader.32-bit" },
-				{ "PackageIdentifier" : "AntibodySoftware.WizTree" },
 				{ "PackageIdentifier" : "Amazon.Kindle" },
+				{ "PackageIdentifier" : "AntibodySoftware.WizTree" },
 				{ "PackageIdentifier" : "CPUID.CPU-Z" },
 				{ "PackageIdentifier" : "CrystalDewWorld.CrystalDiskInfo" },
 				{ "PackageIdentifier" : "CrystalDewWorld.CrystalDiskMark" },
@@ -32,6 +32,7 @@
 				{ "PackageIdentifier" : "Postman.Postman" },
 				{ "PackageIdentifier" : "REALiX.HWiNFO" },
 				{ "PackageIdentifier" : "SlackTechnologies.Slack" },
+				{ "PackageIdentifier" : "TechPowerUp.GPU-Z" },
 				{ "PackageIdentifier" : "voidtools.Everything" },
 				{ "PackageIdentifier" : "wez.wezterm" },
 				{ "PackageIdentifier" : "Wox.Wox" },
