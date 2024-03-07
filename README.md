@@ -53,6 +53,7 @@ $ make deploy/windows
 install apps for Windows
 
 ```powershell
+# After running `deploy/windows` in WSL environment, run the following script in powershell
 .\.scripts\deploy.ps1
 ```
 
@@ -100,7 +101,9 @@ After installing wsl-hello-sudo, you need to modify `/etc/pam.d/sudo`.
 + auth  sufficient pam_wsl_hello.so
 ```
 
-### Import GPG key
+See [wsl-hello-sudo document for configuration](https://github.com/nullpo-head/WSL-Hello-sudo#configuration) for details.
+
+### Import a GPG key
 
 ```sh
 # Login to keybase
@@ -118,5 +121,3 @@ $ keybase pgp export -q <ID> | gpg --import
 # Import a secret key
 $ keybase pgp export --secret | gpg --allow-secret-key-import --import
 ```
-
-See [wsl-hello-sudo document for configuration](https://github.com/nullpo-head/WSL-Hello-sudo#configuration) for details.
