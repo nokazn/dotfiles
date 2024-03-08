@@ -267,7 +267,7 @@ return {
   use_ime = true,
 
   -- window
-  window_background_opacity = 0.95,
+  window_background_opacity = 0.90,
   window_padding = {
     left = 2,
     right = 2,
