@@ -47,14 +47,14 @@ $ cd ~/dotfiles
 # Install all development tools & language runtime
 $ make init/user
 # For WSL environment (optional)
-$ make deploy/windows
+$ make apply/windows
 ```
 
 install apps for Windows
 
 ```powershell
-# After running `deploy/windows` in WSL environment, run the following script in powershell
-.\.scripts\deploy.ps1
+# After running `apply/windows` in WSL environment, run the following script in powershell
+.\.scripts\apply.ps1
 ```
 
 Install apps for Linux
