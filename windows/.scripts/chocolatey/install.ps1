@@ -11,5 +11,5 @@ if (!(Get-Command "choco" -ErrorAction SilentlyContinue)) {
 }
 
 # chocolatey でパッケージをインストールするには以下をコメントアウトする
-# choco install "$env:USERPROFILE\.scripts\chocolatey\packages.config"
+# sudo choco install "$env:USERPROFILE\.scripts\chocolatey\packages.config"
 sudo choco install -y font-hackgen font-hackgen-nerd
