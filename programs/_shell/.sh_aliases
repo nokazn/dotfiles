@@ -258,10 +258,31 @@ function falias() {
 	aliases | fzf -q "$1"
 }
 
+function _fd() {
+	fd \
+		-t d \
+		--maxdepth 4 \
+		--exclude 'Library/' \
+		--exclude 'Applications/' \
+		--exclude 'Google Drive/' \
+		"$@"
+}
+
+function _fd_home() {
+	local -r entries="$(
+		cd ~ && _fd "$@"
+	)"
+	echo "${entries}"
+}
+
+function _fzf_home() {
+	fzf -q "$1" |
+		xargs -I {} readlink -f ~/{}
+}
+
 function fcd() {
 	local -r dir="$(
-		cd ~ || return 1
-		fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1"
+		_fd_home | _fzf_home "$1"
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		cd "${dir}" || return 1
@@ -269,29 +290,48 @@ function fcd() {
 }
 
 function fcode() {
+	local keyword
+	if [[ ! "$1" =~ ^- ]]; then
+		keyword="$1"
+		shift
+	fi
 	local -r dir="$(
-		cd ~ || return 1
-		fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1"
+		_fd_home \
+			--exclude '[dD]ownloads/' \
+			--exclude '[dD]ocuments/' \
+			--exclude '[mM]usic/' \
+			--exclude '[pP]ictures/' \
+			--exclude '[mM]ovies/' |
+			_fzf_home "$keyword"
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
-		code "${dir}"
+		code "${dir}" "$@"
 	fi
 }
 
 function fvim() {
-	local -r file="$(fd --hidden . | fzf -q "$1")"
+	local keyword
+	if [[ ! "$1" =~ ^- ]]; then
+		keyword="$1"
+		shift
+	fi
+	local -r file="$(_fd --hidden . | fzf -q "$keyword")"
 	if [[ -e "${file}" ]]; then
-		vim "${file}"
+		vim "${file}" "$@"
 	fi
 }
 
 function fbroot() {
+	local keyword
+	if [[ ! "$1" =~ ^- ]]; then
+		keyword="$1"
+		shift
+	fi
 	local -r dir="$(
-		cd ~ || return 1
-		fd -t d --maxdepth 4 | xargs -I {} readlink -f {} | fzf -q "$1"
+		_fd_home | _fzf_home "$keyword"
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
-		broot "${dir}"
+		broot "${dir}" "$@"
 	fi
 }
 
@@ -316,7 +356,7 @@ function apt-history() {
 # Show a list of apt packages a user manually installed.
 function apt-history-installed() {
 	echo "List of apt packages you have ever installed. (from '/var/log/apt/history.log')"
-	# ...apt|apt-get [options] install [options] を削除 -> 行中の options を削除 -> パッケージごとに改行
+	# ...apt|apt-get [options] install [options] ���削除 -> 行�����の options を削除 -> パッケー������������と����������行
 	local -r apt_list=$(apt list --installed)
 	grep "install" </var/log/apt/history.log |
 		sed -E -e "s/^.*apt(-get)?(\s--?\S+)*\sinstall(\s--?\S+)*\s//" |
