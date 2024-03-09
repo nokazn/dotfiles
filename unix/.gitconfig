@@ -80,7 +80,7 @@
 	cl = clone
 	cleanf = clean -f
 	cll = "clone --filter=blob:none --filter=tree:1 --depth=100"
-	clgh = "!f() { if [[ -z $2 ]]; then git clone git@github.com:$1; else git clone git@github.com:$1/$2; fi; }; f"
+	clgh = "!f() { if [[ \"$1\" =~ .+/.+ ]]; then target=\"$1\"; shift; else target=\"$1/$2\"; shift 2; fi; git clone git@github.com:\"${target}\" \"$@\"; }; f"
 	cm = commit -m
 	cp = cherry-pick
 	d = diff
