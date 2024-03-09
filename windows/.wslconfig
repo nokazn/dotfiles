@@ -3,10 +3,10 @@ memory=12GB
 swap=6GB
 processors = 8
 localhostForwarding=true
+networkingMode=mirrored
+dnsTunneling=true
+autoProxy=true
 
 [experimental]
 autoMemoryReclaim=gradual
 sparseVhd=true
-networkingMode=mirrored
-dnsTunneling=true
-autoProxy=true
