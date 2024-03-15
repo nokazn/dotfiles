@@ -453,3 +453,11 @@ function pbcopy() {
 		pbcopy "$@"
 	fi
 }
+
+function touchp() {
+	local -r dir=$(dirname "$1")
+	if [[ ! -e ${dir} ]]; then
+		mkdir -p "${dir}"
+	fi
+	touch "$1"
+}
