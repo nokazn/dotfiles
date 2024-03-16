@@ -19,7 +19,7 @@ $ sudo tee /etc/wsl.conf <<EOF
 default = nokazn
 EOF
 
-$ sudo mkdir -p /etc/nix && sudo tee /etc/nix/anix.conf <<EOF
+$ sudo mkdir -p /etc/nix && sudo tee /etc/nix/nix.conf <<EOF
 experimental-features = nix-command flakes
 EOF
 ```
