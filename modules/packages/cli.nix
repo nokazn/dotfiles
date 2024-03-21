@@ -16,7 +16,6 @@ with pkgs; lib.attrValues {
   ];
   dx = [
     direnv
-    hyperfine # A command-line benchmarking tool
     just # A handy way to save and run project-specific commands
     mkcert # A simple zero-config tool to make locally trusted development certificates with any names you'd like.
     navi # An interactive cheatsheet tool for the command-line and application launchers
@@ -38,6 +37,8 @@ with pkgs; lib.attrValues {
     tree # Recursive directory listing command
   ];
   utilities = [
+    asciinema # Terminal session recorder and the best companion of asciinema.org
+    hyperfine # A command-line benchmarking tool
     neofetch # CLI system information tool written in BASH that displays information about your system next to an image, your OS logo, or any ASCII file of your choice
     pastel # A command-line tool to generate, analyze, convert and manipulate colors
     sl # SL(1): Cure your bad habit of mistyping
