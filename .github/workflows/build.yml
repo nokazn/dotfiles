@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: |
           ./scripts/backup.sh ./modules/files/files.txt
-          nix run home-manager/release-23.11 -- switch --flake '.#wsl'
+          nix run home-manager/release-23.11 -- switch --flake '.#runner-wsl'
           echo "✅ home-manager has been applied successfully!"
 
   build-darwin:
