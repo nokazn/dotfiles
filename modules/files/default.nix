@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, meta, ... }:
 
 let
   fileSourceList =
@@ -24,14 +24,17 @@ let
           )
           (lib.splitString "\n" files);
       onChange = file:
-        if pkgs.stdenv.isDarwin then
-          ''
-            /usr/bin/sudo /bin/chmod -h +w '${file}'
-          ''
-        else
-          ''
-            chmod +w '${file}'
-          '';
+        (lib.optionalString
+          (!meta.isCi)
+          (if pkgs.stdenv.isDarwin then
+            ''
+              /usr/bin/sudo /bin/chmod -h +w '${file}'
+            ''
+          else
+            ''
+              chmod +w '${file}'
+            '')
+        );
     in
     builtins.map
       (file: {

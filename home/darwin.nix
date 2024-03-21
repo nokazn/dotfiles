@@ -1,4 +1,4 @@
-{ pkgs, lib, user, nix, meta, ... }:
+{ pkgs, lib, nix, meta, ... }:
 
 let
   nixPackages = import ../modules/packages { inherit pkgs lib meta; };
@@ -6,7 +6,6 @@ let
 in
 {
   home = {
-    username = user.name;
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
     # when a new Home Manager release introduces backwards
