@@ -20,18 +20,19 @@
   };
 
   outputs =
-    inputs@{ nixpkgs
+    { nixpkgs
     , nixpkgs-darwin
     , nix-darwin
     , home-manager
-    , devshell
     , flake-utils
     , ...
     }:
     let
-      user = {
-        name = "nokazn";
-      };
+      users = [
+        { name = "nokazn"; isCi = false; }
+        # For GitHub Actions
+        { name = "runner"; isCi = true; }
+      ];
       nix = {
         version = "23.11";
       };
@@ -39,59 +40,99 @@
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
-          users.${user.name} = home;
+          users =
+            let
+              userAttrs = map (user: with user; { inherit name; value = home; }) users;
+            in
+            nixpkgs.lib.listToAttrs userAttrs;
         };
       });
     in
     {
       # For user environments
       # - home-manager switch .#${USER}
-      # - home-manager switch .#wsl
-      homeConfigurations = nixpkgs.lib.listToAttrs (builtins.map
-        (meta: {
-          name = meta.name;
-          value = home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages.x86_64-linux;
-            modules = [
-              ./home/linux.nix
-            ];
-            extraSpecialArgs = {
-              inherit user nix;
-              meta = meta.value;
-            };
-          };
-        })
-        [
-          { name = user.name; value = { isWsl = false; }; }
-          { name = "wsl"; value = { isWsl = true; }; }
-        ]);
+      # - home-manager switch .#${USER}-wsl
+      # For GitHub Actions
+      # - home-manager switch .#runner
+      # - home-manager switch .#runner-wsl
+      homeConfigurations =
+        let
+          generateContext = (user:
+            map (context: context // { inherit user; })
+              (with user; [
+                {
+                  name = name;
+                  meta = { inherit isCi; isWsl = false; };
+                }
+                {
+                  name = name + "-wsl";
+                  meta = { inherit isCi; isWsl = true; };
+                }
+              ])
+          );
+          contexts = nixpkgs.lib.lists.flatten (map generateContext users);
+          generateConfiguration = (context:
+            {
+              name = context.name;
+              value = home-manager.lib.homeManagerConfiguration {
+                pkgs = nixpkgs.legacyPackages.x86_64-linux;
+                modules = [
+                  ./home/linux.nix
+                ];
+                extraSpecialArgs = with context; {
+                  inherit nix user meta;
+                };
+              };
+            }
+          );
+        in
+        nixpkgs.lib.listToAttrs
+          (builtins.map (generateConfiguration) contexts);
 
       # For darwin
-      # - darwin-rebuild switch .#${system}
-      darwinConfigurations = nixpkgs.lib.listToAttrs (builtins.map
-        (system: {
-          name = system;
-          value = nix-darwin.lib.darwinSystem rec {
-            inherit system;
-            pkgs = nixpkgs-darwin.legacyPackages.${system};
-            modules = [
-              ./hosts/darwin
-              home-manager.darwinModules.home-manager
-              (homeManagerConfigurations (import ./home/darwin.nix {
-                inherit pkgs user nix;
-                lib = pkgs.lib;
-                meta = { isWsl = false; };
-              }))
-            ];
-            specialArgs = { inherit user nix; };
-          };
-          specialArgs = { inherit user nix; };
-        }) [ "aarch64-darwin" "x86_64-darwin" ]);
+      # - darwin-rebuild switch .#${system}-$(USER)
+      # For GitHub Actions
+      # - darwin-rebuild switch .#${system}-runner
+      darwinConfigurations =
+        let
+          systems = [ "aarch64-darwin" "x86_64-darwin" ];
+          contextGenerators = map
+            (system: user: (with user; {
+              inherit user system;
+              name = system + "-" + name;
+              meta = { inherit isCi; isWsl = false; };
+            }))
+            systems;
+          contexts = nixpkgs.lib.flatten (
+            map (generator: map generator users) contextGenerators
+          );
+          generateConfiguration = (context:
+            {
+              name = context.name;
+              value = with context; nix-darwin.lib.darwinSystem rec {
+                inherit system;
+                pkgs = nixpkgs-darwin.legacyPackages.${system};
+                modules = [
+                  ./hosts/darwin
+                  home-manager.darwinModules.home-manager
+                  (homeManagerConfigurations (import ./home/darwin.nix {
+                    inherit pkgs nix user meta;
+                    lib = pkgs.lib;
+                  }))
+                ];
+                specialArgs = { inherit user nix meta; };
+              };
+            });
+        in
+        nixpkgs.lib.listToAttrs
+          (builtins.map generateConfiguration contexts);
 
     } // (flake-utils.lib.eachDefaultSystem
       (system:
       let
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import nixpkgs {
+          inherit system;
+        };
       in
       {
         devShells.default = pkgs.mkShell
