@@ -1,6 +1,7 @@
 { pkgs, lib, user, nix, meta, ... }:
 
 let
+  args = { inherit pkgs lib meta; };
   nixPackages = import ../modules/packages { inherit pkgs lib meta; };
   extraNodePackages = builtins.attrValues (import ../modules/node { inherit pkgs; });
 in
@@ -40,7 +41,7 @@ in
   programs = import ../programs { inherit pkgs lib meta; };
 
   services = {
-    gpg-agent = import ../modules/services/gpg-agent.nix { };
+    gpg-agent = import ../modules/services/gpg-agent.nix args;
     keybase = import ../modules/services/keybase.nix { };
   };
 }

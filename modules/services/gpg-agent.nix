@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 let
   # 1年間
@@ -7,9 +7,8 @@ in
 {
   enable = true;
   enableBashIntegration = true;
-  enableFishIntegration = true;
   enableZshIntegration = true;
   defaultCacheTtl = ttl;
   maxCacheTtl = ttl;
-  pinentryFlavor = "tty";
+  pinentryPackage = pkgs.pinentry;
 }
