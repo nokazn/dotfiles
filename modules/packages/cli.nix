@@ -42,7 +42,6 @@ with pkgs; lib.attrValues {
     neofetch # CLI system information tool written in BASH that displays information about your system next to an image, your OS logo, or any ASCII file of your choice
     pastel # A command-line tool to generate, analyze, convert and manipulate colors
     sl # SL(1): Cure your bad habit of mistyping
-    spotify-tui # Spotify for the terminal written in Rust
   ];
   alternative = [
     bat # A cat(1) clone with syntax highlighting and Git integration
