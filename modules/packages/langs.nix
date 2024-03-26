@@ -1,8 +1,8 @@
-{ pkgs, lib, meta, ... }@args:
+{ pkgs, lib, ... } @args:
 
 let
   meta = {
-    enableElm = false;
+    enableElm = true;
     enableJava = false;
     enablePhp = false;
     enablePython = true;
@@ -13,21 +13,13 @@ with pkgs;
 lib.attrValues {
   meta = [
     asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
-    # Powerful cross-platform (Windows, Linux, and macOS) shell and scripting language based on .NET
-    lua
-    yamlfmt # An extensible command line tool or library to format yaml files.
   ];
   node = with nodePackages;[
     eslint
-    firebase-tools
-    gulp
-    jake
     node-gyp
     prettier
-    pyright
     serverless
     typescript
-    vercel
     webpack-cli
   ];
   js = [
@@ -75,6 +67,8 @@ lib.attrValues {
     pipenv
     poetry
     python312
+    ruff
+    nodePackages.pyright
   ] ++ lib.optionals (!stdenv.isDarwin) (with python312Packages; [
     flake8
     setuptools
@@ -82,6 +76,13 @@ lib.attrValues {
   shellscript = [
     shellcheck # A static analysis tool for shell scripts
     shfmt # A shell parser and formatter
+  ];
+  config = [
+    lua
+    yamlfmt # An extensible command line tool or library to format yaml files.
+  ];
+  terraform = [
+    terraformer
   ];
   langs = lib.optionals meta.enableLangs [
     cue # A data constraint language which aims to simplify tasks involving defining and using data
