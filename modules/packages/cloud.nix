@@ -7,6 +7,6 @@ with pkgs ; [
   google-cloud-sdk
   heroku
   netlify-cli
-  terraformer
+  nodePackages.vercel
   wrangler # A CLI tool designed for folks who are interested in using Cloudflare Workers
 ]

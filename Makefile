@@ -11,10 +11,10 @@ NIX_FILES := $(shell find . -type f | grep -e "\.nix$$")
 # init ----------------------------------------------------------------------------------------------------
 
 .PHONY: init/user
-init/user: add-tools/nix apply/user install/asdf-langs # Set up all languages & packages for user environment
+init/user: add-tools/nix apply/user install/proto-langs # Set up all languages & packages for user environment
 
 .PHONY: init/darwin
-init/darwin: add-tools/nix apply/darwin install/asdf-langs # Set up all languages & packages for dawrin
+init/darwin: add-tools/nix apply/darwin install/proto-langs # Set up all languages & packages for dawrin
 
 # tools ----------------------------------------------------------------------------------------------------
 
@@ -66,19 +66,27 @@ _remove-tools/bash-it: _print-goodbye # (Deprecated) Remove bash-it
 
 # languages ----------------------------------------------------------------------------------------------------
 
-.PHONY: install/asdf-langs
-install/asdf-langs: # Install languages by asdf
+.PHONY: install/proto-langs
+install/proto-langs: # Install languages by proto
+	source $(PATH_SCRIPT) && proto use
+
+.PHONY: uninstall/proto-langs
+uninstall/proto-langs: # Uninstall languages by proto
+	proto uninstall node || : && \
+		proto uninstall yarn || : && \
+		proto uninstall pnpm || : && \
+		proto uninstall terraform
+
+.PHONY: _install/asdf-langs
+_install/asdf-langs: # Install languages by asdf
 	mkdir -p ~/.asdf
 	$(SCRIPTS_DIR)/asdf/install.sh nodejs node || :
 	$(SCRIPTS_DIR)/asdf/install.sh yarn || :
 	$(SCRIPTS_DIR)/asdf/install.sh pnpm || :
 	$(SCRIPTS_DIR)/asdf/install.sh terraform || :
 
-.PHONY: uninstall
-uninstall: uninstall/asdf-langs # Uninstall all languages
-
-.PHONY: uninstall/asdf-langs
-uninstall/asdf-langs: # Uninstall languages by asdf
+.PHONY: _uninstall/asdf-langs
+_uninstall/asdf-langs: # Uninstall languages by asdf
 	$(SCRIPTS_DIR)/asdf/uninstall.sh
 
 # packages ----------------------------------------------------------------------------------------------------

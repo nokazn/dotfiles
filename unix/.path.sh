@@ -132,10 +132,18 @@ if [[ -d "$HOME/.sdkman" ]]; then
 	fi
 fi
 
-# if [[ -f "$HOME/.local/bin/mise" ]]; then
-# 	# shellcheck source=~/.local/bin/mise
-# 	eval "$("$HOME/.local/bin/mise" activate zsh)"
-# fi
+# mise
+if [[ -f "$HOME/.local/bin/mise" ]]; then
+	# shellcheck source=~/.local/bin/mise
+	eval "$("$HOME/.local/bin/mise" activate "$(_detect_shell)")"
+fi
+
+# proto
+if [[ -d "$HOME/.proto" ]]; then
+	export PROTO_HOME="$HOME/.proto"
+	_register_forward "${PROTO_HOME}/shims"
+	_register_forward "${PROTO_HOME}/bin"
+fi
 
 # Nix (single user)
 if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
