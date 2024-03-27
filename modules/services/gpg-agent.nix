@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   # 1年間
@@ -10,5 +10,5 @@ in
   enableZshIntegration = true;
   defaultCacheTtl = ttl;
   maxCacheTtl = ttl;
-  pinentryPackage = pkgs.pinentry;
+  pinentryPackage = if pkgs.stdenv.isLinux then pkgs.pinentry else null;
 }
