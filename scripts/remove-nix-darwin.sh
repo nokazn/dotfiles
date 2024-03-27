@@ -7,7 +7,7 @@ set -u -o pipefail
 function remove_nix_darwin() {
     nix --extra-experimental-features 'nix-command flakes' shell github:LnL7/nix-darwin#darwin-uninstaller \
         --command darwin-uninstaller
-    nix --extra-experimental-features 'nix-command flakes' shell github:nix-community/home-manager/release-23.11 \
+    nix --extra-experimental-features 'nix-command flakes' shell github:nix-community/home-manager \
         --command sh -c "yes | sudo home-manager uninstall"
 
     sudo launchctl unload /Library/LaunchDaemons/org.nixos.nix-daemon.plist &&

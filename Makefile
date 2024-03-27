@@ -96,10 +96,10 @@ apply/user: # Run `home-manager switch` for user environment
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
 	if [[ $$(uname -r) =~ microsoft ]]; then \
 		source $(PATH_SCRIPT) && $(NIX) run \
-			home-manager/release-23.11 -- switch --flake .#$${USER}-wsl; \
+			home-manager -- switch --flake .#$${USER}-wsl; \
 	else \
 		source $(PATH_SCRIPT) && $(NIX) run \
-			home-manager/release-23.11 -- switch --flake .; \
+			home-manager -- switch --flake .; \
 	fi
 	@echo "✅ home-manager has been applied successfully!"
 

@@ -151,7 +151,6 @@ if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 		# shellcheck source=~/.nix-profile/etc/profile.d/nix.sh
 		source "$HOME/.nix-profile/etc/profile.d/nix.sh"
 	fi
-	_apply-nix-profiles "$HOME/.nix-profile/etc/profile.d/"
 fi
 
 # Nix (multi user)
@@ -161,8 +160,6 @@ if [[ -d "/nix/var/nix/profiles/default/bin" ]]; then
 fi
 if [[ -d "/etc/profiles/per-user/$USER/bin" ]]; then
 	_register_forward "/etc/profiles/per-user/$USER/bin"
-
-	_apply-nix-profiles "/etc/profiles/per-user/$USER/etc/profile.d/"
 fi
 
 # if command -v salias >/dev/null; then

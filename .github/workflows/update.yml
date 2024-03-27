@@ -2,8 +2,8 @@ name: update
 
 on:
   schedule:
-    # 毎月25日の00:00に実行
-    - cron: '0 0 25 * *'
+    # 毎月5日/25日の00:00に実行
+    - cron: '0 0 5,25 * *'
   workflow_dispatch:
 
 jobs:
