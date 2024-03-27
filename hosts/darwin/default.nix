@@ -1,4 +1,4 @@
-{ user, ... }:
+{ user, meta, ... }:
 
 {
   # necessary for nix-darwin
@@ -11,7 +11,7 @@
     };
   };
 
-  homebrew = import ./homebrew.nix { };
+  homebrew = if meta.isCi then { } else import ./homebrew.nix;
 
   system.defaults = import ./system.nix { };
 }

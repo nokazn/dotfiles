@@ -4,11 +4,10 @@ with pkgs; [
   expect
   gcc
   inetutils
-  pinentry
   rename
   rsync
   unzip
   zip
-] ++ lib.optional stdenv.isLinux [
+] ++ lib.optionals stdenv.isLinux [
   unixtools.column
 ]

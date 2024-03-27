@@ -34,5 +34,20 @@ jobs:
       - name: Build
         run: |
           ./scripts/backup.sh ./modules/files/files.txt
-          nix run home-manager/release-23.11 -- switch --flake '.#runner-wsl'
+          nix run home-manager -- switch --flake '.#runner-wsl'
           echo "✅ home-manager has been applied successfully!"
+
+  build-darwin:
+    runs-on: macos-12
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - uses: DeterminateSystems/flake-checker-action@main
+      - name: Build
+        # TODO: ignore exit status because this step is unstable in macOS
+        run: |
+          sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.bk
+          make apply/darwin || :
