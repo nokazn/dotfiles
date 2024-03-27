@@ -1,7 +1,8 @@
 { pkgs, lib, nix, meta, ... }:
 
 let
-  nixPackages = import ../modules/packages { inherit pkgs lib meta; };
+  args = { inherit pkgs lib meta; };
+  nixPackages = import ../modules/packages args;
   extraNodePackages = builtins.attrValues (import ../modules/node { inherit pkgs; });
 in
 {
@@ -15,18 +16,17 @@ in
     # the Home Manager release notes for a list of state version
     # changes in each release.
     stateVersion = nix.version;
-
     enableNixpkgsReleaseCheck = true;
     extraOutputsToInstall = [ "dev" ];
 
-    sessionVariables = import ../modules/sessionVariables.nix { inherit pkgs lib meta; };
+    sessionVariables = import ../modules/sessionVariables.nix args;
     shellAliases = import ../modules/shellAliases.nix { inherit meta; };
 
     # nix packages
     packages = nixPackages ++ extraNodePackages;
     # dotfiles in home directory
-    file = import ../modules/files { inherit pkgs lib meta; };
+    file = import ../modules/files args;
   };
 
-  programs = import ../programs { inherit pkgs lib meta; };
+  programs = import ../programs args;
 }
