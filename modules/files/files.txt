@@ -43,4 +43,5 @@
 # .zshrc
 Library/Application Support/Code/User/keybindings.json
 Library/Application Support/Code/User/settings.json
+biome.jsonc
 salias.toml
