@@ -35,6 +35,7 @@ with pkgs; lib.attrValues {
   explorer = [
     broot # A new way to see and navigate directory trees
     tree # Recursive directory listing command
+    yazi # Blazing fast terminal file manager written in Rust, based on async I/O
   ];
   utilities = [
     asciinema # Terminal session recorder and the best companion of asciinema.org
