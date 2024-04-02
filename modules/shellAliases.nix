@@ -55,5 +55,6 @@ in
   sampler = "sampler -c ~/.config/sampler/config.yml";
   ssh-keygen-rsa = "ssh-keygen -t rsa -b 4096 -C";
   tf = "terraform";
+  tarx = "tar -xvz";
   y = "yarn";
 } // wslAliases
