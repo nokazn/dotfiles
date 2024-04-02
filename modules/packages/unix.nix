@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 with pkgs; [
+  bash
   expect
   gcc
   inetutils
