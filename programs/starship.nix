@@ -23,7 +23,7 @@ in
     add_newline = true;
     format =
       let
-        toDimmedStyle = str: toBoldStyle str pastel.grey;
+        toDimmedStyle = target: toBoldStyle target pastel.grey;
       in
       ''
         ${toDimmedStyle "┌"} $username$hostanem$shlvl$directory$git_branch$git_metrics$git_status$git_state$hg_branch$container$docker_context$shell$nix_shell
