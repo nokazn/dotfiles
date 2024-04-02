@@ -38,15 +38,11 @@
       nix = {
         version = "23.11";
       };
-      homeManagerConfigurations = (home: {
+      homeManagerConfigurations = (user: home: {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
-          users =
-            let
-              userAttrs = map (user: with user; { inherit name; value = home; }) users;
-            in
-            nixpkgs.lib.listToAttrs userAttrs;
+          users = { ${user.name} = home; };
         };
       });
     in
@@ -60,15 +56,15 @@
       homeConfigurations =
         let
           generateContext = (user:
-            map (context: context // { inherit user; })
-              (with user; [
+            map (context: context // { user = { inherit (user) name; }; })
+              ([
                 {
-                  name = name;
-                  meta = { inherit isCi; isWsl = false; };
+                  name = user.name;
+                  meta = { inherit (user) isCi; isWsl = false; };
                 }
                 {
-                  name = name + "-wsl";
-                  meta = { inherit isCi; isWsl = true; };
+                  name = user.name + "-wsl";
+                  meta = { inherit (user) isCi; isWsl = true; };
                 }
               ])
           );
@@ -99,10 +95,14 @@
         let
           systems = [ "aarch64-darwin" "x86_64-darwin" ];
           contextGenerators = map
-            (system: user: (with user; {
-              inherit user system;
-              name = system + "-" + name;
-              meta = { inherit isCi; isWsl = false; };
+            (system: user: ({
+              inherit system;
+              name = system + "-" + user.name;
+              user = { inherit (user) name; };
+              meta = {
+                inherit (user) isCi;
+                isWsl = false;
+              };
             }))
             systems;
           contexts = nixpkgs.lib.flatten (
@@ -117,7 +117,7 @@
                 modules = [
                   ./hosts/darwin
                   home-manager.darwinModules.home-manager
-                  (homeManagerConfigurations (import ./home/darwin.nix {
+                  (homeManagerConfigurations user (import ./home/darwin.nix {
                     inherit pkgs nix user meta;
                     lib = pkgs.lib;
                   }))
