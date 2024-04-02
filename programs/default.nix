@@ -11,16 +11,12 @@ let
       let
         isEntryPoint = source.type == "regular" && source.name == "default.nix";
         # `_`で始まるファイル/ディレクトリは除外
-        # isInternal = source.name == "_shell";
         isInternal = (builtins.match "^_.+" source.name) != null;
       in
       !isEntryPoint && !isInternal
     )
     (lib.mapAttrsToList
-      (name: type: {
-        name = name;
-        type = type;
-      })
+      (name: type: { inherit name type; })
       # 再帰的に探索しない
       (readDir ./.)
     );
@@ -34,7 +30,7 @@ let
           else source.name;
       in
       {
-        name = name;
+        inherit name;
         value = (import (./. + "/${source.name}") { inherit pkgs meta; });
       })
     sources;
