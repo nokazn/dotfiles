@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ ... }:
 
 {
   LANG = "en_US.UTF-8";
@@ -17,6 +17,4 @@
   # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
   # Remove -X and -F (exit if the content fits on one screen) to enable it.
   LESS = "-F -g -i -M -R -S -w -X -z-4";
-
-  TAR_OPTIONS = "-xvz";
 }
