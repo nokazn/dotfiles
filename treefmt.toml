@@ -1,19 +1,17 @@
 [formatter.nix]
-command = "bash"
-options = [
-    "-eucx",
-    """
-    find . -type f \
-    | grep -e ".nix$" \
-    | xargs nixpkgs-fmt
-    """,
-]
-includes = [ "./**/*.nix" ]
+command = "nixpkgs-fmt"
+includes = ["./**/*.nix"]
 
 [formatter.shellscript]
 command = "shfmt"
-includes = [ "./**/*.sh" ]
+includes = ["./**/*.sh"]
 
-[formatter.yaml]
-command = "yamlfmt"
-includes = [ "./**/*.yaml", "./**/*.yml" ]
+# TODO: doesn't work with yamlfmt because https://github.com/numtide/treefmt/issues/279
+# [formatter.yaml]
+# command = "yamlfmt"
+# includes = ["./**/*.yaml", "./**/*.yml"]
+
+[formatter.dprint]
+command = "dprint"
+options = ["fmt"]
+includes = ["./**/*.json", "./**/*.md", "./**/*.toml"]
