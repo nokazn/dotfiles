@@ -28,3 +28,16 @@ jobs:
         uses: ludeeus/action-shellcheck@master
         with:
           scandir: "./scripts"
+
+  check-formats:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - uses: DeterminateSystems/flake-checker-action@main
+
+      - name: Run treefmt
+        run: |
+          nix develop --command treefmt --fail-on-change

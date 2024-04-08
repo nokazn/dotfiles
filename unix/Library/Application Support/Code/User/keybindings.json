@@ -159,5 +159,5 @@
     "key": "cmd+k cmd+n",
     "command": "-extension.search",
     "when": "!terminalFocus"
-  },
+  }
 ]
