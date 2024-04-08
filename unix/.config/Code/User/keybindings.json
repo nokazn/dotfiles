@@ -74,5 +74,5 @@
   {
     "key": "ctrl+shift+c",
     "command": "workbench.panel.chat.view.copilot.focus"
-  },
+  }
 ]

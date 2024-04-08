@@ -1,5 +1,12 @@
 {
   "makefile.extensionOutputFolder": "./.vscode",
+  // Nix
+  "[nix]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "B4dM4n.nixpkgs-fmt"
+  },
+  "nixEnvSelector.nixFile": "${workspaceFolder}/flake.nix",
+  // shell script
   "shellcheck.enable": true,
   "shellcheck.enableQuickFix": true,
   "shellcheck.run": "onSave",
@@ -7,13 +14,14 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "mkhl.shfmt"
   },
-  "[nix]": {
+  // dprint
+  "[json][jsonc][toml][markdown]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "B4dM4n.nixpkgs-fmt"
+    "editor.defaultFormatter": "dprint.dprint"
   },
+  // Lua
   "[lua]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "sumneko.lua"
-  },
-  "nixEnvSelector.nixFile": "${workspaceFolder}/flake.nix",
+  }
 }
