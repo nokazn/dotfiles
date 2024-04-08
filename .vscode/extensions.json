@@ -3,6 +3,6 @@
     "timonwong.shellcheck",
     "mkhl.shfmt",
     "B4dM4n.nixpkgs-fmt",
-    "sumneko.lua",
+    "sumneko.lua"
   ]
 }

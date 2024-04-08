@@ -146,7 +146,7 @@
   },
   {
     "key": "ctrl+shift+space",
-    "command": "-editor.action.triggerParameterHints",
+    "command": "-editor.action.triggerParameterHints"
   },
   {
     "key": "ctrl+shift+alt+z",
@@ -257,5 +257,5 @@
     "key": "ctrl+alt+j",
     "command": "-liveshare.join",
     "when": "liveshare:state != 'Joined' && liveshare:state != 'Shared'"
-  },
+  }
 ]
