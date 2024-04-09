@@ -1,9 +1,9 @@
 { ... }:
 
 let
-  aliases = builtins.readFile ./.sh_aliases;
+  aliases = builtins.readFile ./aliases.sh;
   paths = builtins.readFile ../../unix/.path.sh;
-  profile = builtins.readFile ./.sh_profile.sh;
+  profile = builtins.readFile ./profile.sh;
 in
 {
   init = "\n" + aliases + "\n" + paths;
