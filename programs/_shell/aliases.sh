@@ -427,7 +427,7 @@ function chshs() {
 	if ! grep "${shell_path}" /etc/shells --quiet; then
 		echo "${shell_path}" | sudo tee -a /etc/shells >/dev/null
 	fi
-	sudo usermod -s "${shell_path}" "${USER}"
+	chsh -s "${shell_path}"
 }
 
 function zsh-colors() {
