@@ -1,29 +1,23 @@
 default_stages:
   - "commit"
   - "push"
-
 repos:
-- repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v2.3.0
-  hooks:
-  - id: check-symlinks
-  - id: check-json
-    #  exclude jsonc files
-    exclude: ".vscode|Code/User/.+\\.json"
-  - id: check-toml
-  - id: check-yaml
-  - id: check-xml
-  - id: end-of-file-fixer
-  - id: check-ast
-  - id: check-byte-order-marker
-  - id: check-case-conflict
-  - id: mixed-line-ending
-  - id: trailing-whitespace
-    args: [--markdown-linebreak-ext=md]
-  - id: check-merge-conflict
-  - id: detect-private-key
-
-- repo: https://github.com/nix-community/nixpkgs-fmt
-  rev: v1.3.0
-  hooks:
-  - id: nixpkgs-fmt
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: check-symlinks
+      - id: check-json
+        #  exclude jsonc files
+        exclude: ".vscode|Code/User/.+\\.json"
+      - id: check-toml
+      - id: check-yaml
+      - id: check-xml
+      - id: end-of-file-fixer
+      - id: check-ast
+      - id: check-byte-order-marker
+      - id: check-case-conflict
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: check-merge-conflict
+      - id: detect-private-key

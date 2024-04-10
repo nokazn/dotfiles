@@ -144,6 +144,8 @@
               shellcheck
               shfmt
               nixpkgs-fmt
+              yamlfmt
+              dprint
               pre-commit
               treefmt
             ];

@@ -38,7 +38,7 @@ function _register_backward_if_not() {
 function _detect_shell() {
 	local -r shell="$(basename "$SHELL")"
 	case ${shell} in
-	"bash" | "zsh" | "fish")
+	"bash" | "zsh" | "fish" | "nu")
 		echo "${shell}"
 		;;
 	*)
@@ -47,24 +47,44 @@ function _detect_shell() {
 	esac
 }
 
-# 初期化スクリプトを読み込む
-function _apply-nix-profiles() {
-	local -r all_profiles=$(find "$1" -mindepth 1 -maxdepth 1 -type l)
-	local pattern
+function _shell_extension_pattern() {
 	case $(_detect_shell) in
 	"bash")
-		pattern=".+\.(ba)?sh$"
+		echo ".+\.(ba)?sh$"
 		;;
 	"zsh")
-		pattern=".+\.(ba|z)?sh$"
+		echo ".+\.(ba|z)?sh$"
+		;;
+	"fish")
+		echo ".+\.fish$"
+		;;
+	"nu")
+		echo ".+\.nu$"
 		;;
 	*)
-		pattern=".+\.sh$"
+		echo ".+\.sh$"
 		;;
 	esac
+}
+
+# 初期化スクリプトを読み込む
+function _apply_profiles() {
+	local keyword
+	if [[ ! "$1" =~ ^- ]]; then
+		keyword="$1"
+		shift
+	fi
+	local -r all_profiles=$(find "${keyword}" -mindepth 1 -maxdepth 1 "$@")
+	local -r pattern=$(_shell_extension_pattern)
 	grep -E -e "${pattern}" <<<"${all_profiles}" | while read -r dir && [[ -n "${dir}" ]]; do
 		source "${dir}"
 	done
+}
+
+function _start_mise() {
+	local -r shell="$(_detect_shell)"
+	local -r script="$("$HOME/.local/bin/mise" activate "${shell}")"
+	${shell} -c "eval ${script}"
 }
 
 # set PATH so it includes user's private bin if it exists
@@ -91,6 +111,18 @@ if [[ -d "$HOME/.anyenv" ]]; then
 		_register_forward_if_not "${dir}/bin"
 		_register_forward_if_not "${dir}/shims"
 	done
+fi
+
+# mise
+if [[ -f "$HOME/.local/bin/mise" ]]; then
+	_start_mise
+fi
+
+# proto
+if [[ -d "$HOME/.proto" ]]; then
+	export PROTO_HOME="$HOME/.proto"
+	_register_forward "${PROTO_HOME}/shims"
+	_register_forward "${PROTO_HOME}/bin"
 fi
 
 # # Go
@@ -132,19 +164,6 @@ if [[ -d "$HOME/.sdkman" ]]; then
 	fi
 fi
 
-# mise
-if [[ -f "$HOME/.local/bin/mise" ]]; then
-	# shellcheck source=~/.local/bin/mise
-	eval "$("$HOME/.local/bin/mise" activate "$(_detect_shell)")"
-fi
-
-# proto
-if [[ -d "$HOME/.proto" ]]; then
-	export PROTO_HOME="$HOME/.proto"
-	_register_forward "${PROTO_HOME}/shims"
-	_register_forward "${PROTO_HOME}/bin"
-fi
-
 # Nix (single user)
 if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 	if _is_unregistered_path "$HOME/.nix-profile"; then
@@ -160,6 +179,14 @@ if [[ -d "/nix/var/nix/profiles/default/bin" ]]; then
 fi
 if [[ -d "/etc/profiles/per-user/$USER/bin" ]]; then
 	_register_forward "/etc/profiles/per-user/$USER/bin"
+fi
+
+# asdf installed byu Nix
+if [[ -d "$HOME/.nix-profile/share/asdf-vm" ]]; then
+	_apply_profiles "$HOME/.nix-profile/share/asdf-vm/" -type f
+fi
+if [[ -f "/etc/profiles/per-user/$USER/etc/profile.d/asdf-prepare.sh" ]]; then
+	source "/etc/profiles/per-user/$USER/etc/profile.d/asdf-prepare.sh"
 fi
 
 # if command -v salias >/dev/null; then

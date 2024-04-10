@@ -261,48 +261,45 @@ function falias() {
 function _fd() {
 	fd \
 		-t d \
-		--maxdepth 4 \
+		--maxdepth 5 \
 		--exclude 'Library/' \
 		--exclude 'Applications/' \
 		--exclude 'Google Drive/' \
 		"$@"
 }
 
-function _fd_home() {
-	local -r entries="$(
-		cd ~ && _fd "$@"
-	)"
-	echo "${entries}"
-}
-
-function _fzf_home() {
-	fzf -q "$1" |
-		xargs -I {} readlink -f ~/{}
-}
-
 function fcd() {
 	local -r dir="$(
-		_fd_home | _fzf_home "$1"
+		_fd "" "$1" | fzf -q "$2"
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		cd "${dir}" || return 1
 	fi
 }
 
-function fcode() {
+function ffcd() {
+	local -r dir="$(
+		_fd "" ~ | fzf -q "$1"
+	)"
+	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
+		cd "${dir}" || return 1
+	fi
+}
+
+function ffcode() {
 	local keyword
 	if [[ ! "$1" =~ ^- ]]; then
 		keyword="$1"
 		shift
 	fi
 	local -r dir="$(
-		_fd_home \
+		_fd "" ~ \
 			--exclude '[dD]ownloads/' \
 			--exclude '[dD]ocuments/' \
 			--exclude '[mM]usic/' \
 			--exclude '[pP]ictures/' \
 			--exclude '[mM]ovies/' |
-			_fzf_home "$keyword"
+			fzf -q "$keyword"
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		code "${dir}" "$@"
@@ -328,7 +325,21 @@ function fbroot() {
 		shift
 	fi
 	local -r dir="$(
-		_fd_home | _fzf_home "$keyword"
+		_fd "" "$1" | fzf -q "$2"
+	)"
+	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
+		broot "${dir}" "$@"
+	fi
+}
+
+function ffbroot() {
+	local keyword
+	if [[ ! "$1" =~ ^- ]]; then
+		keyword="$1"
+		shift
+	fi
+	local -r dir="$(
+		_fd "" ~ | fzf -q "$keyword"
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		broot "${dir}" "$@"
@@ -416,7 +427,7 @@ function chshs() {
 	if ! grep "${shell_path}" /etc/shells --quiet; then
 		echo "${shell_path}" | sudo tee -a /etc/shells >/dev/null
 	fi
-	sudo usermod -s "${shell_path}" "${USER}"
+	chsh -s "${shell_path}"
 }
 
 function zsh-colors() {
