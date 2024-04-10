@@ -1,6 +1,5 @@
 [
   "http-server",
   "sort-package-json",
-  "ts-node",
-  "yo"
+  "ts-node"
 ]

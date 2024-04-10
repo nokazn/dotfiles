@@ -1,0 +1,10 @@
+node = "lts"
+yarn = "latest"
+pnpm = "latest"
+terraform = "latest"
+
+[tools.node]
+bundled-npm = true
+
+[plugins]
+terraform = "source:https://raw.githubusercontent.com/theomessin/proto-toml-plugins/master/terraform.toml"
