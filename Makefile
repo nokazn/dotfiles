@@ -182,6 +182,10 @@ check/shfmt: # Check wheter schell scripts are formatted
 check/nixpkgs-fmt: # Check `.nix` files
 	nixpkgs-fmt $(NIX_FILES) --check
 
+.PHONY: check/dprint
+check/dprint: # Check by dprint
+	dprint check
+
 .PHONY: fix
 fix: fix/shellcheck fix/shfmt fix/nixpkgs-fmt # Fix by all `fix/*` tasks
 
@@ -197,6 +201,10 @@ fix/shfmt: # Format schell scripts
 .PHONY: fix/nixpkgs-fmt
 fix/nixpkgs-fmt: # Format `.nix` files
 	nixpkgs-fmt $(NIX_FILES)
+
+.PHONY: fix/dprint
+fix/dprint: # Format by dprint
+	dprint fmt
 
 .PHONY: _print-airplane
 _print-airplane:
