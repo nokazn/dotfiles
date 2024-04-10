@@ -260,7 +260,6 @@ function falias() {
 
 function _fd() {
 	fd \
-		-t d \
 		--maxdepth 5 \
 		--exclude 'Library/' \
 		--exclude 'Applications/' \
@@ -270,7 +269,7 @@ function _fd() {
 
 function fcd() {
 	local -r dir="$(
-		_fd "" "$1" | fzf -q "$2"
+		_fd "" "${1:-.}" -t d | fzf -q "$2"
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		cd "${dir}" || return 1
@@ -279,7 +278,7 @@ function fcd() {
 
 function ffcd() {
 	local -r dir="$(
-		_fd "" ~ | fzf -q "$1"
+		_fd "" ~ -t d | fzf -q "$1"
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		cd "${dir}" || return 1
@@ -312,7 +311,7 @@ function fvim() {
 		keyword="$1"
 		shift
 	fi
-	local -r file="$(_fd --hidden . | fzf -q "$keyword")"
+	local -r file="$(_fd --hidden | fzf -q "$keyword")"
 	if [[ -e "${file}" ]]; then
 		vim "${file}" "$@"
 	fi
@@ -325,7 +324,7 @@ function fbroot() {
 		shift
 	fi
 	local -r dir="$(
-		_fd "" "$1" | fzf -q "$2"
+		_fd -t d "" "${1:-.}" | fzf -q "$2"
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		broot "${dir}" "$@"
@@ -339,7 +338,7 @@ function ffbroot() {
 		shift
 	fi
 	local -r dir="$(
-		_fd "" ~ | fzf -q "$keyword"
+		_fd "" ~ -t d | fzf -q "$keyword"
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		broot "${dir}" "$@"
@@ -367,7 +366,7 @@ function apt-history() {
 # Show a list of apt packages a user manually installed.
 function apt-history-installed() {
 	echo "List of apt packages you have ever installed. (from '/var/log/apt/history.log')"
-	# ...apt|apt-get [options] install [options] ���削除 -> 行�����の options を削除 -> パッケー������������と����������行
+	# ...apt|apt-get [options] install [options] を削除 -> 行中の options を削除 -> パッケージごとに改行
 	local -r apt_list=$(apt list --installed)
 	grep "install" </var/log/apt/history.log |
 		sed -E -e "s/^.*apt(-get)?(\s--?\S+)*\sinstall(\s--?\S+)*\s//" |
