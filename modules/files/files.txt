@@ -31,6 +31,7 @@
 .npmrc
 .path.sh
 .prettierrc.json
+.prototools
 # .profile
 .tool-versions
 .xprofile
