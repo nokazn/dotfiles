@@ -113,6 +113,14 @@ if [[ -d "$HOME/.anyenv" ]]; then
 	done
 fi
 
+# asdf installed byu Nix
+if [[ -d "$HOME/.nix-profile/share/asdf-vm" ]]; then
+	_apply_profiles "$HOME/.nix-profile/share/asdf-vm/" -type f
+fi
+if [[ -f "/etc/profiles/per-user/$USER/etc/profile.d/asdf-prepare.sh" ]]; then
+	source "/etc/profiles/per-user/$USER/etc/profile.d/asdf-prepare.sh"
+fi
+
 # mise
 if [[ -f "$HOME/.local/bin/mise" ]]; then
 	_start_mise
@@ -179,14 +187,6 @@ if [[ -d "/nix/var/nix/profiles/default/bin" ]]; then
 fi
 if [[ -d "/etc/profiles/per-user/$USER/bin" ]]; then
 	_register_forward "/etc/profiles/per-user/$USER/bin"
-fi
-
-# asdf installed byu Nix
-if [[ -d "$HOME/.nix-profile/share/asdf-vm" ]]; then
-	_apply_profiles "$HOME/.nix-profile/share/asdf-vm/" -type f
-fi
-if [[ -f "/etc/profiles/per-user/$USER/etc/profile.d/asdf-prepare.sh" ]]; then
-	source "/etc/profiles/per-user/$USER/etc/profile.d/asdf-prepare.sh"
 fi
 
 # if command -v salias >/dev/null; then
