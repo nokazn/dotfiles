@@ -68,7 +68,7 @@ function _shell_extension_pattern() {
 }
 
 # 初期化スクリプトを読み込む
-function _apply-profiles() {
+function _apply_profiles() {
 	local keyword
 	if [[ ! "$1" =~ ^- ]]; then
 		keyword="$1"
@@ -79,6 +79,12 @@ function _apply-profiles() {
 	grep -E -e "${pattern}" <<<"${all_profiles}" | while read -r dir && [[ -n "${dir}" ]]; do
 		source "${dir}"
 	done
+}
+
+function _start_mise() {
+	local -r shell="$(_detect_shell)"
+	local -r script="$("$HOME/.local/bin/mise" activate "${shell}")"
+	${shell} -c "eval ${script}"
 }
 
 # set PATH so it includes user's private bin if it exists
@@ -107,9 +113,9 @@ if [[ -d "$HOME/.anyenv" ]]; then
 	done
 fi
 
+# mise
 if [[ -f "$HOME/.local/bin/mise" ]]; then
-	# shellcheck source=~/.local/bin/mise
-	eval "$("$HOME/.local/bin/mise" activate "$(_detect_shell)")"
+	_start_mise
 fi
 
 # # Go
@@ -169,7 +175,7 @@ if [[ -d "/etc/profiles/per-user/$USER/bin" ]]; then
 fi
 
 if [[ -d "$HOME/.nix-profile/share/asdf-vm" ]]; then
-	_apply-profiles "$HOME/.nix-profile/share/asdf-vm/" -type f
+	_apply_profiles "$HOME/.nix-profile/share/asdf-vm/" -type f
 fi
 
 # if command -v salias >/dev/null; then
