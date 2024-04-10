@@ -25,6 +25,7 @@ with pkgs; lib.attrValues {
   ];
   text = [
     jq # A lightweight and flexible command-line JSON processor
+    jnv # Interactive JSON filter using jq
     nkf # A Kanji code converter among networks
     yq # Command-line YAML processor - jq wrapper for YAML documents
   ];
