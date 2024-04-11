@@ -13,7 +13,7 @@ with pkgs;
 lib.attrValues {
   meta = [
     asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
-    proto # A pluggable multi-language version manager
+    proto # A pluggable multi`-language version manager
   ];
   node = with nodePackages;[
     eslint
@@ -43,6 +43,7 @@ lib.attrValues {
       cargo-watch
       rustup
       libiconv
+      evcxr # An evaluation context for Rust
     ];
   go = [
     ghq
