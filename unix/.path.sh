@@ -129,8 +129,8 @@ fi
 # proto
 if [[ -d "$HOME/.proto" ]]; then
 	export PROTO_HOME="$HOME/.proto"
-	_register_forward "${PROTO_HOME}/shims"
 	_register_forward "${PROTO_HOME}/bin"
+	_register_forward "${PROTO_HOME}/shims"
 fi
 
 # # Go
