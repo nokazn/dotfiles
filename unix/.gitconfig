@@ -135,8 +135,8 @@
 	stu = stash -u --keep-index  # untracked のファイルも退避させる
 	sw = switch
 	swc = "!f() { if [[ -z $2 ]]; then echo "❌ No parent branch specified."; exit 1; fi; git switch -c $1 $2; }; f"  # 親ブランチの指定がなければ実行させない
-	swc-tmp = "!f() { git switch -c $1 $(git symbolic-ref --short HEAD)-tmp; }; f"  # 親ブランチの指定がなければ実行させない
-	swr = "!f() { git fetch origin $1; git switch $1; }; f"  # リモートブランチを同じ名前でチェックアウトする
+	swc-tmp = "!f() { git switch -c $(git symbolic-ref --short HEAD)-tmp-"$(hostname)" HEAD; }; f"  # 親ブランチの指定がなければ実行させない
+	swr = "!f() { git fetch origin $1; git switch -c $1 origin/$1; }; f"  # リモートブランチを同じ名前でチェックアウトする
 	swt = "!f() { git switch -d refs/tags/$1; }; f"
 	tagl = "tag -l"
 	tagd = "describe --tags"
