@@ -174,7 +174,7 @@ fi
 
 # Nix (single user)
 if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
-	if _is_unregistered_path "$HOME/.nix-profile"; then
+	if _is_unregistered_path "$HOME/.nix-profile/bin"; then
 		# shellcheck source=~/.nix-profile/etc/profile.d/nix.sh
 		source "$HOME/.nix-profile/etc/profile.d/nix.sh"
 	fi
