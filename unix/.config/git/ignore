@@ -146,6 +146,7 @@ memo.md
 
 .tmp
 tmp
+,
 
 # git worktree directories
 .worktree
