@@ -10,5 +10,5 @@ in
   enableZshIntegration = true;
   defaultCacheTtl = ttl;
   maxCacheTtl = ttl;
-  pinentryPackage = if pkgs.stdenv.isLinux then pkgs.pinentry else null;
+  pinentryPackage = if pkgs.stdenv.isLinux then pkgs.pinentry.tty else null;
 }
