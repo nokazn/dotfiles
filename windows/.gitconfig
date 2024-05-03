@@ -34,6 +34,9 @@
 	default = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white)%s%Creset %C(green)- [%an] %C(cyan)(%cr)%Creset"
 	bold = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white bold)%s%Creset %C(green)- %an %C(cyan)(%cr)%Creset"
 
+[branch]
+  sort = -committerdate
+
 # npm の認証トークンを含めない
 [filter "ignore-npm-registry-token"]
 	smudge = cat
