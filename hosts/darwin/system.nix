@@ -17,7 +17,7 @@
 
   NSGlobalDomain = {
     AppleInterfaceStyle = "Dark";
-    "com.apple.swipescrolldirection" = false;
+    "com.apple.swipescrolldirection" = true;
     "com.apple.keyboard.fnState" = true;
   };
 }
