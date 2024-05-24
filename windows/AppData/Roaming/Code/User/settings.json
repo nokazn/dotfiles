@@ -21,7 +21,7 @@
   "editor.autoClosingBrackets": "always", // 括弧閉じを自動で入力
   "editor.bracketPairColorization.enabled": true,
   "editor.cursorSmoothCaretAnimation": "on",
-  "editor.fontFamily": "HackGen35 Console, HackGen Console",
+  "editor.fontFamily": "HackGen Console, HackGen35 Console",
   "editor.fontSize": 12.5,
   "editor.fontWeight": "bold",
   "editor.guides.bracketPairs": true,
@@ -62,28 +62,26 @@
 
   // JSON
   "[JSON][JSONC]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": false,
-    "editor.inlayHints.enabled": "on"
+    "editor.defaultFormatter": "dprint.dprint",
+    "editor.formatOnSave": true,
   },
+
   // JavaScript/TypeScript
   "[javascript][javascriptreact][typescript][typescriptreact]": {
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+      "quickfix.biome": "explicit",
+      "source.organizeImports.biome": "explicit"
     },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "biomejs.biome",
     "editor.formatOnSave": true,
     "editor.inlayHints.enabled": "on"
   },
   "typescript.tsserver.log": "off",
   "debug.javascript.autoAttachFilter": "onlyWithFlag",
 
-  // HTML/CSS/Sass
+  // HTML/CSS/SVG
   "[html][css][svg]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "biomejs.biome",
     "editor.formatOnSave": true
   },
 
@@ -97,16 +95,6 @@
   "svelte.enable-ts-plugin": true,
 
   // Vue.js
-  // https://github.com/vuejs/vetur/issues/2150
-  // "vetur.languageFeatures.codeActions": false,
-  // "vetur.completion.autoImport": false,
-  // "vetur.experimental.templateInterpolationService": true,
-  // "vetur.validation.interpolation": true,
-  // "vetur.format.enable": false,
-  // "vetur.useWorkspaceDependencies": true,
-  // "vetur.validation.template": true,
-  // "vetur.validation.script": true,
-  // "vetur.validation.style": true,
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -172,6 +160,7 @@
     "editor.formatOnSave": true
   },
 
+  // Nix
   "[nix]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "B4dM4n.nixpkgs-fmt"
@@ -289,11 +278,6 @@
   "githubPullRequests.pullBranch": "never",
   "git.autofetch": true,
   "remote.autoForwardPortsSource": "hybrid",
-  "[JSON][JSONC][javascript][javascriptreact][typescript][typescriptreact]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
-    }
-  },
   "markdown-table-formatter.markdownGrammarScopes": [
     "markdown",
     "rust"
