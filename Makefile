@@ -150,7 +150,7 @@ update/npm-packages-list: # Generate Nix packages list for npm packages
 update/vscode-settings/darwin: # Update VSCode settings.json & keybindings.json for Darwin
 	echo 'Library/Application\ Support/Code/User/'{settings,keybindings}.json \
 		| xargs -n 1 \
-		| xargs -I {} cp --verbose {~,./unix}/{}
+		| xargs -I {} cp {~,./unix}/{}
 
 .PHONY: update/vscode-settings/linux
 update/vscode-settings/linux: # Update VSCode settings.json & keybindings.json for Linux
@@ -159,7 +159,7 @@ update/vscode-settings/linux: # Update VSCode settings.json & keybindings.json f
 		| xargs -I {} cp --verbose {~,./unix}/{}
 
 .PHONY: update/vscode-settings/windows
-update/vscode-settings/windows: # Update VSCode settings.json & keybindings.json for Windows
+update/vscode-settings/windows: # Update VSCode settings.json & keybindings.json for Windows through WSL environment
 	username=$$(wslvar USERNAME) && \
 	echo 'AppData/Roaming/Code/User/'{settings,keybindings}.json \
 		| xargs -n 1 \
