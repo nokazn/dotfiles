@@ -37,6 +37,9 @@ in
   gpg-list-secret-key-ids = "gpg --list-secret-keys --keyid-format LONG | grep -E '^sec' | awk '{ print $2 }' | sed -E 's/^.+\\///'";
   gpg-agent-reload = "gpgconf --kill gpg-agent";
 
+  # Nix
+  nixpkgs-review-pr = "nixpkgs-review pr --post-result $(gh pr view --json number -q .number)";
+
   # custom aliases
   apt-install = "apt install --no-install-recommends";
   apt-purge = "apt --purge remove";
