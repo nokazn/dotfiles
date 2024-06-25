@@ -67,13 +67,13 @@ let
         sha512 = "oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==";
       };
     };
-    "@swc/core-1.5.24" = {
+    "@swc/core-1.6.5" = {
       name = "_at_swc_slash_core";
       packageName = "@swc/core";
-      version = "1.5.24";
+      version = "1.6.5";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@swc/core/-/core-1.5.24.tgz";
-        sha512 = "Eph9zvO4xvqWZGVzTdtdEJ0Vqf0VIML/o/e4Qd2RLOqtfgnlRi7avmMu5C0oqciJ0tk+hqdUKVUZ4JPoPaiGvQ==";
+        url = "https://registry.npmjs.org/@swc/core/-/core-1.6.5.tgz";
+        sha512 = "tyVvUK/HDOUUsK6/GmWvnqUtD9oDpPUA4f7f7JCOV8hXxtfjMtAZeBKf93yrB1XZet69TDR7EN0hFC6i4MF0Ig==";
       };
     };
     "@swc/counter-0.1.3" = {
@@ -94,22 +94,22 @@ let
         sha512 = "YNlnKRWF2sVojTpIyzwou9XoTNbzbzONwRhOoniEioF1AtaitTvVZblaQRrAzChWQ1bLYyYSWzM18y4WwgzJ+A==";
       };
     };
-    "@swc/types-0.1.7" = {
+    "@swc/types-0.1.9" = {
       name = "_at_swc_slash_types";
       packageName = "@swc/types";
-      version = "0.1.7";
+      version = "0.1.9";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@swc/types/-/types-0.1.7.tgz";
-        sha512 = "scHWahbHF0eyj3JsxG9CFJgFdFNaVQCNAimBlT6PzS3n/HptxqREjsm4OH6AN3lYcffZYSPxXW8ua2BEHp0lJQ==";
+        url = "https://registry.npmjs.org/@swc/types/-/types-0.1.9.tgz";
+        sha512 = "qKnCno++jzcJ4lM4NTfYifm1EFSCeIfKiAHAfkENZAV5Kl9PjJIyd2yeeVv6c/2CckuLyv2NmRC5pv6pm2WQBg==";
       };
     };
-    "@swc/wasm-1.5.24" = {
+    "@swc/wasm-1.6.5" = {
       name = "_at_swc_slash_wasm";
       packageName = "@swc/wasm";
-      version = "1.5.24";
+      version = "1.6.5";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@swc/wasm/-/wasm-1.5.24.tgz";
-        sha512 = "LyJpKUQE0E/4gbS/F7lB5t5h67cU5B6Ov2aTYdPknOA9+Yg6ra9Gyt8BnJZAus7qRlHgofNMA/dj87Mtubzpaw==";
+        url = "https://registry.npmjs.org/@swc/wasm/-/wasm-1.6.5.tgz";
+        sha512 = "p7cWBXjPkyMOpDMWXXmWQpNSBFG25b4ZFbLD7ldz/ca6sps+KWcPV+tZLSF0sUnVnl9jxWTzl8uY8S1vH5Oe2Q==";
       };
     };
     "@tsconfig/node10-1.0.11" = {
@@ -148,31 +148,31 @@ let
         sha512 = "vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==";
       };
     };
-    "@types/node-20.14.1" = {
+    "@types/node-20.14.8" = {
       name = "_at_types_slash_node";
       packageName = "@types/node";
-      version = "20.14.1";
+      version = "20.14.8";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@types/node/-/node-20.14.1.tgz";
-        sha512 = "T2MzSGEu+ysB/FkWfqmhV3PLyQlowdptmmgD20C6QxsS8Fmv5SjpZ1ayXaEC0S21/h5UJ9iA6W/5vSNU5l00OA==";
+        url = "https://registry.npmjs.org/@types/node/-/node-20.14.8.tgz";
+        sha512 = "DO+2/jZinXfROG7j7WKFn/3C6nFwxy2lLpgLjEXJz+0XKphZlTLJ14mo8Vfg8X5BWN6XjyESXq+LcYdT7tR3bA==";
       };
     };
-    "acorn-8.11.3" = {
+    "acorn-8.12.0" = {
       name = "acorn";
       packageName = "acorn";
-      version = "8.11.3";
+      version = "8.12.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/acorn/-/acorn-8.11.3.tgz";
-        sha512 = "Y9rRfJG5jcKOE0CLisYbojUjIrIEE7AGMzA/Sm4BslANhbS+cDMpgBdcPT91oJ7OuJ9hYJBx59RjbhxVnrF8Xg==";
+        url = "https://registry.npmjs.org/acorn/-/acorn-8.12.0.tgz";
+        sha512 = "RTvkC4w+KNXrM39/lWCUaG0IbRkWdCv7W/IOW9oU6SawyxulvkQy5HQPVTKxEjczcUvapcrw3cFx/60VN/NRNw==";
       };
     };
-    "acorn-walk-8.3.2" = {
+    "acorn-walk-8.3.3" = {
       name = "acorn-walk";
       packageName = "acorn-walk";
-      version = "8.3.2";
+      version = "8.3.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/acorn-walk/-/acorn-walk-8.3.2.tgz";
-        sha512 = "cjkyv4OtNCIeqhHrfS81QWXoCBPExR/J62oyEqepVw8WaQeSqpW2uhuLPh1m9eWhDuOo/jUXVTlifvesOWp/4A==";
+        url = "https://registry.npmjs.org/acorn-walk/-/acorn-walk-8.3.3.tgz";
+        sha512 = "MxXdReSRhGO7VlFe1bRG/oI7/mdLV9B9JJT0N8vZOhF7gFRR5l3M8W9G8JxmKV+JC5mGqJ0QvqfSOLsCPa4nUw==";
       };
     };
     "ansi-styles-4.3.0" = {
@@ -652,13 +652,13 @@ let
         sha512 = "6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==";
       };
     };
-    "object-inspect-1.13.1" = {
+    "object-inspect-1.13.2" = {
       name = "object-inspect";
       packageName = "object-inspect";
-      version = "1.13.1";
+      version = "1.13.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.1.tgz";
-        sha512 = "5qoj1RUiKOMsCCNLV1CBiPYE10sziTsnmNxkAI/rZhiD63CF7IqdFGC/XzjWjpSgLf0LxXX3bDFIh0E18f6UhQ==";
+        url = "https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.2.tgz";
+        sha512 = "IRZSRuzJiynemAXPYtPe5BoI/RESNYR7TYm50MC5Mqbd3Jmw5y790sErYw3V6SryFJD64b74qQQs9wn5Bg/k3g==";
       };
     };
     "opener-1.5.2" = {
@@ -841,13 +841,13 @@ let
         sha512 = "xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==";
       };
     };
-    "typescript-5.4.5" = {
+    "typescript-5.5.2" = {
       name = "typescript";
       packageName = "typescript";
-      version = "5.4.5";
+      version = "5.5.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/typescript/-/typescript-5.4.5.tgz";
-        sha512 = "vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==";
+        url = "https://registry.npmjs.org/typescript/-/typescript-5.5.2.tgz";
+        sha512 = "NcRtPEOsPFFWjobJEtfihkLCZCXZt/os3zf8nTxjVH3RvTSxjrCamJpbExGvYOF+tFHc3pA65qpdwPbzjohhew==";
       };
     };
     "undici-types-5.26.5" = {
@@ -947,7 +947,7 @@ in
       sources."minimist-1.2.8"
       sources."mkdirp-0.5.6"
       sources."ms-2.1.3"
-      sources."object-inspect-1.13.1"
+      sources."object-inspect-1.13.2"
       sources."opener-1.5.2"
       sources."portfinder-1.0.32"
       sources."qs-6.12.1"
@@ -1035,24 +1035,24 @@ in
       sources."@jridgewell/resolve-uri-3.1.2"
       sources."@jridgewell/sourcemap-codec-1.4.15"
       sources."@jridgewell/trace-mapping-0.3.9"
-      sources."@swc/core-1.5.24"
+      sources."@swc/core-1.6.5"
       sources."@swc/counter-0.1.3"
       sources."@swc/helpers-0.5.11"
-      sources."@swc/types-0.1.7"
-      sources."@swc/wasm-1.5.24"
+      sources."@swc/types-0.1.9"
+      sources."@swc/wasm-1.6.5"
       sources."@tsconfig/node10-1.0.11"
       sources."@tsconfig/node12-1.0.11"
       sources."@tsconfig/node14-1.0.3"
       sources."@tsconfig/node16-1.0.4"
-      sources."@types/node-20.14.1"
-      sources."acorn-8.11.3"
-      sources."acorn-walk-8.3.2"
+      sources."@types/node-20.14.8"
+      sources."acorn-8.12.0"
+      sources."acorn-walk-8.3.3"
       sources."arg-4.1.3"
       sources."create-require-1.1.1"
       sources."diff-4.0.2"
       sources."make-error-1.3.6"
       sources."tslib-2.6.3"
-      sources."typescript-5.4.5"
+      sources."typescript-5.5.2"
       sources."undici-types-5.26.5"
       sources."v8-compile-cache-lib-3.0.1"
       sources."yn-3.1.1"
