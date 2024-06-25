@@ -70,7 +70,7 @@ lib.attrValues {
     poetry
     python312
     ruff
-    nodePackages.pyright
+    pyright
   ] ++ lib.optionals (!stdenv.isDarwin) (with python312Packages; [
     flake8
     setuptools
