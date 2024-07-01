@@ -2,9 +2,6 @@
 
 {
   enable = true;
-  taps = [
-    "homebrew/cask-fonts"
-  ];
   casks = [
     "alfred"
     "battery"
@@ -15,13 +12,14 @@
     "firefox"
     "google-chrome"
     "google-drive"
-    "homebrew/cask-fonts/font-hackgen-nerd"
-    "homebrew/cask-fonts/font-hackgen"
+    "homebrew/cask/font-hackgen-nerd"
+    "homebrew/cask/font-hackgen"
     "iterm2"
     "lastfm"
     "logi-options-plus"
+    "notion"
     "keepassxc"
-    "rambox"
+    "keybase"
     "slack"
     "spotify"
     "todoist"
