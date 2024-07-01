@@ -53,10 +53,7 @@ with pkgs; lib.attrValues {
     ripgrep # An interactive replacer for ripgrep that makes it easy to find and replace across files on the command line
   ];
   platform =
-    if stdenv.isDarwin then [
-      keybase
-    ]
-    else [
+    lib.optionals (!stdenv.isDarwin) [
       dstat # Versatile resource statistics tool
       sysstat # A collection of performance monitoring tools for Linux (such as sar, iostat and pidstat)
     ] ++ lib.optionals meta.isWsl [
