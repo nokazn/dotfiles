@@ -96,7 +96,7 @@ apply/user: # Run `home-manager switch` for user environment
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
 	if [[ $$(uname -r) =~ microsoft ]]; then \
 		source $(PATH_SCRIPT) && $(NIX) run \
-			home-manager -- switch --flake .#$${USER}-wsl; \
+			home-manager -- switch --flake .#"\"$${USER}-wsl"\"; \
 	else \
 		source $(PATH_SCRIPT) && $(NIX) run \
 			home-manager -- switch --flake .; \
@@ -108,10 +108,10 @@ apply/darwin: # Run `nix-darwin switch`
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
 	if [[ $$(arch) =~ arm64 ]]; then \
 		source $(PATH_SCRIPT) && $(NIX) run \
-			nix-darwin -- switch --flake .#aarch64-darwin-$${USER}; \
+			nix-darwin -- switch --flake .#"\"aarch64-darwin-$${USER}\""; \
 	else \
 		source $(PATH_SCRIPT) && $(NIX) run \
-			nix-darwin -- switch --flake .#x86_64-darwin-$${USER}; \
+			nix-darwin -- switch --flake .#"\"x86_64-darwin-$${USER}"\"; \
 	fi
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully!"
