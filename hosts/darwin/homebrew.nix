@@ -3,6 +3,7 @@
 {
   enable = true;
   casks = [
+    "adobe-acrobat-reader"
     "alfred"
     "battery"
     "bluesnooze"
@@ -15,11 +16,13 @@
     "homebrew/cask/font-hackgen-nerd"
     "homebrew/cask/font-hackgen"
     "iterm2"
+    "karabiner-elements"
+    "keepassxc"
+    "keybase"
+    "keycastr"
     "lastfm"
     "logi-options-plus"
     "notion"
-    "keepassxc"
-    "keybase"
     "slack"
     "spotify"
     "todoist"
