@@ -8,5 +8,6 @@ with pkgs ; [
   heroku
   netlify-cli
   nodePackages.vercel
-  wrangler # A CLI tool designed for folks who are interested in using Cloudflare Workers
+  # TODO: https://github.com/NixOS/nixpkgs/issues/322571
+  # wrangler # A CLI tool designed for folks who are interested in using Cloudflare Workers
 ]
