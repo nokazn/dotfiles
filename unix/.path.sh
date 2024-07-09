@@ -97,42 +97,6 @@ if [[ -d "$HOME/.local/bin" ]]; then
 	_register_forward_if_not "$HOME/.local/bin"
 fi
 
-# anyenv
-if [[ -d "$HOME/.anyenv" ]]; then
-	if _is_unregistered_path "$HOME/.anyenv/bin"; then
-		PATH="$HOME/.anyenv/bin:$PATH"
-		# anyenv コマンドが存在する場合
-		if type "anyenv" >/dev/null 2>&1; then
-			eval "$(anyenv init -)"
-		fi
-	fi
-	# `~/.anyenv/envs` 配下の `bin` と `shims` ディレクトリをパスとして登録
-	find ~/.anyenv/envs -mindepth 1 -maxdepth 1 -type d | while read -r dir; do
-		_register_forward_if_not "${dir}/bin"
-		_register_forward_if_not "${dir}/shims"
-	done
-fi
-
-# asdf installed byu Nix
-if [[ -d "$HOME/.nix-profile/share/asdf-vm" ]]; then
-	_apply_profiles "$HOME/.nix-profile/share/asdf-vm/" -type f
-fi
-if [[ -f "/etc/profiles/per-user/$USER/etc/profile.d/asdf-prepare.sh" ]]; then
-	source "/etc/profiles/per-user/$USER/etc/profile.d/asdf-prepare.sh"
-fi
-
-# mise
-if [[ -f "$HOME/.local/bin/mise" ]]; then
-	_start_mise
-fi
-
-# proto
-if [[ -d "$HOME/.proto" ]]; then
-	export PROTO_HOME="$HOME/.proto"
-	_register_forward "${PROTO_HOME}/bin"
-	_register_forward "${PROTO_HOME}/shims"
-fi
-
 # # Go
 if command -v go >/dev/null; then
 	_goBinDir="$(go env GOBIN)"
@@ -187,6 +151,42 @@ if [[ -d "/nix/var/nix/profiles/default/bin" ]]; then
 fi
 if [[ -d "/etc/profiles/per-user/$USER/bin" ]]; then
 	_register_forward "/etc/profiles/per-user/$USER/bin"
+fi
+
+# anyenv
+if [[ -d "$HOME/.anyenv" ]]; then
+	if _is_unregistered_path "$HOME/.anyenv/bin"; then
+		PATH="$HOME/.anyenv/bin:$PATH"
+		# anyenv コマンドが存在する場合
+		if type "anyenv" >/dev/null 2>&1; then
+			eval "$(anyenv init -)"
+		fi
+	fi
+	# `~/.anyenv/envs` 配下の `bin` と `shims` ディレクトリをパスとして登録
+	find ~/.anyenv/envs -mindepth 1 -maxdepth 1 -type d | while read -r dir; do
+		_register_forward_if_not "${dir}/bin"
+		_register_forward_if_not "${dir}/shims"
+	done
+fi
+
+# asdf installed byu Nix
+if [[ -d "$HOME/.nix-profile/share/asdf-vm" ]]; then
+	_apply_profiles "$HOME/.nix-profile/share/asdf-vm/" -type f
+fi
+if [[ -f "/etc/profiles/per-user/$USER/etc/profile.d/asdf-prepare.sh" ]]; then
+	source "/etc/profiles/per-user/$USER/etc/profile.d/asdf-prepare.sh"
+fi
+
+# mise
+if [[ -f "$HOME/.local/bin/mise" ]]; then
+	_start_mise
+fi
+
+# proto
+if [[ -d "$HOME/.proto" ]]; then
+	export PROTO_HOME="$HOME/.proto"
+	_register_forward "${PROTO_HOME}/bin"
+	_register_forward "${PROTO_HOME}/shims"
 fi
 
 # if command -v salias >/dev/null; then
