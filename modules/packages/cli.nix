@@ -24,6 +24,7 @@ with pkgs; lib.attrValues {
     treefmt # one CLI to format the code tree
   ];
   text = [
+    gettext # Well integrated set of translation tools and documentation
     jq # A lightweight and flexible command-line JSON processor
     jnv # Interactive JSON filter using jq
     nkf # A Kanji code converter among networks
