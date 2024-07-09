@@ -91,8 +91,12 @@ _uninstall/asdf-langs: # Uninstall languages by asdf
 
 # packages ----------------------------------------------------------------------------------------------------
 
+.PHONY: apply/_inject-user
+apply/_inject-user: # Inject user environment
+	perl -pi -e  's/"\$${USER}"/"$$ENV{USER}"/g' ./flake.nix
+
 .PHONY: apply/user
-apply/user: # Run `home-manager switch` for user environment
+apply/user: apply/_inject-user # Run `home-manager switch` for user environment
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
 	if [[ $$(uname -r) =~ microsoft ]]; then \
 		source $(PATH_SCRIPT) && $(NIX) run \
@@ -104,7 +108,7 @@ apply/user: # Run `home-manager switch` for user environment
 	@echo "✅ home-manager has been applied successfully!"
 
 .PHONY: apply/darwin
-apply/darwin: # Run `nix-darwin switch`
+apply/darwin: apply/_inject-user # Run `nix-darwin switch`
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
 	if [[ $$(arch) =~ arm64 ]]; then \
 		source $(PATH_SCRIPT) && $(NIX) run \

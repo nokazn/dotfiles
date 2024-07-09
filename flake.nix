@@ -30,8 +30,9 @@
     , ...
     }:
     let
+      USER = "nokazn";
       users = [
-        { name = "nokazn"; isCi = false; }
+        { name = "${USER}"; isCi = false; }
         # For GitHub Actions
         { name = "runner"; isCi = true; }
       ];
