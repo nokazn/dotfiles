@@ -29,7 +29,8 @@ lib.attrValues {
     deno
     dprint # Code formatting platform written in Rust
     oxlint # A suite of high-performance tools for JavaScript and TypeScript written in Rust
-    # turbo # High-performance build system for JavaScript and TypeScript codebases
+    turbo # High-performance build system for JavaScript and TypeScript codebases
+    nodejs
   ];
   rust =
     let
@@ -71,9 +72,9 @@ lib.attrValues {
     python312
     ruff
     pyright
-  ] ++ lib.optionals (!stdenv.isDarwin) (with python312Packages; [
-    flake8
+  ] ++ (with python312Packages; [
     setuptools
+    flake8
   ]));
   shellscript = [
     shellcheck # A static analysis tool for shell scripts
