@@ -123,8 +123,13 @@ local defaukt_key_bindings = {
   },
   {
     key = "p",
-    mods = utils.merge_mods_with_commands("SHIFT"),
+    mods = utils.merge_mods_with_commands(),
     action = wezterm.action.ShowLauncher
+  },
+  {
+    key = "p",
+    mods = utils.merge_mods_with_commands("SHIFT"),
+    action = wezterm.action.ActivateCommandPalette
   },
   -- Select & Copy & Paste
   {
@@ -143,12 +148,12 @@ local defaukt_key_bindings = {
     action = wezterm.action({ PasteFrom = "PrimarySelection" })
   },
   {
-    key = "c",
-    mods = utils.merge_mods_with_commands("ALT"),
+    key = "Space",
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action.ActivateCopyMode
   },
   {
-    key = "Space",
+    key = "s",
     mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action.QuickSelect
   },
@@ -157,6 +162,11 @@ local defaukt_key_bindings = {
     key = "0",
     mods = utils.merge_mods_with_commands(),
     action = wezterm.action.ResetFontSize
+  },
+  {
+    key = ";",
+    mods = utils.merge_mods_with_commands("SHIFT"),
+    action = wezterm.action.DecreaseFontSize
   },
   {
     key = ";",
@@ -171,18 +181,18 @@ local defaukt_key_bindings = {
   -- Window
   {
     key = "n",
-    mods = utils.merge_mods_with_commands(),
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action.SpawnWindow
   },
   -- Tab
   {
     key = "PageUp",
-    mods = utils.merge_mods_with_commands(),
+    mods = "CTRL",
     action = wezterm.action({ ActivateTabRelative = -1 })
   },
   {
     key = "PageDown",
-    mods = utils.merge_mods_with_commands(),
+    mods = "CTRL",
     action = wezterm.action({ ActivateTabRelative = 1 })
   },
   {
@@ -196,15 +206,16 @@ local defaukt_key_bindings = {
     action = wezterm.action({ CloseCurrentTab = { confirm = true } })
   },
   -- Pane
+  -- ENキーボード用
   {
-    key = "-",
+    key = "_",
     mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } })
   },
+  -- JISキーボード用
   {
-    key = "-",
-    -- CTRL + SHIFT + "-" does not work on Windows
-    mods = utils.merge_mods_with_commands("ALT"),
+    key = "=",
+    mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } })
   },
   {
@@ -252,6 +263,17 @@ local defaukt_key_bindings = {
     mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ RotatePanes = "CounterClockwise" })
   },
+  -- Search
+  {
+    key = "f",
+    mods = utils.merge_mods_with_commands(),
+    action = wezterm.action.Search { CaseInSensitiveString = "" }
+  },
+  {
+    key = "f",
+    mods = utils.merge_mods_with_commands("SHIFT"),
+    action = wezterm.action.Search { Regex = "" }
+  },
   -- Debug
   {
     key = "d",
@@ -295,6 +317,14 @@ return {
     generate_active_tab_key_bindings(),
     generate_spawn_tab_key_bindings(spawn_commands)
   ),
+  quick_select_patterns = {
+    -- URL
+    "https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+",
+    -- IPv4
+    "((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])",
+    -- IPv6
+    "((([0-9a-f]{1,4}:){7}([0-9a-f]{1,4}|:))|(([0-9a-f]{1,4}:){6}(:[0-9a-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9a-f]{1,4}:){5}(((:[0-9a-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9a-f]{1,4}:){4}(((:[0-9a-f]{1,4}){1,3})|((:[0-9a-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9a-f]{1,4}:){3}(((:[0-9a-f]{1,4}){1,4})|((:[0-9a-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9a-f]{1,4}:){2}(((:[0-9a-f]{1,4}){1,5})|((:[0-9a-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9a-f]{1,4}:){1}(((:[0-9a-f]{1,4}){1,6})|((:[0-9a-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9a-f]{1,4}){1,7})|((:[0-9a-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*$"
+  },
   disable_default_key_bindings = true,
 
   -- Multiplexing
