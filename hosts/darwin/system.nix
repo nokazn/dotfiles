@@ -9,6 +9,7 @@
 
   dock = {
     orientation = "left";
+    autohide = false;
   };
 
   finder = {
