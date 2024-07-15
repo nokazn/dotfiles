@@ -123,6 +123,44 @@
     "command": "-cursorWordPartRightSelect",
     "when": "textInputFocus"
   },
+  // Cursor words in terminal
+  {
+    "key": "cmd+ctrl+left",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\u001b[1;5D"
+    },
+    "when": "terminalFocus && !terminalTextSelected"
+  },
+  {
+    "key": "cmd+ctrl+right",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\u001b[1;5C"
+    },
+    "when": "terminalFocus && !terminalTextSelected"
+  },
+  // Fold/Unfold
+  {
+    "key": "shift+cmd+[",
+    "command": "editor.fold",
+    "when": "editorTextFocus && foldingEnabled"
+  },
+  {
+    "key": "alt+cmd+[",
+    "command": "-editor.fold",
+    "when": "editorTextFocus && foldingEnabled"
+  },
+  {
+    "key": "shift+cmd+]",
+    "command": "editor.unfold",
+    "when": "editorTextFocus && foldingEnabled"
+  },
+  {
+    "key": "alt+cmd+]",
+    "command": "-editor.unfold",
+    "when": "editorTextFocus && foldingEnabled"
+  },
   // Go forward/back
   {
     "key": "alt+right",
