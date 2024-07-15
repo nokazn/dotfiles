@@ -32,7 +32,7 @@
     let
       USER = "nokazn";
       users = [
-        { name = "${USER}"; isCi = false; }
+        { name = "nokazn"; isCi = false; }
         # For GitHub Actions
         { name = "runner"; isCi = true; }
       ];

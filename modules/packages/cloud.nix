@@ -9,5 +9,5 @@ with pkgs ; [
   netlify-cli
   nodePackages.vercel
   # TODO: https://github.com/NixOS/nixpkgs/issues/322571
-  # wrangler # A CLI tool designed for folks who are interested in using Cloudflare Workers
+  wrangler # A CLI tool designed for folks who are interested in using Cloudflare Workers
 ]
