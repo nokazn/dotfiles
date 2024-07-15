@@ -52,7 +52,7 @@
   // Languages
 
   // JSON
-  "[JSON][JSONC]": {
+  "[json][jsonc]": {
     "editor.defaultFormatter": "dprint.dprint",
     "editor.formatOnSave": true,
   },
@@ -60,6 +60,7 @@
   // JavaScript/TypeScript
   "[javascript][javascriptreact][typescript][typescriptreact]": {
     "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "never",
       "quickfix.biome": "never",
       "source.organizeImports.biome": "never"
     },
@@ -78,8 +79,8 @@
 
   // Elm
   "[elm]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "elmTooling.elm-ls-vscode"
+    "editor.defaultFormatter": "elmTooling.elm-ls-vscode",
+    "editor.formatOnSave": true
   },
 
   // Svelte
