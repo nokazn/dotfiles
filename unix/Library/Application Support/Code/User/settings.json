@@ -12,7 +12,7 @@
   "editor.autoClosingBrackets": "always", // 括弧閉じを自動で入力
   "editor.bracketPairColorization.enabled": true,
   "editor.cursorSmoothCaretAnimation": "on",
-  "editor.fontFamily": "HackGen Console, HackGen35 Console",
+  "editor.fontFamily": "HackGen Console, HackGenNerd Console, HackGen35 Console",
   "editor.fontSize": 12.5,
   "editor.fontWeight": "bold",
   "editor.guides.bracketPairs": true,
@@ -60,11 +60,11 @@
   // JavaScript/TypeScript
   "[javascript][javascriptreact][typescript][typescriptreact]": {
     "editor.codeActionsOnSave": {
-      "quickfix.biome": "explicit",
-      "source.organizeImports.biome": "explicit"
+      "quickfix.biome": "never",
+      "source.organizeImports.biome": "never"
     },
     "editor.defaultFormatter": "biomejs.biome",
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "editor.inlayHints.enabled": "on"
   },
   "typescript.tsserver.log": "off",
@@ -73,7 +73,7 @@
   // HTML/CSS/SVG
   "[html][css][svg]": {
     "editor.defaultFormatter": "biomejs.biome",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
   },
 
   // Elm

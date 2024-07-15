@@ -6,6 +6,11 @@ local COMMAND_MODS_KEY = "CTRL"
 -- domains for WSL environments
 local WSL_DOMAINS = {
   {
+    name = "WSL:Distrod",
+    distribution = "Distrod",
+    default_cwd = "~"
+  },
+  {
     name = "WSL:Arch",
     distribution = "Arch",
     default_cwd = "~"
@@ -287,7 +292,7 @@ local spawn_commands = generate_spawn_commands()
 return {
   -- font
   font = wezterm.font(
-    "HackGen Console",
+    "HackGenNerd Console",
     {
       weight = "Regular",
       stretch = "Normal",
