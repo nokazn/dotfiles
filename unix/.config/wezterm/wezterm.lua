@@ -201,6 +201,16 @@ local defaukt_key_bindings = {
     action = wezterm.action({ ActivateTabRelative = 1 })
   },
   {
+    key = "LeftArrow",
+    mods = utils.merge_mods_with_commands("ALT"),
+    action = wezterm.action({ ActivateTabRelative = -1 })
+  },
+  {
+    key = "RightArrow",
+    mods = utils.merge_mods_with_commands("ALT"),
+    action = wezterm.action({ ActivateTabRelative = 1 })
+  },
+  {
     key = "t",
     mods = utils.merge_mods_with_commands("SHIFT"),
     action = wezterm.action({ SpawnTab = "CurrentPaneDomain" })
