@@ -15,14 +15,17 @@ lib.attrValues {
     asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
     proto # A pluggable multi`-language version manager
   ];
-  node = with nodePackages;[
-    eslint
-    node-gyp
-    prettier
-    serverless
-    typescript
-    webpack-cli
-  ];
+  node = [
+    fnm
+  ] ++ (with nodePackages;
+    [
+      eslint
+      node-gyp
+      prettier
+      serverless
+      typescript
+      webpack-cli
+    ]);
   js = [
     biome # Toolchain of the web
     bun # Incredibly fast JavaScript runtime, bundler, transpiler and package manager – all in one
@@ -30,7 +33,6 @@ lib.attrValues {
     dprint # Code formatting platform written in Rust
     oxlint # A suite of high-performance tools for JavaScript and TypeScript written in Rust
     turbo # High-performance build system for JavaScript and TypeScript codebases
-    nodejs
   ];
   rust =
     let
