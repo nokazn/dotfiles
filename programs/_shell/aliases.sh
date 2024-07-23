@@ -454,7 +454,7 @@ function re-session-vars() {
 	fi
 }
 
-function pbcopy() {
+function clip() {
 	if _is-wsl; then
 		clip.exe "$@"
 	elif type xsel >/dev/null 2>&1; then
