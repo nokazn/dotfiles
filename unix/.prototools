@@ -1,4 +1,3 @@
-node = "lts"
 yarn = "latest"
 pnpm = "latest"
 terraform = "latest"
