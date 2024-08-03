@@ -22,13 +22,13 @@ let
         sha512 = "bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==";
       };
     };
-    "@jridgewell/sourcemap-codec-1.4.15" = {
+    "@jridgewell/sourcemap-codec-1.5.0" = {
       name = "_at_jridgewell_slash_sourcemap-codec";
       packageName = "@jridgewell/sourcemap-codec";
-      version = "1.4.15";
+      version = "1.5.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.15.tgz";
-        sha512 = "eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==";
+        url = "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.0.tgz";
+        sha512 = "gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==";
       };
     };
     "@jridgewell/trace-mapping-0.3.9" = {
@@ -67,13 +67,13 @@ let
         sha512 = "oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==";
       };
     };
-    "@swc/core-1.6.7" = {
+    "@swc/core-1.7.1" = {
       name = "_at_swc_slash_core";
       packageName = "@swc/core";
-      version = "1.6.7";
+      version = "1.7.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@swc/core/-/core-1.6.7.tgz";
-        sha512 = "BBzORL9qWz5hZqAZ83yn+WNaD54RH5eludjqIOboolFOK/Pw+2l00/H77H4CEBJnzCIBQszsyqtITmrn4evp0g==";
+        url = "https://registry.npmjs.org/@swc/core/-/core-1.7.1.tgz";
+        sha512 = "M4gxJcvzZCH+QQJGVJDF3kT46C05IUPTFcA1wA65WAdg87MDzpr1mwtB/FmPsdcRFRbJIxET6uCsWgubn+KnJQ==";
       };
     };
     "@swc/counter-0.1.3" = {
@@ -85,31 +85,31 @@ let
         sha512 = "e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==";
       };
     };
-    "@swc/helpers-0.5.11" = {
+    "@swc/helpers-0.5.12" = {
       name = "_at_swc_slash_helpers";
       packageName = "@swc/helpers";
-      version = "0.5.11";
+      version = "0.5.12";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.11.tgz";
-        sha512 = "YNlnKRWF2sVojTpIyzwou9XoTNbzbzONwRhOoniEioF1AtaitTvVZblaQRrAzChWQ1bLYyYSWzM18y4WwgzJ+A==";
+        url = "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.12.tgz";
+        sha512 = "KMZNXiGibsW9kvZAO1Pam2JPTDBm+KSHMMHWdsyI/1DbIZjT2A6Gy3hblVXUMEDvUAKq+e0vL0X0o54owWji7g==";
       };
     };
-    "@swc/types-0.1.9" = {
+    "@swc/types-0.1.12" = {
       name = "_at_swc_slash_types";
       packageName = "@swc/types";
-      version = "0.1.9";
+      version = "0.1.12";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@swc/types/-/types-0.1.9.tgz";
-        sha512 = "qKnCno++jzcJ4lM4NTfYifm1EFSCeIfKiAHAfkENZAV5Kl9PjJIyd2yeeVv6c/2CckuLyv2NmRC5pv6pm2WQBg==";
+        url = "https://registry.npmjs.org/@swc/types/-/types-0.1.12.tgz";
+        sha512 = "wBJA+SdtkbFhHjTMYH+dEH1y4VpfGdAc2Kw/LK09i9bXd/K6j6PkDcFCEzb6iVfZMkPRrl/q0e3toqTAJdkIVA==";
       };
     };
-    "@swc/wasm-1.6.7" = {
+    "@swc/wasm-1.7.1" = {
       name = "_at_swc_slash_wasm";
       packageName = "@swc/wasm";
-      version = "1.6.7";
+      version = "1.7.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@swc/wasm/-/wasm-1.6.7.tgz";
-        sha512 = "Mnz9pmfkx0zdrQLMIT81IPnOLjXWeM9njnl9rJHyj+wa7XdfUZzmQAR+JExmkL/iwF2dCHIGkeqNKpx1z5uBsg==";
+        url = "https://registry.npmjs.org/@swc/wasm/-/wasm-1.7.1.tgz";
+        sha512 = "K+o9bzvz6VhPr3E4je1Paz7p8zwNM6QBSlvwhGMFgxGXSb0X3yz0dihU/DUzqHwBmc1QLmN1yE6o7jqMtCJgmg==";
       };
     };
     "@tsconfig/node10-1.0.11" = {
@@ -148,13 +148,13 @@ let
         sha512 = "vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==";
       };
     };
-    "@types/node-20.14.9" = {
+    "@types/node-20.14.12" = {
       name = "_at_types_slash_node";
       packageName = "@types/node";
-      version = "20.14.9";
+      version = "20.14.12";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@types/node/-/node-20.14.9.tgz";
-        sha512 = "06OCtnTXtWOZBJlRApleWndH4JsRVs1pDCc8dLSQp+7PpUpX3ePdHyeNSFTeSe7FtKyQkrlPvHwJOW3SLd8Oyg==";
+        url = "https://registry.npmjs.org/@types/node/-/node-20.14.12.tgz";
+        sha512 = "r7wNXakLeSsGT0H1AU863vS2wa5wBOK4bWMjZz2wj+8nBx+m5PeIn0k8AloSLpRuiwdRQZwarZqHE4FNArPuJQ==";
       };
     };
     "acorn-8.12.1" = {
@@ -697,13 +697,13 @@ let
         sha512 = "on2ZJVVDXRADWE6jnQaX0ioEylzgBpQk8r55NE4wjXW1ZxO+BgDlY6DXwj20i0V8eB4SenDQ00WEaxfiIQPcxg==";
       };
     };
-    "qs-6.12.2" = {
+    "qs-6.12.3" = {
       name = "qs";
       packageName = "qs";
-      version = "6.12.2";
+      version = "6.12.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/qs/-/qs-6.12.2.tgz";
-        sha512 = "x+NLUpx9SYrcwXtX7ob1gnkSems4i/mGZX5SlYxwIau6RrUSODO89TR/XDGGpn5RPWSYIB+aSfuSlV5+CmbTBg==";
+        url = "https://registry.npmjs.org/qs/-/qs-6.12.3.tgz";
+        sha512 = "AWJm14H1vVaO/iNZ4/hO+HyaTehuy9nRqVdkTqlJt0HWvBiBIEXFmb4C0DGeYo3Xes9rrEW+TxHsaigCbN5ICQ==";
       };
     };
     "queue-microtask-1.2.3" = {
@@ -769,13 +769,13 @@ let
         sha512 = "AckIIV90rPDcBcglUwXPF3kg0P0qmPsPXAj6BBEENQE1p5yA1xfmDJzfi1Tappj37Pv2mVbKpL3Z1T+Nn7k1Qw==";
       };
     };
-    "semver-7.6.2" = {
+    "semver-7.6.3" = {
       name = "semver";
       packageName = "semver";
-      version = "7.6.2";
+      version = "7.6.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/semver/-/semver-7.6.2.tgz";
-        sha512 = "FNAIBWCx9qcRhoHcgcJ0gvU7SN1lYU2ZXuSfl04bSC5OpvDHFyJCjdNHomPXxjQlCBU67YW64PzY7/VIEH7F2w==";
+        url = "https://registry.npmjs.org/semver/-/semver-7.6.3.tgz";
+        sha512 = "oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==";
       };
     };
     "set-function-length-1.2.2" = {
@@ -841,13 +841,13 @@ let
         sha512 = "xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==";
       };
     };
-    "typescript-5.5.3" = {
+    "typescript-5.5.4" = {
       name = "typescript";
       packageName = "typescript";
-      version = "5.5.3";
+      version = "5.5.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/typescript/-/typescript-5.5.3.tgz";
-        sha512 = "/hreyEujaB0w76zKo6717l3L0o/qEUtRgdvUBvlkhoWeOVMjMuHNHk0BRBzikzuGDqNmPQbg5ifMEqsHLiIUcQ==";
+        url = "https://registry.npmjs.org/typescript/-/typescript-5.5.4.tgz";
+        sha512 = "Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==";
       };
     };
     "undici-types-5.26.5" = {
@@ -950,7 +950,7 @@ in
       sources."object-inspect-1.13.2"
       sources."opener-1.5.2"
       sources."portfinder-1.0.32"
-      sources."qs-6.12.2"
+      sources."qs-6.12.3"
       sources."requires-port-1.0.0"
       sources."safe-buffer-5.1.2"
       sources."safer-buffer-2.1.2"
@@ -1007,7 +1007,7 @@ in
       sources."queue-microtask-1.2.3"
       sources."reusify-1.0.4"
       sources."run-parallel-1.2.0"
-      sources."semver-7.6.2"
+      sources."semver-7.6.3"
       sources."slash-4.0.0"
       sources."sort-object-keys-1.1.3"
       sources."to-regex-range-5.0.1"
@@ -1033,18 +1033,18 @@ in
     dependencies = [
       sources."@cspotcode/source-map-support-0.8.1"
       sources."@jridgewell/resolve-uri-3.1.2"
-      sources."@jridgewell/sourcemap-codec-1.4.15"
+      sources."@jridgewell/sourcemap-codec-1.5.0"
       sources."@jridgewell/trace-mapping-0.3.9"
-      sources."@swc/core-1.6.7"
+      sources."@swc/core-1.7.1"
       sources."@swc/counter-0.1.3"
-      sources."@swc/helpers-0.5.11"
-      sources."@swc/types-0.1.9"
-      sources."@swc/wasm-1.6.7"
+      sources."@swc/helpers-0.5.12"
+      sources."@swc/types-0.1.12"
+      sources."@swc/wasm-1.7.1"
       sources."@tsconfig/node10-1.0.11"
       sources."@tsconfig/node12-1.0.11"
       sources."@tsconfig/node14-1.0.3"
       sources."@tsconfig/node16-1.0.4"
-      sources."@types/node-20.14.9"
+      sources."@types/node-20.14.12"
       sources."acorn-8.12.1"
       sources."acorn-walk-8.3.3"
       sources."arg-4.1.3"
@@ -1052,7 +1052,7 @@ in
       sources."diff-4.0.2"
       sources."make-error-1.3.6"
       sources."tslib-2.6.3"
-      sources."typescript-5.5.3"
+      sources."typescript-5.5.4"
       sources."undici-types-5.26.5"
       sources."v8-compile-cache-lib-3.0.1"
       sources."yn-3.1.1"
