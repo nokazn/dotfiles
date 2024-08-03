@@ -17,6 +17,10 @@
     ShowStatusBar = true;
   };
 
+  menuExtraClock = {
+    ShowSeconds = true;
+  };
+
   NSGlobalDomain = {
     AppleInterfaceStyle = "Dark";
     AppleShowAllFiles = true;
