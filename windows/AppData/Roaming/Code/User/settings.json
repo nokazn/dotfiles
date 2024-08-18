@@ -48,6 +48,12 @@
   "customWindowZoom.zoomLevelChangeValue": 0.125,
   "window.confirmBeforeClose": "keyboardOnly",
 
+  "workbench.editor.customLabels.patterns": {
+    "**/index.{html,{,c,m}{js,ts}{,x}}": "${dirname}.${extname}",
+    "**/{mod,lib}.{rs,{,c,m}{js,ts}{,x}}": "${dirname}.${extname}",
+    "**/{page,layout,template,route,actions,hooks,components,utils,types}.{js,ts,jsx,tsx}": "${dirname}/${filename}.${extname}",
+  },
+
   // ----------------------------------------------------------------------------------------------------
   // Search
   "search.exclude": {
