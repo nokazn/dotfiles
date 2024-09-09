@@ -52,6 +52,7 @@ with pkgs; lib.attrValues {
     eza # A modern replacement for the venerable file-listing command-line program
     fd # A simple, fast and user-friendly alternative to 'find'
     ripgrep # An interactive replacer for ripgrep that makes it easy to find and replace across files on the command line
+    silver-searcher # A code-searching tool similar to ack, but faster
   ];
   platform =
     lib.optionals (!stdenv.isDarwin) [
