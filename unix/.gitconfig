@@ -110,7 +110,7 @@
 	ls2 = log --oneline --pretty=default -n 2
 	ls3 = log --oneline --pretty=default -n 3
 	ls-files-untracked = ls-files --others --exclude-standard
-	openpr = "!f() { gh pr view \"$(git log --merges --reverse --oneline --ancestry-path $1..\"$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')\" | grep 'Merge pull request' | head -1 | awk '{ print $5 }' )\" --web; }; f"
+	openpr = "!f() { gh pr view \"$(git log --merges --reverse --oneline --ancestry-path $1.."$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')" | grep 'Merge pull request' | head -1 | awk '{ print $5 }' )\" --web; }; f"
 	parent-branches = !git show-branch | grep '*' | grep -v "$(git symbolic-ref --short HEAD)" | awk -F'[]~^[]' '{print $2}' | uniq # https://qiita.com/upinetree/items/0b74b08b64442f0a89b9
 	pl = !git pull origin $(git symbolic-ref --short HEAD)  # 同名のリモートブランチの内容を現在のブランチに取り込む
 	ps = !git push origin $(git symbolic-ref --short HEAD)  # 現在のブランチの内容を同名のリモートブランチに push する
