@@ -1,0 +1,22 @@
+name: update-nixos-version-issue
+
+on:
+  schedule:
+    # 毎年5月と11月の1日の00:00に実行
+    - cron: '0 0 1 5,11 *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  create-updating-nixos-version-issue:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          update_existing: true
