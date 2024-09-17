@@ -32,7 +32,8 @@
     let
       USER = "nokazn";
       users = [
-        { name = USER; isCi = false; }
+        # HACK: this line is replaced by the real user name
+        { name = "${USER}"; isCi = false; }
         # For GitHub Actions
         { name = "runner"; isCi = true; }
       ];
