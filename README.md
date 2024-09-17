@@ -103,6 +103,28 @@ After installing wsl-hello-sudo, you need to modify `/etc/pam.d/sudo`.
 
 See [wsl-hello-sudo document for configuration](https://github.com/nullpo-head/WSL-Hello-sudo#configuration) for details.
 
+### Set up sudo with Touch ID for macOS
+
+```sh
+sudo chmod +w /etc/pam.d/sudo
+sudo vim /etc/pam.d/sudo
+```
+
+```diff
+  # sudo: auth account password session
++ auth       sufficient     pam_tid.so
+  auth       include        sudo_local
+  auth       sufficient     pam_smartcard.so
+  auth       required       pam_opendirectory.so
+  account    required       pam_permit.so
+  password   required       pam_deny.so
+  session    required       pam_permit.so
+```
+
+```sh
+sudo chmod -w /etc/pam.d/sudo
+```
+
 ### Import a GPG key
 
 ```sh
