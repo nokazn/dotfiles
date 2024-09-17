@@ -21,7 +21,7 @@
     "keybase"
     "keycastr"
     "lastfm"
-    "logi-options-plus"
+    "logi-options+"
     "notion"
     "slack"
     "spotify"
