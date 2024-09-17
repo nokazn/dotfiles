@@ -32,11 +32,12 @@
     let
       USER = "nokazn";
       users = [
-        { name = "nokazn"; isCi = false; }
+        { name = USER; isCi = false; }
         # For GitHub Actions
         { name = "runner"; isCi = true; }
       ];
       nix = {
+        # version = "24.05";
         version = "23.11";
       };
       homeManagerConfigurations = (user: home: {

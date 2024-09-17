@@ -13,5 +13,8 @@
 
   homebrew = if meta.isCi then { } else import ./homebrew.nix { };
 
-  system.defaults = import ./system.nix { };
+  system = {
+    stateVersion = 5;
+    defaults = import ./system.nix { };
+  };
 }
