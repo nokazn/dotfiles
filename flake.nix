@@ -37,8 +37,7 @@
         { name = "runner"; isCi = true; }
       ];
       nix = {
-        # version = "24.05";
-        version = "23.11";
+        version = "24.05";
       };
       homeManagerConfigurations = (user: home: {
         home-manager = {
