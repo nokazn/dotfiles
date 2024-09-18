@@ -225,3 +225,7 @@ dist
 debug
 
 .direnv
+
+# Python
+lib/python*
+bin
