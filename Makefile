@@ -33,7 +33,7 @@ add-tools/wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
 
 .PHONY: remove-tools/nix/user
 remove-tools/nix/user: _print-goodbye # Uninstall nix for user environment (See https://nixos.org/manual/nix/stable/installation/uninstall.html#uninstalling-nix)
-	$(NIX) shell github:nix-community/home-manager/release-23.11 \
+	$(NIX) shell github:nix-community/home-manager/release-24.05 \
 		--command sh -c "home-manager uninstall"
 	rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs,.config/nix,.config/home-manager}
 	sudo rm -rf /nix /etc/profiles/per-users
