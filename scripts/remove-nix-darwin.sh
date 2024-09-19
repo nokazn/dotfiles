@@ -6,10 +6,10 @@ set -u -o pipefail
 # See https://nixos.org/manual/nix/stable/installation/uninstall.html#uninstalling-nix
 function remove_nix_darwin() {
     if command -v nix >/dev/null; then
-        nix --extra-experimental-features 'nix-command flakes' shell github:LnL7/nix-darwin#darwin-uninstaller \
-            --command darwin-uninstaller
         nix --extra-experimental-features 'nix-command flakes' shell github:nix-community/home-manager \
             --command sh -c "yes | sudo home-manager uninstall"
+        nix --extra-experimental-features 'nix-command flakes' shell github:LnL7/nix-darwin#darwin-uninstaller \
+            --command darwin-uninstaller
     else
         echo "⚠️ Nix is not installed."
     fi
