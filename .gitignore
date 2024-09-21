@@ -4,3 +4,4 @@
 .aws/credentials
 .ssh/*
 !.ssh/config
+!.vscode/extensions.bk.json
