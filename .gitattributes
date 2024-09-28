@@ -1,1 +1,11 @@
 **/Code/User/settings.json filter=ignore-window-zoom-level
+# You need to add the following to your .git/config file:
+# [filter "ignore-window-zoom-level"]
+# 	smudge = cat
+# 	clean = sed -E -e 's/\"window\\.zoomLevel\": .+/\"window.zoomLevel\": 0,/'
+
+flake.nix filter=ignore-flake-username
+# You need to add the following to your .git/config file:
+# [filter "ignore-flake-username"]
+# 	smudge = cat
+# 	clean = sed -E -e 's/name\\s=\\s\".+\"(.+)false/name = \"${USER}\"\\1false/'
