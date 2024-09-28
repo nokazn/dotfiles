@@ -23,5 +23,10 @@
   "[lua]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "sumneko.lua"
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#371B6D",
+    "titleBar.activeBackground": "#4D2698",
+    "titleBar.activeForeground": "#FCFCFE"
   }
 }

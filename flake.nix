@@ -32,10 +32,10 @@
     let
       USER = "nokazn";
       users = [
-        # HACK: this line is replaced by the real user name
-        { name = "${USER}"; isCi = false; }
         # For GitHub Actions
         { name = "runner"; isCi = true; }
+        # HACK: this line is replaced by the real user name as fallback
+        { name = "${USER}"; isCi = false; }
       ];
       nix = {
         version = "24.05";
