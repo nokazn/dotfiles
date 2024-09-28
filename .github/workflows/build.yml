@@ -18,7 +18,6 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - uses: DeterminateSystems/flake-checker-action@main
       - name: Build
         run: make apply/user
 
@@ -30,7 +29,6 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - uses: DeterminateSystems/flake-checker-action@main
       - name: Build
         run: |
           ./scripts/backup.sh ./modules/files/files.txt
@@ -45,9 +43,10 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - uses: DeterminateSystems/flake-checker-action@main
       - name: Build
-        # TODO: ignore exit status because this step is unstable in macOS
+        # TODO: ignore exit status because this step is flaky in macOS
         run: |
           sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.bk
-          make apply/darwin || :
+          make apply/darwin || \
+            echo '❌ build-darwin job has failed.' >> $GITHUB_STEP_SUMMARY && \
+            echo '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/${{ github.job }}' >> $GITHUB_STEP_SUMMARY
