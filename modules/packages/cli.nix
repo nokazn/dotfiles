@@ -50,6 +50,7 @@ with pkgs; lib.attrValues {
   alternative = [
     bat # A cat(1) clone with syntax highlighting and Git integration
     colordiff # Compare FILES line by line.hto
+    difftastic # A syntax-aware diff
     eza # A modern replacement for the venerable file-listing command-line program
     fd # A simple, fast and user-friendly alternative to 'find'
     ripgrep # An interactive replacer for ripgrep that makes it easy to find and replace across files on the command line
