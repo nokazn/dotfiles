@@ -15,6 +15,9 @@
 	excludesFile = ~/.config/git/ignore
 	attributesFile = ~/.config/git/attributes
 
+[diff]
+	external = difft
+
 [init]
 	defaultBranch = main
 
@@ -133,7 +136,7 @@
 	remote-set-url-me = !git remote set-url origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
 	res = restore
 	s = status --show-stash
-	sh = show
+	sh = show --ext-diff
 	ss = status --show-stash -s
 	st = stash
 	stm = stash -m
@@ -155,5 +158,9 @@
 	line-numbers = true
 	side-by-side = true
 
+[difftool]
+    # Run the difftool immediately, don't ask 'are you sure' each time.
+    prompt = false
+
 [http]
-	sslVerify = false
+		sslVerify = false
