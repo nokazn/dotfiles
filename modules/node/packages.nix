@@ -94,13 +94,13 @@ let
         sha512 = "UoKGxQ3r5kYI9dALKJapMmuK+1zWM/H17Z1+iwnNmzcJRnfFuevZs375TA5rW31pu4BS4NoSy1fRsexDXfWn5w==";
       };
     };
-    "@swc/types-0.1.12" = {
+    "@swc/types-0.1.13" = {
       name = "_at_swc_slash_types";
       packageName = "@swc/types";
-      version = "0.1.12";
+      version = "0.1.13";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@swc/types/-/types-0.1.12.tgz";
-        sha512 = "wBJA+SdtkbFhHjTMYH+dEH1y4VpfGdAc2Kw/LK09i9bXd/K6j6PkDcFCEzb6iVfZMkPRrl/q0e3toqTAJdkIVA==";
+        url = "https://registry.npmjs.org/@swc/types/-/types-0.1.13.tgz";
+        sha512 = "JL7eeCk6zWCbiYQg2xQSdLXQJl8Qoc9rXmG2cEKvHe3CKwMHwHGpfOb8frzNLmbycOo6I51qxnLnn9ESf4I20Q==";
       };
     };
     "@swc/wasm-1.7.28" = {
@@ -148,13 +148,13 @@ let
         sha512 = "vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==";
       };
     };
-    "@types/node-22.6.1" = {
+    "@types/node-22.7.4" = {
       name = "_at_types_slash_node";
       packageName = "@types/node";
-      version = "22.6.1";
+      version = "22.7.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@types/node/-/node-22.6.1.tgz";
-        sha512 = "V48tCfcKb/e6cVUigLAaJDAILdMP0fUW6BidkPK4GpGjXcfbnoHasCZDwz3N3yVt5we2RHm4XTQCpv0KJz9zqw==";
+        url = "https://registry.npmjs.org/@types/node/-/node-22.7.4.tgz";
+        sha512 = "y+NPi1rFzDs1NdQHHToqeiX2TIS79SWEAw9GYhkkx8bD0ChpfqC+n2j5OXOCpzfojBEBt6DnEnnG9MY0zk1XLg==";
       };
     };
     "acorn-8.12.1" = {
@@ -1038,13 +1038,13 @@ in
       sources."@swc/core-1.7.28"
       sources."@swc/counter-0.1.3"
       sources."@swc/helpers-0.5.13"
-      sources."@swc/types-0.1.12"
+      sources."@swc/types-0.1.13"
       sources."@swc/wasm-1.7.28"
       sources."@tsconfig/node10-1.0.11"
       sources."@tsconfig/node12-1.0.11"
       sources."@tsconfig/node14-1.0.3"
       sources."@tsconfig/node16-1.0.4"
-      sources."@types/node-22.6.1"
+      sources."@types/node-22.7.4"
       sources."acorn-8.12.1"
       sources."acorn-walk-8.3.4"
       sources."arg-4.1.3"
