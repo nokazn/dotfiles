@@ -44,7 +44,7 @@ in
   apt-install = "apt install --no-install-recommends";
   apt-purge = "apt --purge remove";
   dc = "docker";
-  dcc = "docker-compose";
+  dcc = "docker compose";
   diff = "colordiff";
   dotfiles = "cd ${DOTFILES}";
   hm = "home-manager";
@@ -60,4 +60,5 @@ in
   tf = "terraform";
   tarx = "tar -xvz";
   y = "yarn";
+
 } // wslAliases
