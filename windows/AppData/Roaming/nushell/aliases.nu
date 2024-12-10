@@ -6,5 +6,5 @@ alias branch = git symbolic-ref --short HEAD
 alias dotfiles = cd ~\dotfiles
 alias ssh-keygen-rsa = ssh-keygen -t rsa -b 4096 -C
 alias dc = docker
-alias dcc = docker-compose
+alias dcc = docker compose
 alias tf = terraform

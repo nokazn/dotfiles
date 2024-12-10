@@ -44,7 +44,7 @@ in
   apt-install = "apt install --no-install-recommends";
   apt-purge = "apt --purge remove";
   dc = "docker";
-  dcc = "docker-compose";
+  dcc = "docker compose";
   diff = "colordiff";
   dotfiles = "cd ${DOTFILES}";
   hm = "home-manager";
@@ -60,4 +60,11 @@ in
   tf = "terraform";
   tarx = "tar -xvz";
   y = "yarn";
+
+  dball = "mysql -uroot -h 127.0.0.1 -P 3307 -p tunecorejapan -A -ppassword";
+  tailfsite = "docker exec tcj-ap-server tail -f /var/log/tunecorejapan/site/error/current";
+  tailfadmin = "docker exec tcj-ap-server tail -f /var/log/tunecorejapan/admin/error/current";
+  tailfgo = "docker exec tcj-go-server tail -f /var/log/tunecorejapan_go/site/error/current";
+  tailflinkcore = "docker exec tcj-go-server tail -f /var/log/tunecorejapan_go/linkcore/error/current";
+  tailfdynamo = "docker exec tcj-go-server tail -f /var/log/tunecorejapan_go/dynaprox/error/current";
 } // wslAliases
