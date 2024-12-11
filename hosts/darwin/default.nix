@@ -1,4 +1,4 @@
-{ user, meta, ... }:
+{ user, ... }:
 
 {
   # necessary for nix-darwin
@@ -11,7 +11,7 @@
     };
   };
 
-  homebrew = if meta.isCi then { } else import ./homebrew.nix { };
+  homebrew = if user.isCi then { } else import ./homebrew.nix { };
 
   system = {
     stateVersion = 5;

@@ -6,6 +6,9 @@ PATH_SCRIPT := ./unix/.path.sh
 NIX := nix --extra-experimental-features 'nix-command flakes'
 SHELL_FILES := $(shell find . -type f | grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)")
 NIX_FILES := $(shell find . -type f | grep -e "\.nix$$")
+USERNAME := $(shell whoami)
+HOSTNAME := $(shell uname -n)
+
 .DEFAULT_GOAL := help
 
 # init ----------------------------------------------------------------------------------------------------
@@ -91,12 +94,13 @@ _uninstall/asdf-langs: # Uninstall languages by asdf
 
 # packages ----------------------------------------------------------------------------------------------------
 
-.PHONY: apply/_inject-user
-apply/_inject-user: # Inject user environment
-	perl -pi -e  's/"\$${USER}"/"$$ENV{USER}"/g' ./flake.nix
+.PHONY: apply/_inject-environment
+apply/_inject-environment: # Inject user environment variables to flake.nix
+	perl -pi -e  's/"\$${USERNAME}"/"$(USERNAME)"/g' ./flake.nix;
+	perl -pi -e  's/"\$${HOSTNAME}"/"$(HOSTNAME)"/g' ./flake.nix;
 
 .PHONY: apply/user
-apply/user: apply/_inject-user # Run `home-manager switch` for user environment
+apply/user: apply/_inject-environment # Run `home-manager switch` for user environment
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
 	if [[ $$(uname -r) =~ microsoft ]]; then \
 		source $(PATH_SCRIPT) && $(NIX) run \
@@ -108,11 +112,11 @@ apply/user: apply/_inject-user # Run `home-manager switch` for user environment
 	@echo "✅ home-manager has been applied successfully!"
 
 .PHONY: apply/darwin
-apply/darwin: apply/_inject-user # Run `nix-darwin switch`
+apply/darwin: apply/_inject-environment # Run `nix-darwin switch`
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
 	if [[ $$(arch) =~ arm64 ]]; then \
 		source $(PATH_SCRIPT) && $(NIX) run \
-			nix-darwin -- switch --flake .#"\"aarch64-darwin-$${USER}\""; \
+		nix-darwin -- switch --flake .; \
 	else \
 		source $(PATH_SCRIPT) && $(NIX) run \
 			nix-darwin -- switch --flake .#"\"x86_64-darwin-$${USER}"\"; \

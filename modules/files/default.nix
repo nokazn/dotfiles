@@ -1,4 +1,4 @@
-{ pkgs, lib, meta, ... }:
+{ pkgs, lib, user, ... }:
 
 let
   fileSourceList =
@@ -25,7 +25,7 @@ let
           (lib.splitString "\n" files);
       onChange = file:
         (lib.optionalString
-          (!meta.isCi)
+          (!user.isCi)
           (if pkgs.stdenv.isDarwin then
             ''
               /usr/bin/sudo /bin/chmod -h +w '${file}'

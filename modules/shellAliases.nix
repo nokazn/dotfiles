@@ -1,9 +1,9 @@
-{ meta, ... }:
+{ user, ... }:
 
 let
   DOTFILES = "~/dotfiles";
   wslAliases =
-    if meta.isWsl then
+    if user.isWsl then
       {
         "explorer.exe" = "/mnt/c/Windows/explorer.exe";
         "bash.exe" = "/mnt/c/Windows/system32/bash.exe";
