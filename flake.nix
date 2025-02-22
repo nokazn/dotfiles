@@ -31,12 +31,11 @@
     }:
     let
       USER = "nokazn";
-      users = [
-        # For GitHub Actions
-        { name = "runner"; isCi = true; }
-        # HACK: this line is replaced by the real user name as fallback
-        { name = "${USER}"; isCi = false; }
-      ];
+      # username in GitHub Actions
+      CI_USER = "runner";
+      # this line is replaced by the real user name as fallback
+
+      HOST = "${HOST}";
       nix = {
         version = "24.05";
       };
@@ -95,42 +94,30 @@
       # - darwin-rebuild switch .#${system}-runner
       darwinConfigurations =
         let
-          systems = [ "aarch64-darwin" "x86_64-darwin" ];
-          contextGenerators = map
-            (system: user: ({
-              inherit system;
-              name = system + "-" + user.name;
-              user = { inherit (user) name; };
-              meta = {
-                inherit (user) isCi;
+          system = "aarch64-darwin";
+          meta = rec {
+            user = {
+              name = "${USER}";
+            };
+            isCi = user.name == "${CI_USER}";
                 isWsl = false;
               };
-            }))
-            systems;
-          contexts = nixpkgs.lib.flatten (
-            map (generator: map generator users) contextGenerators
-          );
-          generateConfiguration = (context:
-            {
-              name = context.name;
-              value = with context; nix-darwin.lib.darwinSystem rec {
+        in
+        {
+          ${HOST} = nix-darwin.lib.darwinSystem rec {
                 inherit system;
                 pkgs = nixpkgs-darwin.legacyPackages.${system};
                 modules = [
                   ./hosts/darwin
                   home-manager.darwinModules.home-manager
-                  (homeManagerConfigurations user (import ./home/darwin.nix {
-                    inherit pkgs nix user meta;
+              (homeManagerConfigurations meta.user (import ./home/darwin.nix {
+                inherit pkgs nix meta;
                     lib = pkgs.lib;
                   }))
                 ];
-                specialArgs = { inherit user nix meta; };
+            specialArgs = { inherit nix meta; };
+          };
               };
-            });
-        in
-        nixpkgs.lib.listToAttrs
-          (builtins.map generateConfiguration contexts);
-
     } // (flake-utils.lib.eachDefaultSystem
       (system:
       let
