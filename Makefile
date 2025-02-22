@@ -6,7 +6,7 @@ PATH_SCRIPT := ./unix/.path.sh
 NIX := nix --extra-experimental-features 'nix-command flakes'
 SHELL_FILES := $(shell find . -type f | grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)")
 NIX_FILES := $(shell find . -type f | grep -e "\.nix$$")
-HOST := $(shell scutil --get LocalHostName)
+HOST := $(shell if command -v scutil > /dev/null; then scutil --get LocalHostName; else hostname; fi)
 .DEFAULT_GOAL := help
 
 # init ----------------------------------------------------------------------------------------------------
