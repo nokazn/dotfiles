@@ -30,16 +30,20 @@
     , ...
     }:
     let
-      USER = "nokazn";
-      # username in GitHub Actions
-      CI_USER = "runner";
+      USER = "runner";
       # this line is replaced by the real user name as fallback
-
+      user = {
+        # this line is replaced by the real user name as fallback
+        name = "${USER}";
+      };
+      # whether username is the one in GitHub Actions
+      isCi = user.name == "runner";
+      # this line is replaced by the real user name as fallback
       HOST = "${HOST}";
       nix = {
         version = "24.05";
       };
-      homeManagerConfigurations = (user: home: {
+      homeManagerConfigurations = (home: {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
@@ -56,40 +60,24 @@
       # - home-manager switch .#runner-wsl
       homeConfigurations =
         let
-          meta = rec {
-            user = {
-              # this line is replaced by the real user name as fallback
-              name = "${USER}";
-            };
-            isCi = user.name == "${CI_USER}";
-          };
-          contexts = [
+          generateConfiguration = ({ isWsl }:
             {
-              name = meta.user.name;
-              meta = { inherit (meta) isCi; isWsl = false; };
-            }
-            {
-              name = meta.user.name + "-wsl";
-              meta = { inherit (meta) isCi; isWsl = true; };
-            }
-          ];
-          generateConfiguration = (context:
-            {
-              name = context.name;
+              name = user.name + (if isWsl then "-wsl" else "");
               value = home-manager.lib.homeManagerConfiguration {
                 pkgs = nixpkgs.legacyPackages.x86_64-linux;
                 modules = [
                   ./home/linux.nix
                 ];
-                extraSpecialArgs = {
-                  inherit nix meta;
-                };
+                extraSpecialArgs = { inherit nix; meta = { inherit user isWsl isCi; }; };
               };
             }
           );
         in
         nixpkgs.lib.listToAttrs
-          (builtins.map (generateConfiguration) contexts);
+          (builtins.map generateConfiguration [
+            { isWsl = true; }
+            { isWsl = false; }
+          ]);
 
       # For darwin
       # - darwin-rebuild switch .#${system}-$(USER)
@@ -98,12 +86,8 @@
       darwinConfigurations =
         let
           system = "aarch64-darwin";
-          meta = rec {
-            user = {
-              # this line is replaced by the real user name as fallback
-              name = "${USER}";
-            };
-            isCi = user.name == "${CI_USER}";
+          meta = {
+            inherit user isCi;
             isWsl = false;
           };
         in
@@ -114,7 +98,7 @@
             modules = [
               ./hosts/darwin
               home-manager.darwinModules.home-manager
-              (homeManagerConfigurations meta.user (import ./home/darwin.nix {
+              (homeManagerConfigurations (import ./home/darwin.nix {
                 inherit pkgs nix meta;
                 lib = pkgs.lib;
               }))
