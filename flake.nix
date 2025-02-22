@@ -56,20 +56,23 @@
       # - home-manager switch .#runner-wsl
       homeConfigurations =
         let
-          generateContext = (user:
-            map (context: context // { user = { inherit (user) name; }; })
-              ([
-                {
-                  name = user.name;
-                  meta = { inherit (user) isCi; isWsl = false; };
-                }
-                {
-                  name = user.name + "-wsl";
-                  meta = { inherit (user) isCi; isWsl = true; };
-                }
-              ])
-          );
-          contexts = nixpkgs.lib.lists.flatten (map generateContext users);
+          meta = rec {
+            user = {
+              # this line is replaced by the real user name as fallback
+              name = "${USER}";
+            };
+            isCi = user.name == "${CI_USER}";
+          };
+          contexts = [
+            {
+              name = meta.user.name;
+              meta = { inherit (meta) isCi; isWsl = false; };
+            }
+            {
+              name = meta.user.name + "-wsl";
+              meta = { inherit (meta) isCi; isWsl = true; };
+            }
+          ];
           generateConfiguration = (context:
             {
               name = context.name;
@@ -78,8 +81,8 @@
                 modules = [
                   ./home/linux.nix
                 ];
-                extraSpecialArgs = with context; {
-                  inherit nix user meta;
+                extraSpecialArgs = {
+                  inherit nix meta;
                 };
               };
             }
@@ -97,27 +100,28 @@
           system = "aarch64-darwin";
           meta = rec {
             user = {
+              # this line is replaced by the real user name as fallback
               name = "${USER}";
             };
             isCi = user.name == "${CI_USER}";
-                isWsl = false;
-              };
+            isWsl = false;
+          };
         in
         {
           ${HOST} = nix-darwin.lib.darwinSystem rec {
-                inherit system;
-                pkgs = nixpkgs-darwin.legacyPackages.${system};
-                modules = [
-                  ./hosts/darwin
-                  home-manager.darwinModules.home-manager
+            inherit system;
+            pkgs = nixpkgs-darwin.legacyPackages.${system};
+            modules = [
+              ./hosts/darwin
+              home-manager.darwinModules.home-manager
               (homeManagerConfigurations meta.user (import ./home/darwin.nix {
                 inherit pkgs nix meta;
-                    lib = pkgs.lib;
-                  }))
-                ];
+                lib = pkgs.lib;
+              }))
+            ];
             specialArgs = { inherit nix meta; };
           };
-              };
+        };
     } // (flake-utils.lib.eachDefaultSystem
       (system:
       let
