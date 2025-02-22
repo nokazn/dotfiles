@@ -1,4 +1,4 @@
-{ pkgs, lib, user, nix, meta, ... }:
+{ pkgs, lib, nix, meta, ... }:
 
 let
   args = { inherit pkgs lib meta; };
@@ -7,8 +7,8 @@ let
 in
 {
   home = {
-    username = user.name;
-    homeDirectory = "/home/${user.name}";
+    username = meta.user.name;
+    homeDirectory = "/home/${meta.user.name}";
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
     # when a new Home Manager release introduces backwards
