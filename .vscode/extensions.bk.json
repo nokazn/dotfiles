@@ -569,6 +569,14 @@
   },
   {
     "identifier": {
+      "id": "vscode.terminal-suggest"
+    },
+    "preRelease": false,
+    "version": "1.0.1",
+    "pinned": false
+  },
+  {
+    "identifier": {
       "id": "vscode.testing-editor-contributions"
     },
     "version": "1.0.0",
@@ -733,6 +741,26 @@
   },
   {
     "identifier": {
+      "id": "actionforge.actionforge",
+      "uuid": "e9969f21-919b-4384-9dfd-cb222b425ece"
+    },
+    "preRelease": false,
+    "version": "0.9.84",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "adpyke.vscode-sql-formatter",
+      "uuid": "ac70a31d-d9ab-417b-b259-baf7cd9d6cb0"
+    },
+    "preRelease": false,
+    "version": "1.4.4",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
       "id": "albymor.increment-selection",
       "uuid": "3fe4660f-1dcb-47d4-8f7e-1a22a16b2d5e"
     },
@@ -779,8 +807,18 @@
       "id": "astro-build.astro-vscode",
       "uuid": "1fbbc8b0-7432-4b7e-8774-3336151da2f3"
     },
-    "version": "2.8.5",
     "preRelease": false,
+    "version": "2.15.4",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "asuka.insertnumbers",
+      "uuid": "1bd4f828-df27-4316-952d-2d89c42e6b16"
+    },
+    "preRelease": false,
+    "version": "0.9.1",
     "pinned": false,
     "installed": true
   },
@@ -791,16 +829,6 @@
     },
     "preRelease": false,
     "version": "0.5.0",
-    "pinned": false,
-    "installed": true
-  },
-  {
-    "identifier": {
-      "id": "b4dm4n.nixpkgs-fmt",
-      "uuid": "dee02e97-562f-4c72-8626-0566e7e522f2"
-    },
-    "version": "0.0.1",
-    "preRelease": false,
     "pinned": false,
     "installed": true
   },
@@ -856,16 +884,6 @@
   },
   {
     "identifier": {
-      "id": "biomejs.biome",
-      "uuid": "2c992d35-3965-4369-856e-fdfbb0af2ce2"
-    },
-    "preRelease": false,
-    "version": "2.2.2",
-    "pinned": false,
-    "installed": true
-  },
-  {
-    "identifier": {
       "id": "bradgashler.htmltagwrap",
       "uuid": "c16f95f6-9b42-4a24-9bf4-245d4ea54fc5"
     },
@@ -881,6 +899,26 @@
     },
     "version": "0.10.5",
     "preRelease": false,
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "bradymholt.pgformatter",
+      "uuid": "849ffb6c-e755-4e6e-adc2-c33eaaf0d0fc"
+    },
+    "preRelease": false,
+    "version": "1.28.1",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "brettm12345.nixfmt-vscode",
+      "uuid": "1aa812d9-007d-46e3-ae73-91210cf36115"
+    },
+    "preRelease": false,
+    "version": "0.0.1",
     "pinned": false,
     "installed": true
   },
@@ -970,17 +1008,7 @@
       "uuid": "583b2b34-2c1e-4634-8c0b-0b82e283ea3a"
     },
     "preRelease": false,
-    "version": "2.4.4",
-    "pinned": false,
-    "installed": true
-  },
-  {
-    "identifier": {
-      "id": "denoland.vscode-deno",
-      "uuid": "91881318-cfd0-4905-adb7-f4e431ca1ead"
-    },
-    "version": "3.36.0",
-    "preRelease": false,
+    "version": "3.0.10",
     "pinned": false,
     "installed": true
   },
@@ -989,8 +1017,8 @@
       "id": "dprint.dprint",
       "uuid": "a71f21fc-951b-4829-92f5-ba423b77109f"
     },
-    "version": "0.16.0",
     "preRelease": false,
+    "version": "0.16.3",
     "pinned": false,
     "installed": true
   },
@@ -1020,12 +1048,11 @@
       "uuid": "4de763bd-505d-4978-9575-2b7696ecf94e"
     },
     "preRelease": false,
-    "version": "15.5.1",
+    "version": "16.3.2",
     "pinned": false,
     "installed": true,
     "state": {
-      "gitlens:views:welcome:visible": false,
-      "gitlens:synced:version": "15.5.1"
+      "gitlens:synced:version": "16.3.2"
     }
   },
   {
@@ -1055,6 +1082,26 @@
     },
     "preRelease": false,
     "version": "10.1.0",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "fcrespo82.markdown-table-formatter",
+      "uuid": "db9e305f-2d5a-44a5-97f7-91d4f2199a81"
+    },
+    "preRelease": false,
+    "version": "3.0.0",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "fireside21.cshtml",
+      "uuid": "24fc5c70-edac-4484-9c8f-3feb012e40db"
+    },
+    "preRelease": false,
+    "version": "0.1.3",
     "pinned": false,
     "installed": true
   },
@@ -1104,7 +1151,7 @@
       "uuid": "69ddd764-339a-4ecc-97c1-9c4ece58e36d"
     },
     "preRelease": false,
-    "version": "0.96.0",
+    "version": "0.104.1",
     "pinned": false,
     "installed": true,
     "state": {
@@ -1217,7 +1264,7 @@
       "uuid": "d95cb424-7a5a-4e08-9698-107d6fd590cf"
     },
     "preRelease": false,
-    "version": "2.17.5",
+    "version": "2.18.1",
     "pinned": false,
     "installed": true
   },
@@ -1263,6 +1310,26 @@
   },
   {
     "identifier": {
+      "id": "jrieken.vscode-pr-pinger",
+      "uuid": "4ea1571f-9bf1-43d9-aa81-0018435c351f"
+    },
+    "preRelease": false,
+    "version": "0.0.6",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "kaiwood.center-editor-window",
+      "uuid": "02152492-08a6-4c83-a1a7-b077733bdd7c"
+    },
+    "preRelease": false,
+    "version": "2.3.0",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
       "id": "kamadorueda.alejandra",
       "uuid": "90c308b2-fb23-42d4-a902-c7a56b62fe5a"
     },
@@ -1283,11 +1350,41 @@
   },
   {
     "identifier": {
+      "id": "koichisasada.vscode-rdbg",
+      "uuid": "24c6dcf1-6c66-4c4e-be43-d48d0d9c5a41"
+    },
+    "preRelease": false,
+    "version": "0.2.2",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
       "id": "kuscamara.electron",
       "uuid": "975d187d-7d95-4292-92ef-ad9e8f083ca3"
     },
     "version": "0.2.6",
     "preRelease": false,
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "luqimin.tiny-light",
+      "uuid": "327262c5-9b97-472c-805c-4f0fe8251e57"
+    },
+    "preRelease": false,
+    "version": "2.0.9",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "marcostazi.vs-code-vagrantfile",
+      "uuid": "d0febfc8-15fa-4951-bad7-ad5c9682af4a"
+    },
+    "preRelease": false,
+    "version": "0.0.7",
     "pinned": false,
     "installed": true
   },
@@ -1346,8 +1443,8 @@
       "id": "ms-azuretools.vscode-docker",
       "uuid": "0479fc1c-3d67-49f9-b087-fb9069afe48f"
     },
-    "version": "1.29.0",
     "preRelease": false,
+    "version": "1.29.3",
     "pinned": false,
     "installed": true
   },
@@ -1358,6 +1455,16 @@
     },
     "preRelease": false,
     "version": "1.90.2024061209",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "ms-dotnettools.vscode-dotnet-runtime",
+      "uuid": "1aab81a1-b3d9-4aef-976b-577d5d90fe3f"
+    },
+    "preRelease": false,
+    "version": "2.1.5",
     "pinned": false,
     "installed": true
   },
@@ -1376,8 +1483,8 @@
       "id": "ms-python.isort",
       "uuid": "4ad0ce32-ff3f-49f0-83b5-93e5dc00cfff"
     },
-    "version": "2023.10.1",
     "preRelease": false,
+    "version": "2023.10.1",
     "pinned": false,
     "installed": true
   },
@@ -1417,7 +1524,7 @@
       "uuid": "93ce222b-5f6f-49b7-9ab1-a0463c6238df"
     },
     "preRelease": false,
-    "version": "0.384.0",
+    "version": "0.397.0",
     "pinned": false,
     "installed": true,
     "state": {
@@ -1564,8 +1671,8 @@
       "id": "ms-vscode.powershell",
       "uuid": "40d39ce9-c381-47a0-80c8-a6661f731eab"
     },
-    "version": "2024.0.0",
     "preRelease": false,
+    "version": "2024.4.0",
     "pinned": false,
     "installed": true
   },
@@ -1610,6 +1717,16 @@
   },
   {
     "identifier": {
+      "id": "ms-vscode.vscode-github-issue-notebooks",
+      "uuid": "3be1cece-c179-4cd6-b59b-3bae29e1a166"
+    },
+    "preRelease": false,
+    "version": "0.0.130",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
       "id": "ms-vscode.vscode-js-profile-table",
       "uuid": "7e52b41b-71ad-457b-ab7e-0620f1fc4feb"
     },
@@ -1634,6 +1751,26 @@
     },
     "version": "1.0.5918",
     "preRelease": false,
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "mtxr.sqltools",
+      "uuid": "6a2bbab0-d8f0-43fa-9b26-e6a3b7892a0b"
+    },
+    "preRelease": false,
+    "version": "0.28.3",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "mylesmurphy.prettify-ts",
+      "uuid": "c988487b-df58-4518-83d9-cfbf0483493e"
+    },
+    "preRelease": false,
+    "version": "0.1.5",
     "pinned": false,
     "installed": true
   },
@@ -1682,8 +1819,8 @@
       "id": "peterschmalfeldt.explorer-exclude",
       "uuid": "cd42c488-2afb-4d43-a5a5-98b1e482978a"
     },
-    "version": "1.3.2",
     "preRelease": false,
+    "version": "1.3.2",
     "pinned": false,
     "installed": true
   },
@@ -1694,6 +1831,16 @@
     },
     "version": "1.10.3",
     "preRelease": false,
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "rafael-avalos.light-colors-theme",
+      "uuid": "68959ce2-b9e3-4a2f-89fc-93cb41e9222f"
+    },
+    "preRelease": false,
+    "version": "1.1.1",
     "pinned": false,
     "installed": true
   },
@@ -1775,8 +1922,8 @@
       "id": "s-nlf-fh.glassit",
       "uuid": "7f4f553c-204c-42fe-9b4d-7a3f11f7335b"
     },
-    "version": "0.2.6",
     "preRelease": false,
+    "version": "0.2.6",
     "pinned": false,
     "installed": true
   },
@@ -1817,6 +1964,16 @@
     },
     "preRelease": false,
     "version": "0.28.0",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "shahzaibkhalid.shaizei-light",
+      "uuid": "f2029ddf-f604-4672-9d77-9e91d70a548f"
+    },
+    "preRelease": false,
+    "version": "1.3.0",
     "pinned": false,
     "installed": true
   },
@@ -1882,11 +2039,21 @@
   },
   {
     "identifier": {
+      "id": "sorbet.sorbet-vscode-extension",
+      "uuid": "67d58bf5-9c4f-495f-bee0-d1d3f5898a8b"
+    },
+    "preRelease": false,
+    "version": "0.3.37",
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
       "id": "streetsidesoftware.code-spell-checker",
       "uuid": "f6dbd813-b0a0-42c1-90ea-10dde9d925a7"
     },
-    "version": "3.0.1",
     "preRelease": false,
+    "version": "4.0.21",
     "pinned": false,
     "installed": true
   },
@@ -1907,16 +2074,6 @@
     },
     "preRelease": false,
     "version": "1.7.8",
-    "pinned": false,
-    "installed": true
-  },
-  {
-    "identifier": {
-      "id": "stylelint.vscode-stylelint",
-      "uuid": "ec35b5a3-9802-4c68-b5ff-e85f19ec0977"
-    },
-    "preRelease": false,
-    "version": "1.3.0",
     "pinned": false,
     "installed": true
   },
@@ -2123,10 +2280,10 @@
   {
     "identifier": {
       "id": "vue.volar",
-      "uuid": "a5223b43-8621-4351-a14e-3d560f85f277"
+      "uuid": "a95ee795-1576-4ffa-acda-8d6e6a95c584"
     },
     "preRelease": false,
-    "version": "2.0.10",
+    "version": "2.1.6",
     "pinned": false,
     "installed": true
   },
@@ -2137,6 +2294,16 @@
     },
     "version": "1.0.5",
     "preRelease": false,
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "well-ar.plantuml",
+      "uuid": "fd667480-335c-42d9-8c0a-73fe74829095"
+    },
+    "preRelease": false,
+    "version": "2.17.6",
     "pinned": false,
     "installed": true
   },
@@ -2167,6 +2334,16 @@
     },
     "version": "0.5.3",
     "preRelease": false,
+    "pinned": false,
+    "installed": true
+  },
+  {
+    "identifier": {
+      "id": "yzane.markdown-pdf",
+      "uuid": "f015bc3c-a098-4245-8765-615e002e09ab"
+    },
+    "preRelease": false,
+    "version": "1.5.0",
     "pinned": false,
     "installed": true
   }
