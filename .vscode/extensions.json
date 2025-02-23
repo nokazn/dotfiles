@@ -2,7 +2,7 @@
   "recommendations": [
     "timonwong.shellcheck",
     "mkhl.shfmt",
-    "B4dM4n.nixpkgs-fmt",
-    "sumneko.lua"
+    "brettm12345.nixfmt-vscode",
+    "sumneko.lua",
   ]
 }

@@ -170,8 +170,7 @@
   // Nix
   "[nix]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "B4dM4n.nixpkgs-fmt"
-    // "editor.defaultFormatter": "kamadorueda.alejandra"
+    "editor.defaultFormatter": "brettm12345.nixfmt-vscode"
   },
   "nix.enableLanguageServer": true,
   "nix.serverPath": "nil",
