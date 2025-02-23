@@ -58,7 +58,7 @@ with pkgs; lib.attrValues {
   ];
   platform =
     lib.optionals (!stdenv.isDarwin) [
-      dstat # Versatile resource statistics tool
+      dool # Python3 compatible clone of dstat
       sysstat # A collection of performance monitoring tools for Linux (such as sar, iostat and pidstat)
     ] ++ lib.optionals meta.isWsl [
       wslu # A collection of utilities for Windows 10 Linux Subsystems

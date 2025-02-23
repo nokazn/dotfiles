@@ -1,17 +1,17 @@
-{ meta, ... }:
+{ meta, pkgs, ... }:
 
 {
-  # necessary for nix-darwin
-  services.nix-daemon.enable = true;
-
   users.users = {
     ${meta.user.name} = {
       home = "/Users/${meta.user.name}";
-      shell = "zsh";
+      shell = pkgs.zsh;
     };
   };
 
   homebrew = if meta.isCi then { } else import ./homebrew.nix { };
+
+  # For compatibility for lecacy Nix build uiser group ID by nix-darwin
+  ids.gids.nixbld = 30000;
 
   system = {
     stateVersion = 5;
