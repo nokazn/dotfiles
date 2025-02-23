@@ -120,7 +120,7 @@
               gnumake
               shellcheck
               shfmt
-              nixpkgs-fmt
+              nixfmt-rfc-style
               yamlfmt
               dprint
               pre-commit

@@ -40,8 +40,8 @@ jobs:
         run: |
           cd ./modules/node;
           nix-shell -p nodePackages.node2nix \
-            -p nixpkgs-fmt \
-            --command "node2nix -i ./packages.json -o ./packages.nix --nodejs-18 && find . -type f | grep -e "\.nix$" | xargs nixpkgs-fmt"
+            -p nixfmt \
+            --command "node2nix -i ./packages.json -o ./packages.nix --nodejs-18 && find . -type f | grep -e "\.nix$" | xargs nixfmt"
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:

@@ -24,7 +24,9 @@ lib.attrValues {
       prettier
       serverless
       typescript
-      webpack-cli
+      # TODO: Cant be read $out for some reason
+      # See https://github.com/NixOS/nixpkgs/issues/380681 or https://github.com/NixOS/nixpkgs/issues/380436
+      # webpack-cli
     ]);
   js = [
     biome # Toolchain of the web

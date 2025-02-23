@@ -144,8 +144,8 @@ update/nix: # Update Nix package manager
 update/npm-packages-list: # Generate Nix packages list for npm packages
 	cd ./modules/node; \
 	nix-shell -p nodePackages.node2nix \
-    -p nixpkgs-fmt \
-    --command 'node2nix -i ./packages.json -o ./packages.nix --nodejs-18 && find . -type f | grep -e "\.nix$$" | xargs nixpkgs-fmt' && exit
+    -p nixfmt \
+    --command 'node2nix -i ./packages.json -o ./packages.nix --nodejs-18 && find . -type f | grep -e "\.nix$$" | xargs nixfmt' && exit
 
 .PHONY: update/vscode-settings/darwin
 update/vscode-settings/darwin: # Update VSCode settings.json & keybindings.json for Darwin
@@ -169,7 +169,7 @@ update/vscode-settings/windows: # Update VSCode settings.json & keybindings.json
 # utilities ----------------------------------------------------------------------------------------------------
 
 .PHONY: check
-check: check/shellcheck check/shfmt check/nixpkgs-fmt # Check by all `check/*` tasks
+check: check/shellcheck check/shfmt check/nixfmt # Check by all `check/*` tasks
 
 .PHONY: check/shellcheck
 check/shellcheck: # Check schell scripts
@@ -179,16 +179,16 @@ check/shellcheck: # Check schell scripts
 check/shfmt: # Check wheter schell scripts are formatted
 	shfmt --diff $(SHELL_FILES)
 
-.PHONY: check/nixpkgs-fmt
-check/nixpkgs-fmt: # Check `.nix` files
-	nixpkgs-fmt $(NIX_FILES) --check
+.PHONY: check/nixfmt
+check/nixfmt: # Check `.nix` files
+	nixfmt $(NIX_FILES) --check
 
 .PHONY: check/dprint
 check/dprint: # Check by dprint
 	dprint check
 
 .PHONY: fix
-fix: fix/shellcheck fix/shfmt fix/nixpkgs-fmt # Fix by all `fix/*` tasks
+fix: fix/shellcheck fix/shfmt fix/nixfmt # Fix by all `fix/*` tasks
 
 .PHONY: fix/shellcheck
 fix/shellcheck: # Fix schell scripts if possible
@@ -199,9 +199,9 @@ fix/shellcheck: # Fix schell scripts if possible
 fix/shfmt: # Format schell scripts
 	shfmt --write $(SHELL_FILES)
 
-.PHONY: fix/nixpkgs-fmt
-fix/nixpkgs-fmt: # Format `.nix` files
-	nixpkgs-fmt $(NIX_FILES)
+.PHONY: fix/nixfmt
+fix/nixfmt: # Format `.nix` files
+	nixfmt $(NIX_FILES)
 
 .PHONY: fix/dprint
 fix/dprint: # Format by dprint
