@@ -6,6 +6,7 @@ PATH_SCRIPT := ./unix/.path.sh
 NIX := nix --extra-experimental-features 'nix-command flakes'
 SHELL_FILES := $(shell find . -type f | grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)")
 NIX_FILES := $(shell find . -type f | grep -e "\.nix$$")
+HOST := $(shell if command -v scutil > /dev/null; then scutil --get LocalHostName; else hostname; fi)
 .DEFAULT_GOAL := help
 
 # init ----------------------------------------------------------------------------------------------------
@@ -91,12 +92,13 @@ _uninstall/asdf-langs: # Uninstall languages by asdf
 
 # packages ----------------------------------------------------------------------------------------------------
 
-.PHONY: apply/_inject-user
-apply/_inject-user: # Inject user environment
-	perl -pi -e  's/"\$${USER}"/"$$ENV{USER}"/g' ./flake.nix
+.PHONY: apply/_inject-env
+apply/_inject-env: # Inject user environment
+	perl -pi -e 's/"\$${USER}"/"$$ENV{USER}"/g' ./flake.nix;
+	perl -pi -e 's/"\$${HOST}"/"$(HOST)"/g' ./flake.nix;
 
 .PHONY: apply/user
-apply/user: apply/_inject-user # Run `home-manager switch` for user environment
+apply/user: apply/_inject-env # Run `home-manager switch` for user environment
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
 	if [[ $$(uname -r) =~ microsoft ]]; then \
 		source $(PATH_SCRIPT) && $(NIX) run \
@@ -108,15 +110,10 @@ apply/user: apply/_inject-user # Run `home-manager switch` for user environment
 	@echo "✅ home-manager has been applied successfully!"
 
 .PHONY: apply/darwin
-apply/darwin: apply/_inject-user # Run `nix-darwin switch`
+apply/darwin: apply/_inject-env # Run `nix-darwin switch`
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
-	if [[ $$(arch) =~ arm64 ]]; then \
-		source $(PATH_SCRIPT) && $(NIX) run \
-			nix-darwin -- switch --flake .#"\"aarch64-darwin-$${USER}\""; \
-	else \
-		source $(PATH_SCRIPT) && $(NIX) run \
-			nix-darwin -- switch --flake .#"\"x86_64-darwin-$${USER}"\"; \
-	fi
+	source $(PATH_SCRIPT) && $(NIX) run \
+		nix-darwin -- switch --flake .; \
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully!"
 
