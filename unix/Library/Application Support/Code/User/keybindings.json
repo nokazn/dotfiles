@@ -53,22 +53,23 @@
     "key": "cmd+;",
     "command": "extension.customWindowZoomIn"
   },
-  // Cursor words
-  {
-    "key": "cmd+left",
-    "command": "cursorWordPartLeft",
-    "when": "textInputFocus"
-  },
+  // Cursor words to left
   {
     "key": "ctrl+alt+left",
     "command": "-cursorWordPartLeft",
     "when": "textInputFocus"
   },
   {
-    "key": "cmd+right",
-    "command": "cursorWordPartRight",
+    "key": "alt+left",
+    "command": "-cursorWordLeft",
     "when": "textInputFocus"
   },
+  {
+    "key": "alt+left",
+    "command": "cursorWordPartLeft",
+    "when": "textInputFocus"
+  },
+  // Cursor words to right
   {
     "key": "ctrl+alt+right",
     "command": "-cursorWordPartRight",
@@ -80,23 +81,19 @@
     "when": "textInputFocus"
   },
   {
-    "key": "alt+left",
-    "command": "-cursorWordLeft",
+    "key": "alt+right",
+    "command": "cursorWordPartRight",
     "when": "textInputFocus"
   },
+  // delete per words
   {
     "key": "ctrl+alt+backspace",
     "command": "-deleteWordPartLeft",
     "when": "textInputFocus && !editorReadonly"
   },
   {
-    "key": "cmd+backspace",
+    "key": "alt+backspace",
     "command": "deleteWordPartLeft"
-  },
-  {
-    "key": "cmd+delete",
-    "command": "deleteWordPartRight",
-    "when": "textInputFocus && !editorReadonly"
   },
   {
     "key": "ctrl+alt+delete",
@@ -104,41 +101,49 @@
     "when": "textInputFocus && !editorReadonly"
   },
   {
-    "key": "shift+cmd+left",
-    "command": "cursorWordPartLeftSelect",
-    "when": "textInputFocus"
+    "key": "cmd+delete",
+    "command": "deleteWordPartRight",
+    "when": "textInputFocus && !editorReadonly"
   },
+  // Select words to left
   {
     "key": "ctrl+shift+alt+left",
     "command": "-cursorWordPartLeftSelect",
     "when": "textInputFocus"
   },
   {
-    "key": "shift+cmd+right",
-    "command": "cursorWordPartRightSelect",
+    "key": "shift+alt+left",
+    "command": "cursorWordPartLeftSelect",
     "when": "textInputFocus"
   },
+  // Select words to right
   {
     "key": "ctrl+shift+alt+right",
     "command": "-cursorWordPartRightSelect",
     "when": "textInputFocus"
   },
-  // Cursor words in terminal
   {
-    "key": "cmd+ctrl+left",
-    "command": "workbench.action.terminal.sendSequence",
-    "args": {
-      "text": "\u001b[1;5D"
-    },
-    "when": "terminalFocus && !terminalTextSelected"
+    "key": "shift+alt+right",
+    "command": "cursorWordPartRightSelect",
+    "when": "textInputFocus"
+  },
+  // Go to next member
+  {
+    "key": "ctrl+down",
+    "command": "-gotoNextPreviousMember.nextMember"
   },
   {
-    "key": "cmd+ctrl+right",
-    "command": "workbench.action.terminal.sendSequence",
-    "args": {
-      "text": "\u001b[1;5C"
-    },
-    "when": "terminalFocus && !terminalTextSelected"
+    "key": "ctrl+cmd+down",
+    "command": "gotoNextPreviousMember.nextMember"
+  },
+  // Go to previous member
+  {
+    "key": "ctrl+up",
+    "command": "-gotoNextPreviousMember.previousMember"
+  },
+  {
+    "key": "ctrl+cmd+up",
+    "command": "gotoNextPreviousMember.previousMember"
   },
   // Fold/Unfold
   {
@@ -161,9 +166,9 @@
     "command": "-editor.unfold",
     "when": "editorTextFocus && foldingEnabled"
   },
-  // Go forward/back
+  // Go forward
   {
-    "key": "alt+right",
+    "key": "alt+]",
     "command": "workbench.action.navigateForward",
     "when": "canNavigateForward"
   },
@@ -172,8 +177,9 @@
     "command": "-workbench.action.navigateForward",
     "when": "canNavigateForward"
   },
+  // Go backward
   {
-    "key": "alt+left",
+    "key": "alt+[",
     "command": "workbench.action.navigateBack",
     "when": "canNavigateBack"
   },
@@ -182,10 +188,39 @@
     "command": "-workbench.action.navigateBack",
     "when": "canNavigateBack"
   },
+  // Cursor words in terminal
   {
-    "key": "alt+left",
-    "command": "-cursorWordLeft",
-    "when": "textInputFocus"
+    "key": "cmd+ctrl+left",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\u001b[1;5D"
+    },
+    "when": "terminalFocus && !terminalTextSelected"
+  },
+  {
+    "key": "cmd+ctrl+right",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\u001b[1;5C"
+    },
+    "when": "terminalFocus && !terminalTextSelected"
+  },
+  // Split terminal
+  {
+    "key": "cmd+shift+\\",
+    "command": "workbench.action.terminal.split",
+    "when": "terminalFocus"
+  },
+  // Focus previous/next terminal
+  {
+    "key": "cmd+shift+left",
+    "command": "workbench.action.terminal.focusPreviousPane",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "cmd+shift+right",
+    "command": "workbench.action.terminal.focusNextPane",
+    "when": "terminalFocus"
   },
   // Copilot
   {
@@ -197,5 +232,11 @@
     "key": "cmd+k cmd+n",
     "command": "-extension.search",
     "when": "!terminalFocus"
+  },
+  // For Bookmark extension
+  {
+    "key": "alt+cmd+j",
+    "command": "-liveshare.join",
+    "when": "liveshare:state != 'Joined' && liveshare:state != 'Shared'"
   }
 ]
