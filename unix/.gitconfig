@@ -130,6 +130,11 @@
 	rebi3 = rebase -i HEAD~3
 	rebi4 = rebase -i HEAD~4
 	rebi5 = rebase -i HEAD~5
+	rebi6 = rebase -i HEAD~6
+	rebi7 = rebase -i HEAD~7
+	rebi8 = rebase -i HEAD~8
+	rebi9 = rebase -i HEAD~9
+	rebi10 = rebase -i HEAD~10
 	rebonto = "!f() { if [[ -z $2 ]]; then echo "❌ No current base branch specified."; exit 1; fi; git rebase --onto $1 $2 $(git symbolic-ref --short HEAD); }; f"
 	remote-add-me = !git remote add origin git@github.com:\"$(git config --global user.name)\"/\"$(basename $(pwd))\"
 	remote-set-url-upstream-from-origin = !git remote add upstream \"$(git remote get-url origin)\" && git remote set-url origin \"$(git remote get-url origin | sed -E -s "s/:(.*)\\//:$USER\\//")\"
