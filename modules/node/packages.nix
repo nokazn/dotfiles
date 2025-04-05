@@ -49,14 +49,14 @@ let
           "3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==";
       };
     };
-    "@swc/core-1.11.13" = {
+    "@swc/core-1.11.16" = {
       name = "_at_swc_slash_core";
       packageName = "@swc/core";
-      version = "1.11.13";
+      version = "1.11.16";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@swc/core/-/core-1.11.13.tgz";
+        url = "https://registry.npmjs.org/@swc/core/-/core-1.11.16.tgz";
         sha512 =
-          "9BXdYz12Wl0zWmZ80PvtjBWeg2ncwJ9L5WJzjhN6yUTZWEV/AwAdVdJnIEp4pro3WyKmAaMxcVOSbhuuOZco5g==";
+          "wgjrJqVUss8Lxqilg0vkiE0tkEKU3mZkoybQM1Ehy+PKWwwB6lFAwKi20cAEFlSSWo8jFR8hRo19ZELAoLDowg==";
       };
     };
     "@swc/counter-0.1.3" = {
@@ -79,24 +79,24 @@ let
           "JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==";
       };
     };
-    "@swc/types-0.1.19" = {
+    "@swc/types-0.1.21" = {
       name = "_at_swc_slash_types";
       packageName = "@swc/types";
-      version = "0.1.19";
+      version = "0.1.21";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@swc/types/-/types-0.1.19.tgz";
+        url = "https://registry.npmjs.org/@swc/types/-/types-0.1.21.tgz";
         sha512 =
-          "WkAZaAfj44kh/UFdAQcrMP1I0nwRqpt27u+08LMBYMqmQfwwMofYoMh/48NGkMMRfC4ynpfwRbJuu8ErfNloeA==";
+          "2YEtj5HJVbKivud9N4bpPBAyZhj4S2Ipe5LkUG94alTpr7in/GU/EARgPAd3BwU+YOmFVJC2+kjqhGRi3r0ZpQ==";
       };
     };
-    "@swc/wasm-1.11.13" = {
+    "@swc/wasm-1.11.16" = {
       name = "_at_swc_slash_wasm";
       packageName = "@swc/wasm";
-      version = "1.11.13";
+      version = "1.11.16";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@swc/wasm/-/wasm-1.11.13.tgz";
+        url = "https://registry.npmjs.org/@swc/wasm/-/wasm-1.11.16.tgz";
         sha512 =
-          "R3cpgAX/mxoPH9zNCwmWGOqtvQ9obRpf97Kw8FJu0HUsEcEG766ozxFgfzE9p4IwK7pKOvzYR+szDtIXlOQwdQ==";
+          "V8Vb45xemcS1Ma1tN8qNTVKHxaBWpnbU79eFi3uBs2XUprllhJkjXLdW4dupO/+MzirEP5/pCSDwUMupSFa34Q==";
       };
     };
     "@tsconfig/node10-1.0.11" = {
@@ -139,14 +139,14 @@ let
           "vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==";
       };
     };
-    "@types/node-22.13.13" = {
+    "@types/node-22.14.0" = {
       name = "_at_types_slash_node";
       packageName = "@types/node";
-      version = "22.13.13";
+      version = "22.14.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@types/node/-/node-22.13.13.tgz";
+        url = "https://registry.npmjs.org/@types/node/-/node-22.14.0.tgz";
         sha512 =
-          "ClsL5nMwKaBRwPcCvH8E7+nU4GxHVx1axNvMZTFHMEfNI7oahimt26P5zjVCRrjiIWj6YFXfE1v3dEp94wLcGQ==";
+          "Kmpl+z84ILoG+3T/zQFyAJsU6EPTmOCj8/2+83fSN6djd6I4o7uOuGIH6vq3PrjY5BGitSbFuMN18j3iknubbA==";
       };
     };
     "acorn-8.14.1" = {
@@ -795,15 +795,15 @@ let
           "aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==";
       };
     };
-    "undici-types-6.20.0" = {
+    "undici-types-6.21.0" = {
       name = "undici-types";
       packageName = "undici-types";
-      version = "6.20.0";
+      version = "6.21.0";
       src = fetchurl {
         url =
-          "https://registry.npmjs.org/undici-types/-/undici-types-6.20.0.tgz";
+          "https://registry.npmjs.org/undici-types/-/undici-types-6.21.0.tgz";
         sha512 =
-          "Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==";
+          "iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==";
       };
     };
     "union-0.5.0" = {
@@ -975,16 +975,16 @@ in {
       sources."@jridgewell/resolve-uri-3.1.2"
       sources."@jridgewell/sourcemap-codec-1.5.0"
       sources."@jridgewell/trace-mapping-0.3.9"
-      sources."@swc/core-1.11.13"
+      sources."@swc/core-1.11.16"
       sources."@swc/counter-0.1.3"
       sources."@swc/helpers-0.5.15"
-      sources."@swc/types-0.1.19"
-      sources."@swc/wasm-1.11.13"
+      sources."@swc/types-0.1.21"
+      sources."@swc/wasm-1.11.16"
       sources."@tsconfig/node10-1.0.11"
       sources."@tsconfig/node12-1.0.11"
       sources."@tsconfig/node14-1.0.3"
       sources."@tsconfig/node16-1.0.4"
-      sources."@types/node-22.13.13"
+      sources."@types/node-22.14.0"
       sources."acorn-8.14.1"
       sources."acorn-walk-8.3.4"
       sources."arg-4.1.3"
@@ -993,7 +993,7 @@ in {
       sources."make-error-1.3.6"
       sources."tslib-2.8.1"
       sources."typescript-5.8.2"
-      sources."undici-types-6.20.0"
+      sources."undici-types-6.21.0"
       sources."v8-compile-cache-lib-3.0.1"
       sources."yn-3.1.1"
     ];
