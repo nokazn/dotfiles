@@ -4,7 +4,7 @@
   {
     "key": "ctrl+alt+g",
     "command": "workbench.view.scm",
-    "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
+    "when": "workbench.scm.active"
   },
   // focus on source control management
   {
@@ -14,7 +14,7 @@
   {
     "key": "ctrl+shift+g g",
     "command": "-workbench.view.scm",
-    "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
+    "when": "workbench.scm.active"
   },
   // update git changes information
   {
