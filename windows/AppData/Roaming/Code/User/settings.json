@@ -289,5 +289,5 @@
     "rust"
   ],
   // Ignored by git
-  "window.zoomLevel": 0
+  "window.zoomLevel": 0,
 }
