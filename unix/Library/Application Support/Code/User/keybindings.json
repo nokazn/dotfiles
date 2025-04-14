@@ -234,10 +234,20 @@
     "command": "workbench.action.terminal.paste",
     "when": "terminalFocus"
   },
+  // Git
+  {
+    "key": "alt+shift+g",
+    "command": "workbench.view.scm",
+    "when": "workbench.scm.active"
+  },
   // Copilot
   {
     "key": "shift+alt+c",
     "command": "workbench.panel.chat.view.copilot.focus"
+  },
+  {
+    "key": "shift+cmd+i",
+    "command": "-workbench.action.chat.openEditSession"
   },
   // Avoid collision with unstage command
   {

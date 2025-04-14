@@ -21,6 +21,7 @@
   "editor.suggestSelection": "first",
   "editor.tabSize": 2, // インデントはスペース2個分
   "editor.wordWrap": "on",
+  "editor.cursorStyle": "block",
   "explorer.autoReveal": true,
   "extensions.autoUpdate": true, // 拡張機能を自動更新
   "extensions.webWorker": true,
@@ -187,6 +188,9 @@
     "editor.semanticHighlighting.enabled": true
   },
 
+  // Makefile
+  "makefile.configureOnOpen": false,
+
   // ----------------------------------------------------------------------------------------------------
   // Linters
 
@@ -279,6 +283,6 @@
     "markdown",
     "rust"
   ],
-  // Ignored by git
   "window.zoomLevel": 0,
+  "github.copilot.preferredAccount": "kzkohno",
 }
