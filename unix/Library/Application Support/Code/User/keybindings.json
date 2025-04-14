@@ -228,6 +228,11 @@
     "command": "workbench.action.terminal.copySelection",
     "when": "terminalFocus && terminalTextSelected"
   },
+  {
+    "key": "shift+cmd+c",
+    "command": "-workbench.action.terminal.openNativeConsole",
+    "when": "!terminalFocus"
+  },
   // Paste in terminal also with shift
   {
     "key": "cmd+shift+v",
