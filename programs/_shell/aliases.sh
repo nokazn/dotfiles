@@ -473,10 +473,10 @@ function touchp() {
 }
 
 function deprecate() {
-	local -r source_file="$1"
-	if [[ ! -f "${source_file}" ]]; then
-		echo "❌ source file ${source_file} does not exist."
-		exit 1
+	local -r source="$1"
+	if [[ ! -e "${source}" ]]; then
+		echo "❌ source ${source} does not exist."
+		return 1
 	fi
 
 	local -r destination_base_dir="${2:-deprecated}"
@@ -484,9 +484,9 @@ function deprecate() {
 		mkdir -p "${destination_base_dir}"
 	fi
 
-	local -r destination_file="${destination_base_dir%/}/${source_file}"
-	if [[ ! -d $(dirname "${destination_file}") ]]; then
-		mkdir -p "/${destination_file}"
+	local -r destination="${destination_base_dir%/}/${source}"
+	if [[ ! -d $(dirname "${destination}") ]]; then
+		mkdir -p "./${destination}"
 	fi
-	cp -v "${source_file}" "${destination_file}"
+	cp -r -v "${source}" "${destination}"
 }
