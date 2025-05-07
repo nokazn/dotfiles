@@ -356,7 +356,7 @@ function apt-list() {
 
 # Show apt packages installed/uninstalled history.
 function apt-history() {
-	# tee でプロセス置換して、+ (緑) の場合と - (赤) の場合で色を分け、標準出力を捨��る
+	# tee でプロセス置換して、+ (緑) の場合と - (赤) の場合で色を分け、標準出力を捨������������る
 	grep -e "install" -e "remove" </var/log/apt/history.log |
 		sed -E -e "s/^.*apt(-get)?(\s--?\S+)*\s(install|remove)(\s--?\S+)*\s/\3:/" |
 		sed -E -e "s/(^|\s)--?\S+//g" -e "s/install:/+ /" -e "s/remove:/- /" |
@@ -474,8 +474,13 @@ function touchp() {
 
 function deprecate() {
 	local -r source="$1"
-	if [[ ! -e "${source}" ]]; then
-		echo "❌ source ${source} does not exist."
+	local -r destination="${destination_base_dir%/}/${source}"
+	if [[ -f "${source}" ]]; then
+		mkdir -p "$(dirname "${destination}")"
+	elif [[ -d "${source}" ]]; then
+		mkdir -p "${destination}"
+	else
+		echo "❌ source ${source} is not a file or directory."
 		return 1
 	fi
 
@@ -484,9 +489,5 @@ function deprecate() {
 		mkdir -p "${destination_base_dir}"
 	fi
 
-	local -r destination="${destination_base_dir%/}/${source}"
-	if [[ ! -d $(dirname "${destination}") ]]; then
-		mkdir -p "./${destination}"
-	fi
 	cp -r -v "${source}" "${destination}"
 }
