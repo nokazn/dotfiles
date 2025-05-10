@@ -222,6 +222,23 @@
     "command": "workbench.action.terminal.focusNextPane",
     "when": "terminalFocus"
   },
+  // Copy in terminal also with shift
+  {
+    "key": "cmd+shift+c",
+    "command": "workbench.action.terminal.copySelection",
+    "when": "terminalFocus && terminalTextSelected"
+  },
+  {
+    "key": "shift+cmd+c",
+    "command": "-workbench.action.terminal.openNativeConsole",
+    "when": "!terminalFocus"
+  },
+  // Paste in terminal also with shift
+  {
+    "key": "cmd+shift+v",
+    "command": "workbench.action.terminal.paste",
+    "when": "terminalFocus"
+  },
   // Git
   {
     "key": "alt+shift+g",
@@ -230,7 +247,7 @@
   },
   // Copilot
   {
-    "key": "shift+cmd+c",
+    "key": "shift+alt+c",
     "command": "workbench.panel.chat.view.copilot.focus"
   },
   {
