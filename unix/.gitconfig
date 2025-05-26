@@ -91,6 +91,7 @@
 	cm = commit -m
 	cp = cherry-pick
 	d = diff
+	diff-default = diff --no-ext-diff
 	d1 = diff HEAD~1 HEAD
 	d2 = diff HEAD~2 HEAD
 	d3 = diff HEAD~3 HEAD
@@ -110,7 +111,7 @@
 	lp = log --pretty  # pretty
 	ls = log --oneline --pretty=default  # --oneline option
 	ls-pr = log --pretty=format:\"- %s (%h)\" --reverse
-	ls1 = log --oneline --pretty=default -n 1
+	lf = "!git log --name-only --pretty=format: "
 	ls2 = log --oneline --pretty=default -n 2
 	ls3 = log --oneline --pretty=default -n 3
 	ls-files-untracked = ls-files --others --exclude-standard
