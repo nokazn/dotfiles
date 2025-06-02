@@ -205,6 +205,17 @@
     },
     "when": "terminalFocus && !terminalTextSelected"
   },
+  // Copy & paste in terminal
+  {
+    "key": "cmd+shift+c",
+    "command": "workbench.action.terminal.copySelection",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "cmd+shift+v",
+    "command": "workbench.action.terminal.paste",
+    "when": "terminalFocus"
+  },
   // Split terminal
   {
     "key": "cmd+shift+\\",
@@ -229,10 +240,6 @@
     "when": "workbench.scm.active"
   },
   // Copilot
-  {
-    "key": "shift+cmd+c",
-    "command": "workbench.panel.chat.view.copilot.focus"
-  },
   {
     "key": "shift+cmd+i",
     "command": "-workbench.action.chat.openEditSession"
