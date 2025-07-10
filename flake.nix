@@ -35,15 +35,20 @@
       # this line is replaced by the real user name as fallback
       user = {
         # this line is replaced by the real user name as fallback
-        name = "${USER}";
+        name = "nokazn";
       };
       # whether username is the one in GitHub Actions
       isCi = user.name == "runner";
       # this line is replaced by the real user name as fallback
-      HOST = "${HOST}";
+      HOST = "MKGP3JA";
       nix = {
         version = "25.05";
       };
+      allowUnfreePredicate =
+        pkg:
+        builtins.elem (pkg.pname or (nixpkgs.lib.getName pkg)) [
+          "claude-code"
+        ];
       homeManagerConfigurations = (
         home: {
           home-manager = {
@@ -70,7 +75,10 @@
             {
               name = user.name + (if isWsl then "-wsl" else "");
               value = home-manager.lib.homeManagerConfiguration {
-                pkgs = nixpkgs.legacyPackages.x86_64-linux;
+                pkgs = import nixpkgs {
+                  system = "x86_64-linux";
+                  config.allowUnfreePredicate = allowUnfreePredicate;
+                };
                 modules = [
                   ./home/linux.nix
                 ];
@@ -104,7 +112,10 @@
         {
           ${HOST} = nix-darwin.lib.darwinSystem rec {
             inherit system;
-            pkgs = nixpkgs-darwin.legacyPackages.${system};
+            pkgs = import nixpkgs-darwin {
+              inherit system;
+              config.allowUnfreePredicate = allowUnfreePredicate;
+            };
             modules = [
               ./hosts/darwin
               home-manager.darwinModules.home-manager
@@ -124,6 +135,7 @@
       let
         pkgs = import nixpkgs {
           inherit system;
+          config.allowUnfreePredicate = allowUnfreePredicate;
         };
       in
       {

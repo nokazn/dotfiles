@@ -18,6 +18,7 @@
 .config/lazygit/config.yml
 .config/neofetch/config.conf
 .config/nix
+.config/nixpkgs
 .config/sampler/config.yml
 .config/tmux/cpu-usage.sh
 .config/tmux/memory-usage.sh
