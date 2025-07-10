@@ -110,10 +110,14 @@ apply/user: apply/_inject-env # Run `home-manager switch` for user environment
 	@echo "✅ home-manager has been applied successfully!"
 
 .PHONY: apply/darwin
+# https://github.com/nix-darwin/nix-darwin/blob/e04a388232d9a6ba56967ce5b53a8a6f713cdfcf/README.md#getting-started
+# https://github.com/nix-darwin/nix-darwin/issues/1330#issuecomment-2654133042
 apply/darwin: apply/_inject-env # Run `nix-darwin switch`
+	sudo mkdir -p /etc/nix-darwin
+	sudo chown $(id -nu):$(id -ng) /etc/nix-darwin
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
-	source $(PATH_SCRIPT) && $(NIX) run \
-		nix-darwin -- switch --flake .; \
+	source $(PATH_SCRIPT) && sudo $(NIX) run \
+		nix-darwin/master#darwin-rebuild -- switch --flake ./flake.nix; \
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully!"
 
