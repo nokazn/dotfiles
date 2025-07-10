@@ -22,6 +22,7 @@ lib.attrValues {
     sampler # Tool for shell commands execution, visualization and alerting. Configured with a simple YAML file.
   ];
   dx = [
+    claude-code # An agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster
     direnv
     just # A handy way to save and run project-specific commands
     mkcert # A simple zero-config tool to make locally trusted development certificates with any names you'd like.
