@@ -12,7 +12,6 @@
 .config/git/attributes
 .config/git/config.work
 .config/git/ignore
-.config/home-manager
 .config/htop/htoprc
 .config/latte/custom.layout.latte
 .config/lazygit/config.yml
