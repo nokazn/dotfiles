@@ -1,6 +1,12 @@
-{ pkgs, lib, meta, ... }:
+{
+  pkgs,
+  lib,
+  meta,
+  ...
+}:
 
-with pkgs; lib.attrValues {
+with pkgs;
+lib.attrValues {
   db = [
     memcached
     redis
@@ -33,7 +39,6 @@ with pkgs; lib.attrValues {
   ];
   network = [
     gping # Ping, but with a graph
-    wireshark # Powerful network protocol analyzer
   ];
   explorer = [
     broot # A new way to see and navigate directory trees
@@ -60,7 +65,8 @@ with pkgs; lib.attrValues {
     lib.optionals (!stdenv.isDarwin) [
       dool # Python3 compatible clone of dstat
       sysstat # A collection of performance monitoring tools for Linux (such as sar, iostat and pidstat)
-    ] ++ lib.optionals meta.isWsl [
+    ]
+    ++ lib.optionals meta.isWsl [
       wslu # A collection of utilities for Windows 10 Linux Subsystems
     ];
 }

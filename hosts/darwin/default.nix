@@ -12,6 +12,7 @@
 
   system = {
     stateVersion = 5;
+    primaryUser = meta.user.name;
     defaults = import ./system.nix { };
   };
 }

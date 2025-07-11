@@ -117,7 +117,7 @@ apply/darwin: apply/_inject-env # Run `nix-darwin switch`
 	sudo chown $(id -nu):$(id -ng) /etc/nix-darwin
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
 	source $(PATH_SCRIPT) && sudo $(NIX) run \
-		nix-darwin/master#darwin-rebuild -- switch --flake ./flake.nix; \
+		nix-darwin/master#darwin-rebuild -- switch --flake .; \
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully!"
 
