@@ -22,12 +22,13 @@
   };
 
   outputs =
-    { nixpkgs
-    , nixpkgs-darwin
-    , nix-darwin
-    , home-manager
-    , flake-utils
-    , ...
+    {
+      nixpkgs,
+      nixpkgs-darwin,
+      nix-darwin,
+      home-manager,
+      flake-utils,
+      ...
     }:
     let
       USER = "runner";
@@ -41,15 +42,19 @@
       # this line is replaced by the real user name as fallback
       HOST = "${HOST}";
       nix = {
-        version = "24.05";
+        version = "25.05";
       };
-      homeManagerConfigurations = (home: {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          users = { ${user.name} = home; };
-        };
-      });
+      homeManagerConfigurations = (
+        home: {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users = {
+              ${user.name} = home;
+            };
+          };
+        }
+      );
     in
     {
       # For user environments
@@ -60,7 +65,8 @@
       # - home-manager switch .#runner-wsl
       homeConfigurations =
         let
-          generateConfiguration = ({ isWsl }:
+          generateConfiguration = (
+            { isWsl }:
             {
               name = user.name + (if isWsl then "-wsl" else "");
               value = home-manager.lib.homeManagerConfiguration {
@@ -68,16 +74,20 @@
                 modules = [
                   ./home/linux.nix
                 ];
-                extraSpecialArgs = { inherit nix; meta = { inherit user isWsl isCi; }; };
+                extraSpecialArgs = {
+                  inherit nix;
+                  meta = { inherit user isWsl isCi; };
+                };
               };
             }
           );
         in
-        nixpkgs.lib.listToAttrs
-          (builtins.map generateConfiguration [
+        nixpkgs.lib.listToAttrs (
+          builtins.map generateConfiguration [
             { isWsl = true; }
             { isWsl = false; }
-          ]);
+          ]
+        );
 
       # For darwin
       # - darwin-rebuild switch .#${system}-$(USER)
@@ -98,39 +108,45 @@
             modules = [
               ./hosts/darwin
               home-manager.darwinModules.home-manager
-              (homeManagerConfigurations (import ./home/darwin.nix {
-                inherit pkgs nix meta;
-                lib = pkgs.lib;
-              }))
+              (homeManagerConfigurations (
+                import ./home/darwin.nix {
+                  inherit pkgs nix meta;
+                  lib = pkgs.lib;
+                }
+              ))
             ];
             specialArgs = { inherit nix meta; };
           };
         };
-    } // (flake-utils.lib.eachDefaultSystem
-      (system:
+    }
+    // (flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs {
           inherit system;
         };
       in
       {
-        devShells.default = pkgs.mkShell
-          {
-            buildInputs = with pkgs; [
-              gnumake
-              shellcheck
-              shfmt
-              nixfmt-rfc-style
-              yamlfmt
-              dprint
-              pre-commit
-              treefmt
-            ];
-          };
-      }));
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            gnumake
+            shellcheck
+            shfmt
+            nixfmt-rfc-style
+            yamlfmt
+            dprint
+            pre-commit
+            treefmt
+          ];
+        };
+      }
+    ));
 
   nixConfig = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
     auto-optimise-store = true;
     eval-cache = true;
