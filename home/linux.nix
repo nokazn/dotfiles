@@ -1,9 +1,20 @@
-{ pkgs, lib, nix, meta, ... }:
+{
+  pkgs,
+  lib,
+  nix,
+  meta,
+  ...
+}:
 
 let
   args = { inherit pkgs lib meta; };
   nixPackages = import ../modules/packages args;
-  extraNodePackages = builtins.attrValues (import ../modules/node { inherit pkgs; });
+  npmPackages = builtins.attrValues (
+    import ../modules/node/npm.nix {
+      inherit pkgs;
+      nodejs = pkgs.nodejs_22;
+    }
+  );
 in
 {
   home = {
@@ -25,7 +36,7 @@ in
     shellAliases = import ../modules/shellAliases.nix { inherit meta; };
 
     # nix packages
-    packages = nixPackages ++ extraNodePackages;
+    packages = nixPackages ++ npmPackages;
     # dotfiles in home directory
     file = import ../modules/files args;
   };

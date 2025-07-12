@@ -1,4 +1,4 @@
-{ pkgs, lib, ... } @args:
+{ pkgs, lib, ... }@args:
 
 let
   meta = {
@@ -15,18 +15,16 @@ lib.attrValues {
     asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
     proto # A pluggable multi`-language version manager
   ];
-  node = [
-    fnm
-  ] ++ (with nodePackages;
+  node =
     [
+      fnm
+    ]
+    ++ (with nodePackages; [
       eslint
       node-gyp
       prettier
-      serverless
       typescript
-      # TODO: Cant be read $out for some reason
-      # See https://github.com/NixOS/nixpkgs/issues/380681 or https://github.com/NixOS/nixpkgs/issues/380436
-      # webpack-cli
+      webpack-cli
     ]);
   js = [
     biome # Toolchain of the web
@@ -40,8 +38,7 @@ lib.attrValues {
     let
       libiconv =
         # `LD_LIBRARY_PATH`と`LIBRARY_PATH`を設定する必要がある
-        if stdenv.isDarwin then pkgs.darwin.libiconv
-        else pkgs.libiconv;
+        if stdenv.isDarwin then pkgs.darwin.libiconv else pkgs.libiconv;
     in
     [
       cargo-cache
@@ -56,10 +53,12 @@ lib.attrValues {
     gopls
     gore
   ];
-  elm = with elmPackages; lib.optionals meta.enableElm [
-    elm
-    elm-format
-  ];
+  elm =
+    with elmPackages;
+    lib.optionals meta.enableElm [
+      elm
+      elm-format
+    ];
   java = lib.optionals meta.enableJava [
     jdk11
     maven
@@ -68,18 +67,21 @@ lib.attrValues {
     php
     php81Packages.composer
   ];
-  python = lib.optionals meta.enablePython ([
-    black
-    isort
-    pipenv
-    poetry
-    python312
-    ruff
-    pyright
-  ] ++ (with python312Packages; [
-    setuptools
-    flake8
-  ]));
+  python = lib.optionals meta.enablePython (
+    [
+      black
+      isort
+      pipenv
+      poetry
+      python312
+      ruff
+      pyright
+    ]
+    ++ (with python312Packages; [
+      setuptools
+      flake8
+    ])
+  );
   shellscript = [
     shellcheck # A static analysis tool for shell scripts
     shfmt # A shell parser and formatter

@@ -117,7 +117,7 @@ apply/darwin: apply/_inject-env # Run `nix-darwin switch`
 	sudo chown $(id -nu):$(id -ng) /etc/nix-darwin
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
 	source $(PATH_SCRIPT) && sudo $(NIX) run \
-		nix-darwin/master#darwin-rebuild -- switch --flake ./flake.nix; \
+		nix-darwin/master#darwin-rebuild -- switch --flake .; \
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully!"
 
@@ -149,7 +149,7 @@ update/npm-packages-list: # Generate Nix packages list for npm packages
 	cd ./modules/node; \
 	nix-shell -p nodePackages.node2nix \
     -p nixfmt \
-    --command 'node2nix -i ./packages.json -o ./packages.nix --nodejs-18 && find . -type f | grep -e "\.nix$$" | xargs nixfmt' && exit
+    --command 'node2nix -i ./packages.json -o ./packages.nix && find . -type f | grep -e "\.nix$$" | xargs nixfmt' && exit
 
 .PHONY: update/vscode-settings/darwin
 update/vscode-settings/darwin: # Update VSCode settings.json & keybindings.json for Darwin
