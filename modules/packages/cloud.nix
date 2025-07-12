@@ -9,5 +9,6 @@ with pkgs;
   nodePackages.vercel
 ]
 ++ lib.optionals (!stdenv.isDarwin) [
-  wrangler # A CLI tool designed for folks who are interested in using Cloudflare Workers
+  # TODO: ビルドが落ちる
+  # wrangler # A CLI tool designed for folks who are interested in using Cloudflare Workers
 ]
