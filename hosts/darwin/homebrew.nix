@@ -15,7 +15,6 @@
     "google-drive"
     "homebrew/cask/font-hackgen-nerd"
     "homebrew/cask/font-hackgen"
-    "iterm2"
     "karabiner-elements"
     "keepassxc"
     "keybase"
