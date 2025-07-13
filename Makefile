@@ -52,19 +52,6 @@ remove-tools/wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
 	fi
 	@echo "✅ WSL-Hello-sudo has been uninstalled successfully!"
 
-.PHONY: _add-tools/bash-it
-_add-tools/bash-it: _print-airplane # (Deprecated) Add bash-it
-	rm -rf ~/.bash-it
-	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it
-# keep your .bashrc and append bash-it templates at the end
-	yes | ~/.bash-it/install.sh
-	@echo "✅ bash-it has been installed successfully!"
-
-.PHONY: remove-tools/bash-it
-_remove-tools/bash-it: _print-goodbye # (Deprecated) Remove bash-it
-	rm -rf ~/.bash-it
-	@echo "✅ bash-it has been uninstalled successfully!"
-
 # languages ----------------------------------------------------------------------------------------------------
 
 .PHONY: install/langs
