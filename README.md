@@ -38,7 +38,7 @@ $ sudo pacman -Syu && sudo pacman -S base base-devel vi vim git make wget openss
 
 - `add-tools/nix` - add Nix
 - `apply/user` - run `home-manager switch`
-- `install/proto-langs` - install some languages & tools by proto
+- `install/langs` - install some languages & tools by proto
 
 ```sh
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
@@ -69,7 +69,7 @@ Install apps for Linux
 
 - `add-tools/nix` - add Nix
 - `apply/darwin` - run `nix-darwin switch`
-- `install/proto-langs` - install some languages & tools by proto
+- `install/langs` - install some languages & tools by proto
 
 ```sh
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles

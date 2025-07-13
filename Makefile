@@ -12,10 +12,10 @@ HOST := $(shell if command -v scutil > /dev/null; then scutil --get LocalHostNam
 # init ----------------------------------------------------------------------------------------------------
 
 .PHONY: init/user
-init/user: add-tools/nix apply/user install/proto-langs # Set up all languages & packages for user environment
+init/user: add-tools/nix apply/user install/langs # Set up all languages & packages for user environment
 
 .PHONY: init/darwin
-init/darwin: add-tools/nix apply/darwin install/proto-langs # Set up all languages & packages for dawrin
+init/darwin: add-tools/nix apply/darwin install/langs # Set up all languages & packages for darwin
 
 # tools ----------------------------------------------------------------------------------------------------
 
@@ -67,16 +67,14 @@ _remove-tools/bash-it: _print-goodbye # (Deprecated) Remove bash-it
 
 # languages ----------------------------------------------------------------------------------------------------
 
-.PHONY: install/proto-langs
-install/proto-langs: # Install languages by proto
-	source $(PATH_SCRIPT) && proto use
+.PHONY: install/langs
+install/langs: # Install languages by proto
+	source $(PATH_SCRIPT) && proto install --config-mode global
 
-.PHONY: uninstall/proto-langs
-uninstall/proto-langs: # Uninstall languages by proto
-	proto uninstall node || : && \
-		proto uninstall yarn || : && \
-		proto uninstall pnpm || : && \
-		proto uninstall terraform
+.PHONY: uninstall/langs
+uninstall/langs: # Uninstall languages by proto & fnm
+	proto status --json | jq -r 'keys[]' | xargs -I {} zsh -c 'proto uninstall --yes {} || :'
+	fnm list | grep "v" | awk '{ print $$2 }' | xargs -I {} zsh -c 'fnm uninstall {} || :'
 
 .PHONY: _install/asdf-langs
 _install/asdf-langs: # Install languages by asdf

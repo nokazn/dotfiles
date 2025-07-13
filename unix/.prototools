@@ -1,6 +1,9 @@
+node = "latest"
 yarn = "latest"
 pnpm = "latest"
 terraform = "latest"
+go = "latest"
+uv = "latest"
 
 [tools.node]
 bundled-npm = true

@@ -72,14 +72,11 @@ lib.attrValues {
       black
       isort
       pipenv
-      poetry
-      python312
       ruff
       pyright
     ]
     ++ (with python312Packages; [
       setuptools
-      flake8
     ])
   );
   shellscript = [
