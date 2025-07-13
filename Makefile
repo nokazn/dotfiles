@@ -40,7 +40,7 @@ remove-tools/nix/user: _print-goodbye # Uninstall nix for user environment (See 
 	sudo rm -rf /nix /etc/profiles/per-users
 	@echo "✅ Nix has been uninstalled successfully!"
 
-.PHONY: ls
+.PHONY: remove-tools/nix/darwin
 remove-tools/nix/darwin: _print-goodbye # Uninstall nix for darwin (See https://nixos.org/manual/nix/stable/installation/uninstall.html#macos)
 	$(SCRIPTS_DIR)/remove-nix-darwin.sh
 
@@ -62,18 +62,6 @@ install/langs: # Install languages by proto
 uninstall/langs: # Uninstall languages by proto & fnm
 	proto status --json | jq -r 'keys[]' | xargs -I {} zsh -c 'proto uninstall --yes {} || :'
 	fnm list | grep "v" | awk '{ print $$2 }' | xargs -I {} zsh -c 'fnm uninstall {} || :'
-
-.PHONY: _install/asdf-langs
-_install/asdf-langs: # Install languages by asdf
-	mkdir -p ~/.asdf
-	$(SCRIPTS_DIR)/asdf/install.sh nodejs node || :
-	$(SCRIPTS_DIR)/asdf/install.sh yarn || :
-	$(SCRIPTS_DIR)/asdf/install.sh pnpm || :
-	$(SCRIPTS_DIR)/asdf/install.sh terraform || :
-
-.PHONY: _uninstall/asdf-langs
-_uninstall/asdf-langs: # Uninstall languages by asdf
-	$(SCRIPTS_DIR)/asdf/uninstall.sh
 
 # packages ----------------------------------------------------------------------------------------------------
 

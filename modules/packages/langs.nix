@@ -12,7 +12,6 @@ in
 with pkgs;
 lib.attrValues {
   meta = [
-    asdf-vm # Extendable version manager with support for Ruby, Node.js, Erlang & more
     proto # A pluggable multi`-language version manager
   ];
   node =
