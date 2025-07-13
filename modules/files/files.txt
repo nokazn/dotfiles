@@ -21,7 +21,6 @@
 .config/tmux/memory-usage.sh
 .config/wezterm
 .ssh/config
-.asdfrc
 # .bashrc
 # .bash_profile
 .curlrc
