@@ -1,7 +1,6 @@
 # /etc/bash.bashrc
 # /etc/bashrc
 .aws/config
-.bash-it/custom/bobby2/bobby2.theme.bash
 .config/bat/config
 .config/broot/conf.hjson
 .config/Code/User/keybindings.json
