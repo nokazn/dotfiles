@@ -38,12 +38,14 @@ in
       };
     }
   ];
-  initExtra = commonShellConfig.init + ''
-    # FIXME: デバッグ用
-    # if (which zprof > /dev/null) ;then
-    #   zprof | less
-    # fi
-  '';
+  initContent =
+    commonShellConfig.init
+    + ''
+      # FIXME: デバッグ用
+      # if (which zprof > /dev/null) ;then
+      #   zprof | less
+      # fi
+    '';
   loginExtra = commonShellConfig.profile;
   envExtra = ''
     # FIXME: デバッグ用
