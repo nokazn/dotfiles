@@ -14,6 +14,8 @@
 	pager = delta
 	excludesFile = ~/.config/git/ignore
 	attributesFile = ~/.config/git/attributes
+	# macOSでもファイル・ディレクトリ名をcase sensitiveにする
+	ignorecase = false
 
 [diff]
 	external = difft
