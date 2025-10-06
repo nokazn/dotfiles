@@ -71,7 +71,7 @@ in
 
     # Git
     git_branch = {
-      symbol = "";
+      symbol = "";
       disabled = false;
       style = toBold pastel.cyan;
     };
