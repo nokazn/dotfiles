@@ -116,6 +116,10 @@ if [[ -f "$HOME/.cargo/env" ]]; then
 	source "$HOME/.cargo/env"
 fi
 
+if [[ -d "$HOME/.cargo/bin" ]]; then
+	_register_forward "$HOME/.cargo/bin"
+fi
+
 # Nim (choosenim)
 if [[ -d "$HOME/.nimble/bin" ]]; then
 	_register_forward "$HOME/.nimble/bin"
