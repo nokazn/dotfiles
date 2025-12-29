@@ -20,9 +20,8 @@ function _register_forward_if_not() {
 
 # パスが追加されていても、先頭に移動する
 function _register_forward() {
-	# `/`を`\/`にエスケープ
-	local -r p=$(sed -E -e "s/\//\\\\\//g" <<<"$1")
-	PATH=$(sed -E -e "s/:${p}//" <<<"$PATH" | sed -E -e "s/^/${p}:/")
+	PATH=$(sed -E -e "s|:$1||" <<<"$PATH")
+	PATH="$1:${PATH}"
 	return 0
 }
 
