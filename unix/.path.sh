@@ -149,6 +149,9 @@ if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 fi
 
 # Nix (multi user)
+if [[ -f "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" ]]; then
+  source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
 if [[ -d "/nix/var/nix/profiles/default/bin" ]]; then
 	# darwinでの初期インストールのために必要
 	_register_forward "/nix/var/nix/profiles/default/bin"

@@ -35,12 +35,12 @@
       # this line is replaced by the real user name as fallback
       user = {
         # this line is replaced by the real user name as fallback
-        name = "${USER}";
+        name = "nokazn";
       };
       # whether username is the one in GitHub Actions
       isCi = user.name == "runner";
       # this line is replaced by the real user name as fallback
-      HOST = "${HOST}";
+      HOST = "um890pro";
       nix = {
         version = "25.05";
       };
