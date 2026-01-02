@@ -13,8 +13,7 @@ function main() {
 		org.chromium.Chromium \
 		org.keepassxc.KeePassXC \
 		org.mozilla.firefox \
-		org.wezfurlong.wezterm \
-		us.zoom.Zoom
+		org.wezfurlong.wezterm
 }
 
 main
