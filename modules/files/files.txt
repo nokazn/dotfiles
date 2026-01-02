@@ -5,6 +5,7 @@
 .config/broot/conf.hjson
 .config/Code/User/keybindings.json
 .config/Code/User/settings.json
+.config/environment.d/fcitx5.conf
 .config/fcitx5/addon/fcitx-clipboard.conf
 .config/fcitx5/profile
 .config/gh/config.yml
