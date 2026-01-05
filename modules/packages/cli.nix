@@ -30,6 +30,7 @@ lib.attrValues {
     tldr # A collection of community-maintained help pages for command-line tools
     tokei # compiled with serialization support: json, cbor, yaml
     treefmt # one CLI to format the code tree
+    xsel
   ];
   text = [
     gettext # Well integrated set of translation tools and documentation

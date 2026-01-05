@@ -20,7 +20,10 @@ function main() {
 		fcitx5-mozc \
 		fcitx5-gtk \
 		fcitx5-qt \
-		fcitx5-configtool
+		fcitx5-configtool \
+		manjaro-asian-input-support-fcitx5 \
+		noto-fonts-cjk \
+		docker
 
 	pamac build \
 		visual-studio-code-bin
