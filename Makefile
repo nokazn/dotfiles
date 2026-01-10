@@ -119,7 +119,7 @@ _restore/unix: # (Deprecated) Restore backed-up files of dotfiles
 
 .PHONY: update/nix
 update/nix: # Update Nix package manager
-	nix-channel --update && nix upgrade-nix
+	nix-channel --update && sudo nix upgrade-nix
 	nix flake update
 
 .PHONY: update/npm-packages-list

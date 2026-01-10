@@ -144,7 +144,7 @@
             gnumake
             shellcheck
             shfmt
-            nixfmt-rfc-style
+            nixfmt
             yamlfmt
             dprint
             pre-commit

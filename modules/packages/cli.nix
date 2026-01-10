@@ -14,7 +14,7 @@ lib.attrValues {
     mysql80
   ];
   system = [
-    du-dust # du + rust = dust. Like du but more intuitive
+    dust # du + rust = dust. Like du but more intuitive
     htop # A cross-platform interactive process viewer
     gtop # System monitoring dashboard for the terminal
     ncdu # A disk usage analyzer with an ncurses interface
