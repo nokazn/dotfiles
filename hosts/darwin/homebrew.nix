@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{ ... }: {
   enable = true;
   casks = [
     "adobe-acrobat-reader"
