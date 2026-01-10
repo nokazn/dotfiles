@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   enable = true;
   casks = [
     "adobe-acrobat-reader"
@@ -6,8 +7,9 @@
     "battery"
     "bluesnooze"
     "clipy"
+    "copilot-cli"
     "discord"
-    "docker"
+    "docker-desktop"
     "firefox"
     "google-chrome"
     "google-drive"
@@ -22,7 +24,7 @@
     "notion"
     "slack"
     "spotify"
-    "todoist"
+    "todoist-app"
     "visual-studio-code"
     "wezterm"
     "zed"
