@@ -1,12 +1,11 @@
-node = "latest"
+node = "stable"
 yarn = "latest"
 pnpm = "latest"
-terraform = "latest"
 go = "latest"
 uv = "latest"
 
 [tools.node]
 bundled-npm = true
 
-[plugins]
-terraform = "source:https://raw.githubusercontent.com/theomessin/proto-toml-plugins/master/terraform.toml"
+[settings]
+auto-install = true
