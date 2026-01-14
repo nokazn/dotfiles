@@ -45,8 +45,8 @@
 	follow = true
 
 [pretty]
-	default = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white)%s%Creset %C(green)- [%an] %C(cyan)(%cr)%Creset"
-	bold = "format:%C(yellow)%h%Creset%C(red)%d%Creset %C(white bold)%s%Creset %C(green)- %an %C(cyan)(%cr)%Creset"
+	default = "format:%C(yellow)%h%Creset %C(white)%s%Creset%C(red)%d%Creset %C(green)- [%an] %C(cyan)(%cr)%Creset"
+	bold = "format:%C(yellow)%h%Creset %C(white bold)%s%Creset%C(red)%d%Creset %C(green)- %an %C(cyan)(%cr)%Creset"
 
 [branch]
   sort = -committerdate
