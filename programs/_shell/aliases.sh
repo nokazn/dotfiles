@@ -134,7 +134,7 @@ function ffcd() {
 
 function ffcode() {
 	local keyword
-	if [[ ! "$1" =~ ^- ]]; then
+	if [[ -n "$1" ]] && [[ ! "$1" =~ ^- ]]; then
 		keyword="$1"
 		shift
 	fi
@@ -154,7 +154,7 @@ function ffcode() {
 
 function fvim() {
 	local keyword
-	if [[ ! "$1" =~ ^- ]]; then
+	if [[ -n "$1" ]] && [[ ! "$1" =~ ^- ]]; then
 		keyword="$1"
 		shift
 	fi
@@ -166,7 +166,7 @@ function fvim() {
 
 function fbroot() {
 	local keyword
-	if [[ ! "$1" =~ ^- ]]; then
+	if [[ -n "$1" ]] && [[ ! "$1" =~ ^- ]]; then
 		keyword="$1"
 		shift
 	fi
@@ -180,7 +180,7 @@ function fbroot() {
 
 function ffbroot() {
 	local keyword
-	if [[ ! "$1" =~ ^- ]]; then
+	if [[ -n "$1" ]] && [[ ! "$1" =~ ^- ]]; then
 		keyword="$1"
 		shift
 	fi
