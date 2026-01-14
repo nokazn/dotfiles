@@ -15,7 +15,7 @@ HOST := $(shell if command -v scutil > /dev/null; then scutil --get LocalHostNam
 init/user: add-tools/nix apply/user install/langs # Set up all languages & packages for user environment
 
 .PHONY: init/darwin
-init/darwin: add-tools/nix apply/darwin install/langs # Set up all languages & packages for darwin
+init/darwin: add-tools/homebrew add-tools/nix apply/darwin install/langs # Set up all languages & packages for darwin
 
 # tools ----------------------------------------------------------------------------------------------------
 
@@ -28,6 +28,10 @@ add-tools/nix: _print-airplane # Install nix
 		source $(PATH_SCRIPT); \
 		echo "✅ Nix has been installed successfully!"; \
 	fi
+
+.PHONY: add-tools/homebrew
+add-tools/homebrew: _print-airplane # Add Homebrew
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 .PHONY: add-tools/wsl-hello-sudo
 add-tools/wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
