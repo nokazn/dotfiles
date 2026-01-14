@@ -1,3 +1,5 @@
+# /etc/bash.bashrc
+# /etc/bashrc
 .aws/config
 .config/bat/config
 .config/broot/conf.hjson
@@ -19,6 +21,7 @@
 .config/wezterm
 .ssh/config
 # .bashrc
+# .bash_profile
 .curlrc
 .gitconfig
 .npmrc
@@ -28,6 +31,12 @@
 # .profile
 .tool-versions
 .yarnrc
+# .zlogin
+# .zlogout
+# .zpreztorc
+# .zprofile
+# .zshenv
+# .zshrc
 Library/Application Support/Code/User/keybindings.json
 Library/Application Support/Code/User/settings.json
 biome.jsonc
