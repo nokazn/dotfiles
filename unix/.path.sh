@@ -134,6 +134,8 @@ if [[ -d "$HOME/.proto" ]]; then
 	export PROTO_HOME="$HOME/.proto"
 	_register_forward "${PROTO_HOME}/bin"
 	_register_forward "${PROTO_HOME}/shims"
+	# パス追加時に https://github.com/moonrepo/proto/blob/7b9e3b7785e49e7a8d323b307151a842af6084e8/crates/cli/src/systems.rs#L81-L148 の出力でsedコマンドでエラーになってしまうのを防ぐため
+	export PROTO_VERSION_CHECK=0
 fi
 
 # fnm
