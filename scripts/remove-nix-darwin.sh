@@ -34,6 +34,8 @@ function remove_nix_darwin() {
     sudo rm -rf /etc/{nix,profiles} \
         /var/root/{.nix-profile,.nix-defexpr,.nix-channels} \
         ~/{.nix-profile,.nix-defexpr,.nix-channels}
+		rm -rf "${HOME}/Applications/Nix Apps" \
+			"${HOME}/Applications/Home Manager Apps"
 
     # See https://github.com/NixOS/nix/issues/8771#issuecomment-1662633816
     sudo rm -rf /etc/ssl/certs/ca-certificates.crt
@@ -48,7 +50,8 @@ function remove_nix_darwin() {
     read -rp "Do you want to reboot to unmount \`/Volumes/Nix Store\` instead of \`/nix\` now? (Y/n) " response </dev/tty
     if [[ ${response} =~ ^([yY][eE][sS]|[yY])$ ]]; then
         echo 'You should run the following command to unmount the Nix store volume. (See https://github.com/NixOS/nix/issues/458#issuecomment-1264906595)'
-        echo 'sudo diskutil apfs deleteVolume /Volumes/Nix\ Store'
+        echo '  sudo diskutil apfs deleteVolume "Nix Store"'
+        echo '  sudo security delete-generic-password  -a "Nix Store" -s "Nix Store" -l "disk3 encryption password" -D "Encrypted volume password"'
         echo 'After 5 seconds the system will reboot.'
         echo "${complete_message}"
         sleep 5
