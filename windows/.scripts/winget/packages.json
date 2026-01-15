@@ -25,18 +25,15 @@
 				{ "PackageIdentifier" : "Logitech.LogiBolt" },
 				{ "PackageIdentifier" : "Logitech.Options" },
 				{ "PackageIdentifier" : "Microsoft.VisualStudioCode" },
-				{ "PackageIdentifier" : "Microsoft.WindowsTerminal" },
 				{ "PackageIdentifier" : "Mozilla.Firefox" },
 				{ "PackageIdentifier" : "NickeManarin.ScreenToGif" },
-				{ "PackageIdentifier" : "PostgreSQL.pgAdmin" },
 				{ "PackageIdentifier" : "Postman.Postman" },
 				{ "PackageIdentifier" : "REALiX.HWiNFO" },
 				{ "PackageIdentifier" : "SlackTechnologies.Slack" },
 				{ "PackageIdentifier" : "TechPowerUp.GPU-Z" },
 				{ "PackageIdentifier" : "voidtools.Everything" },
 				{ "PackageIdentifier" : "wez.wezterm" },
-				{ "PackageIdentifier" : "Wox.Wox" },
-				{ "PackageIdentifier" : "Zoom.Zoom" }
+				{ "PackageIdentifier" : "Wox.Wox" }
 			],
 			"SourceDetails" :
 			{

@@ -7,7 +7,7 @@
   // Editor
 
   "breadcrumbs.enabled": true,
-  "diffEditor.ignoreTrimWhitespace": false, // 差分エディタで両端のホワイトスペースの変更を無視
+  "diffEditor.ignoreTrimWhitespace": true, // 差分エディタで両端のホワイトスペースの変更を無視
   "editor.accessibilitySupport": "off",
   "editor.autoClosingBrackets": "always", // 括弧閉じを自動で入力
   "editor.bracketPairColorization.enabled": true,
@@ -30,6 +30,7 @@
   "redhat.telemetry.enabled": true,
   "security.workspace.trust.untrustedFiles": "open",
   "terminal.integrated.scrollback": 10000, // ターミナルでスクロールできる行数
+  "terminal.integrated.stickyScroll.enabled": false,
   "vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration",
   "workbench.colorTheme": "Vaporizer Golgi Dark",
   "workbench.editor.enablePreview": false, // タブが上書きされるのを防ぐ
@@ -37,7 +38,11 @@
   "workbench.iconTheme": "vscode-icons",
   "workbench.startupEditor": "none",
   "workbench.tree.indent": 12,
-  "customWindowZoom.zoomLevelChangeValue": 0.125,
+  "workbench.activityBar.location": "top",
+  "workbench.editorAssociations": {
+    "git-rebase-todo": "default"
+  },
+  "customWindowZoom.zoomLevelChangeValue": 0.25,
   "window.confirmBeforeClose": "keyboardOnly",
 
   "workbench.editor.customLabels.patterns": {

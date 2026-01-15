@@ -32,7 +32,7 @@ let
             ''
           else
             ''
-              chmod +w '${file}'
+              /usr/bin/sudo chmod +w '${file}'
             '')
         );
     in

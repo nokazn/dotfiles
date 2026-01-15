@@ -12,7 +12,6 @@
 .config/git/config.work
 .config/git/ignore
 .config/htop/htoprc
-.config/latte/custom.layout.latte
 .config/lazygit/config.yml
 .config/neofetch/config.conf
 .config/nix
@@ -31,7 +30,6 @@
 .prototools
 # .profile
 .tool-versions
-.xprofile
 .yarnrc
 # .zlogin
 # .zlogout

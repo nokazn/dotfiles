@@ -14,7 +14,7 @@ lib.attrValues {
     mysql80
   ];
   system = [
-    du-dust # du + rust = dust. Like du but more intuitive
+    dust # du + rust = dust. Like du but more intuitive
     htop # A cross-platform interactive process viewer
     gtop # System monitoring dashboard for the terminal
     ncdu # A disk usage analyzer with an ncurses interface
@@ -30,6 +30,7 @@ lib.attrValues {
     tldr # A collection of community-maintained help pages for command-line tools
     tokei # compiled with serialization support: json, cbor, yaml
     treefmt # one CLI to format the code tree
+    xsel
   ];
   text = [
     gettext # Well integrated set of translation tools and documentation

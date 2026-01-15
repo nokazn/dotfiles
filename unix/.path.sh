@@ -20,9 +20,8 @@ function _register_forward_if_not() {
 
 # パスが追加されていても、先頭に移動する
 function _register_forward() {
-	# `/`を`\/`にエスケープ
-	local -r p=$(sed -E -e "s/\//\\\\\//g" <<<"$1")
-	PATH=$(sed -E -e "s/:${p}//" <<<"$PATH" | sed -E -e "s/^/${p}:/")
+	PATH="$(sed -E -e "s|:$1||" <<<"$PATH")"
+	PATH="$1:${PATH}"
 	return 0
 }
 
@@ -45,40 +44,6 @@ function _detect_shell() {
 		echo "bash"
 		;;
 	esac
-}
-
-function _shell_extension_pattern() {
-	case $(_detect_shell) in
-	"bash")
-		echo ".+\.(ba)?sh$"
-		;;
-	"zsh")
-		echo ".+\.(ba|z)?sh$"
-		;;
-	"fish")
-		echo ".+\.fish$"
-		;;
-	"nu")
-		echo ".+\.nu$"
-		;;
-	*)
-		echo ".+\.sh$"
-		;;
-	esac
-}
-
-# 初期化スクリプトを読み込む
-function _apply_profiles() {
-	local keyword
-	if [[ ! "$1" =~ ^- ]]; then
-		keyword="$1"
-		shift
-	fi
-	local -r all_profiles=$(find "${keyword}" -mindepth 1 -maxdepth 1 "$@")
-	local -r pattern=$(_shell_extension_pattern)
-	grep -E -e "${pattern}" <<<"${all_profiles}" | while read -r dir && [[ -n "${dir}" ]]; do
-		source "${dir}"
-	done
 }
 
 function _start_mise() {
@@ -130,7 +95,6 @@ if [[ -d "$HOME/.deno/bin" ]]; then
 	_register_forward "$HOME/.deno/bin"
 fi
 
-# TODO
 # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 if [[ -d "$HOME/.sdkman" ]]; then
 	export SDKMAN_DIR="$HOME/.sdkman"
@@ -149,28 +113,15 @@ if [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]; then
 fi
 
 # Nix (multi user)
+if [[ -f "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" ]]; then
+	source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
 if [[ -d "/nix/var/nix/profiles/default/bin" ]]; then
 	# darwinでの初期インストールのために必要
 	_register_forward "/nix/var/nix/profiles/default/bin"
 fi
 if [[ -d "/etc/profiles/per-user/$USER/bin" ]]; then
 	_register_forward "/etc/profiles/per-user/$USER/bin"
-fi
-
-# anyenv
-if [[ -d "$HOME/.anyenv" ]]; then
-	if _is_unregistered_path "$HOME/.anyenv/bin"; then
-		PATH="$HOME/.anyenv/bin:$PATH"
-		# anyenv コマンドが存在する場合
-		if type "anyenv" >/dev/null 2>&1; then
-			eval "$(anyenv init -)"
-		fi
-	fi
-	# `~/.anyenv/envs` 配下の `bin` と `shims` ディレクトリをパスとして登録
-	find ~/.anyenv/envs -mindepth 1 -maxdepth 1 -type d | while read -r dir; do
-		_register_forward_if_not "${dir}/bin"
-		_register_forward_if_not "${dir}/shims"
-	done
 fi
 
 # mise
@@ -183,8 +134,11 @@ if [[ -d "$HOME/.proto" ]]; then
 	export PROTO_HOME="$HOME/.proto"
 	_register_forward "${PROTO_HOME}/bin"
 	_register_forward "${PROTO_HOME}/shims"
+	# パス追加時に https://github.com/moonrepo/proto/blob/7b9e3b7785e49e7a8d323b307151a842af6084e8/crates/cli/src/systems.rs#L81-L148 の出力でsedコマンドでエラーになってしまうのを防ぐため
+	export PROTO_VERSION_CHECK=0
 fi
 
+# fnm
 if command -v fnm >/dev/null; then
 	eval "$(fnm env --use-on-cd)"
 fi

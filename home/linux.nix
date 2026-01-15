@@ -11,7 +11,7 @@ let
   nixPackages = import ../modules/packages args;
   npmPackages = builtins.attrValues (
     import ../modules/node/npm.nix {
-      inherit pkgs;
+      inherit pkgs lib;
       nodejs = pkgs.nodejs_22;
     }
   );

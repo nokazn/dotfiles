@@ -2,7 +2,7 @@
 with pkgs; [
   alejandra
   nil
-  nixfmt-rfc-style
+  nixfmt
   nixpkgs-lint
   nixpkgs-review
   nix-prefetch-git
