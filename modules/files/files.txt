@@ -1,5 +1,6 @@
 # /etc/bash.bashrc
 # /etc/bashrc
+# /etc/zshenv
 .aws/config
 .config/bat/config
 .config/broot/conf.hjson
