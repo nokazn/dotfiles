@@ -6,7 +6,7 @@ function _chmod() {
 	if [[ $(uname) == "Darwin" ]]; then
 		sudo /bin/chmod -vh "$@"
 	else
-		chmod --verbose "$@"
+		sudo chmod --verbose "$@"
 	fi
 }
 

@@ -42,7 +42,7 @@
       # this line is replaced by the real user name as fallback
       HOST = "${HOST}";
       nix = {
-        version = "25.05";
+        version = "25.11";
       };
       allowUnfreePredicate =
         pkg:
@@ -144,7 +144,7 @@
             gnumake
             shellcheck
             shfmt
-            nixfmt-rfc-style
+            nixfmt
             yamlfmt
             dprint
             pre-commit

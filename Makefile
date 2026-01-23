@@ -15,7 +15,7 @@ HOST := $(shell if command -v scutil > /dev/null; then scutil --get LocalHostNam
 init/user: add-tools/nix apply/user install/langs # Set up all languages & packages for user environment
 
 .PHONY: init/darwin
-init/darwin: add-tools/nix apply/darwin install/langs # Set up all languages & packages for darwin
+init/darwin: add-tools/homebrew add-tools/nix apply/darwin install/langs # Set up all languages & packages for darwin
 
 # tools ----------------------------------------------------------------------------------------------------
 
@@ -24,9 +24,14 @@ add-tools/nix: _print-airplane # Install nix
 	@if type "nix" >/dev/null 2>&1; then \
 		echo "✅ Nix is already installed."; \
 	else \
-		curl -L https://nixos.org/nix/install | bash; \
+		curl -fsSL https://install.determinate.systems/nix | sudo sh -s -- install; \
+		source $(PATH_SCRIPT); \
 		echo "✅ Nix has been installed successfully!"; \
 	fi
+
+.PHONY: add-tools/homebrew
+add-tools/homebrew: _print-airplane # Add Homebrew
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 .PHONY: add-tools/wsl-hello-sudo
 add-tools/wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
@@ -34,10 +39,14 @@ add-tools/wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
 
 .PHONY: remove-tools/nix/user
 remove-tools/nix/user: _print-goodbye # Uninstall nix for user environment (See https://nixos.org/manual/nix/stable/installation/uninstall.html#uninstalling-nix)
-	$(NIX) shell github:nix-community/home-manager/release-24.05 \
+	$(NIX) shell github:nix-community/home-manager/master \
 		--command sh -c "home-manager uninstall"
-	rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs,.config/nix,.config/home-manager}
-	sudo rm -rf /nix /etc/profiles/per-users
+	if [[ -f /nix/nix-installer ]]; then \
+		sudo /nix/nix-installer uninstall; \
+		rm -rf ~/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs,.config/nix,.config/home-manager}; \
+	else
+		echo "❌ nix-installer does not exist."; \
+	fi
 	@echo "✅ Nix has been uninstalled successfully!"
 
 .PHONY: remove-tools/nix/darwin
@@ -114,7 +123,7 @@ _restore/unix: # (Deprecated) Restore backed-up files of dotfiles
 
 .PHONY: update/nix
 update/nix: # Update Nix package manager
-	nix-channel --update && nix upgrade-nix
+	sudo determinate-nixd upgrade
 	nix flake update
 
 .PHONY: update/npm-packages-list

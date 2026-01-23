@@ -9,7 +9,7 @@
 ```sh
 # Generate SSH key (and then need to register public key to GitHub)
 $ mkdir -p ~/.ssh/github.com && \
-  ssh-keygen -t rsa -b 4096 -C nokazn@gmail.com -f ~/.ssh/github.com/id_rsa -N "" && \
+  ssh-keygen -t ed25519 -C nokazn@gmail.com -f ~/.ssh/github.com/id_rsa -N "" && \
   cat ~/.ssh/github.com/id_rsa.pub
 $ curl https://raw.githubusercontent.com/nokazn/dotfiles/main/unix/.ssh/config > ~/.ssh/config
 $ ssh -T github.com

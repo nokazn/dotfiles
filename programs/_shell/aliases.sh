@@ -47,159 +47,6 @@ function code() {
 	fi
 }
 
-#
-# Docker
-#
-
-# Nginx
-NGINX_CONTAINER="nginx"
-unset NGINX_CONTAINER
-NGINX_PORT=8080
-unset NGINX_PORT
-
-# Run nginx in Docker.
-function docker-nginx() {
-	docker run -d --name "${NGINX_CONTAINER}" -p "${NGINX_PORT}:80" nginx
-	echo "✅ Running nginx at port ${NGINX_PORT} in '${NGINX_CONTAINER}' container."
-}
-
-# Remove nginx in Docker.
-function docker-nginx-rm() {
-	docker stop "${NGINX_CONTAINER}"
-	echo "✅ Removed '${NGINX_CONTAINER}' container."
-}
-
-# PostgresQL
-POSTGRESQL_CONTAINER="postgresql"
-unset POSTGRESQL_CONTAINER
-POSTGRESQL_PORT=5432
-unset POSTGRESQL_PORT
-
-# Run PostgreSQL in Docker.
-function docker-postgresql() {
-	docker run --rm -d \
-		--name "${POSTGRESQL_CONTAINER}" \
-		-e POSTGRES_PASSWORD=password \
-		-p "${POSTGRESQL_CONTAINER}:${POSTGRESQL_CONTAINER}" \
-		-v postgres-tmp:/var/lib/postgresql/data \
-		postgres:12-alpine
-	echo "✅ Running PostgreSQL at port ${POSTGRESQL_PORT} in '${POSTGRESQL_CONTAINER}' container. You can connect by executing 'psql -h localhost -p 5432 -U postgres'."
-}
-
-# Run PostgreSQL in Docker.
-function docker-postgresql-rm() {
-	docker stop "${POSTGRESQL_CONTAINER}"
-	echo "✅ Removed '${POSTGRESQL_CONTAINER}' container."
-}
-
-# MySQL
-MYSQL_CONTAINER="mysql"
-unset MYSQL_CONTAINER
-MYSQL_NETWORK="mysql-network"
-unset MYSQL_NETWORK
-MYSQL_PORT=3306
-unset MYSQL_PORT
-
-# Run MySQL in Docker/
-function docker-mysql() {
-	docker network create "${MYSQL_NETWORK}"
-	docker run -d --rm \
-		--name "${MYSQL_CONTAINER}" \
-		--network "${MYSQL_NETWORK}" \
-		-e MYSQL_ROOT_PASSWORD=password \
-		-p "${MYSQL_PORT}:${MYSQL_PORT}" \
-		-v mysql-tmp-data:/var/lib/mysql \
-		-v mysql-tmp-log:/var/log/mysql \
-		mysql:5.7
-	echo "✅ Running MySQL at port ${MYSQL_PORT} in '${MYSQL_CONTAINER}' container."
-}
-
-# Remove MySql container.
-function docker-mysql-rm() {
-	docker stop "${MYSQL_CONTAINER}"
-	docker network rm "${MYSQL_NETWORK}"
-	echo "✅ Removed '${MYSQL_CONTAINER}' container."
-}
-
-# Redis
-REDIS_CONTAINER="redis"
-unset REDIS_CONTAINER
-REDIS_NETWORK=redis-"network"
-unset REDIS_NETWORK
-REDIS_PORT=6379
-unset REDIS_PORT
-
-# Run Redis in Docker.
-function docker-redis() {
-	docker network create "${REDIS_NETWORK}"
-	docker run -d --rm \
-		--name "${REDIS_CONTAINER}" \
-		--network "${REDIS_NETWORK}" \
-		-p "${REDIS_PORT}:${REDIS_PORT}" \
-		-v redis-tmp:/data \
-		redis:6.0.10-alpine \
-		redis-server --appendonly yes
-	echo "✅ Running Redis at port ${REDIS_PORT} in '${REDIS_CONTAINER}' container."
-}
-
-# Remove Redis container.
-function docker-redis-rm() {
-	docker stop "${REDIS_CONTAINER}"
-	docker network rm "${REDIS_NETWORK}"
-	echo "✅ Removed '${REDIS_CONTAINER}' container."
-}
-
-# Memcached
-MEMCACHED_CONTAINER="memcached"
-unset MEMCACHED_CONTAINER
-MEMCACHED_NETWORK="memcached-network"
-unset MEMCACHED_NETWORK
-MEMCACHED_PORT=11121
-unset MEMCACHED_PORT
-
-# Run Memcached in Docker.
-function docker-memcached() {
-	docker network create "${MEMCACHED_NETWORK}"
-	docker run -d --rm \
-		--name "${MEMCACHED_CONTAINER}" \
-		--network "${MEMCACHED_NETWORK}" \
-		-p "${MEMCACHED_PORT}:${MEMCACHED_PORT}" \
-		memcached:1.6-alpine
-	echo "✅ Running Memcached at port ${MEMCACHED_PORT} in '${MEMCACHED_CONTAINER}' container."
-}
-
-# Remove Memcached container.
-function docker-memcached-rm() {
-	docker stop "${MEMCACHED_CONTAINER}"
-	docker network rm "${MEMCACHED_NETWORK}"
-	echo "✅ Removed '${MEMCACHED_CONTAINER}' container."
-}
-
-# Wordpress
-WORKDPRESS_CONTAINER="wordpress"
-unset WORKDPRESS_CONTAINER
-WORKDPRESS_PORT=8080
-unset WORKDPRESS_PORT
-
-# Run Wordpress & MySQL in Docker.
-function docker-wordpress() {
-	docker-mysql
-	docker run -d --rm --name "${WORKDPRESS_CONTAINER}" \
-		--network "${MYSQL_NETWORK}" \
-		-e WORDPRESS_DB_PASSWORD=password \
-		-e WORDPRESS_DB_HOST="localhost" \
-		-p "${WORKDPRESS_PORT}:80" \
-		wordpress
-	echo "✅ Running Wordpress at port ${WORKDPRESS_PORT} in '${WORKDPRESS_CONTAINER}' container."
-}
-
-# Run Wordpress & MySQL in Docker.
-function docker-wordpress-rm() {
-	docker stop "${WORKDPRESS_CONTAINER}"
-	echo "✅ Removed '${WORKDPRESS_CONTAINER}' container."
-	docker-mysql-rm
-}
-
 # Remove all untagged images.
 function docker-rmi-untagged-images() {
 	docker rmi "$(docker images -f "dangling=true" -q --no-trunc)"
@@ -287,7 +134,7 @@ function ffcd() {
 
 function ffcode() {
 	local keyword
-	if [[ ! "$1" =~ ^- ]]; then
+	if [[ -n "$1" ]] && [[ ! "$1" =~ ^- ]]; then
 		keyword="$1"
 		shift
 	fi
@@ -307,7 +154,7 @@ function ffcode() {
 
 function fvim() {
 	local keyword
-	if [[ ! "$1" =~ ^- ]]; then
+	if [[ -n "$1" ]] && [[ ! "$1" =~ ^- ]]; then
 		keyword="$1"
 		shift
 	fi
@@ -319,7 +166,7 @@ function fvim() {
 
 function fbroot() {
 	local keyword
-	if [[ ! "$1" =~ ^- ]]; then
+	if [[ -n "$1" ]] && [[ ! "$1" =~ ^- ]]; then
 		keyword="$1"
 		shift
 	fi
@@ -333,7 +180,7 @@ function fbroot() {
 
 function ffbroot() {
 	local keyword
-	if [[ ! "$1" =~ ^- ]]; then
+	if [[ -n "$1" ]] && [[ ! "$1" =~ ^- ]]; then
 		keyword="$1"
 		shift
 	fi

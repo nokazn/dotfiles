@@ -10,8 +10,8 @@ let
   args = { inherit pkgs lib meta; };
   nixPackages = import ../modules/packages args;
   npmPackages = builtins.attrValues (
-    import ../modules/node/default.nix {
-      inherit pkgs;
+    import ../modules/node/npm.nix {
+      inherit pkgs lib;
       nodejs = pkgs.nodejs_22;
     }
   );
