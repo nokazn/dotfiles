@@ -73,6 +73,8 @@
 	ls1 = log --oneline --pretty=default -n 1
 	ls2 = log --oneline --pretty=default -n 2
 	ls3 = log --oneline --pretty=default -n 3
+	ls-files-untracked = ls-files --others --exclude-standard
+	mo-1 = !git merge origin/$(git rev-parse --abbrev-ref @{-1})  # 前のブランチのoriginをマージする
 	reamend = reset --soft HEAD@{1}
 	reb = rebase
 	rebi1 = rebase -i HEAD~
