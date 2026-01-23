@@ -4,19 +4,16 @@ set -eu -o pipefail
 
 function main() {
 	flatpak install -y --noninteractive \
+		flathub \
 		com.discordapp.Discord \
 		com.getpostman.Postman \
 		com.slack.Slack \
 		com.spotify.Client \
 		com.todoist.Todoist \
-		com.visualstudio.code \
 		org.chromium.Chromium \
-		org.gimp.GIMP \
 		org.keepassxc.KeePassXC \
 		org.mozilla.firefox \
-		org.mozilla.Thunderbird \
-		org.videolan.VLC \
-		us.zoom.Zoom
+		org.wezfurlong.wezterm
 }
 
 main

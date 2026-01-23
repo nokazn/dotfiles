@@ -17,8 +17,8 @@
   git.submoduleIgnore = "all";
   prompt.theme = "off";
   ssh.identities = [
-    "id_rsa"
-    "id_rsa2"
+    "id"
+    "id2"
     "github"
     "gitlab"
   ];
