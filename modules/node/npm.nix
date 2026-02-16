@@ -78,4 +78,46 @@
     packageJSON = "${src}/package.json";
     yarnLock = "${src}/yarn.lock";
   };
+
+  skills = pkgs.stdenv.mkDerivation (finalAttrs: {
+    pname = "skills";
+    version = "1.3.9";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "vercel-labs";
+      repo = "skills";
+      rev = "v${finalAttrs.version}";
+      hash = "sha256-JidfLICAkXY1xEUSGcRZbS88x50cxyZcG9uRFASqOqI=";
+    };
+
+    nativeBuildInputs = [
+      pkgs.nodejs_22
+      pkgs.pnpmConfigHook
+      pkgs.pnpm_10
+    ];
+
+    pnpmDeps = pkgs.fetchPnpmDeps {
+      inherit (finalAttrs) pname version src;
+      fetcherVersion = 3;
+      hash = "sha256-pwPJ4CRHEtCXpt5b6g/7EbDsUc2KCjOtpiVED0tqoMk=";
+    };
+
+    buildPhase = ''
+      runHook preBuild
+      # Skip license generation as it requires network access
+      # Just run obuild directly instead of the full build script
+      pnpm obuild
+      runHook postBuild
+    '';
+
+    installPhase = ''
+      runHook preInstall
+      mkdir -p $out/lib/node_modules/skills
+      cp -r dist bin package.json $out/lib/node_modules/skills/
+      mkdir -p $out/bin
+      ln -s $out/lib/node_modules/skills/bin/cli.mjs $out/bin/skills
+      ln -s $out/lib/node_modules/skills/bin/cli.mjs $out/bin/add-skill
+      runHook postInstall
+    '';
+  });
 }
