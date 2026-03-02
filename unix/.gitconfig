@@ -92,6 +92,7 @@
 	cll = "clone --filter=blob:none --filter=tree:1 --depth=100"
 	clgh = "!f() { if [[ \"$1\" =~ .+/.+ ]]; then target=\"$1\"; shift; else target=\"$1/$2\"; shift 2; fi; git clone git@github.com:\"${target}\" \"$@\"; }; f"
 	cm = commit -m
+	cmb = "!f() { msg=\"$1\"; shift; git commit \"$@\" -m \"$msg\" -m \"$(git symbolic-ref --short HEAD | sed 's|/.*||')\"; }; f"  # コミットメッセージの末尾にブランチ名の最初の/までを付与
 	cp = cherry-pick
 	d = diff
 	diff-default = diff --no-ext-diff
@@ -106,7 +107,7 @@
 	dlc = diff --stat --cached
 	exact-amend = !git commit -m \"$(git log --format="%s" -n 1)\" --date="$(git log --format="%cd" -n 1)" --amend
 	f = fetch
-	l = log --stat --pretty=bold
+	l = log --stat --pretty=bold --format=%B
 	ld = "!f() { git log --oneline --no-merges $1..$2; }; f"  # commit diff from $1 to $2
 	ld-remote = "!f() { local branch="$1"; if [[ -z "$branch" ]]; then branch="$(git symbolic-ref --short HEAD)"; fi; git log --oneline --no-merges "origin/$branch..$branch"; }; f"  # commit diff from $1 to $2
 	lg = log --graph --branches --pretty=default  # graph
