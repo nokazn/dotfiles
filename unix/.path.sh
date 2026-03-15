@@ -52,16 +52,6 @@ function _start_mise() {
 	${shell} -c "eval ${script}"
 }
 
-# set PATH so it includes user's private bin if it exists
-if [[ -d "$HOME/bin" ]]; then
-	_register_forward_if_not "$HOME/bin"
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [[ -d "$HOME/.local/bin" ]]; then
-	_register_forward_if_not "$HOME/.local/bin"
-fi
-
 # # Go
 if command -v go >/dev/null; then
 	_goBinDir="$(go env GOBIN)"
@@ -122,6 +112,16 @@ if [[ -d "/nix/var/nix/profiles/default/bin" ]]; then
 fi
 if [[ -d "/etc/profiles/per-user/$USER/bin" ]]; then
 	_register_forward "/etc/profiles/per-user/$USER/bin"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [[ -d "$HOME/bin" ]]; then
+	_register_forward_if_not "$HOME/bin"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [[ -d "$HOME/.local/bin" ]]; then
+	_register_forward_if_not "$HOME/.local/bin"
 fi
 
 # mise
