@@ -3,6 +3,7 @@
   lib,
   nix,
   meta,
+  overrides,
   ...
 }:
 
@@ -34,7 +35,7 @@ in
     shellAliases = import ../modules/shellAliases.nix { inherit meta; };
 
     # nix packages
-    packages = nixPackages ++ npmPackages;
+    packages = nixPackages ++ npmPackages ++ overrides;
     # dotfiles in home directory
     file = import ../modules/files args;
   };
