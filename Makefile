@@ -126,6 +126,10 @@ update/nix: # Update Nix package manager
 	sudo determinate-nixd upgrade
 	nix flake update
 
+.PHONY: update/claude-code
+update/claude-code: # Update claude-code to the latest version
+	bash scripts/update-claude-code.sh
+
 .PHONY: update/npm-packages-list
 update/npm-packages-list: # Generate Nix packages list for npm packages
 	cd ./modules/node; \

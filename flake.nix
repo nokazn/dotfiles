@@ -72,19 +72,27 @@
         let
           generateConfiguration = (
             { isWsl }:
+            let
+              pkgs = import nixpkgs {
+                system = "x86_64-linux";
+                config.allowUnfreePredicate = allowUnfreePredicate;
+              };
+              overrides = import ./modules/overrides {
+                inherit pkgs;
+                lib = pkgs.lib;
+              };
+            in
             {
               name = user.name + (if isWsl then "-wsl" else "");
               value = home-manager.lib.homeManagerConfiguration {
-                pkgs = import nixpkgs {
-                  system = "x86_64-linux";
-                  config.allowUnfreePredicate = allowUnfreePredicate;
-                };
+                inherit pkgs;
                 modules = [
                   ./home/linux.nix
                 ];
                 extraSpecialArgs = {
                   inherit nix;
                   meta = { inherit user isWsl isCi; };
+                  overrides = builtins.attrValues overrides;
                 };
               };
             }
@@ -108,14 +116,18 @@
             inherit user isCi;
             isWsl = false;
           };
+          pkgs = import nixpkgs-darwin {
+            inherit system;
+            config.allowUnfreePredicate = allowUnfreePredicate;
+          };
+          overrides = import ./modules/overrides {
+            inherit pkgs;
+            lib = pkgs.lib;
+          };
         in
         {
-          ${HOST} = nix-darwin.lib.darwinSystem rec {
-            inherit system;
-            pkgs = import nixpkgs-darwin {
-              inherit system;
-              config.allowUnfreePredicate = allowUnfreePredicate;
-            };
+          ${HOST} = nix-darwin.lib.darwinSystem {
+            inherit system pkgs;
             modules = [
               ./hosts/darwin
               home-manager.darwinModules.home-manager
@@ -123,6 +135,7 @@
                 import ./home/darwin.nix {
                   inherit pkgs nix meta;
                   lib = pkgs.lib;
+                  overrides = builtins.attrValues overrides;
                 }
               ))
             ];
@@ -137,8 +150,13 @@
           inherit system;
           config.allowUnfreePredicate = allowUnfreePredicate;
         };
+        overrides = import ./modules/overrides {
+          inherit pkgs;
+          lib = pkgs.lib;
+        };
       in
       {
+        packages = overrides;
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             gnumake
