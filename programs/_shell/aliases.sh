@@ -98,6 +98,34 @@ function fgshow() {
 				EOF"
 }
 
+function fglog() {
+	local -r target="${1:-.}"
+	git log --oneline --follow --color=always -- "${target}" |
+		fzf --ansi \
+			--no-sort \
+			--reverse \
+			--tiebreak=index \
+			--preview 'git show --color=always {1} -- "'"${target}"'"' \
+			--bind "ctrl-m:execute:
+				git show --color=always {1} -- '${target}' | less -R"
+}
+
+function frg() {
+	local -r query="${1:-}"
+	local -ra selected=($(
+		: | fzf --multi \
+			--disabled \
+			--query "${query}" \
+			--delimiter '\t' \
+			--bind "change:reload:rg --line-number --no-heading --color=never {q} | awk -F: '{printf \"%-40s\t%s\n\", \$1\":\" \$2, substr(\$0, index(\$0,\$3))}' || true" \
+			--preview 'f=$(echo {1} | sed "s/:[0-9]*$//"); n=$(echo {1} | grep -o "[0-9]*$"); n=${n:-1}; bat --color=always --highlight-line "$n" --line-range "$(( n > 5 ? n - 5 : 1 )):$(( n + 5 ))" "$f"' |
+			awk -F'\t' '{print $1}'
+	))
+	if [[ ${#selected[@]} -gt 0 ]]; then
+		printf '%s\n' "${selected[@]}"
+	fi
+}
+
 function falias() {
 	aliases | fzf -q "$1"
 }
@@ -105,10 +133,14 @@ function falias() {
 function _fd() {
 	fd \
 		--maxdepth 5 \
-		--exclude 'Library/' \
-		--exclude 'Applications/' \
-		--exclude 'Google Drive/' \
+		--exclude 'Library' \
+		--exclude 'Applications' \
+		--exclude 'Google Drive' \
 		"$@"
+}
+
+function ffd() {
+	_fd "" | fzf -q "$1" --preview 'if [ -d {} ]; then tree -L 3 -C {} | head -100; else bat --color=always {}; fi'
 }
 
 function fcd() {
@@ -122,7 +154,7 @@ function fcd() {
 
 function ffcd() {
 	local -r dir="$(
-		_fd "" ~ -t d | fzf -q "$1"
+		_fd "" ~ -t d | fzf -q "$1" --preview 'if [ -d {} ]; then tree -L 3 -C {} | head -100; else bat --color=always {}; fi'
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		cd "${dir}" || return 1
@@ -142,7 +174,7 @@ function ffcode() {
 			--exclude '[mM]usic/' \
 			--exclude '[pP]ictures/' \
 			--exclude '[mM]ovies/' |
-			fzf -q "$keyword"
+			fzf -q "$keyword" --preview 'if [ -d {} ]; then tree -L 3 -C {} | head -100; else bat --color=always {}; fi'
 	)"
 	if [[ -n "${dir}" ]] && [[ -d "${dir}" ]]; then
 		code "${dir}" "$@"
@@ -155,7 +187,7 @@ function fvim() {
 		keyword="$1"
 		shift
 	fi
-	local -r file="$(_fd --hidden | fzf -q "$keyword")"
+	local -r file="$(_fd --hidden | fzf -q "$keyword" --preview 'if [ -d {} ]; then tree -L 3 -C {} | head -100; else bat --color=always {}; fi')"
 	if [[ -e "${file}" ]]; then
 		vim "${file}" "$@"
 	fi
