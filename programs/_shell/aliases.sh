@@ -57,40 +57,37 @@ function docker-rmi-untagged-images() {
 #
 
 function fgsw() {
-	local -r branch="$(git branch -vv | grep -v '^\s*\*' | fzf -q "$1")"
-	git switch "$(awk '{print $1}' <<<"${branch}")"
+	local -r branch="$(git branch -vv | grep -v '^\s*\*' | fzf -q "$1" --preview 'git lg --color=always {1}')"
+	if [[ -n "${branch}" ]]; then
+		git switch "$(awk '{print $1}' <<<"${branch}")"
+	fi
 }
 
 function fgswa() {
-	local -r branch="$(git branch -vva | grep -v '^\s*\*' | fzf -q "$1")"
-	git switch "$(awk '{print $1}' <<<"${branch}")"
-}
-
-function fgbrr() {
-	git fetch
-	local -r branch="$(git branch -vva --remotes --color=always --color=always | grep -v HEAD | fzf -q "$1" --ansi)"
+	local -r branch="$(git branch -vva | grep -v '^\s*\*' | grep -E -v '/HEAD$' | fzf -q "$1" --preview 'git lg --color=always {1}')"
 	if [[ -n "${branch}" ]]; then
-		local -r remote_branch="$(awk '{print $1}' <<<"${branch}")"
-		git branch "$(sed -E 's/^[^\/]+\/(.+)$/\1/' <<<"${remote_branch}")" "${remote_branch}"
+		local -r name="$(awk '{print $1}' <<<"${branch}" | sed -E 's/^remotes\/(origin|upstream)\///')"
+		git switch "${name}"
 	fi
 }
 
 function fgswr() {
 	git fetch
-	local -r branch="$(git branch -vva --remotes --color=always --color=always | grep -v HEAD | fzf -q "$1" --ansi)"
+	local -r branch="$(git branch -vva --remotes --color=always --color=always | grep -E -v '/HEAD$' | fzf -q "$1" --ansi --preview 'git lg --color=always {1}')"
 	if [[ -n "${branch}" ]]; then
 		git switch "$(awk '{print $1}' <<<"${branch}" | sed -E 's/^[^\/]+\/(.+)$/\1/')"
 	fi
 }
 
 function fgshow() {
-	git log --graph --branches --pretty=default --color=always |
+	git lg |
 		fzf -q "$1" \
 			--ansi \
 			--no-sort \
 			--reverse \
 			--tiebreak=index \
 			--bind=ctrl-s:toggle-sort \
+			--preview 'git show --color=always $(grep -o "[a-f0-9]\{7,\}" <<< {} | head -1)' \
 			--bind "ctrl-m:execute:
 				(grep -o '[a-f0-9]\{7\}' \
 					| head -1 \
