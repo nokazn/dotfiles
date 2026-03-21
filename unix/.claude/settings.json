@@ -1,0 +1,12 @@
+{
+  "model": "sonnet",
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true
+  },
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "allow": [
+      "Bash(gh pr diff:*)"
+    ]
+  }
+}

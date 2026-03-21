@@ -2,6 +2,7 @@
 # /etc/bashrc
 # /etc/zshenv
 .aws/config
+.claude/settings.json
 .config/bat/config
 .config/broot/conf.hjson
 .config/Code/User/keybindings.json
