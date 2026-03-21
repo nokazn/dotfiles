@@ -6,32 +6,30 @@ let
     enableJava = false;
     enablePhp = false;
     enablePython = true;
-    enableLangs = true;
-  } // args.meta;
+    enableTerraform = false;
+    enableLangs = false;
+  }
+  // args.meta;
 in
 with pkgs;
 lib.attrValues {
   meta = [
     proto # A pluggable multi`-language version manager
   ];
-  node =
-    [
-      fnm
-    ]
-    ++ (with nodePackages; [
-      eslint
-      node-gyp
-      prettier
-      typescript
-      webpack-cli
-    ]);
+  node = [
+    fnm
+  ]
+  ++ (with nodePackages; [
+    eslint
+    node-gyp
+    prettier
+    typescript
+    webpack-cli
+  ]);
   js = [
-    biome # Toolchain of the web
     bun # Incredibly fast JavaScript runtime, bundler, transpiler and package manager – all in one
-    deno
     dprint # Code formatting platform written in Rust
     oxlint # A suite of high-performance tools for JavaScript and TypeScript written in Rust
-    turbo # High-performance build system for JavaScript and TypeScript codebases
   ];
   rust =
     let
@@ -86,7 +84,7 @@ lib.attrValues {
     lua
     yamlfmt # An extensible command line tool or library to format yaml files.
   ];
-  terraform = [
+  terraform = lib.optionals meta.enableTerraform [
     terraformer
   ];
   langs = lib.optionals meta.enableLangs [
