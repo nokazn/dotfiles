@@ -8,4 +8,4 @@ flake.nix filter=ignore-flake-username
 # You need to add the following to your .git/config file:
 # [filter "ignore-flake-username"]
 # 	smudge = cat
-# 	clean = sed -E -e 's/name\\s=\\s\".+\"(.+)false/name = \"${USER}\"\\1false/'
+# 	clean = sed -E -e 's/name = ".+";/name = "${USER}";/' -e 's/HOST = ".+";/HOST = "${HOST}";/'
