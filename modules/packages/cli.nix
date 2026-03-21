@@ -8,10 +8,7 @@
 with pkgs;
 lib.attrValues {
   db = [
-    memcached
-    redis
     sqlite
-    mysql80
   ];
   system = [
     dust # du + rust = dust. Like du but more intuitive

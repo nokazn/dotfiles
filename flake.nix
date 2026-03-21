@@ -49,6 +49,13 @@
         builtins.elem (pkg.pname or (nixpkgs.lib.getName pkg)) [
           "claude-code"
         ];
+      profiles = [
+        "minimum"
+        "private"
+        "work"
+      ];
+      getProfileSuffix = profile: if profile == "minimum" then "" else "-${profile}";
+      getWslSuffix = isWsl: if isWsl then "-wsl" else "";
       homeManagerConfigurations = (
         home: {
           home-manager = {
@@ -64,14 +71,18 @@
     {
       # For user environments
       # - home-manager switch .#${USER}
+      # - home-manager switch .#${USER}-private
+      # - home-manager switch .#${USER}-work
       # - home-manager switch .#${USER}-wsl
+      # - home-manager switch .#${USER}-private-wsl
+      # - home-manager switch .#${USER}-work-wsl
       # For GitHub Actions
       # - home-manager switch .#runner
       # - home-manager switch .#runner-wsl
       homeConfigurations =
         let
           generateConfiguration = (
-            { isWsl }:
+            { isWsl, profile }:
             let
               pkgs = import nixpkgs {
                 system = "x86_64-linux";
@@ -83,7 +94,7 @@
               };
             in
             {
-              name = user.name + (if isWsl then "-wsl" else "");
+              name = user.name + (getProfileSuffix profile) + (getWslSuffix isWsl);
               value = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 modules = [
@@ -91,7 +102,14 @@
                 ];
                 extraSpecialArgs = {
                   inherit nix;
-                  meta = { inherit user isWsl isCi; };
+                  meta = {
+                    inherit
+                      user
+                      isWsl
+                      isCi
+                      profile
+                      ;
+                  };
                   overrides = builtins.attrValues overrides;
                 };
               };
@@ -99,23 +117,24 @@
           );
         in
         nixpkgs.lib.listToAttrs (
-          builtins.map generateConfiguration [
-            { isWsl = true; }
-            { isWsl = false; }
-          ]
+          builtins.concatMap (
+            profile:
+            builtins.map (isWsl: generateConfiguration { inherit isWsl profile; }) [
+              true
+              false
+            ]
+          ) profiles
         );
 
       # For darwin
-      # - darwin-rebuild switch .#${system}-$(USER)
+      # - darwin-rebuild switch .#${HOST}
+      # - darwin-rebuild switch .#${HOST}-private
+      # - darwin-rebuild switch .#${HOST}-work
       # For GitHub Actions
-      # - darwin-rebuild switch .#${system}-runner
+      # - darwin-rebuild switch .#${HOST}
       darwinConfigurations =
         let
           system = "aarch64-darwin";
-          meta = {
-            inherit user isCi;
-            isWsl = false;
-          };
           pkgs = import nixpkgs-darwin {
             inherit system;
             config.allowUnfreePredicate = allowUnfreePredicate;
@@ -124,24 +143,35 @@
             inherit pkgs;
             lib = pkgs.lib;
           };
+          generateDarwinConfiguration = (
+            profile:
+            let
+              meta = {
+                inherit user isCi profile;
+                isWsl = false;
+              };
+            in
+            {
+              name = HOST + (getProfileSuffix profile);
+              value = nix-darwin.lib.darwinSystem {
+                inherit system pkgs;
+                modules = [
+                  ./hosts/darwin
+                  home-manager.darwinModules.home-manager
+                  (homeManagerConfigurations (
+                    import ./home/darwin.nix {
+                      inherit pkgs nix meta;
+                      lib = pkgs.lib;
+                      overrides = builtins.attrValues overrides;
+                    }
+                  ))
+                ];
+                specialArgs = { inherit nix meta; };
+              };
+            }
+          );
         in
-        {
-          ${HOST} = nix-darwin.lib.darwinSystem {
-            inherit system pkgs;
-            modules = [
-              ./hosts/darwin
-              home-manager.darwinModules.home-manager
-              (homeManagerConfigurations (
-                import ./home/darwin.nix {
-                  inherit pkgs nix meta;
-                  lib = pkgs.lib;
-                  overrides = builtins.attrValues overrides;
-                }
-              ))
-            ];
-            specialArgs = { inherit nix meta; };
-          };
-        };
+        nixpkgs.lib.listToAttrs (builtins.map generateDarwinConfiguration profiles);
     }
     // (flake-utils.lib.eachDefaultSystem (
       system:

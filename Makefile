@@ -7,6 +7,8 @@ NIX := nix --extra-experimental-features 'nix-command flakes'
 SHELL_FILES := $(shell find . -type f | grep -E -e "\.sh$$" -e "\.bash(_aliases|_profile|rc)")
 NIX_FILES := $(shell find . -type f | grep -e "\.nix$$")
 HOST := $(shell if command -v scutil > /dev/null; then scutil --get LocalHostName; else hostname; fi)
+PROFILE ?= minimum
+PROFILE_SUFFIX := $(if $(filter minimum,$(PROFILE)),,-$(PROFILE))
 .DEFAULT_GOAL := help
 
 # init ----------------------------------------------------------------------------------------------------
@@ -80,28 +82,28 @@ apply/_inject-env: # Inject user environment
 	perl -pi -e 's/"\$${HOST}"/"$(HOST)"/g' ./flake.nix;
 
 .PHONY: apply/user
-apply/user: apply/_inject-env # Run `home-manager switch` for user environment
+apply/user: apply/_inject-env # Run `home-manager switch` for user environment (PROFILE=minimum|private|work)
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
 	if [[ $$(uname -r) =~ microsoft ]]; then \
 		source $(PATH_SCRIPT) && $(NIX) run \
-			home-manager -- switch --flake .#"\"$${USER}-wsl"\"; \
+			home-manager -- switch --flake .#$${USER}$(PROFILE_SUFFIX)-wsl; \
 	else \
 		source $(PATH_SCRIPT) && $(NIX) run \
-			home-manager -- switch --flake .; \
+			home-manager -- switch --flake .#$${USER}$(PROFILE_SUFFIX); \
 	fi
-	@echo "✅ home-manager has been applied successfully!"
+	@echo "✅ home-manager has been applied successfully! (profile: $(PROFILE))"
 
 .PHONY: apply/darwin
 # https://github.com/nix-darwin/nix-darwin/blob/e04a388232d9a6ba56967ce5b53a8a6f713cdfcf/README.md#getting-started
 # https://github.com/nix-darwin/nix-darwin/issues/1330#issuecomment-2654133042
-apply/darwin: apply/_inject-env # Run `nix-darwin switch`
+apply/darwin: apply/_inject-env # Run `nix-darwin switch` (PROFILE=minimum|private|work)
 	sudo mkdir -p /etc/nix-darwin
 	sudo chown $(id -nu):$(id -ng) /etc/nix-darwin
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
 	source $(PATH_SCRIPT) && sudo $(NIX) run \
-		nix-darwin/master#darwin-rebuild -- switch --flake .; \
+		nix-darwin/master#darwin-rebuild -- switch --flake .#$(HOST)$(PROFILE_SUFFIX); \
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
-	@echo "✅ nix-darwin has been applied successfully!"
+	@echo "✅ nix-darwin has been applied successfully! (profile: $(PROFILE))"
 
 .PHONY: apply/windows
 apply/windows: # Make symbolic links to dotfiles & back up original files if exists in Windows
