@@ -1,3 +1,3 @@
-nodejs latest
-yarn 1.22.19
+nodejs stable
+yarn latest
 pnpm latest
