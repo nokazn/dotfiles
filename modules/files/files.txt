@@ -22,6 +22,7 @@
 .config/tmux/cpu-usage.sh
 .config/tmux/memory-usage.sh
 .config/wezterm
+.proto/.prototools
 .ssh/config
 # .bashrc
 # .bash_profile
@@ -30,7 +31,6 @@
 .npmrc
 .path.sh
 .prettierrc.json
-.prototools
 # .profile
 .tool-versions
 .yarnrc
