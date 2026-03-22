@@ -15,7 +15,7 @@ TMPDIR=$(mktemp -d)
 (
 	cd "${TMPDIR}"
 	npm pack "@anthropic-ai/claude-code@${VERSION}" --quiet 2>/dev/null
-	tar xzf *.tgz
+	tar xzf ./*.tgz
 	cd package
 	npm install --package-lock-only --ignore-scripts 2>/dev/null
 	cp package-lock.json "${REPO_ROOT}/${LOCKFILE}"
