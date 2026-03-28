@@ -128,6 +128,10 @@ update/nix: # Update Nix package manager
 	sudo determinate-nixd upgrade
 	nix flake update
 
+.PHONY: install/skills
+install/skills: # Install Claude Code skills from obra/superpowers globally
+	bash scripts/install-skills.sh
+
 .PHONY: update/claude-code
 update/claude-code: # Update claude-code to the latest version
 	bash scripts/update-claude-code.sh
