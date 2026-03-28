@@ -57,6 +57,7 @@ in
   repath = "source ~/.path.sh";
   sampler = "sampler -c ~/.config/sampler/config.yml";
   ssh-keygen-rsa = "ssh-keygen -t rsa -b 4096 -C";
+  claude = "claude --dangerously-skip-permissions";
   tf = "terraform";
   tarx = "tar -xvz";
   y = "yarn";
