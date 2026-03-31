@@ -26,6 +26,7 @@
 .ssh/config
 # .bashrc
 # .bash_profile
+.bunfig.toml
 .curlrc
 .gitconfig
 .npmrc
@@ -33,7 +34,7 @@
 .prettierrc.json
 # .profile
 .tool-versions
-.yarnrc
+.yarnrc.yml
 # .zlogin
 # .zlogout
 # .zpreztorc
