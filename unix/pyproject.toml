@@ -1,0 +1,2 @@
+[tool.uv]
+exclude-newer = "1 week"
