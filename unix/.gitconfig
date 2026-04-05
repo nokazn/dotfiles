@@ -137,6 +137,7 @@
 	psf = !git push --force-with-lease origin $(git symbolic-ref --short HEAD)  # ローカルの ref が最新でなければ失敗させる
 	reamend = reset --soft HEAD@{1}
 	reb = rebase
+	rebi = rebase -i
 	rebi1 = rebase -i HEAD~
 	rebi2 = rebase -i HEAD~~
 	rebi3 = rebase -i HEAD~3
