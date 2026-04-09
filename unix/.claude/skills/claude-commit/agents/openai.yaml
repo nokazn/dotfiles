@@ -1,0 +1,4 @@
+interface:
+  display_name: "Claude Commit"
+  short_description: "Generate git commit messages with Claude"
+  default_prompt: "Use $claude-commit to generate a conventional commit message for my staged changes."
