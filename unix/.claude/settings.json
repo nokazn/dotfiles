@@ -4,7 +4,7 @@
     "rust-analyzer-lsp@claude-plugins-official": true
   },
   "permissions": {
-    "defaultMode": "bypassPermissions",
+    "defaultMode": "auto",
     "allow": [
       "Bash(gh pr diff:*)"
     ]
