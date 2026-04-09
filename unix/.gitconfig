@@ -97,6 +97,7 @@
 	cm-copilot = "!f() { DIFF=$(git diff --cached); COMMITMSG=$(copilot -p \"Generate ONLY a one-line Git commit message in English  using Conventional Commits format. Start with one of these prefixes: feat:, fix:, build:, chore:, ci:, docs:, style:, refactor:, perf:, test:. If the diff contains any bug fix, use fix:. If the diff contains any new or modified feature, use feat:. Based on this diff:\n\n${DIFF}\n\nOutput ONLY the commit summary line, no explanation, no markdown.\" --available-tools \"\" -s 2>/dev/null | head -1); git commit -m \"$COMMITMSG\" -e \"$@\"; }; f"
 	cm-claude = "!f() { DIFF=$(git diff --cached); COMMITMSG=$(claude --model haiku --no-session-persistence -p \"Generate ONLY a one-line Git commit message in English using Conventional Commits format. Start with one of these prefixes: feat:, fix:, build:, chore:, ci:, docs:, style:, refactor:, perf:, test:. If the diff contains any bug fix, use fix:. If the diff contains any new or modified feature, use feat:. Based on this diff:\n\n${DIFF}\n\nOutput ONLY the commit summary line, no explanation, no markdown.\" 2>/dev/null | head -1); git commit -m \"$COMMITMSG\" -e \"$@\"; }; f"
 	cmb-copilot = "!f() { DIFF=$(git diff --cached); COMMITMSG=$(copilot -p \"Generate ONLY a one-line Git commit message in English  using Conventional Commits format. Start with one of these prefixes: feat:, fix:, build:, chore:, ci:, docs:, style:, refactor:, perf:, test:. Based on this diff:\n\n${DIFF}\n\nOutput ONLY the commit summary line, no explanation, no markdown.\" --available-tools \"\" -s 2>/dev/null | head -1); git commit -m \"$COMMITMSG\" -m \"$(git symbolic-ref --short HEAD | sed 's|/.*||')\" -e \"$@\"; }; f"
+	cmb-claude = "!f() { DIFF=$(git diff --cached); COMMITMSG=$(claude --model haiku --no-session-persistence -p \"Generate ONLY a one-line Git commit message in English using Conventional Commits format. Start with one of these prefixes: feat:, fix:, build:, chore:, ci:, docs:, style:, refactor:, perf:, test:. Based on this diff:\n\n${DIFF}\n\nOutput ONLY the commit summary line, no explanation, no markdown.\" 2>/dev/null | head -1); git commit -m \"$COMMITMSG\" -m \"$(git symbolic-ref --short HEAD | sed 's|/.*||')\" -e \"$@\"; }; f"
 	cp = cherry-pick
 	d = diff
 	diff-default = diff --no-ext-diff
@@ -125,6 +126,7 @@
 	ls2 = log --oneline --pretty=default -n 2
 	ls3 = log --oneline --pretty=default -n 3
 	ls-files-untracked = ls-files --others --exclude-standard
+	m = merge
 	mo = "!f() { git merge origin/$1; }; f"
 	mo-1 = !git merge origin/$(git rev-parse --abbrev-ref @{-1})  # 前のブランチのoriginをマージする
 	openpr = "!f() { gh pr view \"$(git log --merges --reverse --oneline --ancestry-path $1.."$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')" | grep 'Merge pull request' | head -1 | awk '{ print $5 }' )\" --web; }; f"
