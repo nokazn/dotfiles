@@ -42,6 +42,7 @@ lib.attrValues {
       cargo-watch
       rustup
       libiconv
+      pkg-config
       evcxr # An evaluation context for Rust
     ];
   go = [
