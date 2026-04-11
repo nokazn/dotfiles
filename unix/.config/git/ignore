@@ -229,3 +229,5 @@ debug
 # Python
 lib/python*
 bin
+
+.claude/settings.local.json
