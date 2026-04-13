@@ -11,7 +11,7 @@
     };
   };
 
-  homebrew = if meta.isCi then { } else import ./homebrew.nix { };
+  homebrew = if meta.isCi then { } else import ./homebrew.nix { inherit meta; };
 
   system = {
     stateVersion = 5;
