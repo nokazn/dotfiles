@@ -1,5 +1,11 @@
 {
-  "model": "sonnet",
+  "model": "opus[1m]",
+  "permissions": {
+    "defaultMode": "auto",
+    "allow": [
+      "Bash(gh pr diff:*)"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {
@@ -7,19 +13,37 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$HOME/.claude/hooks/shellcheck-on-save.sh"
+            "command": "/Users/o.kazuki/.claude/hooks/shellcheck-on-save.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CLAUDE_HOOK_EVENT=Stop /Users/o.kazuki/.claude/hooks/notify.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CLAUDE_HOOK_EVENT=Notification /Users/o.kazuki/.claude/hooks/notify.sh"
           }
         ]
       }
     ]
   },
   "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "figma@claude-plugins-official": true,
+    "chrome-devtools-mcp@claude-plugins-official": true
   },
-  "permissions": {
-    "defaultMode": "auto",
-    "allow": [
-      "Bash(gh pr diff:*)"
-    ]
-  }
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true
 }
