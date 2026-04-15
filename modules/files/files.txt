@@ -6,6 +6,7 @@
 .claude/settings.json
 .claude/skills/me-css-guidelines
 .claude/skills/me-gh-address-pr-comments
+.claude/skills/me-gh-create-pr
 .claude/skills/me-git-commits
 .claude/skills/me-keep-ai-doc-up-to-date
 .claude/skills/me-shell-script
