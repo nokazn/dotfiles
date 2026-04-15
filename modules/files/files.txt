@@ -4,6 +4,11 @@
 .aws/config
 .claude/CLAUDE.md
 .claude/settings.json
+.claude/skills/me-css-guidelines
+.claude/skills/me-gh-address-pr-comments
+.claude/skills/me-git-commits
+.claude/skills/me-keep-ai-doc-up-to-date
+.claude/skills/me-shell-script
 .config/bat/config
 .config/broot/conf.hjson
 .config/Code/User/keybindings.json
