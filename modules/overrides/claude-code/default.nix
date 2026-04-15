@@ -15,19 +15,19 @@
   fetchNpmDeps,
 }:
 let
-  overrideVersion = "2.1.80";
+  overrideVersion = "2.1.109";
   overridden = claude-code.overrideAttrs (oldAttrs: rec {
     version = overrideVersion;
     src = fetchzip {
       url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
-      hash = "sha256-0Jdr7e4QcWzEWrezOfqTQW3s0w2xlUA4tVScY0y/zI8=";
+      hash = "sha256-tzqFLTe8lh2Qxs0Uo1L/QAVR7uYhRNU1ekErHNUSdsA=";
     };
     postPatch = ''
       cp ${./package-lock.json} package-lock.json
       substituteInPlace cli.js \
         --replace-fail '#!/bin/sh' '#!/usr/bin/env sh'
     '';
-    npmDepsHash = "sha256-4zW3sGw/3tKZJa+2VikHYuHFEVoNyyjorHQ/rC6Xvm0=";
+    npmDepsHash = "sha256-0OmDTLDjPZrMcqVWlTwgkYUmfmv9DygBDl+kXu9we10=";
     npmDeps = fetchNpmDeps {
       inherit src postPatch;
       name = "claude-code-${version}-npm-deps";
