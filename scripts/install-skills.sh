@@ -2,12 +2,12 @@
 set -euo pipefail
 
 echo "Installing all skills from obra/superpowers..."
-npx skills add -g -y obra/superpowers
+skills add obra/superpowers -g -y
 
 echo "Installing skill-creator from anthropics/skills..."
-npx skills add -g -y -s skill-creator anthropics/skills
+skills add anthropics/skills -g -y --skill skill-creator
 
 echo "Installing playwright-interactive, screenshot, playwright from openai/skills..."
-npx skills add -g -y -s playwright-interactive,screenshot,playwright openai/skills
+skills add openai/skills -g -y --skill playwright-interactive screenshot playwright
 
 echo "Done."
