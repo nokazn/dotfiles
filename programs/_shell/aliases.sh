@@ -57,14 +57,16 @@ function docker-rmi-untagged-images() {
 #
 
 function fgsw() {
-	local -r branch="$(git branch -vv | grep -v '^\s*\*' | fzf -q "$1" --preview 'git lg --color=always {1}')"
+	# Not using {1} directly: worktree-checked-out branches prefix the line with "+", pushing the branch name to {2}
+	local -r branch="$(git branch -vv | grep -v '^\s*\*' | fzf -q "$1" --preview 'b={1}; [[ "$b" == "+" ]] && b={2}; git lg --color=always "$b"')"
 	if [[ -n "${branch}" ]]; then
 		git switch "$(awk '{print $1}' <<<"${branch}")"
 	fi
 }
 
 function fgswa() {
-	local -r branch="$(git branch -vva | grep -v '^\s*\*' | grep -E -v '/HEAD$' | fzf -q "$1" --preview 'git lg --color=always {1}')"
+	# Not using {1} directly: worktree-checked-out branches prefix the line with "+", pushing the branch name to {2}
+	local -r branch="$(git branch -vva | grep -v '^\s*\*' | grep -E -v '/HEAD$' | fzf -q "$1" --preview 'b={1}; [[ "$b" == "+" ]] && b={2}; git lg --color=always "$b"')"
 	if [[ -n "${branch}" ]]; then
 		local -r name="$(awk '{print $1}' <<<"${branch}" | sed -E 's/^remotes\/(origin|upstream)\///')"
 		git switch "${name}"
