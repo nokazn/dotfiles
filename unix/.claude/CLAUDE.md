@@ -8,6 +8,14 @@
 ## Solutions
 
 - Prefer **simple** solutions over easy ones.
+- Prefer **explicit** over implicit.
+
+## Design Principles
+
+- Keep functions pure by default; isolate side effects where unavoidable.
+- Follow Design by Contract: clarify preconditions, postconditions, and invariants before designing interfaces and module boundaries.
+  - Infer technical contracts from code, types, and existing patterns autonomously.
+  - Ask the user for domain/business constraints that are not derivable from code.
 
 ## Workflows
 
@@ -19,11 +27,16 @@
     tasks in the main context**
   - Run subagents in parallel when tasks are parallelizable
 
-## Store documents under `~/.agents/` directory
+### Git Workflows
+
+- Only commit or push when explicitly instructed
+- When committing, follow the `me-git-commits` skill
+
+### Store documents under `~/.agents/` directory
 
 - Under `~/.agents`, use 2 levels of directories based on the working directory path relative to the home directory. File format: `YYYYmmdd_<description>.md`.
   - e.g. When running an agent under `~/private/app` and storing documents, use `~/.agents/private/app/20260101_something.md`.
-- If the project has a designated location for research results or plans, follow that convention instead
+- If the project has a designated location, follow that convention instead
 
 ## Skills
 
