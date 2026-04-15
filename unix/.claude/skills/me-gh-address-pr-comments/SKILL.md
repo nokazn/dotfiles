@@ -1,6 +1,7 @@
 ---
-name: gh-address-pr-comments
+name: me-gh-address-pr-comments
 description: Use when the user wants to fetch GitHub PR review comments and address them. Fetches inline code review comments and general PR comments using gh CLI, evaluates each comment, fixes definitive issues, and handles opinion-based suggestions (imo/nit/consider) by judging validity before acting.
+disable-model-invocation: true
 ---
 
 # gh-address-pr-comments
@@ -72,9 +73,11 @@ FOR each comment:
 1. **1コメントずつ対応する** — バッチ処理しない
 2. **修正前にファイルを読む** — 変更箇所の文脈を確認する
 3. **テストを実行する** — 修正が既存の動作を壊さないか確認する
-4. **完了後に報告する** — 何を修正したか・何を保留したかを明示する
+4. **完了後に報告する** — 何を修正したか・何を保留したかを明示し、ユーザーに問題ないか確認する
+5. **リモートブランチにpushする** — `git ps`でプッシュする
+6. **GitHub 上のコメントで対応内容を reviewer に知らせる** — どのコミットで対応したかをコメントに残す
 
-## 報告フォーマット
+## 報告のフォーマット
 
 作業完了後、以下の形式でユーザーに報告する:
 
@@ -89,8 +92,14 @@ FOR each comment:
   - 推奨: （あれば）
 ```
 
+## コメントのフォーマット
+
+報告内容が問題ないとユーザーに判断され push した後、と指摘のインラインコメントに返信する。
+
+```sh
+gh api repos/{owner}/{repo}/pulls/{pr_number}/comments/{comment_id}/replies -f body="📝 `<commit hash>` で対応"
+```
+
 ## 注意事項
 
 - resolved済みのコメントは `in_reply_to_id` や `position: null` で判別できる場合がある。すでに対応済みのコメントはスキップする
-- `CHANGES_REQUESTED` 状態のレビューが残っている場合は全指摘を対応後、`gh pr review --comment` で対応完了を通知することを検討する
-- インラインコメントへの返信は `gh api repos/{owner}/{repo}/pulls/{pr_number}/comments/{comment_id}/replies -f body="..."` で行う

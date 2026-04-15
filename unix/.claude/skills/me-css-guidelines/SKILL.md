@@ -1,5 +1,5 @@
 ---
-name: css-guidelines
+name: me-css-guidelines
 description: Use when writing or reviewing CSS or Tailwind CSS code. Provides guidelines for layout, spacing, and class usage to avoid common pitfalls.
 ---
 

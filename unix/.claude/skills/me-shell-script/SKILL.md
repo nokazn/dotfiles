@@ -1,6 +1,7 @@
 ---
-name: shell-script
+name: me-shell-script
 description: Use when writing or editing shell scripts (.sh files). Provides conventions for shebang, safety options, variable declarations, and Bash idioms used in this repository.
+user-invocable: false
 ---
 
 # Shell Script Guidelines
