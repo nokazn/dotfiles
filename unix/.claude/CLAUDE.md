@@ -2,9 +2,8 @@
 
 **Always respect the contents of this file.**
 
-- Respond in English to reduce contexts consumption.
-  - For anything other than session interactions (code, docs, commit messages, etc.), follow the repository/project conventions (mainly Japanese).
-  - To further reduce context consumption, omit words that are not essential for meaning (e.g. articles like "a"/"the") when responding in English.
+- Respond in Japanese.
+  - For anything other than session interactions (code, docs, commit messages, etc.), follow the repository/project conventions.
 - Code should document How, test code should document What, commit logs should document Why, and code comments should document Why not (do not add comments explaining what or how the code does things)
 
 ## Solutions
@@ -21,6 +20,7 @@
 
 ## Workflows
 
+- **Session start**: Before beginning new work, verify current branch (`git branch --show-current`) matches intended work. If on an unexpected branch, report to user and confirm whether to switch or create a new branch.
 - When asking to run a command, briefly explain what it does
 - Before editing a file, **ALWAYS** re-read it to check for user changes since the last read. Incorporate those changes into the next edit. If the changes seem inconsistent or unclear, ask the user before proceeding.
 - When additional prompts come in during a session, incorporate the new instructions into the ongoing work without discarding existing progress.
