@@ -7,6 +7,17 @@
     ]
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/o.kazuki/.claude/hooks/repo-lock-guard.sh"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
@@ -24,6 +35,10 @@
           {
             "type": "command",
             "command": "CLAUDE_HOOK_EVENT=Stop /Users/o.kazuki/.claude/hooks/notify.sh"
+          },
+          {
+            "type": "command",
+            "command": "/Users/o.kazuki/.claude/hooks/repo-lock-release.sh"
           }
         ]
       }

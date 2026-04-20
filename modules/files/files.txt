@@ -5,6 +5,8 @@
 .claude/CLAUDE.md
 .claude/settings.json
 .claude/hooks/notify.sh
+.claude/hooks/repo-lock-guard.sh
+.claude/hooks/repo-lock-release.sh
 .claude/hooks/shellcheck-on-save.sh
 .claude/skills/me-css-guidelines
 .claude/skills/me-gh-address-pr-comments
