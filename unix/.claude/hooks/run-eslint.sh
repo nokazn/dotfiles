@@ -36,11 +36,14 @@ done
 # Stop hook がプロジェクトルートを特定できるようキャッシュ
 echo "$project_root" > /tmp/.claude_ts_project_root
 
+# flat config (eslint.config.js) は cwd 基準で設定ファイルを探すため project_root で実行する
+cd "$project_root"
+
 diag=""
 
 # --- ESLint: 自動修正 → 残りの違反を収集 ---
-"$project_root/node_modules/.bin/eslint" --fix "$file" >/dev/null 2>&1 || true
-eslint_out="$("$project_root/node_modules/.bin/eslint" "$file" 2>&1 | head -30)" || true
+node_modules/.bin/eslint --fix "$file" >/dev/null 2>&1 || true
+eslint_out="$(node_modules/.bin/eslint "$file" 2>&1 | head -30)" || true
 
 if [ -n "$eslint_out" ]; then
 	diag="${diag}=== ESLint ===
