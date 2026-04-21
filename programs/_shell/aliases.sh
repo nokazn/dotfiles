@@ -81,6 +81,13 @@ function fgswr() {
 	fi
 }
 
+function fgwtsw() {
+	local -r line="$(git worktree list | fzf -q "$1" --preview 'git lg --color=always {3//[]/}')"
+	if [[ -n "${line}" ]]; then
+		cd "$(awk '{print $1}' <<<"${line}")" || return 1
+	fi
+}
+
 function fgshow() {
 	git lg |
 		fzf -q "$1" \
