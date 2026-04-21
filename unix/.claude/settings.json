@@ -27,6 +27,15 @@
             "command": "/Users/o.kazuki/.claude/hooks/shellcheck-on-save.sh"
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/o.kazuki/.claude/hooks/run-eslint.sh"
+          }
+        ]
       }
     ],
     "Stop": [
@@ -39,6 +48,15 @@
           {
             "type": "command",
             "command": "/Users/o.kazuki/.claude/hooks/repo-lock-release.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/o.kazuki/.claude/hooks/run-type-check.sh"
           }
         ]
       }
