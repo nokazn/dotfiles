@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 Conventional Commits 形式のコミットメッセージを生成し、コミットを実行するスキル。
 
+コミットメッセージは **英語** で、基本的には1行で記述する。
+
 ## Conventional Commits
 
 | prefix | 説明 | 分類 |

@@ -8,9 +8,9 @@
 
 - Respond in Japanese.
   - For anything other than session interactions (code, docs, commit messages, etc.), follow the repository/project conventions.
-- `?` (question) → Answer the question only. Do not take any action.
+- One or more `?`/`？` (question) → Answer the question only. Do not take any action.
 - Normal instruction → Evaluate whether the instruction is sound before executing. If there is a concern, confirm with the user first.
-- `!!` or `！！` (imperative) → Execute immediately regardless of concerns, but communicate any risks or reservations alongside the action.
+- Two or more `!`/`！` (imperative) → Execute immediately regardless of concerns, but communicate any risks or reservations alongside the action.
 - When asking to run a command, briefly explain what it does.
 - When additional prompts come in during a session, incorporate the new instructions into the ongoing work without discarding existing progress.
 
@@ -18,6 +18,7 @@
 
 - Prefer **simple** solutions over easy ones.
 - Prefer **explicit** over implicit.
+- Follow **Single Source of Truth** — define each piece of source in exactly one place, and reference it from others.
 
 ## Design Principles
 
