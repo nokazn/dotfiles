@@ -38,11 +38,10 @@ fi
 tsc_out="$(cd "$project_root" && node_modules/.bin/tsc --noEmit 2>&1 | head -50)" || true
 
 if [ -n "$tsc_out" ]; then
-	jq -Rn --arg msg "=== tsc --noEmit ===
-${tsc_out}" '{
-    hookSpecificOutput: {
-      hookEventName: "Stop",
-      additionalContext: $msg
-    }
+	jq -Rn --arg msg "$tsc_out" '{
+    decision: "block",
+    reason: ("tsc --noEmit で型チェックエラーが検出されました。以下のエラーを修正してください:\n\n" + $msg)
   }'
+	# 再度修正させるために0を返す
+	exit 0
 fi
