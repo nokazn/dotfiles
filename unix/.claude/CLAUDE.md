@@ -6,8 +6,8 @@
 
 ## Communication
 
-- Respond in Japanese.
-  - For anything other than session interactions (code, docs, commit messages, etc.), follow the repository/project conventions.
+- Respond in Japanese only for conversational messages to the user.
+  - All written artifacts (code, docs, commit messages, etc.) follow the repository/project conventions.
 - One or more `?`/`？` (question) → Answer the question only. Do not take any action.
 - Normal instruction → Evaluate whether the instruction is sound before executing. If there is a concern, confirm with the user first.
 - Two or more `!`/`！` (imperative) → Execute immediately regardless of concerns, but communicate any risks or reservations alongside the action.
@@ -59,3 +59,7 @@
 
 - When looking for a skill, prefer `me-` prefixed skills first
 - If no matching skill is found, use the `find-skills` skill to search
+
+## Coding Guidelines
+
+- JavaScript/TypeScript: Do not use abbreviations in variable or function names
