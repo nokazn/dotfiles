@@ -70,6 +70,36 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/o.kazuki/.claude/hooks/update-status-line.sh"
+          }
+        ]
+      }
+    ],
+    "CwdChanged": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/o.kazuki/.claude/hooks/update-status-line.sh"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rm -f /tmp/claude-status-line-${CLAUDE_SESSION_ID}"
+          }
+        ]
+      }
     ]
   },
   "enabledPlugins": {
@@ -78,5 +108,10 @@
     "chrome-devtools-mcp@claude-plugins-official": true
   },
   "skipDangerousModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "statusLine": {
+    "type": "command",
+    "command": "cat /tmp/claude-status-line-${CLAUDE_SESSION_ID} 2>/dev/null || printf '%s | %s' \"$(git branch --show-current 2>/dev/null || echo '-')\" \"$(basename \"$PWD\")\"",
+    "refreshInterval": 5
+  }
 }
