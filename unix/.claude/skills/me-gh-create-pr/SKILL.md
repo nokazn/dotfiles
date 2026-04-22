@@ -116,7 +116,7 @@ git symbolic-ref --short HEAD | sed 's|/.*||'
 PR 作成は heredoc で本文を渡す。**シングルクォート付き heredoc (`<<'EOF'`) を使う**ので、本文中のバッククォートは**エスケープせずそのまま書く**。誤って `\` でエスケープすると、リテラルの `\` が出力に残り、GitHub 上で code 表示にならない:
 
 ```bash
-gh pr create --base <base> --title "<title>" --body "$(cat <<'EOF'
+gh pr create --base <base> --title "<title>" --assignee @me --body "$(cat <<'EOF'
 <本文>
 EOF
 )"
