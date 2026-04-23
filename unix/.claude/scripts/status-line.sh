@@ -10,58 +10,62 @@ RED=$'\033[31m'
 DIM=$'\033[2m'
 
 color_for_percent() {
-  local pct=${1:-0}
-  if (( pct >= 80 )); then
-    printf '%s' "$RED"
-  elif (( pct >= 50 )); then
-    printf '%s' "$YELLOW"
-  else
-    printf '%s' "$GREEN"
-  fi
+	local pct=${1:-0}
+	if ((pct >= 80)); then
+		printf '%s' "$RED"
+	elif ((pct >= 50)); then
+		printf '%s' "$YELLOW"
+	else
+		printf '%s' "$GREEN"
+	fi
 }
 
 five_hour=""
 seven_day=""
 ctx_pct=""
+model=""
+cwd=""
 
 if [[ -n "$INPUT" ]]; then
-  five_hour=$(printf '%s' "$INPUT" | jq -r '.rate_limits.five_hour.used_percentage // empty' 2>/dev/null || true)
-  seven_day=$(printf '%s' "$INPUT" | jq -r '.rate_limits.seven_day.used_percentage // empty' 2>/dev/null || true)
+	five_hour=$(printf '%s' "$INPUT" | jq -r '.rate_limits.five_hour.used_percentage // empty' 2>/dev/null || true)
+	seven_day=$(printf '%s' "$INPUT" | jq -r '.rate_limits.seven_day.used_percentage // empty' 2>/dev/null || true)
 
-  ctx_used=$(printf '%s' "$INPUT" | jq -r '.context_window.used // empty' 2>/dev/null || true)
-  ctx_total=$(printf '%s' "$INPUT" | jq -r '.context_window.total // empty' 2>/dev/null || true)
+	ctx_pct=$(printf '%s' "$INPUT" | jq -r '.context_window.used_percentage // empty' 2>/dev/null || true)
+	if [[ -n "$ctx_pct" ]]; then
+		ctx_pct=$(printf '%.0f' "$ctx_pct")
+	fi
 
-  if [[ -n "$ctx_used" && -n "$ctx_total" && "$ctx_total" -gt 0 ]]; then
-    ctx_pct=$(( ctx_used * 100 / ctx_total ))
-  fi
+	model=$(printf '%s' "$INPUT" | jq -r '.model.display_name // .model.id // .model // empty' 2>/dev/null || true)
+	cwd=$(printf '%s' "$INPUT" | jq -r '.cwd // .workspace.current_dir // empty' 2>/dev/null || true)
 fi
 
 output=""
 
+if [[ -n "$model" ]]; then
+	output+="${DIM}${model}${RESET}"
+fi
+
 if [[ -n "$five_hour" ]]; then
-  color=$(color_for_percent "$five_hour")
-  output+="${DIM}5h:${RESET}${color}${five_hour}%${RESET}"
+	[[ -n "$output" ]] && output+=" ${DIM}|${RESET} "
+	color=$(color_for_percent "$five_hour")
+	output+="${DIM}5h:${RESET}${color}${five_hour}%${RESET}"
 fi
 
 if [[ -n "$seven_day" ]]; then
-  [[ -n "$output" ]] && output+=" ${DIM}|${RESET} "
-  color=$(color_for_percent "$seven_day")
-  output+="${DIM}7d:${RESET}${color}${seven_day}%${RESET}"
+	[[ -n "$output" ]] && output+=" ${DIM}|${RESET} "
+	color=$(color_for_percent "$seven_day")
+	output+="${DIM}7d:${RESET}${color}${seven_day}%${RESET}"
 fi
 
 if [[ -n "$ctx_pct" ]]; then
-  [[ -n "$output" ]] && output+=" ${DIM}|${RESET} "
-  color=$(color_for_percent "$ctx_pct")
-  output+="${DIM}ctx:${RESET}${color}${ctx_pct}%${RESET}"
+	[[ -n "$output" ]] && output+=" ${DIM}|${RESET} "
+	color=$(color_for_percent "$ctx_pct")
+	output+="${DIM}ctx:${RESET}${color}${ctx_pct}%${RESET}"
 fi
 
-STATUS_FILE="/tmp/claude-status-line-${CLAUDE_SESSION_ID:-}"
-if [[ -n "${CLAUDE_SESSION_ID:-}" && -f "$STATUS_FILE" ]]; then
-  branch_dir=$(cat "$STATUS_FILE")
-else
-  branch=$(git branch --show-current 2>/dev/null || echo "-")
-  branch_dir="${branch} | $(basename "$PWD")"
-fi
+target_dir="${cwd:-$PWD}"
+branch=$(git -C "$target_dir" branch --show-current 2>/dev/null || echo "-")
+branch_dir="${branch} | $(basename "$target_dir")"
 
 [[ -n "$output" ]] && output+=" ${DIM}|${RESET} "
 output+="$branch_dir"
