@@ -111,7 +111,7 @@
   "skipAutoPermissionPrompt": true,
   "statusLine": {
     "type": "command",
-    "command": "cat /tmp/claude-status-line-${CLAUDE_SESSION_ID} 2>/dev/null || printf '%s | %s' \"$(git branch --show-current 2>/dev/null || echo '-')\" \"$(basename \"$PWD\")\"",
+    "command": "/Users/o.kazuki/.claude/scripts/status-line.sh",
     "refreshInterval": 5
   }
 }

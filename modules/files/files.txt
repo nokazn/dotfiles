@@ -4,6 +4,7 @@
 .aws/config
 .claude/CLAUDE.md
 .claude/settings.json
+.claude/scripts/status-line.sh
 .claude/hooks/notify.sh
 .claude/hooks/repo-lock-guard.sh
 .claude/hooks/repo-lock-release.sh
