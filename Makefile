@@ -100,8 +100,10 @@ apply/darwin: apply/_inject-env # Run `nix-darwin switch` (PROFILE=minimum|priva
 	sudo mkdir -p /etc/nix-darwin
 	sudo chown $(id -nu):$(id -ng) /etc/nix-darwin
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
-	source $(PATH_SCRIPT) && sudo $(NIX) run \
-		nix-darwin/master#darwin-rebuild -- switch --flake .#$(HOST)$(PROFILE_SUFFIX); \
+	@source $(PATH_SCRIPT) && \
+	sudo $(NIX) run \
+		nix-darwin/master#darwin-rebuild -- switch --flake .#$(HOST)$(PROFILE_SUFFIX) || \
+	{ echo "❌ nix-darwin failed (profile: $(PROFILE))" >&2; exit 1; }
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully! (profile: $(PROFILE))"
 
