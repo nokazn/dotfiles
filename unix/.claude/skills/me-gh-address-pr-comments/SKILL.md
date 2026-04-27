@@ -97,7 +97,7 @@ FOR each comment:
 報告内容が問題ないとユーザーに判断され push した後、と指摘のインラインコメントに返信する。
 
 ```sh
-gh api repos/{owner}/{repo}/pulls/{pr_number}/comments/{comment_id}/replies -f body="📝 `<commit hash>` で対応"
+gh api repos/{owner}/{repo}/pulls/{pr_number}/comments/{comment_id}/replies -f body="📝 <commit hash> で対応"
 ```
 
 ## 注意事項
