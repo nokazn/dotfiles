@@ -82,26 +82,6 @@
           }
         ]
       }
-    ],
-    "CwdChanged": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/o.kazuki/.claude/hooks/update-status-line.sh"
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "rm -f /tmp/claude-status-line-${CLAUDE_SESSION_ID}"
-          }
-        ]
-      }
     ]
   },
   "enabledPlugins": {
@@ -113,7 +93,6 @@
   "skipAutoPermissionPrompt": true,
   "statusLine": {
     "type": "command",
-    "command": "/Users/o.kazuki/.claude/scripts/status-line.sh",
-    "refreshInterval": 5
+    "command": "/Users/o.kazuki/.claude/scripts/status-line.sh"
   }
 }

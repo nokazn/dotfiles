@@ -22,6 +22,7 @@
 
 ## Design Principles
 
+- Prefer **immutable** over mutable — avoid direct state mutation; express changes as new values.
 - Keep functions pure by default; isolate side effects where unavoidable.
 - Follow Design by Contract: clarify preconditions, postconditions, and invariants before designing interfaces and module boundaries.
   - Infer technical contracts from code, types, and existing patterns autonomously.
