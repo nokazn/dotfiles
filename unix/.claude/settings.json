@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/o.kazuki/.claude/hooks/repo-lock-guard.sh"
+            "command": "~/.claude/hooks/repo-lock-guard.sh"
           }
         ]
       }
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/o.kazuki/.claude/hooks/shellcheck-on-save.sh"
+            "command": "~/.claude/hooks/shellcheck-on-save.sh"
           }
         ]
       },
@@ -35,7 +35,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash /Users/o.kazuki/.claude/hooks/run-eslint.sh"
+            "command": "bash ~/.claude/hooks/run-eslint.sh"
           }
         ]
       }
@@ -45,11 +45,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "CLAUDE_HOOK_EVENT=Stop /Users/o.kazuki/.claude/hooks/notify.sh"
+            "command": "CLAUDE_HOOK_EVENT=Stop ~/.claude/hooks/notify.sh"
           },
           {
             "type": "command",
-            "command": "/Users/o.kazuki/.claude/hooks/repo-lock-release.sh"
+            "command": "~/.claude/hooks/repo-lock-release.sh"
           }
         ]
       },
@@ -58,7 +58,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash /Users/o.kazuki/.claude/hooks/run-type-check.sh"
+            "command": "bash ~/.claude/hooks/run-type-check.sh"
           }
         ]
       }
@@ -68,17 +68,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "CLAUDE_HOOK_EVENT=Notification /Users/o.kazuki/.claude/hooks/notify.sh"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/o.kazuki/.claude/hooks/update-status-line.sh"
+            "command": "CLAUDE_HOOK_EVENT=Notification ~/.claude/hooks/notify.sh"
           }
         ]
       }
@@ -86,13 +76,12 @@
   },
   "enabledPlugins": {
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "figma@claude-plugins-official": true,
-    "chrome-devtools-mcp@claude-plugins-official": true
+    "figma@claude-plugins-official": true
   },
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true,
   "statusLine": {
     "type": "command",
-    "command": "/Users/o.kazuki/.claude/scripts/status-line.sh"
+    "command": "~/.claude/scripts/status-line.sh"
   }
 }
