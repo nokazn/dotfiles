@@ -16,6 +16,7 @@
     "keycastr"
     "logi-options+"
     "notion"
+    "rectangle"
     "slack"
     "spotify"
     "todoist-app"
