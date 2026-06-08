@@ -4,6 +4,7 @@ set -euo pipefail
 cat > /dev/null
 
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+[[ -e "$REPO_ROOT/.git" ]] || exit 0
 
 LOCK_BASE="/tmp/claude-repo-locks"
 REPO_HASH="$(echo -n "$REPO_ROOT" | shasum | cut -d' ' -f1)"
