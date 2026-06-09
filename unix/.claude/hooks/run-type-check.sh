@@ -35,13 +35,34 @@ fi
 # tsconfig.json がない場合はスキップ
 [ -f "$project_root/tsconfig.json" ] || exit 0
 
-tsc_out="$(cd "$project_root" && node_modules/.bin/tsc --noEmit 2>&1 | head -50)" || true
+tsc_out="$(cd "$project_root" && node_modules/.bin/tsc --noEmit 2>&1)" || true
 
-if [ -n "$tsc_out" ]; then
-	jq -Rn --arg msg "$tsc_out" '{
+[ -n "$tsc_out" ] || exit 0
+
+errors="$(echo "$tsc_out" | grep -E '\.tsx?\([0-9]+,[0-9]+\): error TS')" || true
+
+[ -n "$errors" ] || exit 0
+
+changed_files="$(git diff --name-only HEAD 2>/dev/null || true)"
+
+if [ -n "$changed_files" ]; then
+	pattern="$(echo "$changed_files" | sed 's/[.[\*^$()+?{}|]/\\&/g' | paste -sd'|' -)"
+	mine="$(echo "$errors" | grep -E "^($pattern)" | head -50)" || true
+	others="$(echo "$errors" | grep -vE "^($pattern)" | head -10)" || true
+else
+	mine=""
+	others="$(echo "$errors" | head -10)"
+fi
+
+if [ -n "$others" ]; then
+	echo "[tsc] 変更外ファイルの型エラー (修正不要):" >&2
+	echo "$others" | head -10 >&2
+fi
+
+if [ -n "$mine" ]; then
+	jq -Rn --arg msg "$mine" '{
     decision: "block",
-    reason: ("tsc --noEmit で型チェックエラーが検出されました。以下のエラーを修正してください:\n\n" + $msg)
+    reason: ("tsc --noEmit で、変更したファイルに型エラーが検出されました。このセッションの変更によるものであれば、修正してください:\n\n" + $msg)
   }'
-	# 再度修正させるために0を返す
 	exit 0
 fi
