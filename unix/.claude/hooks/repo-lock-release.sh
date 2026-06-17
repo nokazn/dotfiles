@@ -3,13 +3,7 @@ set -uo pipefail
 
 cat > /dev/null
 
-REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
-[[ -e "$REPO_ROOT/.git" ]] || exit 0
-
 LOCK_BASE="/tmp/claude-repo-locks"
-REPO_HASH="$(echo -n "$REPO_ROOT" | shasum | cut -d' ' -f1)"
-LOCK_DIR="${LOCK_BASE}/${REPO_HASH}"
-LOCK_INFO="${LOCK_DIR}/pid"
 
 find_session_pid() {
   local pid=$PPID
@@ -28,10 +22,13 @@ find_session_pid() {
 
 SESSION_PID="$(find_session_pid)"
 
-[[ -f "$LOCK_INFO" ]] || exit 0
+[[ -d "$LOCK_BASE" ]] || exit 0
 
-lock_pid="$(cat "$LOCK_INFO" 2>/dev/null)" || exit 0
-
-if [[ "$lock_pid" == "$SESSION_PID" ]]; then
-  rm -rf "$LOCK_DIR"
-fi
+# Release all locks held by this session
+for lock_info in "$LOCK_BASE"/*/pid; do
+  [[ -f "$lock_info" ]] || continue
+  lock_pid="$(cat "$lock_info" 2>/dev/null)" || continue
+  if [[ "$lock_pid" == "$SESSION_PID" ]]; then
+    rm -rf "$(dirname "$lock_info")"
+  fi
+done
