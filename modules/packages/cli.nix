@@ -46,7 +46,6 @@ lib.attrValues {
   utilities = [
     asciinema # Terminal session recorder and the best companion of asciinema.org
     hyperfine # A command-line benchmarking tool
-    neofetch # CLI system information tool written in BASH that displays information about your system next to an image, your OS logo, or any ASCII file of your choice
     pastel # A command-line tool to generate, analyze, convert and manipulate colors
     sl # SL(1): Cure your bad habit of mistyping
   ];
@@ -57,7 +56,6 @@ lib.attrValues {
     eza # A modern replacement for the venerable file-listing command-line program
     fd # A simple, fast and user-friendly alternative to 'find'
     ripgrep # An interactive replacer for ripgrep that makes it easy to find and replace across files on the command line
-    silver-searcher # A code-searching tool similar to ack, but faster
   ];
   platform =
     lib.optionals (!stdenv.isDarwin) [

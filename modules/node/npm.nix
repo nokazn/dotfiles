@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  nodejs,
+  ...
+}:
 
 # ハッシュの算出
 # 1. `src.hash`
@@ -49,35 +54,29 @@
     dontFixup = true;
   };
 
-  envinfo = pkgs.mkYarnPackage rec {
+  # GitHub のソースには webpack ビルド成果物 `dist/cli.js` がコミットされておらず、実行時依存も無いため、ビルド済みの npm 公開物をそのまま使う
+  envinfo = pkgs.stdenv.mkDerivation (finalAttrs: {
     pname = "envinfo";
     version = "7.14.0";
 
-    src = pkgs.fetchFromGitHub {
-      owner = "tabrindle";
-      repo = "envinfo";
-      rev = "v${version}";
-      hash = "sha256-WC6F4qNQ4mzL6j6D+8LAvXp2VhprEcjQal/Mr3fCOzo=";
+    src = pkgs.fetchurl {
+      url = "https://registry.npmjs.org/envinfo/-/envinfo-${finalAttrs.version}.tgz";
+      hash = "sha256-RXwI6c1oY8TIO2lopBBHJ0jaQWLUA0oso2U37BioG7o=";
     };
 
-    packageJSON = "${src}/package.json";
-    yarnLock = "${src}/yarn.lock";
-  };
+    nativeBuildInputs = [ pkgs.makeWrapper ];
 
-  minimum-node-version = pkgs.mkYarnPackage rec {
-    pname = "minimum-node-version";
-    version = "3.0.0";
+    dontBuild = true;
 
-    src = pkgs.fetchFromGitHub {
-      owner = "hugojosefson";
-      repo = "minimum-node-version";
-      rev = "v${version}";
-      hash = "sha256-ftVP+I2Bk9zvKp1Sv72lVuwSJV1wwN5/TkMD+gvw4lw=";
-    };
-
-    packageJSON = "${src}/package.json";
-    yarnLock = "${src}/yarn.lock";
-  };
+    installPhase = ''
+      runHook preInstall
+      mkdir -p $out/lib/node_modules/envinfo
+      cp -r . $out/lib/node_modules/envinfo/
+      makeWrapper ${nodejs}/bin/node $out/bin/envinfo \
+        --add-flags $out/lib/node_modules/envinfo/dist/cli.js
+      runHook postInstall
+    '';
+  });
 
   skills = pkgs.stdenv.mkDerivation (finalAttrs: {
     pname = "skills";
