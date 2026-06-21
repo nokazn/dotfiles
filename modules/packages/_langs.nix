@@ -18,14 +18,12 @@ lib.attrValues {
   ];
   node = [
     fnm
-  ]
-  ++ (with nodePackages; [
     eslint
     node-gyp
     prettier
     typescript
     webpack-cli
-  ]);
+  ];
   js = [
     bun # Incredibly fast JavaScript runtime, bundler, transpiler and package manager – all in one
     dprint # Code formatting platform written in Rust

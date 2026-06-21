@@ -29,7 +29,6 @@ langs
   };
   cloud = [
     google-cloud-sdk
-    nodePackages.vercel
   ];
   container =
     [ ]
