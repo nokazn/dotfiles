@@ -57,12 +57,8 @@ lib.attrValues {
     fd # A simple, fast and user-friendly alternative to 'find'
     ripgrep # An interactive replacer for ripgrep that makes it easy to find and replace across files on the command line
   ];
-  platform =
-    lib.optionals (!stdenv.isDarwin) [
-      dool # Python3 compatible clone of dstat
-      sysstat # A collection of performance monitoring tools for Linux (such as sar, iostat and pidstat)
-    ]
-    ++ lib.optionals meta.isWsl [
-      wslu # A collection of utilities for Windows 10 Linux Subsystems
-    ];
+  platform = lib.optionals (!stdenv.isDarwin) [
+    dool # Python3 compatible clone of dstat
+    sysstat # A collection of performance monitoring tools for Linux (such as sar, iostat and pidstat)
+  ];
 }
