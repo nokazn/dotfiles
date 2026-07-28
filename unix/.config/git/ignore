@@ -215,6 +215,8 @@ lib-cov
 # Nuxt generate
 dist
 
+.playwright-cli/
+
 # vuepress build output
 .vuepress/dist
 
