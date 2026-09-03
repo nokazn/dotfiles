@@ -4,65 +4,11 @@
   "effortLevel": "high",
   "permissions": {
     "defaultMode": "auto",
-    "allow": [
-      "Bash(gh pr diff:*)"
-    ]
+    "allow": ["Bash(gh pr diff:*)"]
   },
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/repo-lock-guard.sh"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/shellcheck-on-save.sh"
-          }
-        ]
-      },
-      {
-        "matcher": "Write|Edit|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/run-eslint.sh"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "CLAUDE_HOOK_EVENT=Stop ~/.claude/hooks/notify.sh"
-          },
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/repo-lock-release.sh"
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/run-type-check.sh"
-          }
-        ]
-      }
-    ],
+    "PreToolUse": [],
+    "PostToolUse": [],
     "Notification": [
       {
         "hooks": [
