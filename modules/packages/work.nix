@@ -23,7 +23,7 @@ langs
 ++ lib.attrValues {
   cli = lib.attrValues {
     db = [
-      mysql80
+      mysql84
     ];
   };
 }
