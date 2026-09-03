@@ -1,7 +1,6 @@
 ---
 name: me-gh-create-pr
 description: Use when the user wants to open a GitHub pull request with `gh pr create`. Inspects the repository for a PR template under `.github/` and follows it when present; otherwise falls back to a Japanese default template (やったこと / やらないこと / Why・背景 / Before/After / 確認URL / 確認方法 / 観点 / 補足). Keeps each section concise instead of explanatory.
-disable-model-invocation: true
 ---
 
 # gh-create-pr
@@ -72,28 +71,36 @@ ls "$REPO_ROOT/.github/pull_request_template.md" \
 
 ```markdown
 ## やったこと
+
 - ...
 
 ## やらないこと
+
 - ...
 
 ## Why・背景
+
 ...
 
 ## Before/After
+
 <!-- 画面が変更された場合のみスクリーンショットを貼る -->
 
 ## 確認URL
+
 - ...
 
 ## 確認方法
+
 1. ...
 
 ## 観点
+
 - [ ] ...
 - [ ] ...
 
 ## 補足
+
 ...
 ```
 
@@ -125,7 +132,7 @@ EOF
 ```
 
 良い例: `` `foo.ts` を編集 `` → GitHub 上で `foo.ts` が code 表示
-悪い例: `` \`foo.ts\` を編集 `` → GitHub 上で `\foo.ts\` と表示される
+悪い例: ``\`foo.ts\` を編集`` → GitHub 上で `\foo.ts\` と表示される
 
 PRが作成済みの場合は、`gh pr edit` で不足している内容の更新、古くなっている説明の更新・削除を行う。
 
@@ -133,7 +140,7 @@ PRが作成済みの場合は、`gh pr edit` で不足している内容の更�
 
 ## 記述スタイル
 
-- **簡潔さを最優先**にする。1 bullet = 1行で完結させ、複数行の説明文や段落を書かない。レビュー時の読み込み負荷を下げ、PR本文がコードレビューの邪魔にならないようにするため。
+- **簡潔さを最優先**にする。読み手の負荷を下げるため、1 bullet = 1行で完結させ、複数行の説明文や段落を書かない。
 - 括弧での補足（`（〇〇のため）`、`（後続タスクで対応）` 等）を入れない。理由は Why 節に集約し、本文の bullet には入れない。括弧で補足したくなった時は、その情報が本当に必要かまず疑う。
 - 「コードを読めばわかる」内容を本文で繰り返さない。特に具体的な変数名やファイル名、項目名を用いた説明は不要。ユーザー視点から見た変更点を中心に記載する。
 - 該当のないセクションは見出しを残し、本文は「なし」と記載する。テンプレートとの整合性のため。テンプレートに書かれていた雛形（例: 空のテーブル、途中の箇条書きのような雛形）は **そのまま残さず削除** して「なし」に置き換える。
@@ -141,6 +148,7 @@ PRが作成済みの場合は、`gh pr edit` で不足している内容の更�
 - スクリーンショットが必要だが /screenshot skill で用意できない場合は `<!-- TODO: スクリーンショット -->` を残してユーザーに依頼する。
 
 良い例:
+
 ```
 ### やったこと
 - Form 型を salepoint モジュールに分離
@@ -148,6 +156,7 @@ PRが作成済みの場合は、`gh pr edit` で不足している内容の更�
 ```
 
 悪い例（長文・括弧補足・小見出し追加）:
+
 ```
 ### やったこと
 

@@ -1,7 +1,6 @@
 ---
 name: me-git-commits
 description: Use when committing staged changes. Splits diff by Conventional Commits category, generates a message per commit, and appends task/project ID from branch name if present.
-disable-model-invocation: true
 ---
 
 # Claude Commit
@@ -12,18 +11,28 @@ Conventional Commits 形式のコミットメッセージを生成し、コミ�
 
 ## Conventional Commits
 
-| prefix | 説明 | 分類 |
-|---|---|---|
-| `feat` | 新機能・既存機能の変更 | A |
-| `fix` | バグ修正 | A |
-| `perf` | パフォーマンス改善 | A |
-| `refactor` | バグ修正でも機能追加でもないコードの変更 | A |
-| `build` | ビルドシステムや外部依存関係に影響する変更 | A |
-| `ci` | CI 設定・スクリプトの変更 | A |
-| `test` | テストの追加・修正 | B |
-| `docs` | ドキュメントのみの変更 | B |
-| `style` | コードの意味に影響しない変更（空白、フォーマット等） | C |
-| `chore` | その他のメンテナンス | — |
+### type prefix
+
+| prefix     | 説明                                                 | 分類 |
+| ---------- | ---------------------------------------------------- | ---- |
+| `feat`     | 新機能・既存機能の変更                               | A    |
+| `fix`      | バグ修正                                             | A    |
+| `perf`     | パフォーマンス改善                                   | A    |
+| `refactor` | バグ修正でも機能追加でもないコードの変更             | A    |
+| `build`    | ビルドシステムや外部依存関係に影響する変更           | A    |
+| `ci`       | CI 設定・スクリプトの変更                            | A    |
+| `test`     | テストの追加・修正                                   | B    |
+| `docs`     | ドキュメントのみの変更                               | B    |
+| `style`    | コードの意味に影響しない変更（空白、フォーマット等） | C    |
+| `chore`    | その他のメンテナンス                                 | —    |
+
+### range prefix
+
+- 影響範囲が限定できる変更に対して、影響範囲を示す subsystem / package / domain の名称を type prefix に続けて`()`内にを付与する
+  - range prefix に記載する名称はシステム内で横断的に使用されていて通じるものである場合のみに付与する
+- 3つまでは`,`つなぎでつなげて列挙してよく、それ以上になる場合は range prefix 自体を書かない
+
+例）`fix(web,admin)`
 
 ## ワークフロー
 
