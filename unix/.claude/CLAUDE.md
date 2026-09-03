@@ -28,6 +28,16 @@
   - Infer technical contracts from code, types, and existing patterns autonomously.
   - Ask the user for domain/business constraints that are not derivable from code.
 
+## Development
+
+### Source comments
+
+- Do not write comments that explain How or What when it is already evident from the implementation
+- Only comment when background or context is genuinely needed for a future reader; otherwise express it through code, naming, constraints, or modularization in one line as possible
+- Do not write change-history comments (e.g. "changed to...", "added...") — that's the role of commit logs
+- Prefix TODO/FIXME with a Task/Project/Issue ID: `TODO: [ID] ...`. IDs are required
+- Documentation comments (JSDoc/docstring, etc. for APIs referenced by other modules) may describe preconditions, postconditions, and invariants that are not already expressed by argument/return types or other constraints.
+
 ## Workflows
 
 - **Session start**: Before beginning new work, verify current branch (`git branch --show-current`) matches intended work. If on an unexpected branch, report to user and confirm whether to switch or create a new branch.
