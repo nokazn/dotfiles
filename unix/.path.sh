@@ -20,8 +20,11 @@ function _register_forward_if_not() {
 
 # パスが追加されていても、先頭に移動する
 function _register_forward() {
-	PATH="$(sed -E -e "s|:$1||" <<<"$PATH")"
-	PATH="$1:${PATH}"
+	[[ -d $1 ]] || return 0
+	local path=":${PATH}:"
+	path="${path//:$1:/:}"
+	path="${path#:}"
+	PATH="$1:${path%:}"
 	return 0
 }
 
@@ -52,13 +55,10 @@ function _start_mise() {
 	${shell} -c "eval ${script}"
 }
 
-# # Go
-if command -v go >/dev/null; then
-	_goBinDir="$(go env GOBIN)"
-	[[ -z ${_goBinDir} ]] && _goBinDir="$(go env GOPATH)/bin"
-	[[ -z ${_goBinDir} ]] && _goBinDir="${HOME}/go/bin"
-	_register_forward "${_goBinDir}"
-fi
+# Go
+# proto の shim 経由で go を実行すると auto-install 等の出力が混入して PATH が壊れるため、go env を使わずに解決する
+_goBinDir="${GOBIN:-${GOPATH:-$HOME/go}/bin}"
+_register_forward "${_goBinDir}"
 
 # Ruby
 if command -v ruby >/dev/null; then

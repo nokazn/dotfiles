@@ -1,7 +1,7 @@
 node = "stable"
 yarn = "latest"
 pnpm = "latest"
-go = "latest"
+go = "1.27.2"
 uv = "latest"
 
 [tools.node]
