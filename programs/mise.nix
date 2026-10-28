@@ -8,6 +8,7 @@
     node = "lts";
     yarn = "latest";
     pnpm = "latest";
+    bun = "latest";
     go = "latest";
     uv = "latest";
   };

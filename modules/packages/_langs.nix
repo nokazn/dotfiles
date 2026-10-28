@@ -25,7 +25,6 @@ lib.attrValues {
     webpack-cli
   ];
   js = [
-    bun # Incredibly fast JavaScript runtime, bundler, transpiler and package manager – all in one
     dprint # Code formatting platform written in Rust
     oxlint # A suite of high-performance tools for JavaScript and TypeScript written in Rust
   ];
