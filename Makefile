@@ -35,10 +35,6 @@ add-tools/nix: _print-airplane # Install nix
 add-tools/homebrew: _print-airplane # Add Homebrew
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-.PHONY: add-tools/wsl-hello-sudo
-add-tools/wsl-hello-sudo: _print-airplane # Add WSL-Hello-sudo
-	$(SCRIPTS_DIR)/add-wsl-sudo-hello.sh
-
 .PHONY: remove-tools/nix/user
 remove-tools/nix/user: _print-goodbye # Uninstall nix for user environment (See https://nixos.org/manual/nix/stable/installation/uninstall.html#uninstalling-nix)
 	$(NIX) shell github:nix-community/home-manager/master \
@@ -54,14 +50,6 @@ remove-tools/nix/user: _print-goodbye # Uninstall nix for user environment (See 
 .PHONY: remove-tools/nix/darwin
 remove-tools/nix/darwin: _print-goodbye # Uninstall nix for darwin (See https://nixos.org/manual/nix/stable/installation/uninstall.html#macos)
 	$(SCRIPTS_DIR)/remove-nix-darwin.sh
-
-.PHONY: remove-tools/wsl-hello-sudo
-remove-tools/wsl-hello-sudo: _print-goodbye # Remove WSL-Hello-sudo
-	if [[ -f ~/Downloads/wsl-hello-sudo/uninstall.sh ]]; then \
-		~/Downloads/wsl-hello-sudo/uninstall.sh; \
-		rm -rf ~/Downloads/wsl-hello-sudo; \
-	fi
-	@echo "✅ WSL-Hello-sudo has been uninstalled successfully!"
 
 # languages ----------------------------------------------------------------------------------------------------
 

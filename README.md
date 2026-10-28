@@ -88,21 +88,6 @@ $ make init/darwin
 $ chshs zsh
 ```
 
-### Set up wsl-hello-sudo (optional)
-
-```bash
-# Add wsl-hello-sudo
-$ make add-tools/wsl-hello-sudo
-```
-
-After installing wsl-hello-sudo, you need to modify `/etc/pam.d/sudo`.
-
-```diff
-+ auth  sufficient pam_wsl_hello.so
-```
-
-See [wsl-hello-sudo document for configuration](https://github.com/nullpo-head/WSL-Hello-sudo#configuration) for details.
-
 ### Set up sudo with Touch ID for macOS
 
 ```sh
