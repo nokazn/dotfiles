@@ -1,10 +1,10 @@
 { pkgs, lib, ... }:
 
-with pkgs; [
+with pkgs;
+[
   dive # A tool for exploring each layer in a docker image
   lazydocker # The lazier way to manage everything docker
-  podman
-  podman-compose
-] ++ lib.optionals stdenv.isLinux [
+]
+++ lib.optionals stdenv.isLinux [
   kubernetes
 ]

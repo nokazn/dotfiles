@@ -5,7 +5,6 @@
     "alfred"
     "battery"
     "clipy"
-    "copilot-cli"
     "docker-desktop"
     "firefox"
     "google-chrome"
@@ -19,7 +18,6 @@
     "rectangle"
     "slack"
     "spotify"
-    "todoist-app"
     "visual-studio-code"
     "wezterm"
     "zed"
@@ -32,6 +30,7 @@
         "google-drive"
         "keybase"
         "lastfm"
+        "todoist-app"
         "zoom"
       ]
     else
