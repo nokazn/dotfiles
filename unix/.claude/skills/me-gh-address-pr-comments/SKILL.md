@@ -1,6 +1,6 @@
 ---
 name: me-gh-address-pr-comments
-description: Use when the user wants to fetch GitHub PR review comments and address them. Fetches inline code review comments and general PR comments using gh CLI, evaluates each comment, fixes definitive issues, and handles opinion-based suggestions (imo/nit/consider) by judging validity before acting.
+description: Use when the user wants to fetch GitHub PR review comments and address them. Fetches inline code review comments and general PR comments using gh CLI, classifies each comment with the review labels shared with me-gh-code-review (ask / must / should / better / imo / nits, plus security), fixes definitive issues, and judges the validity of opinion-based suggestions (better / imo) before acting.
 disable-model-invocation: true
 ---
 
@@ -29,24 +29,35 @@ gh pr view --json number,reviews,comments
 
 ## コメントの分類
 
-取得したコメントを以下の基準で分類する:
+ラベルの定義は `~/.claude/skills/me-gh-code-review/references/review-labels.md` にあり、レビューする側と共有している。分類の前に読む。
 
-| 種別 | シグナル | 対応 |
-|------|---------|------|
-| **必須修正** | bug / error / wrong / must / should / broken / security | 必ず修正 |
-| **意見系 (imo)** | imo / nit / optional / consider / maybe / perhaps / could / might / I think / in my opinion / personal preference / 〜じゃないかな / 個人的に | 妥当性を評価してから判断 |
-| **質問** | ? / why / what / how | 実装意図を説明するか修正 |
+`[must]` のようにラベルが付いたコメントは、そのラベルで分類する。
+ラベルがないコメントは、次のシグナルから最も近いラベルを推定する:
+
+| 推定ラベル | シグナル |
+|------|---------|
+| `must` | bug / error / wrong / broken / must / 動かない |
+| `should` | should / 〜すべき / 〜したほうがいい |
+| `ask` | ? / why / what / how / なぜ / どうして |
+| `imo` | imo / optional / consider / maybe / perhaps / could / might / I think / in my opinion / personal preference / 〜じゃないかな / 個人的に |
+| `nits` | nit / nits / typo / 細かいですが |
+| `security`（付加） | security / vulnerability / 脆弱性 / injection / XSS |
 
 ## 処理フロー
 
 ```
 FOR each comment:
-  IF 意見系キーワードを含む (imo/nit/consider 等):
-    → [意見系コメントの処理] へ
-  ELSE IF CHANGES_REQUESTED レビューの指摘:
-    → 修正する
-  ELSE:
+  IF security が付いている:
+    → 他より先に対応し、対応の有無にかかわらず返信する
+  IF must / should:
     → 技術的に正当か確認後、修正する
+    → should を直さないと判断した場合は、理由をユーザーに報告する
+  ELSE IF ask:
+    → 実装意図を説明する返信案を作る。回答の結果、修正が必要なら修正する
+  ELSE IF better / imo:
+    → [意見系コメントの処理] へ
+  ELSE IF nits:
+    → 修正する
 ```
 
 ### 意見系コメントの処理
