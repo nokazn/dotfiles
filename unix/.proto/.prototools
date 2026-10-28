@@ -1,11 +1,6 @@
-node = "stable"
-yarn = "latest"
-pnpm = "latest"
-go = "1.27.2"
-uv = "latest"
-
 [tools.node]
 bundled-npm = true
 
 [settings]
 auto-install = true
+auto-clean = true

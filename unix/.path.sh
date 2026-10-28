@@ -36,25 +36,6 @@ function _register_backward_if_not() {
 	return 0
 }
 
-# @return "bash" | "zsh" | "fish" ("bash" as fallback)
-function _detect_shell() {
-	local -r shell="$(basename "$SHELL")"
-	case ${shell} in
-	"bash" | "zsh" | "fish" | "nu")
-		echo "${shell}"
-		;;
-	*)
-		echo "bash"
-		;;
-	esac
-}
-
-function _start_mise() {
-	local -r shell="$(_detect_shell)"
-	local -r script="$("$HOME/.local/bin/mise" activate "${shell}")"
-	${shell} -c "eval ${script}"
-}
-
 # Go
 # proto の shim 経由で go を実行すると auto-install 等の出力が混入して PATH が壊れるため、go env を使わずに解決する
 _goBinDir="${GOBIN:-${GOPATH:-$HOME/go}/bin}"
@@ -122,11 +103,6 @@ fi
 # set PATH so it includes user's private bin if it exists
 if [[ -d "$HOME/.local/bin" ]]; then
 	_register_forward_if_not "$HOME/.local/bin"
-fi
-
-# mise
-if [[ -f "$HOME/.local/bin/mise" ]]; then
-	_start_mise
 fi
 
 # proto

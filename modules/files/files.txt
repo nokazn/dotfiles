@@ -44,7 +44,6 @@
 .path.sh
 .prettierrc.json
 # .profile
-.tool-versions
 .yarnrc.yml
 # .zlogin
 # .zlogout
