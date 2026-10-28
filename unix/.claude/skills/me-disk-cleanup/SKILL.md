@@ -5,11 +5,13 @@ description: macOS / Linux のディスクを掃除する。tmp の古いファ�
 
 # Disk Cleanup
 
-削除の判定と実行は同梱の `scripts/cleanup.sh` に任せる。
+削除の判定と実行は同梱の `scripts/cleanup.ts` に任せる。
 自分で `rm -rf` や `find -delete` を組み立てると、使用中のソケットや未コミットの clone を消す事故が起きやすいので、スクリプトにない対象を消すときもまずユーザーに確認する。
 
+スクリプトは bun（mise で管理）で動く。`bun` が見つからなければ、`mise install bun` を実行してよいかユーザーに聞く。
+
 ```bash
-SCRIPT=~/.claude/skills/me-disk-cleanup/scripts/cleanup.sh
+SCRIPT=~/.claude/skills/me-disk-cleanup/scripts/cleanup.ts
 "$SCRIPT" categories             # カテゴリと利用可否
 "$SCRIPT" report [category...]   # 削除候補を TSV で出す。何も消さない
 "$SCRIPT" run <category...>      # カテゴリ単位で削除
@@ -17,7 +19,7 @@ SCRIPT=~/.claude/skills/me-disk-cleanup/scripts/cleanup.sh
 ```
 
 report の TSV は `category, size_kb, size, target, note` の5列。
-全カテゴリの report は数分かかる（tmp と user-cache で1〜2分、`$HOME` 全体を du する `survey` で2〜3分）。
+`$HOME` 全体を du する `survey` の report は1〜3分かかり、それ以外は合わせて数十秒で終わる。
 `report survey` とそれ以外のカテゴリの report を別々の Bash 呼び出しで並列に走らせ、どちらも timeout は 600000 にする。
 
 ## 手順
