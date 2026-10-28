@@ -76,5 +76,4 @@ fi
 
 ## Lint
 
-ファイル保存時に shellcheck が自動実行される（`~/.claude/hooks/shellcheck-on-save.sh`）。
-手動実行: `shellcheck <file>.sh`
+編集後に `shellcheck <file>.sh` を実行する。

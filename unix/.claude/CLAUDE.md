@@ -41,8 +41,6 @@
 ## Workflows
 
 - **Session start**: Before beginning new work, verify current branch (`git branch --show-current`) matches intended work. If on an unexpected branch, report to user and confirm whether to switch or create a new branch.
-- **Repo lock**: If editing is blocked by a repo lock (another session is active), create a worktree and continue work there:
-  `git worktree add ../<repo>-wt-<branch> -b <branch> && cd ../<repo>-wt-<branch>`
 - Before editing a file, **ALWAYS** re-read it to check for user changes since the last read. Incorporate those changes into the next edit. If the changes seem inconsistent or unclear, ask the user before proceeding.
 - Keep documentation up to date with code changes
 - Use subagents for small-to-medium self-contained tasks
