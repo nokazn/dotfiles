@@ -2,6 +2,7 @@
 *.log
 .direnv
 .aws/credentials
+.aliases.work.sh
 .ssh/*
 !.ssh/config
 !.vscode/extensions.bk.json

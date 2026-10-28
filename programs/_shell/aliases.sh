@@ -376,3 +376,13 @@ function deprecate() {
 
 	cp -r -v "${source}" "${destination}"
 }
+
+#
+# work
+#
+
+# Sourced at runtime because flakes cannot read git-ignored files, and this repository is public
+if [[ -r "${HOME}/dotfiles/unix/.aliases.work.sh" ]]; then
+	# shellcheck source=/dev/null
+	source "${HOME}/dotfiles/unix/.aliases.work.sh"
+fi
