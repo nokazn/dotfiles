@@ -1,6 +1,6 @@
 ---
 name: me-gh-create-pr
-description: Use when the user wants to open a GitHub pull request with `gh pr create`. Inspects the repository for a PR template under `.github/` and follows it when present; otherwise falls back to a Japanese default template (やったこと / やらないこと / Why・背景 / Before/After / 確認URL / 確認方法 / 観点 / 補足). Keeps each section concise instead of explanatory.
+description: Use when the user wants to open a GitHub pull request with `gh pr create`. Inspects the repository for a PR template under `.github/` and follows it when present; otherwise falls back to a Japanese default template (やったこと / やらないこと / Why・背景 / Before/After / 確認URL / 確認方法 / 観点 / 補足). Keeps each section concise instead of explanatory. For UI changes, captures before/after screenshots and attaches them side by side with `gh --attach`; when verification needs specific data, includes the SQL or scripts to prepare it in a collapsed details block.
 ---
 
 # gh-create-pr
@@ -58,10 +58,10 @@ ls "$REPO_ROOT/.github/pull_request_template.md" \
 - やらないこと
 - Why・背景
 - Before/After
-  - 画面変更時のみ記載し、スクリーンショットを載せる
-  - `/screenshot` skillを使用して storybook や実際の画面のスクリーンショットを取得する
+  - 画面変更時のみ記載し、base ブランチと現在のブランチのスクリーンショットを表で横に並べる（後述の「Before/After のスクリーンショット」）
 - 確認URL
 - 確認方法
+  - 確認に特定のデータが要る場合は、抽出・作成する SQL やスクリプトを `<details>` に入れて載せる（後述の「テストデータの載せ方」）
 - 観点
 - 補足
 
@@ -84,7 +84,9 @@ ls "$REPO_ROOT/.github/pull_request_template.md" \
 
 ## Before/After
 
-<!-- 画面が変更された場合のみスクリーンショットを貼る -->
+| Before | After |
+| --- | --- |
+| ![before](./before-list.png) | ![after](./after-list.png) |
 
 ## 確認URL
 
@@ -93,6 +95,15 @@ ls "$REPO_ROOT/.github/pull_request_template.md" \
 ## 確認方法
 
 1. ...
+
+<details>
+<summary>テストデータ</summary>
+
+```sql
+...
+```
+
+</details>
 
 ## 観点
 
@@ -103,6 +114,30 @@ ls "$REPO_ROOT/.github/pull_request_template.md" \
 
 ...
 ```
+
+#### Before/After のスクリーンショット
+
+レビュアーが差分を一目で比べられるよう、同じ画面・同じ状態の Before と After を並べる。
+
+1. 撮影対象を差分から決める。変更したコンポーネントの storybook か、そのコンポーネントを使う実際の画面。
+2. Before は base ブランチで撮る。作業ツリーを切り替えずに済むよう `git worktree add <tmp-dir> origin/<base>` で別の作業ツリーを作り、そこで dev server や storybook を起動する。
+3. After は現在のブランチで撮る。ビューポート・ログインユーザー・表示データを Before とそろえないと、変更以外の差分が混ざる。
+4. `/screenshot` skill や `/playwright` skill で撮り、PR 本文と同じ一時ディレクトリに `before-<画面名>.png` / `after-<画面名>.png` として保存する。
+5. 本文では上の表のようにローカルパスで参照する。`gh pr create/edit --attach` がアップロードして GitHub 上の URL に書き換える。
+
+`--attach` は gh v2.99.0 以降で使え、リポジトリへの push 権限が要る。
+`gh --version` が古い、または撮影できない画面（外部サービス連携や本番データが必要など）の場合は、表のセルに `<!-- TODO: スクリーンショット -->` を残してユーザーに依頼する。
+作った worktree とスクリーンショットは、PR 作成後にユーザーに確認してから削除する。
+
+#### テストデータの載せ方
+
+確認方法に「この状態のアカウントで」「このデータがあるとき」のような前提があるなら、レビュアーがそのデータを用意できるよう SQL やスクリプトを載せる。
+長くなりやすく本文の流れを妨げるので、`<details>` に入れて折りたたむ。
+
+- 既存データから条件に合うものを探す抽出クエリを優先し、ない場合に作成用の INSERT やスクリプトを書く。既存データを書き換える UPDATE は、元に戻す手順も添える。
+- 対象環境（ローカル / 開発環境など）を `<summary>` か直前の手順に書く。本番環境で実行する前提のものは載せない。
+- 実在の個人情報・認証情報・本番の ID は入れない。値はダミーにするか、抽出クエリで取得させる。
+- `<summary>` の後とコードブロックの前後には空行を入れる。空行がないと GitHub 上でコードブロックとして表示されない。
 
 ### 4. リモートへ push
 
@@ -134,6 +169,17 @@ EOF
 良い例: `` `foo.ts` を編集 `` → GitHub 上で `foo.ts` が code 表示
 悪い例: ``\`foo.ts\` を編集`` → GitHub 上で `\foo.ts\` と表示される
 
+スクリーンショットを添付する場合は、本文をスクリーンショットと同じディレクトリのファイルに書き出し、`--body-file` と `--attach` で渡す。
+`--body-file` 内の相対パスはそのファイルのディレクトリを基準に解決されるため。
+
+```bash
+gh pr create --base <base> --title "<title>" --assignee @me \
+  --body-file <tmp-dir>/body.md \
+  --attach <tmp-dir>/before-list.png --attach <tmp-dir>/after-list.png
+```
+
+一部の添付だけ失敗した場合、PR は成功した分だけで作成され、コマンドは非 0 で終了する。失敗したファイルは `gh pr edit --body-file ... --attach ...` で付け直す。
+
 PRが作成済みの場合は、`gh pr edit` で不足している内容の更新、古くなっている説明の更新・削除を行う。
 
 作成/更新後、PR の URL を返す。
@@ -145,7 +191,6 @@ PRが作成済みの場合は、`gh pr edit` で不足している内容の更�
 - 「コードを読めばわかる」内容を本文で繰り返さない。特に具体的な変数名やファイル名、項目名を用いた説明は不要。ユーザー視点から見た変更点を中心に記載する。
 - 該当のないセクションは見出しを残し、本文は「なし」と記載する。テンプレートとの整合性のため。テンプレートに書かれていた雛形（例: 空のテーブル、途中の箇条書きのような雛形）は **そのまま残さず削除** して「なし」に置き換える。
 - 「観点」は `- [ ] ` のチェックボックスで列挙し、レビュー時にチェック可能にする。
-- スクリーンショットが必要だが /screenshot skill で用意できない場合は `<!-- TODO: スクリーンショット -->` を残してユーザーに依頼する。
 
 良い例:
 
