@@ -58,6 +58,7 @@
 - **Worktree safety**:
   - Never stash, checkout, or switch branches in a worktree that has uncommitted changes — always create a new worktree instead. Confirm with user before touching an existing worktree's changes.
   - If a worktree is meant for a specific branch and the current checkout doesn't match, confirm with the user before proceeding.
+  - When the work is complete, ask the user before removing the worktrees and temporary files created for it.
 
 ### Store documents under `~/.agents/` directory
 
