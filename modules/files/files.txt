@@ -7,6 +7,7 @@
 .claude/scripts/status-line.sh
 .claude/hooks/notify.sh
 .claude/skills/me-css-guidelines
+.claude/skills/me-disk-cleanup
 .claude/skills/me-gh-address-pr-comments
 .claude/skills/me-gh-create-pr
 .claude/skills/me-git-commits
