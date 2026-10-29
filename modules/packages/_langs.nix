@@ -22,7 +22,6 @@ lib.attrValues {
     node-gyp
     prettier
     typescript
-    webpack-cli
   ];
   js = [
     dprint # Code formatting platform written in Rust
