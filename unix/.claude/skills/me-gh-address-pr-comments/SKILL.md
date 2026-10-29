@@ -86,7 +86,7 @@ FOR each comment:
 3. **テストを実行する** — 修正が既存の動作を壊さないか確認する
 4. **完了後に報告する** — 何を修正したか・何を保留したかを明示し、ユーザーに問題ないか確認する
 5. **リモートブランチにpushする** — `git ps`でプッシュする
-6. **GitHub 上のコメントで対応内容を reviewer に知らせる** — どのコミットで対応したかをコメントに残す
+6. **GitHub 上のコメントで対応内容を reviewer に知らせる** — どのコミットで対応したかをコメントに残す。投稿者によって確認の要否と resolve の扱いが変わる（後述の「返信と resolve の扱い」）
 
 ## 報告のフォーマット
 
@@ -105,11 +105,43 @@ FOR each comment:
 
 ## コメントのフォーマット
 
-報告内容が問題ないとユーザーに判断され push した後、と指摘のインラインコメントに返信する。
+push した後、指摘のインラインコメントに返信する。
 
 ```sh
 gh api repos/{owner}/{repo}/pulls/{pr_number}/comments/{comment_id}/replies -f body="📝 <commit hash> で対応"
 ```
+
+### 返信と resolve の扱い
+
+返信してよいタイミングと resolve するかどうかは、コメントの投稿者で変える。
+他の人の指摘は、その人が対応を確かめてから閉じるものなので、勝手に resolve しない。
+
+| 投稿者 | 返信 | resolve |
+|------|------|------|
+| 自分（`gh api user --jq .login`）または AI エージェント | ユーザーに確認せずそのまま送る | 修正して対応したものは、返信したうえで resolve する |
+| それ以外の人 | 返信内容をユーザーに見せ、OK をもらってから送る | しない |
+
+- AI エージェントは、REST のコメントの `user.type` が `Bot` のもの（`copilot-pull-request-reviewer[bot]` など）と、login が `Copilot` のもの。
+- 修正せずに返信だけしたもの（ask への回答、対応しないと判断した imo など）は、自分や AI エージェントの指摘でも resolve しない。後でユーザーが見直せるようにするため。
+
+resolve には thread の ID が要るので、GraphQL で返信先のコメントが属する thread を引いてから閉じる:
+
+```sh
+gh api graphql -f query='
+  query($owner: String!, $repo: String!, $number: Int!) {
+    repository(owner: $owner, name: $repo) {
+      pullRequest(number: $number) {
+        reviewThreads(first: 100) {
+          nodes { id isResolved comments(first: 1) { nodes { databaseId author { login } } } }
+        }
+      }
+    }
+  }' -F owner={owner} -F repo={repo} -F number={pr_number}
+
+gh api graphql -f query='mutation($id: ID!) { resolveReviewThread(input: { threadId: $id }) { thread { isResolved } } }' -F id=<thread_id>
+```
+
+`comments(first: 1)` の `databaseId` が、REST で取得したスレッド先頭のコメント ID と一致する thread を選ぶ。
 
 ## 注意事項
 
