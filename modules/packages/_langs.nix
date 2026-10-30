@@ -68,7 +68,7 @@ lib.attrValues {
       ruff
       pyright
     ]
-    ++ (with python312Packages; [
+    ++ (with python3Packages; [
       setuptools
     ])
   );
