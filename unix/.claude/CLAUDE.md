@@ -57,6 +57,7 @@
   - Never stash, checkout, or switch branches in a worktree that has uncommitted changes — always create a new worktree instead. Confirm with user before touching an existing worktree's changes.
   - If a worktree is meant for a specific branch and the current checkout doesn't match, confirm with the user before proceeding.
   - When the work is complete, ask the user before removing the worktrees and temporary files created for it.
+    - If `git worktree remove` refuses because the worktree contains submodules, `git worktree remove -f` is allowed once the branch is pushed to the remote and `git status --porcelain` is empty — `-f` also discards uncommitted changes.
 
 ### Store documents under `~/.agents/` directory
 
