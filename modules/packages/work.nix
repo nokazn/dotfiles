@@ -15,6 +15,7 @@ let
       enablePython = true;
       enableTerraform = false;
       enableLangs = false;
+      enableOptional = false;
     };
   };
 in

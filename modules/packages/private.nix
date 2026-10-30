@@ -15,6 +15,7 @@ let
       enablePython = true;
       enableTerraform = false;
       enableLangs = true;
+      enableOptional = false;
     };
   };
 in
@@ -27,9 +28,6 @@ langs
       redis
     ];
   };
-  cloud = [
-    google-cloud-sdk
-  ];
   container =
     [ ]
     ++ lib.optionals stdenv.isLinux [
@@ -45,7 +43,6 @@ langs
   langs = lib.attrValues {
     js = [
       biome # Toolchain of the web
-      deno
       turbo # High-performance build system for JavaScript and TypeScript codebases
     ];
   };

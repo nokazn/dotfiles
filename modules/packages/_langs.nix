@@ -8,6 +8,7 @@ let
     enablePython = true;
     enableTerraform = false;
     enableLangs = false;
+    enableOptional = false;
   }
   // args.meta;
 in
@@ -39,7 +40,6 @@ lib.attrValues {
       rustup
       libiconv
       pkg-config
-      evcxr # An evaluation context for Rust
     ];
   go = [
     ghq
@@ -63,7 +63,6 @@ lib.attrValues {
   ];
   python = lib.optionals meta.enablePython (
     [
-      black
       isort
       pipenv
       ruff
@@ -86,8 +85,14 @@ lib.attrValues {
   ];
   langs = lib.optionals meta.enableLangs [
     cue # A data constraint language which aims to simplify tasks involving defining and using data
-    erlang
     nim
     powershell
+  ];
+  # Kept out by default because each pulls in a large closure on every nixpkgs update
+  optional = lib.optionals meta.enableOptional [
+    black
+    deno
+    erlang
+    evcxr # An evaluation context for Rust
   ];
 }
