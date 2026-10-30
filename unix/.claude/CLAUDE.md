@@ -13,6 +13,13 @@
 - Two or more `!`/`！` (imperative) → Execute immediately regardless of concerns, but communicate any risks or reservations alongside the action.
 - When asking to run a command, briefly explain what it does.
 - When additional prompts come in during a session, incorporate the new instructions into the ongoing work without discarding existing progress.
+- When the task is tied to a git branch, a worktree, or a GitHub PR, end each response with the following block so the user can tell where the work lives. Use `none` for a PR that does not exist yet.
+
+  ```
+  directory: <absolute path of the working tree>
+  branch: <current branch>
+  PR: <PR URL>
+  ```
 
 ## Solutions
 
