@@ -1,0 +1,111 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "context_servers": {
+    "Figma": {
+      "enabled": true,
+      "url": "http://127.0.0.1:3845/mcp",
+    },
+  },
+  "agent_servers": {
+    "claude-acp": {
+      "default_config_options": {
+        "mode": "bypassPermissions",
+        "fast": true,
+        "model": "opusplan",
+      },
+      "type": "registry",
+    },
+  },
+  "cli_default_open_behavior": "new_window",
+  "project_panel": {
+    "dock": "right",
+  },
+  "outline_panel": {
+    "dock": "left",
+  },
+  "collaboration_panel": {
+    "button": false,
+    "dock": null,
+  },
+  "format_on_save": "on",
+  "ensure_final_newline_on_save": true,
+  "remove_trailing_whitespace_on_save": true,
+  "confirm_quit": true,
+  "session": {
+    "trust_all_worktrees": true,
+  },
+  "file_scan_exclusions": ["**/.git", "**/.node_modules", "**/*.{min,bundle}.{js,css}", "**/.yarn/releases/yarn-*.cjs"],
+  "disable_ai": false,
+  "agent": {
+    "show_turn_stats": true,
+    "max_idle_retained_threads": 5,
+    "threads_sidebar": {
+      "position": "left",
+    },
+    "message_editor_min_lines": 8,
+    "use_modifier_to_send": true,
+    "single_file_review": true,
+    "dock": "left",
+    "default_profile": "write",
+    "play_sound_when_agent_done": "always",
+    "model_parameters": [],
+    "default_model": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-5",
+    },
+  },
+  "git_panel": {
+    "dock": "right",
+  },
+  "ui_font_size": 16,
+  "buffer_font_size": 16,
+  "icon_theme": "Zed (Default)",
+  "theme": {
+    "mode": "dark",
+    "light": "Gruvbox Light",
+    "dark": "Ayu Mirage",
+  },
+  "languages": {
+    "TypeScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true,
+      },
+      "format_on_save": "on",
+      "language_servers": ["vtsls", "!typescript-language-server", "!typescript-ls", "..."],
+    },
+    "JavaScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true,
+      },
+      "format_on_save": "on",
+    },
+    "TSX": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true,
+      },
+      "format_on_save": "on",
+      "language_servers": ["vtsls", "!typescript-language-server", "!typescript-ls", "..."],
+    },
+    "CSS": {
+      "language_servers": ["tailwindcss-intellisense-css", "!vscode-css-language-server"],
+    },
+  },
+  "lsp": {
+    "tailwindcss-language-server": {
+      "settings": {
+        "emmetCompletions": true,
+        "classFunctions": ["cva", "cx", "clsx"],
+        "experimental": {
+          "classRegex": ["[cls|className]\\s\\:\\=\\s\"([^\"]*)"],
+        },
+      },
+    },
+  },
+}

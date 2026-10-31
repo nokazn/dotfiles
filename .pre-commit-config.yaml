@@ -8,7 +8,7 @@ repos:
       - id: check-symlinks
       - id: check-json
         #  exclude jsonc files
-        exclude: ".vscode|Code/User/.+\\.json"
+        exclude: ".vscode|Code/User/.+\\.json|\\.config/zed/.+\\.json"
       - id: check-toml
       - id: check-yaml
       - id: check-xml

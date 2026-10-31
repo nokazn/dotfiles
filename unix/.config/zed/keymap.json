@@ -1,0 +1,113 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Editor",
+    "bindings": {
+      // "j k": ["workspace::SendKeystrokes", "escape"]
+    },
+  },
+  {
+    "bindings": {
+      // Tab navigation
+      "ctrl-pagedown": "pane::ActivateNextItem",
+      "ctrl-pageup": "pane::ActivatePreviousItem",
+      "cmd-e": "file_finder::Toggle",
+      "cmd-shift-g": "git_panel::ToggleFocus",
+    },
+  },
+
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-escape": "editor::ShowCompletions",
+      // Cursor movement by word parts
+      "alt-left": "editor::MoveToPreviousSubwordStart",
+      "alt-right": "editor::MoveToNextSubwordEnd",
+      "shift-alt-left": "editor::SelectToPreviousWordStart",
+      "shift-alt-right": "editor::SelectToNextWordEnd",
+      // Delete by word parts
+      "alt-backspace": "editor::DeleteToPreviousWordStart",
+      "cmd-delete": "editor::DeleteToNextWordEnd",
+      // Folding
+      "cmd-shift-[": "editor::Fold",
+      "cmd-shift-]": "editor::UnfoldLines",
+    },
+  },
+
+  // Navigation (Go forward/backward)
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-]": "pane::GoForward",
+      "alt-[": "pane::GoBack",
+    },
+  },
+
+  // Split pane and move the active item into it.
+  // Zed resolves bindings deepest-context-first (Workspace > Pane > Editor),
+  // so the same binding has to be repeated at every context where a default
+  // would otherwise shadow it:
+  //   Editor                    -> editor::SelectSmallerSyntaxNode / SelectLargerSyntaxNode
+  //   Editor && edit_prediction -> editor::AcceptNextWordEditPrediction
+  // The Pane entry covers focus outside an editor (project panel, etc.).
+  {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-cmd-left": "pane::SplitLeft",
+      "ctrl-cmd-right": "pane::SplitRight",
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-cmd-left": "pane::SplitLeft",
+      "ctrl-cmd-right": "pane::SplitRight",
+    },
+  },
+  {
+    "context": "Editor && edit_prediction",
+    "bindings": {
+      "ctrl-cmd-right": "pane::SplitRight",
+    },
+  },
+
+  // Go to next/previous function/class member
+  {
+    "context": "Editor",
+    "bindings": {
+      // "ctrl-cmd-down": "outline::SelectNext",
+      // "ctrl-cmd-up": "outline::SelectPrev"
+    },
+  },
+
+  // Terminal keybindings
+  {
+    "context": "Terminal",
+    "bindings": {
+      "cmd-shift-c": "terminal::Copy",
+      "cmd-shift-v": "terminal::Paste",
+      "cmd-shift-|": "pane::SplitRight",
+      "cmd-shift--": "pane::SplitDown",
+      "cmd-shift-right": "workspace::ActivatePaneRight",
+      "cmd-shift-left": "workspace::ActivatePaneLeft",
+      "cmd-shift-up": "workspace::ActivatePaneUp",
+      "cmd-shift-down": "workspace::ActivatePaneDown",
+      // "cmd-shift-lef": "terminal::ActivateNextPane"
+      // Word movement in terminal (using escape sequences)
+      "cmd-ctrl-left": ["terminal::SendText", "\u001b[1;5D"],
+      "cmd-ctrl-right": ["terminal::SendText", "\u001b[1;5C"],
+    },
+  },
+
+  // Git/SCM
+  {
+    "context": "Workspace",
+    "bindings": {},
+  },
+]
