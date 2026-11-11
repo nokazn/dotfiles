@@ -29,6 +29,7 @@ gh api user --jq .login                            # 自分のログイン名
 
 差分の各変更について、バグ・仕様との整合・セキュリティ・UI/UX・規約・保守性の順に見る。
 リポジトリに規約（`CLAUDE.md`、`CONTRIBUTING.md`、lint 設定、`tcj-*-coding-guidelines` などのスキル）があれば、それを基準にする。
+バグを報告するかどうかは `~/.claude/CLAUDE.md` の「Code review」の分類で決める。報告対象外のバグは下書きに積まず、ステップ 4 でユーザーに補足として伝える。
 
 指摘ごとにラベルを1つ選ぶ（`security` は付加）。コメント本文は次のように書く。
 
