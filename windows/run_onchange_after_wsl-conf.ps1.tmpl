@@ -1,0 +1,14 @@
+# wsl.conf hash: {{ include "wsl/wsl.conf" | sha256sum }}
+$ErrorActionPreference = 'Stop'
+
+if (-not (Get-Command wsl.exe -ErrorAction SilentlyContinue)) {
+  exit 0
+}
+
+$source = wsl.exe wslpath -u '{{ joinPath .chezmoi.sourceDir "wsl/wsl.conf" | replace "\\" "/" }}'
+wsl.exe -u root -- cp --verbose $source /etc/wsl.conf
+if ($LASTEXITCODE -ne 0) {
+  throw "Failed to deploy /etc/wsl.conf"
+}
+
+Write-Host "Run 'wsl --shutdown' to apply /etc/wsl.conf"

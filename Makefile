@@ -95,22 +95,6 @@ apply/darwin: apply/_inject-env # Run `nix-darwin switch` (PROFILE=minimum|priva
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully! (profile: $(PROFILE))"
 
-.PHONY: apply/windows
-apply/windows: # Make symbolic links to dotfiles & back up original files if exists in Windows
-	$(SCRIPTS_DIR)/apply/windows.sh
-
-.PHONY: _apply/unix
-_apply/unix: # (Deprecated) Make symbolic links to dotfiles & back up original files if exists
-	$(SCRIPTS_DIR)/apply/unix.sh
-
-.PHONY: restore/windows
-restore/windows: # Restore backed-up files of dotfiles in Windows
-	$(SCRIPTS_DIR)/restore/windows.sh
-
-.PHONY: _restore/unix
-_restore/unix: # (Deprecated) Restore backed-up files of dotfiles
-	$(SCRIPTS_DIR)/restore/unix.sh
-
 # update ----------------------------------------------------------------------------------------------------
 
 .PHONY: update/nix
