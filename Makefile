@@ -126,13 +126,6 @@ install/skills: # Install Claude Code skills from obra/superpowers globally
 update/claude-code: # Update claude-code to the latest version
 	bash scripts/update-claude-code.sh
 
-.PHONY: update/npm-packages-list
-update/npm-packages-list: # Generate Nix packages list for npm packages
-	cd ./modules/node; \
-	nix-shell -p nodePackages.node2nix \
-    -p nixfmt \
-    --command 'node2nix -i ./packages.json -o ./packages.nix && find . -type f | grep -e "\.nix$$" | xargs nixfmt' && exit
-
 .PHONY: update/vscode-settings/darwin
 update/vscode-settings/darwin: # Update VSCode settings.json & keybindings.json for Darwin
 	echo 'Library/Application\ Support/Code/User/'{settings,keybindings}.json \
