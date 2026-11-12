@@ -26,7 +26,6 @@
 .config/git/ignore
 .config/htop/htoprc
 .config/lazygit/config.yml
-.config/neofetch/config.conf
 .config/nix
 .config/pnpm/config.yaml
 .config/sampler/config.yml
@@ -57,4 +56,3 @@
 Library/Application Support/Code/User/keybindings.json
 Library/Application Support/Code/User/settings.json
 biome.jsonc
-salias.toml

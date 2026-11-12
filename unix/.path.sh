@@ -119,8 +119,4 @@ if command -v fnm >/dev/null; then
 	eval "$(fnm env --use-on-cd)"
 fi
 
-# if command -v salias >/dev/null; then
-#     source <(salias --init)
-# fi
-
 export PATH=$PATH
