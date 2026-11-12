@@ -5,7 +5,7 @@
   enableBashIntegration = true;
   enableZshIntegration = true;
   globalConfig.tools = {
-    node = "26";
+    node = "lts";
     yarn = "latest";
     pnpm = "latest";
     bun = "latest";

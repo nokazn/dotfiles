@@ -38,7 +38,7 @@ $ sudo pacman -Syu && sudo pacman -S base base-devel vi vim git make wget openss
 
 - `add-tools/nix` - add Nix
 - `apply/user` - run `home-manager switch`
-- `install/langs` - install Node.js by fnm & other languages by mise, then remove unused versions
+- `install/langs` - install languages by mise
 
 ```sh
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
@@ -69,7 +69,7 @@ Install apps for Linux
 
 - `add-tools/nix` - add Nix
 - `apply/darwin` - run `nix-darwin switch`
-- `install/langs` - install Node.js by fnm & other languages by mise, then remove unused versions
+- `install/langs` - install languages by mise
 
 ```sh
 $ git clone git@github.com:nokazn/dotfiles ~/dotfiles
