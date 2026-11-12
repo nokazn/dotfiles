@@ -28,9 +28,11 @@
 .config/lazygit/config.yml
 .config/neofetch/config.conf
 .config/nix
+.config/pnpm/config.yaml
 .config/sampler/config.yml
 .config/tmux/cpu-usage.sh
 .config/tmux/memory-usage.sh
+.config/uv/uv.toml
 .config/wezterm
 .config/zed/keymap.json
 .config/zed/settings.json
