@@ -80,13 +80,13 @@
 
   skills = pkgs.stdenv.mkDerivation (finalAttrs: {
     pname = "skills";
-    version = "1.3.9";
+    version = "1.8.1";
 
     src = pkgs.fetchFromGitHub {
       owner = "vercel-labs";
       repo = "skills";
       rev = "v${finalAttrs.version}";
-      hash = "sha256-JidfLICAkXY1xEUSGcRZbS88x50cxyZcG9uRFASqOqI=";
+      hash = "sha256-K4xCSpt8jnkTx8FDEa2cXrzMjpRkYOwTiFqPap6iCYU=";
     };
 
     nativeBuildInputs = [
@@ -100,7 +100,7 @@
       inherit (finalAttrs) pname version src;
       pnpm = pkgs.pnpm_10;
       fetcherVersion = 3;
-      hash = "sha256-pwPJ4CRHEtCXpt5b6g/7EbDsUc2KCjOtpiVED0tqoMk=";
+      hash = "sha256-cL9mQpQZ5/kbrdZ9TWhymz8iVxdtb9YSdstiVBMejTU=";
     };
 
     buildPhase = ''
@@ -113,8 +113,10 @@
 
     installPhase = ''
       runHook preInstall
+      rm -rf node_modules
+      pnpm install --offline --prod --frozen-lockfile --ignore-scripts
       mkdir -p $out/lib/node_modules/skills
-      cp -r dist bin package.json $out/lib/node_modules/skills/
+      cp -r dist bin package.json node_modules $out/lib/node_modules/skills/
       makeWrapper ${nodejs}/bin/node $out/bin/skills \
         --add-flags $out/lib/node_modules/skills/bin/cli.mjs
       ln -s $out/bin/skills $out/bin/add-skill
