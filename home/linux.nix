@@ -13,7 +13,7 @@ let
   npmPackages = builtins.attrValues (
     import ../modules/node/npm.nix {
       inherit pkgs lib;
-      nodejs = pkgs.nodejs_22;
+      nodejs = pkgs.nodejs_26;
     }
   );
 in

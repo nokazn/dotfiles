@@ -12,6 +12,7 @@
 #   `npmDepsHash = "";`をセットして、`nix-build --no-out-link -E 'with import <nixpkgs> {}; callPackage ./modules/npm-packages.nix {}' -A パッケージ名`を実行する
 {
   sort-package-json = pkgs.buildNpmPackage rec {
+    inherit nodejs;
     pname = "sort-package-json";
     version = "3.6.0";
 
@@ -25,10 +26,10 @@
     npmDepsHash = "sha256-dECVKQE7AwAZERSmFhv9qXG+zCSXxSxKBqX/mtFFXFs=";
 
     dontNpmBuild = true;
-    dontFixup = true;
   };
 
   http-server = pkgs.buildNpmPackage rec {
+    inherit nodejs;
     pname = "http-server";
     version = "14.1.1";
 
@@ -51,7 +52,6 @@
     npmDepsHash = "sha256-iUTDdcibnstbSxC7cD5WbwSxQbfiIL2iNyMWJ8izSu0=";
 
     dontNpmBuild = true;
-    dontFixup = true;
   };
 
   # GitHub のソースには webpack ビルド成果物 `dist/cli.js` がコミットされておらず、実行時依存も無いため、ビルド済みの npm 公開物をそのまま使う
@@ -90,7 +90,8 @@
     };
 
     nativeBuildInputs = [
-      pkgs.nodejs_22
+      nodejs
+      pkgs.makeWrapper
       pkgs.pnpmConfigHook
       pkgs.pnpm_10
     ];
@@ -114,9 +115,9 @@
       runHook preInstall
       mkdir -p $out/lib/node_modules/skills
       cp -r dist bin package.json $out/lib/node_modules/skills/
-      mkdir -p $out/bin
-      ln -s $out/lib/node_modules/skills/bin/cli.mjs $out/bin/skills
-      ln -s $out/lib/node_modules/skills/bin/cli.mjs $out/bin/add-skill
+      makeWrapper ${nodejs}/bin/node $out/bin/skills \
+        --add-flags $out/lib/node_modules/skills/bin/cli.mjs
+      ln -s $out/bin/skills $out/bin/add-skill
       runHook postInstall
     '';
   });
