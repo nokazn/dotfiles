@@ -54,8 +54,8 @@ remove-tools/nix/darwin: _print-goodbye # Uninstall nix for darwin (See https://
 # languages ----------------------------------------------------------------------------------------------------
 
 .PHONY: install/langs
-install/langs: # Install languages by proto
-	source $(PATH_SCRIPT) && proto install --config-mode global
+install/langs: # Install Node.js by fnm & other languages by mise, then remove unused versions
+	source $(PATH_SCRIPT) && bash scripts/install-langs.sh
 
 .PHONY: uninstall/langs
 uninstall/langs: # Uninstall languages by proto & fnm
