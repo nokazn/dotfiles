@@ -60,6 +60,8 @@ chezmoi init --apply <path to this repository>
 .\.scripts\apply.ps1
 ```
 
+`windows/wsl/wsl.conf` is copied to `/etc/wsl.conf` in WSL on `chezmoi apply` when it changes. Run `wsl --shutdown` afterwards to apply it.
+
 Install apps for Linux
 
 ```sh
