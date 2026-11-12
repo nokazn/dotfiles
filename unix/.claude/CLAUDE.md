@@ -26,6 +26,8 @@
 - Prefer **simple** solutions over easy ones.
 - Prefer **explicit** over implicit.
 - Follow **Single Source of Truth** — define each piece of source in exactly one place, and reference it from others.
+- Fix root causes, not symptoms — no patchwork fixes (special-case branches, swallowed errors, retries/sleeps, duplicated logic). Consider the whole system and codebase, not just the local spot.
+  - If the proper fix exceeds the task's scope, propose it instead of applying it.
 
 ## Design Principles
 
@@ -44,6 +46,24 @@
 - Do not write change-history comments (e.g. "changed to...", "added...") — that's the role of commit logs
 - Prefix TODO/FIXME with a Task/Project/Issue ID: `TODO: [ID] ...`. IDs are required
 - Documentation comments (JSDoc/docstring, etc. for APIs referenced by other modules) may describe preconditions, postconditions, and invariants that are not already expressed by argument/return types or other constraints.
+
+## Code review
+
+When pointing out bugs, classify each by likelihood and impact:
+
+- Likelihood
+  - 1: Occurs under normal usage and conditions
+  - 2: Possible per the code, but only under unusual conditions
+  - 3: Does not occur now, but likely to under foreseeable future changes
+- Impact
+  - A: Affects many users
+  - B: Affects some users
+  - C: Affects only developers or operators (logs, monitoring, tooling)
+  - D: No observable effect (internal processing only)
+
+Report bugs rated 1 or 3 with impact A or B. Regardless of rating, always report security issues and bugs whose consequences would be severe (e.g. data loss or corruption, billing, permissions), even if rare.
+Mention the other bugs you found separately as a brief supplementary note.
+This applies to bugs only, not to design, performance, or readability feedback.
 
 ## Workflows
 
