@@ -1,15 +1,9 @@
-{
-  pkgs,
-  lib,
-  nodejs,
-  ...
-}:
+{ pkgs, ... }:
 
-# ハッシュの算出
-# 1. `src.hash`
-#   `nix-build -E 'with import <nixpkgs> {}; fetchFromGitHub { owner = "オーナー"; repo = "リポジトリ"; rev = "バージョン"; sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; }' 2>&1 | grep "got:"`
-# 2. `npmDepsHash:`
-#   `npmDepsHash = "";`をセットして、`nix-build --no-out-link -E 'with import <nixpkgs> {}; callPackage ./modules/npm-packages.nix {}' -A パッケージ名`を実行する
+# 更新は `make update/npm-packages`（nix-update）で行うため、各パッケージは nix-update が書き換えられる `version` と `hash` の形を保つ
+let
+  nodejs = pkgs.nodejs_26;
+in
 {
   sort-package-json = pkgs.buildNpmPackage rec {
     inherit nodejs;

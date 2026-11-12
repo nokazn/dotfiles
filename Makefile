@@ -126,6 +126,10 @@ install/skills: # Install Claude Code skills from obra/superpowers globally
 update/claude-code: # Update claude-code to the latest version
 	bash scripts/update-claude-code.sh
 
+.PHONY: update/npm-packages
+update/npm-packages: # Update npm packages defined in modules/node/npm.nix to the latest versions
+	bash scripts/update-npm-packages.sh
+
 .PHONY: update/vscode-settings/darwin
 update/vscode-settings/darwin: # Update VSCode settings.json & keybindings.json for Darwin
 	echo 'Library/Application\ Support/Code/User/'{settings,keybindings}.json \
