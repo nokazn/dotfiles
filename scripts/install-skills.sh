@@ -22,4 +22,7 @@ skills add github/gh-stack -g -y --skill gh-stack
 echo "Installing show-me from humanlayer/skills..."
 skills add humanlayer/skills -g -y --skill show-me
 
+echo "Installing archify from archify.si..."
+skills add https://archify.si -g -y --skill archify
+
 echo "Done."
