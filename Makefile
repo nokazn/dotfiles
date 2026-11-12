@@ -119,7 +119,7 @@ update/nix: # Update Nix package manager
 	nix flake update
 
 .PHONY: install/skills
-install/skills: # Install Claude Code skills from obra/superpowers globally
+install/skills: # Install agent skills globally
 	bash scripts/install-skills.sh
 
 .PHONY: update/claude-code

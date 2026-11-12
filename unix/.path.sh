@@ -37,7 +37,7 @@ function _register_backward_if_not() {
 }
 
 # Go
-# proto の shim 経由で go を実行すると auto-install 等の出力が混入して PATH が壊れるため、go env を使わずに解決する
+# バージョン管理ツールの shim 経由で go を実行すると auto-install 等の出力が混入して PATH が壊れるため、go env を使わずに解決する
 _goBinDir="${GOBIN:-${GOPATH:-$HOME/go}/bin}"
 _register_forward "${_goBinDir}"
 
