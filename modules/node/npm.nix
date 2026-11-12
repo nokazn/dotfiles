@@ -8,16 +8,16 @@ in
   sort-package-json = pkgs.buildNpmPackage rec {
     inherit nodejs;
     pname = "sort-package-json";
-    version = "3.6.0";
+    version = "4.1.0";
 
     src = pkgs.fetchFromGitHub {
       owner = "keithamus";
       repo = "sort-package-json";
       rev = "v${version}";
-      hash = "sha256-Y3za+CCkXf2KK5cRZxupM/1A89weP1uIqk/KqLYBl/w=";
+      hash = "sha256-dqk0BypmVx23FTaTvq46MxAI+Tr0Q66xR4srwpi4Kfs=";
     };
 
-    npmDepsHash = "sha256-dECVKQE7AwAZERSmFhv9qXG+zCSXxSxKBqX/mtFFXFs=";
+    npmDepsHash = "sha256-YqQXrWUi9+Gf8Ni2qcFy/cl3OOsI255/gt0tMDhqpko=";
 
     dontNpmBuild = true;
   };
@@ -51,11 +51,11 @@ in
   # GitHub のソースには webpack ビルド成果物 `dist/cli.js` がコミットされておらず、実行時依存も無いため、ビルド済みの npm 公開物をそのまま使う
   envinfo = pkgs.stdenv.mkDerivation (finalAttrs: {
     pname = "envinfo";
-    version = "7.14.0";
+    version = "7.21.0";
 
     src = pkgs.fetchurl {
       url = "https://registry.npmjs.org/envinfo/-/envinfo-${finalAttrs.version}.tgz";
-      hash = "sha256-RXwI6c1oY8TIO2lopBBHJ0jaQWLUA0oso2U37BioG7o=";
+      hash = "sha256-WHgGps18jKpwHTVugGr+bBaZ87L/p6hGsE0Y9uM1+Dw=";
     };
 
     nativeBuildInputs = [ pkgs.makeWrapper ];
