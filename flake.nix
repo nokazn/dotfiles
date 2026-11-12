@@ -186,7 +186,7 @@
         };
       in
       {
-        packages = overrides;
+        packages = overrides // import ./modules/node/npm.nix { inherit pkgs; };
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             gnumake

@@ -1,34 +1,29 @@
-{
-  pkgs,
-  lib,
-  nodejs,
-  ...
-}:
+{ pkgs, ... }:
 
-# ハッシュの算出
-# 1. `src.hash`
-#   `nix-build -E 'with import <nixpkgs> {}; fetchFromGitHub { owner = "オーナー"; repo = "リポジトリ"; rev = "バージョン"; sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; }' 2>&1 | grep "got:"`
-# 2. `npmDepsHash:`
-#   `npmDepsHash = "";`をセットして、`nix-build --no-out-link -E 'with import <nixpkgs> {}; callPackage ./modules/npm-packages.nix {}' -A パッケージ名`を実行する
+# 更新は `make update/npm-packages`（nix-update）で行うため、各パッケージは nix-update が書き換えられる `version` と `hash` の形を保つ
+let
+  nodejs = pkgs.nodejs_26;
+in
 {
   sort-package-json = pkgs.buildNpmPackage rec {
+    inherit nodejs;
     pname = "sort-package-json";
-    version = "3.6.0";
+    version = "4.1.0";
 
     src = pkgs.fetchFromGitHub {
       owner = "keithamus";
       repo = "sort-package-json";
       rev = "v${version}";
-      hash = "sha256-Y3za+CCkXf2KK5cRZxupM/1A89weP1uIqk/KqLYBl/w=";
+      hash = "sha256-dqk0BypmVx23FTaTvq46MxAI+Tr0Q66xR4srwpi4Kfs=";
     };
 
-    npmDepsHash = "sha256-dECVKQE7AwAZERSmFhv9qXG+zCSXxSxKBqX/mtFFXFs=";
+    npmDepsHash = "sha256-YqQXrWUi9+Gf8Ni2qcFy/cl3OOsI255/gt0tMDhqpko=";
 
     dontNpmBuild = true;
-    dontFixup = true;
   };
 
   http-server = pkgs.buildNpmPackage rec {
+    inherit nodejs;
     pname = "http-server";
     version = "14.1.1";
 
@@ -51,17 +46,16 @@
     npmDepsHash = "sha256-iUTDdcibnstbSxC7cD5WbwSxQbfiIL2iNyMWJ8izSu0=";
 
     dontNpmBuild = true;
-    dontFixup = true;
   };
 
   # GitHub のソースには webpack ビルド成果物 `dist/cli.js` がコミットされておらず、実行時依存も無いため、ビルド済みの npm 公開物をそのまま使う
   envinfo = pkgs.stdenv.mkDerivation (finalAttrs: {
     pname = "envinfo";
-    version = "7.14.0";
+    version = "7.21.0";
 
     src = pkgs.fetchurl {
       url = "https://registry.npmjs.org/envinfo/-/envinfo-${finalAttrs.version}.tgz";
-      hash = "sha256-RXwI6c1oY8TIO2lopBBHJ0jaQWLUA0oso2U37BioG7o=";
+      hash = "sha256-WHgGps18jKpwHTVugGr+bBaZ87L/p6hGsE0Y9uM1+Dw=";
     };
 
     nativeBuildInputs = [ pkgs.makeWrapper ];
@@ -80,17 +74,18 @@
 
   skills = pkgs.stdenv.mkDerivation (finalAttrs: {
     pname = "skills";
-    version = "1.3.9";
+    version = "1.8.1";
 
     src = pkgs.fetchFromGitHub {
       owner = "vercel-labs";
       repo = "skills";
       rev = "v${finalAttrs.version}";
-      hash = "sha256-JidfLICAkXY1xEUSGcRZbS88x50cxyZcG9uRFASqOqI=";
+      hash = "sha256-K4xCSpt8jnkTx8FDEa2cXrzMjpRkYOwTiFqPap6iCYU=";
     };
 
     nativeBuildInputs = [
-      pkgs.nodejs_22
+      nodejs
+      pkgs.makeWrapper
       pkgs.pnpmConfigHook
       pkgs.pnpm_10
     ];
@@ -99,7 +94,7 @@
       inherit (finalAttrs) pname version src;
       pnpm = pkgs.pnpm_10;
       fetcherVersion = 3;
-      hash = "sha256-pwPJ4CRHEtCXpt5b6g/7EbDsUc2KCjOtpiVED0tqoMk=";
+      hash = "sha256-cL9mQpQZ5/kbrdZ9TWhymz8iVxdtb9YSdstiVBMejTU=";
     };
 
     buildPhase = ''
@@ -112,11 +107,13 @@
 
     installPhase = ''
       runHook preInstall
+      rm -rf node_modules
+      pnpm install --offline --prod --frozen-lockfile --ignore-scripts
       mkdir -p $out/lib/node_modules/skills
-      cp -r dist bin package.json $out/lib/node_modules/skills/
-      mkdir -p $out/bin
-      ln -s $out/lib/node_modules/skills/bin/cli.mjs $out/bin/skills
-      ln -s $out/lib/node_modules/skills/bin/cli.mjs $out/bin/add-skill
+      cp -r dist bin package.json node_modules $out/lib/node_modules/skills/
+      makeWrapper ${nodejs}/bin/node $out/bin/skills \
+        --add-flags $out/lib/node_modules/skills/bin/cli.mjs
+      ln -s $out/bin/skills $out/bin/add-skill
       runHook postInstall
     '';
   });

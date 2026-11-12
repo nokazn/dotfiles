@@ -54,8 +54,8 @@ remove-tools/nix/darwin: _print-goodbye # Uninstall nix for darwin (See https://
 # languages ----------------------------------------------------------------------------------------------------
 
 .PHONY: install/langs
-install/langs: # Install languages by proto
-	source $(PATH_SCRIPT) && proto install --config-mode global
+install/langs: # Install languages by mise
+	source $(PATH_SCRIPT) && mise install
 
 .PHONY: uninstall/langs
 uninstall/langs: # Uninstall languages by proto & fnm
@@ -110,12 +110,9 @@ install/skills: # Install Claude Code skills from obra/superpowers globally
 update/claude-code: # Update claude-code to the latest version
 	bash scripts/update-claude-code.sh
 
-.PHONY: update/npm-packages-list
-update/npm-packages-list: # Generate Nix packages list for npm packages
-	cd ./modules/node; \
-	nix-shell -p nodePackages.node2nix \
-    -p nixfmt \
-    --command 'node2nix -i ./packages.json -o ./packages.nix && find . -type f | grep -e "\.nix$$" | xargs nixfmt' && exit
+.PHONY: update/npm-packages
+update/npm-packages: # Update npm packages defined in modules/node/npm.nix to the latest versions
+	bash scripts/update-npm-packages.sh
 
 .PHONY: update/vscode-settings/darwin
 update/vscode-settings/darwin: # Update VSCode settings.json & keybindings.json for Darwin
