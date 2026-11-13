@@ -1,6 +1,7 @@
 .*.swp
 *.log
 .direnv
+node_modules
 .aws/credentials
 .aliases.work.sh
 .ssh/*
