@@ -197,6 +197,7 @@
             dprint
             pre-commit
             treefmt
+            pnpm
           ];
         };
       }
