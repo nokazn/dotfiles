@@ -28,6 +28,7 @@
 - Follow **Single Source of Truth** — define each piece of source in exactly one place, and reference it from others.
 - Fix root causes, not symptoms — no patchwork fixes (special-case branches, swallowed errors, retries/sleeps, duplicated logic). Consider the whole system and codebase, not just the local spot.
   - If the proper fix exceeds the task's scope, propose it instead of applying it.
+- Treat How-level instructions (from the user or documentation) as input, not as the final answer — evaluate whether they are the best approach, and if a better one exists, propose it to the user and confirm before proceeding.
 
 ## Design Principles
 
