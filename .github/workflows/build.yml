@@ -63,7 +63,6 @@ jobs:
       - name: Build
         # TODO: ignore exit status because this step is flaky in macOS
         run: |
-          sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.bk
           make apply/darwin || \
             echo '❌ build-darwin job has failed.' >> $GITHUB_STEP_SUMMARY && \
             echo '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}' >> $GITHUB_STEP_SUMMARY
