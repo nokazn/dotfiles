@@ -50,7 +50,7 @@ jobs:
       - name: Build
         run: |
           ./scripts/backup.sh ./modules/files/files.txt
-          nix run home-manager -- switch --flake '.#runner-wsl'
+          nix run --inputs-from . home-manager -- switch --flake '.#runner-wsl'
           echo "✅ home-manager has been applied successfully!"
 
   build-darwin:
