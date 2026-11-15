@@ -3,7 +3,6 @@
 # /etc/zshenv
 .aws/config
 .claude/CLAUDE.md
-.claude/settings.json
 .claude/scripts/status-line.sh
 .claude/hooks/notify.sh
 .claude/skills/me-css-guidelines

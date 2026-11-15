@@ -16,9 +16,9 @@
   "agent_servers": {
     "claude-acp": {
       "default_config_options": {
-        "mode": "bypassPermissions",
+        "mode": "auto",
         "fast": true,
-        "model": "opusplan",
+        "model": "opus",
       },
       "type": "registry",
     },
