@@ -1,4 +1,4 @@
-{ pkgs, lib, meta, ... }:
+{ pkgs, lib, meta, config, ... }:
 
 let
   fileSourceList =
@@ -47,5 +47,10 @@ let
         };
       })
       files;
+  # Read and written in place so that edits made by Claude Code show up as repository diffs
+  writableFiles = {
+    ".claude/settings.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/unix/.claude/settings.json";
+  };
 in
-builtins.listToAttrs fileSourceList
+builtins.listToAttrs fileSourceList // writableFiles

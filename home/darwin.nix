@@ -12,6 +12,7 @@ let
   nixPackages = import ../modules/packages args;
   npmPackages = builtins.attrValues (import ../modules/node/npm.nix { inherit pkgs; });
 in
+{ config, ... }:
 {
   home = {
     # This value determines the Home Manager release that your
@@ -32,7 +33,7 @@ in
     # nix packages
     packages = nixPackages ++ npmPackages ++ overrides;
     # dotfiles in home directory
-    file = import ../modules/files args;
+    file = import ../modules/files (args // { inherit config; });
   };
 
   programs = import ../programs args;

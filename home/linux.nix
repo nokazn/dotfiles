@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   nix,
@@ -34,7 +35,7 @@ in
     # nix packages
     packages = nixPackages ++ npmPackages ++ overrides;
     # dotfiles in home directory
-    file = import ../modules/files args;
+    file = import ../modules/files (args // { inherit config; });
   };
 
   news = {
