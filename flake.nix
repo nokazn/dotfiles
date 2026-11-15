@@ -42,7 +42,7 @@
       # this line is replaced by the real user name as fallback
       HOST = "${HOST}";
       nix = {
-        version = "25.11";
+        version = "26.05";
       };
       allowUnfreePredicate =
         pkg:
