@@ -6,7 +6,8 @@ set -u -o pipefail
 # See https://nixos.org/manual/nix/stable/installation/uninstall.html#uninstalling-nix
 function remove_nix_darwin() {
 	if command -v nix >/dev/null; then
-		sudo nix --extra-experimental-features 'nix-command flakes' shell github:LnL7/nix-darwin#darwin-uninstaller \
+		sudo nix --extra-experimental-features 'nix-command flakes' shell \
+			--inputs-from "$(dirname "${BASH_SOURCE[0]}")/.." nix-darwin#darwin-uninstaller \
 			--command darwin-uninstaller
 	else
 		echo "⚠️ Nix is not installed."

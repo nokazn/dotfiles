@@ -37,7 +37,7 @@ add-tools/homebrew: _print-airplane # Add Homebrew
 
 .PHONY: remove-tools/nix/user
 remove-tools/nix/user: _print-goodbye # Uninstall nix for user environment (See https://nixos.org/manual/nix/stable/installation/uninstall.html#uninstalling-nix)
-	$(NIX) shell github:nix-community/home-manager/master \
+	$(NIX) shell --inputs-from . home-manager \
 		--command sh -c "home-manager uninstall"
 	if [[ -f /nix/nix-installer ]]; then \
 		sudo /nix/nix-installer uninstall; \
@@ -73,10 +73,10 @@ apply/_inject-env: # Inject user environment
 apply/user: apply/_inject-env # Run `home-manager switch` for user environment (PROFILE=minimum|private|work)
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt
 	if [[ $$(uname -r) =~ microsoft ]]; then \
-		source $(PATH_SCRIPT) && $(NIX) run \
+		source $(PATH_SCRIPT) && $(NIX) run --inputs-from . \
 			home-manager -- switch --flake .#$${USER}$(PROFILE_SUFFIX)-wsl; \
 	else \
-		source $(PATH_SCRIPT) && $(NIX) run \
+		source $(PATH_SCRIPT) && $(NIX) run --inputs-from . \
 			home-manager -- switch --flake .#$${USER}$(PROFILE_SUFFIX); \
 	fi
 	@echo "✅ home-manager has been applied successfully! (profile: $(PROFILE))"
@@ -90,7 +90,7 @@ apply/darwin: apply/_inject-env # Run `nix-darwin switch` (PROFILE=minimum|priva
 	$(SCRIPTS_DIR)/backup.sh ./modules/files/files.txt --absolute
 	@source $(PATH_SCRIPT) && \
 	sudo $(NIX) run \
-		nix-darwin/master#darwin-rebuild -- switch --flake .#$(HOST)$(PROFILE_SUFFIX) || \
+		--inputs-from . nix-darwin#darwin-rebuild -- switch --flake .#$(HOST)$(PROFILE_SUFFIX) || \
 	{ echo "❌ nix-darwin failed (profile: $(PROFILE))" >&2; exit 1; }
 	$(SCRIPTS_DIR)/writable-files.sh ./modules/files/files.txt
 	@echo "✅ nix-darwin has been applied successfully! (profile: $(PROFILE))"
