@@ -87,6 +87,7 @@ This applies to bugs only, not to design, performance, or readability feedback.
 
 - Only commit or push when explicitly instructed
 - When committing, follow the `me-git-commits` skill
+- After pushing to a branch that has a PR, compare the PR title and body with the diff and update them with `gh pr edit` if they are stale
 - When switching branches or pulling, run `git fetch` first and reference remote branches (origin/upstream) to ensure up-to-date state
 - **Worktree safety**:
   - Never stash, checkout, or switch branches in a worktree that has uncommitted changes — always create a new worktree instead. Confirm with user before touching an existing worktree's changes.
