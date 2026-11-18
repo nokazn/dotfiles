@@ -100,7 +100,7 @@ async function scanMemory(memoryDirectory: string, file: string) {
   const references = extractReferences(body, home, (name) => existsSync(join(home, name)));
   return {
     file,
-    path,
+    ...describeLocation(path),
     name: fields.name ?? null,
     description: fields.description ?? null,
     type: fields.type ?? null,
