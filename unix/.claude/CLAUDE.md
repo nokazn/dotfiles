@@ -21,6 +21,13 @@
   PR: <PR URL>
   ```
 
+## Research
+
+- When an answer relies on investigating documentation, source code, specs, issues, etc., cite the sources for claims the user may act on — especially project-specific, version-dependent, or non-obvious ones (e.g. `path/to/file.ts:42`, a doc URL with its section, a command and its output) — unsourced answers mix verified facts with guesses, and the user cannot tell which is which.
+  - Well-known general facts need no citation; over-citing buries the sources that matter.
+  - This applies to qualitative research for gathering information. When behavior or performance needs to be measured, actually run and test it as before.
+- Speculation and hypotheses are acceptable when no source can be obtained, or when the user wants to move fast or defer verification — but label them explicitly as such (e.g. "仮説:", "未確認:") and, where useful, note how they could be verified.
+
 ## Solutions
 
 - Prefer **simple** solutions over easy ones.
