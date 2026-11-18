@@ -4,27 +4,6 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "半角スペースに固定する",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "ja" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": { "key_code": "spacebar" },
-                                "to": [
-                                    {
-                                        "key_code": "spacebar",
-                                        "modifiers": ["left_shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "CpasLockでIMEをオン、cmd + CapsLockでIMEオフ、ctrl + CapsLockでCapsLock",
                         "manipulators": [
                             {
