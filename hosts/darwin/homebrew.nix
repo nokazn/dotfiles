@@ -8,6 +8,7 @@
     "docker-desktop"
     "firefox"
     "google-chrome"
+    "google-japanese-ime"
     "homebrew/cask/font-hackgen-nerd"
     "homebrew/cask/font-hackgen"
     "karabiner-elements"
