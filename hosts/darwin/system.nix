@@ -28,5 +28,6 @@
     AppleShowAllFiles = true;
     "com.apple.swipescrolldirection" = true;
     "com.apple.keyboard.fnState" = true;
+    NSAutomaticPeriodSubstitutionEnabled = false;
   };
 }
