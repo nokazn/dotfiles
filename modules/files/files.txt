@@ -14,6 +14,7 @@
 .claude/skills/me-gh-sync-pr-conflicts
 .claude/skills/me-git-commits
 .claude/skills/me-keep-ai-doc-up-to-date
+.claude/skills/me-memory-inventory
 .claude/skills/me-shell-script
 .config/bat/config
 .config/broot/conf.hjson
